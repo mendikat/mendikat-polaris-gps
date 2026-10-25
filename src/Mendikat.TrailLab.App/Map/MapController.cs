@@ -29,12 +29,14 @@ public sealed class MapController : IDisposable
     private const int BaseLayerGroup = 0;
     private const int DataLayerGroup = 1;
     private const int SelectionLayerGroup = 2;
+    private const int HoverLayerGroup = 3;
 
     private readonly Mapsui.Map _map;
     private readonly HttpClient _httpClient;
     private readonly ILogger _logger;
     private readonly Dictionary<DocumentViewModel, IReadOnlyList<ItemLayers>> _documentLayers = [];
     private readonly MemoryLayer _selectionLayer = new("selection") { Style = null };
+    private readonly MemoryLayer _hoverLayer = new("profile-hover") { Style = null };
     private TileLayer? _baseLayer;
     private ObservedTileSource? _tileSource;
     private bool _lastTileFailed;
@@ -45,6 +47,7 @@ public sealed class MapController : IDisposable
         _httpClient = httpClient;
         _logger = logger;
         _map.Layers.Add(_selectionLayer, SelectionLayerGroup);
+        _map.Layers.Add(_hoverLayer, HoverLayerGroup);
         ZoomTo(InitialBounds);
     }
 
@@ -128,6 +131,13 @@ public sealed class MapController : IDisposable
         _selectionLayer.DataHasChanged();
     }
 
+    /// <summary>Marks the point under the pointer in the elevation profile, or clears the mark (PROF-04).</summary>
+    public void ShowHover(GeoPosition? position)
+    {
+        _hoverLayer.Features = position is { } p ? TrailLayerFactory.Markers([p], MapStyles.HoverPoint).ToList() : [];
+        _hoverLayer.DataHasChanged();
+    }
+
     /// <summary>The visible point nearest to <paramref name="world"/>, with its document (LAY-03).</summary>
     public (DocumentViewModel Document, TrailPoint Point)? HitTest(MPoint world)
     {
@@ -177,6 +187,7 @@ public sealed class MapController : IDisposable
         }
 
         _selectionLayer.Dispose();
+        _hoverLayer.Dispose();
         _baseLayer?.Dispose();
     }
 

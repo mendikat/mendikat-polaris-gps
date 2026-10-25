@@ -3,10 +3,10 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar tracks **GPX**
 y archivos de waypoints **WPT** sobre cartografía online (IGN España por defecto).
 
-> **Estado: Incremento 4 (guardado) terminado, pendiente de aprobación.**
+> **Estado: Incremento 5 (perfil de elevación) terminado, pendiente de aprobación.**
 > Se abren GPX y WPT, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan en el mismo formato de forma segura.
-> Faltan el perfil de elevación, las herramientas y el ajuste DEM. Ver [specs/ROADMAP.md](specs/ROADMAP.md).
+> También muestra el perfil de elevación sincronizado con el mapa. Faltan las herramientas (simplificar, tiempos) y el ajuste DEM. Ver [specs/ROADMAP.md](specs/ROADMAP.md).
 
 ## Uso rápido
 
@@ -19,6 +19,7 @@ y archivos de waypoints **WPT** sobre cartografía online (IGN España por defec
 | Mover un punto | Seleccionarlo y arrastrarlo en el mapa, o cambiar latitud/longitud en el detalle y pulsar **Aplicar** (Intro) |
 | Editar nombre, descripción, elevación, hora | Panel «Punto seleccionado» › **Aplicar**; **Descartar** (Esc) deshace lo escrito |
 | Deshacer / rehacer | **Ctrl+Z** / **Ctrl+Y** (menú Edición) |
+| Perfil de elevación | Seleccionar un track o ruta en **Capas** › botón **Perfil** (o Ver › Perfil de elevación). Puntero sobre el perfil: marca el punto en el mapa; clic: lo selecciona; ← →: punto anterior / siguiente |
 
 ## Documentación (Spec-Driven Development)
 
@@ -107,7 +108,7 @@ Datos: mosaicos y MDT del IGN España bajo CC BY 4.0 (scne.es); datos OSM bajo O
 - Guardar escribe primero un archivo temporal, lo verifica y sólo entonces sustituye el original. Al guardar se avisa
   si algo cambiará en el archivo (GPX 1.0 → 1.1, caracteres que la codificación del WPT no admite, waypoints
   CompeGPS sin altitud). Los números se escriben con su valor exacto, pero su texto puede cambiar (-2.0610 → -2.061).
-- El botón «Perfil» está deshabilitado hasta el incremento 5.
+- El perfil mide la distancia horizontal y, por defecto, no cuenta el hueco entre segmentos (casilla para incluirlo).
 - Tras cada edición se redibuja el documento completo en el mapa; con tracks de cientos de miles de puntos puede notarse (se revisará en el Inc 8).
 - Los textos de OziExplorer no admiten comas y los nombres de CompeGPS no admiten espacios (limitaciones de esos formatos).
 - Los WPT CompeGPS en coordenadas UTM (`U 0`) se rechazan; no se convierten datums distintos de WGS 84.

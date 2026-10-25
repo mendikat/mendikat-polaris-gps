@@ -6,6 +6,7 @@ using Mendikat.TrailLab.App.Services;
 using Mendikat.TrailLab.App.Settings;
 using Mendikat.TrailLab.Domain.Documents;
 using Mendikat.TrailLab.Domain.Geo;
+using Mendikat.TrailLab.Domain.Model;
 using Mendikat.TrailLab.Gpx;
 using Mendikat.TrailLab.Mapping.Coordinates;
 using Mendikat.TrailLab.Mapping.Providers;
@@ -28,6 +29,7 @@ public sealed partial class MainViewModel : ObservableObject
     private MapProvider _selectedMapProvider;
     private bool _isBusy;
     private int _nextColorIndex;
+    private int _nextNewDocumentNumber = 1;
 
     public MainViewModel(IDialogService dialogs, IDocumentStore store, ISettingsStore settings, ILogger<MainViewModel> logger)
     {
@@ -37,6 +39,7 @@ public sealed partial class MainViewModel : ObservableObject
         _logger = logger;
         _selectedMapProvider = MapProviderCatalog.FindOrDefault(settings.Load().Map.Provider);
 
+        NewGpxCommand = new RelayCommand(NewGpx, () => !IsBusy);
         OpenGpxCommand = new RelayCommand(_ => OpenAsync(DocumentFormat.Gpx), _ => !IsBusy);
         OpenWptCommand = new RelayCommand(_ => OpenAsync(DocumentFormat.Wpt), _ => !IsBusy);
         SaveCommand = new RelayCommand(_ => SaveActiveAsync(), _ => !IsBusy && ActiveDocument?.IsDirty == true);
@@ -49,8 +52,7 @@ public sealed partial class MainViewModel : ObservableObject
         ZoomOutCommand = new RelayCommand(() => MapRequested?.Invoke(this, new MapRequest.ZoomOut()));
         ZoomToDataCommand = new RelayCommand(ZoomToData, () => GetDataBounds() is not null);
 
-        // Requires a selected track (increment 3) and the profile window (increment 5).
-        ElevationProfileCommand = new RelayCommand(() => { }, () => false);
+        ElevationProfileCommand = new RelayCommand(OpenProfile, () => ActiveDocument?.SelectedLayer?.IsSequence == true);
         InitializeEditingCommands();
     }
 
@@ -59,6 +61,9 @@ public sealed partial class MainViewModel : ObservableObject
 
     /// <summary>Asks the map view to navigate.</summary>
     public event EventHandler<MapRequest>? MapRequested;
+
+    /// <summary>Asks the view to show the elevation profile window (PROF-01).</summary>
+    public event EventHandler<ProfileViewModel>? ProfileRequested;
 
     public ObservableCollection<DocumentViewModel> Documents { get; } = [];
 
@@ -153,6 +158,8 @@ public sealed partial class MainViewModel : ObservableObject
         }
     }
 
+    public RelayCommand NewGpxCommand { get; }
+
     public RelayCommand OpenGpxCommand { get; }
 
     public RelayCommand OpenWptCommand { get; }
@@ -196,6 +203,26 @@ public sealed partial class MainViewModel : ObservableObject
     public GeoBounds? GetDataBounds() =>
         Documents.Select(d => d.Document.Data.GetBounds())
             .Aggregate((GeoBounds?)null, (acc, b) => acc is { } a ? (b is { } bb ? a.Union(bb) : a) : b);
+
+    /// <summary>
+    /// File › New GPX (APP-08): opens an unsaved GPX document "Sin título N.gpx" with one empty track, selected so
+    /// that Ctrl+click on the map adds points to it. It has no file until it is saved (Save asks for a path).
+    /// </summary>
+    public void NewGpx()
+    {
+        var track = new Track { Name = Strings.NewTrackName };
+        track.Segments.Add(new TrackSegment());
+        var data = new TrailData { FormatState = new GpxFormatState { SourceVersion = "1.1" } };
+        data.Tracks.Add(track);
+
+        var title = string.Format(Strings.NewDocumentTitle, _nextNewDocumentNumber++);
+        var viewModel = new DocumentViewModel(TrailDocument.CreateNew(DocumentFormat.Gpx, title, data), _nextColorIndex++);
+        Documents.Add(viewModel);
+        OnPropertyChanged(nameof(HasDocuments));
+        ActiveDocument = viewModel;
+        StatusMessage = string.Format(Strings.StatusNewDocument, title);
+        _logger.LogInformation("Created new GPX document {FileName}", title);
+    }
 
     public async Task OpenAsync(DocumentFormat format)
     {
@@ -251,20 +278,27 @@ public sealed partial class MainViewModel : ObservableObject
         }
     }
 
+    /// <summary>Saves to the document's file; a new document has none, so it asks for a path as "Save as" (APP-08).</summary>
     /// <returns>True if the document was saved.</returns>
     public Task<bool> SaveActiveAsync() =>
-        ActiveDocument is null ? Task.FromResult(false) : SaveAsync(ActiveDocument, ActiveDocument.FilePath);
+        ActiveDocument is null ? Task.FromResult(false) : SaveToFileOrAskAsync(ActiveDocument);
 
     /// <returns>True if the document was saved.</returns>
-    public async Task<bool> SaveActiveAsAsync()
+    public Task<bool> SaveActiveAsAsync() =>
+        ActiveDocument is null ? Task.FromResult(false) : SaveAsAsync(ActiveDocument);
+
+    private Task<bool> SaveToFileOrAskAsync(DocumentViewModel document) =>
+        document.FilePath is { } path ? SaveAsync(document, path) : SaveAsAsync(document);
+
+    private async Task<bool> SaveAsAsync(DocumentViewModel document)
     {
-        if (ActiveDocument is null || !EnsureCanSave(ActiveDocument))
+        if (!EnsureCanSave(document))
         {
             return false;
         }
 
-        var format = ActiveDocument.Document.Format;
-        var path = _dialogs.AskSaveFilePath(format, ActiveDocument.FilePath);
+        var format = document.Document.Format;
+        var path = _dialogs.AskSaveFilePath(format, document.FilePath ?? document.FileName);
         if (path is null)
         {
             return false;
@@ -281,7 +315,7 @@ public sealed partial class MainViewModel : ObservableObject
             }
         }
 
-        return await SaveAsync(ActiveDocument, path);
+        return await SaveAsync(document, path);
     }
 
     /// <summary>Closes a document, asking first if it has unsaved changes (APP-04).</summary>
@@ -328,6 +362,15 @@ public sealed partial class MainViewModel : ObservableObject
         return true;
     }
 
+    /// <summary>Opens the elevation profile of the track or route selected in the layers panel (APP-06, PROF-01).</summary>
+    private void OpenProfile()
+    {
+        if (ActiveDocument is { SelectedLayer: { IsSequence: true } layer } doc)
+        {
+            ProfileRequested?.Invoke(this, new ProfileViewModel(doc, layer));
+        }
+    }
+
     private void ZoomToData()
     {
         if (GetDataBounds() is { } bounds)
@@ -346,7 +389,7 @@ public sealed partial class MainViewModel : ObservableObject
         return _dialogs.AskSaveChanges(document.FileName) switch
         {
             SaveChangesChoice.Discard => true,
-            SaveChangesChoice.Save => await SaveAsync(document, document.FilePath),
+            SaveChangesChoice.Save => await SaveToFileOrAskAsync(document),
             _ => false,
         };
     }
@@ -440,11 +483,15 @@ public sealed partial class MainViewModel : ObservableObject
             case nameof(DocumentViewModel.CanUndo) or nameof(DocumentViewModel.CanRedo) or nameof(DocumentViewModel.Detail):
                 RefreshEditingCommands();
                 break;
+            case nameof(DocumentViewModel.SelectedLayer):
+                ElevationProfileCommand.RaiseCanExecuteChanged();
+                break;
         }
     }
 
     private void RefreshCommands()
     {
+        NewGpxCommand.RaiseCanExecuteChanged();
         OpenGpxCommand.RaiseCanExecuteChanged();
         OpenWptCommand.RaiseCanExecuteChanged();
         SaveCommand.RaiseCanExecuteChanged();
@@ -452,5 +499,6 @@ public sealed partial class MainViewModel : ObservableObject
         CloseDocumentCommand.RaiseCanExecuteChanged();
         ZoomToDataCommand.RaiseCanExecuteChanged();
         RefreshEditingCommands();
+        ElevationProfileCommand.RaiseCanExecuteChanged();
     }
 }

@@ -25,7 +25,7 @@ public sealed class GpxWriterTests
     }
 
     /// <summary>Validates against the official GPX 1.1 schema (GPX-04). Returns the validation errors.</summary>
-    private static List<string> SchemaErrors(byte[] bytes)
+    internal static List<string> SchemaErrors(byte[] bytes)
     {
         var schemas = new XmlSchemaSet();
         schemas.Add(GpxReader.Gpx11Namespace, Fixture.PathOf("schema/gpx-1.1.xsd"));

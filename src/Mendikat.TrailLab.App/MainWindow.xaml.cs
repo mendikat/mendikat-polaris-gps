@@ -8,6 +8,7 @@ using Mapsui;
 using Mapsui.Extensions;
 using Mendikat.TrailLab.App.Map;
 using Mendikat.TrailLab.App.ViewModels;
+using Mendikat.TrailLab.App.Views;
 using Mendikat.TrailLab.Domain.Geo;
 using Mendikat.TrailLab.Domain.Model;
 using Mendikat.TrailLab.Mapping.Coordinates;
@@ -28,6 +29,7 @@ public partial class MainWindow : Window
     private readonly MapController _map;
     private bool _closeConfirmed;
     private DragState? _drag;
+    private readonly List<ProfileWindow> _profileWindows = [];
 
     public MainWindow(MainViewModel viewModel, Func<Mapsui.Map, MapController> createMapController)
     {
@@ -42,6 +44,7 @@ public partial class MainWindow : Window
 
         viewModel.ExitRequested += (_, _) => Close();
         viewModel.MapRequested += (_, request) => _map.Handle(request);
+        viewModel.ProfileRequested += (_, profile) => ShowProfile(profile);
         viewModel.Documents.CollectionChanged += OnDocumentsChanged;
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
@@ -76,6 +79,11 @@ public partial class MainWindow : Window
         foreach (DocumentViewModel removed in e.OldItems ?? Array.Empty<DocumentViewModel>())
         {
             _map.RemoveDocument(removed);
+            foreach (var window in _profileWindows.Where(w => ReferenceEquals(w.ViewModel.Document, removed)).ToList())
+            {
+                window.Close();
+            }
+
         }
 
         foreach (DocumentViewModel added in e.NewItems ?? Array.Empty<DocumentViewModel>())
@@ -112,6 +120,28 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// Shows the profile window of a track or route (PROF-01); if it is already open, brings it to the front.
+    /// The point under the pointer in the profile is marked on the map (PROF-04).
+    /// </summary>
+    private void ShowProfile(ProfileViewModel profile)
+    {
+        var existing = _profileWindows.FirstOrDefault(w =>
+            ReferenceEquals(w.ViewModel.Document, profile.Document) && ReferenceEquals(w.ViewModel.Layer, profile.Layer));
+        if (existing is not null)
+        {
+            profile.Detach();
+            existing.Activate();
+            return;
+        }
+
+        var window = new ProfileWindow(profile) { Owner = this };
+        profile.HoveredPointChanged += (_, point) => _map.ShowHover(point?.Position);
+        window.Closed += (_, _) => _profileWindows.Remove(window);
+        _profileWindows.Add(window);
+        window.Show();
+    }
+
     /// <summary>Highlights the selected points of the active document; optionally scrolls the map to them.</summary>
     private void ShowSelection(bool ensureVisible)
     {
@@ -146,7 +176,8 @@ public partial class MainWindow : Window
     /// <summary>Pressing on the selected point starts a drag (EDIT-04); only an already selected point can be moved.</summary>
     private void OnMapPointerPressed(object? sender, MapEventArgs e)
     {
-        if (Mouse.LeftButton != MouseButtonState.Pressed || e.WorldPosition is null
+        // Ctrl+click adds a point (OnMapTapped); it must not start dragging the selected one.
+        if (Mouse.LeftButton != MouseButtonState.Pressed || IsControlPressed || e.WorldPosition is null
             || _viewModel.ActiveDocument is not { SelectedRows.Count: 1 } doc)
         {
             return;
@@ -180,7 +211,10 @@ public partial class MainWindow : Window
         }
     }
 
-    /// <summary>A click selects the nearest point within a few pixels, or clears the selection (LAY-03).</summary>
+    /// <summary>
+    /// A click selects the nearest point within a few pixels, or clears the selection (LAY-03).
+    /// Ctrl+click adds a point there to the active document (APP-08).
+    /// </summary>
     private void OnMapTapped(object? sender, MapEventArgs e)
     {
         if (e.WorldPosition is null)
@@ -188,8 +222,17 @@ public partial class MainWindow : Window
             return;
         }
 
+        if (IsControlPressed)
+        {
+            _viewModel.AddPointAt(WebMercator.ToGeo(e.WorldPosition.X, e.WorldPosition.Y));
+            e.Handled = true;
+            return;
+        }
+
         SelectAt(e.WorldPosition);
     }
+
+    private static bool IsControlPressed => (Keyboard.Modifiers & ModifierKeys.Control) != 0;
 
     /// <summary>Right click selects the point under the pointer before the context menu opens.</summary>
     private void OnMapRightButtonDown(object sender, MouseButtonEventArgs e)

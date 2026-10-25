@@ -30,6 +30,12 @@ Fixtures: `tests/Mendikat.TrailLab.Tests/Fixtures/` (se crean en el incremento c
 - Given ningún documento abierto
 - Then Guardar, Guardar como y Cerrar documento están deshabilitados; Abrir GPX/WPT y Salir habilitados.
 
+**ACC-APP-05 — Crear un GPX a mano** (APP-08, SAVE-02, EDIT-05) [auto en ViewModel + manual]
+- Given la aplicación abierta
+- When elijo Archivo › Nuevo GPX y hago Ctrl+clic en tres lugares del mapa
+- Then aparece la pestaña «Sin título 1.gpx *» con «Track 1» de 3 puntos unidos en el orden de los clics; Ctrl+Z quita el último;
+  Guardar pide nombre y ruta, la pestaña pasa a mostrar el nombre elegido y el archivo se reabre con sus puntos.
+
 ## Cartografía
 
 **ACC-MAP-01 — IGN por defecto y persistencia** (MAP-03, MAP-04) [auto (settings) + manual]

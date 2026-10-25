@@ -55,6 +55,15 @@ public static class MapStyles
         Outline = new Pen(Color.Black, 2),
     };
 
+    /// <summary>Point under the pointer in the elevation profile (PROF-04): blue ring, always visible.</summary>
+    public static IStyle HoverPoint { get; } = new SymbolStyle
+    {
+        SymbolType = SymbolType.Ellipse,
+        SymbolScale = 0.7,
+        Fill = new Brush(Color.Transparent),
+        Outline = new Pen(new Color(25, 90, 220), 3),
+    };
+
     public static IStyle Waypoint(Color color) => new SymbolStyle
     {
         SymbolType = SymbolType.Triangle,

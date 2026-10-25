@@ -60,7 +60,8 @@ public sealed class DocumentViewModel : ObservableObject
 
     public string FileName => Document.FileName;
 
-    public string FilePath => Document.FilePath;
+    /// <summary>Full path of the file; null for a new document not saved yet (APP-08).</summary>
+    public string? FilePath => Document.FilePath;
 
     public bool IsDirty => Document.IsDirty;
 

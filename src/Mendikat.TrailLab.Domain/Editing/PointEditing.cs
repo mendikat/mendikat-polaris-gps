@@ -35,4 +35,46 @@ public static class PointEditing
         };
         return new InsertPointCommand(owner, second, point);
     }
+
+    /// <summary>
+    /// Builds the addition of a point drawn by the user at <paramref name="position"/> (APP-08). It goes right after
+    /// <paramref name="after"/> when given (so consecutive clicks extend the line from the last added point); otherwise
+    /// at the end of <paramref name="target"/>: the last segment of a <see cref="Track"/>, a <see cref="Route"/> or the
+    /// waypoint list. With no target, a new track is created for it. The point has no elevation or time.
+    /// </summary>
+    public static (IEditCommand Command, TrailPoint Point) CreateAddition(TrailData data, object? target, TrailPoint? after, GeoPosition position)
+    {
+        var point = new TrailPoint(position) { IsAdded = true };
+        if (after is not null && data.Locate(after) is { } location)
+        {
+            return (new InsertPointCommand(location.Points, location.Points.IndexOf(after) + 1, point), point);
+        }
+
+        IEditCommand command = target switch
+        {
+            Track { Segments.Count: > 0 } track => Append(track.Segments[^1].Points, point),
+            Track track => new AddItemCommand<TrackSegment>(track.Segments, NewSegment(point)),
+            Route route => Append(route.Points, point),
+            List<TrailPoint> waypoints when ReferenceEquals(waypoints, data.Waypoints) => Append(waypoints, point),
+            null => new AddItemCommand<Track>(data.Tracks, NewTrack(point)),
+            _ => throw new ArgumentException("The target must be a track, a route or the waypoint list of the document.", nameof(target)),
+        };
+        return (command, point);
+    }
+
+    private static InsertPointCommand Append(List<TrailPoint> owner, TrailPoint point) => new(owner, owner.Count, point);
+
+    private static TrackSegment NewSegment(TrailPoint point)
+    {
+        var segment = new TrackSegment();
+        segment.Points.Add(point);
+        return segment;
+    }
+
+    private static Track NewTrack(TrailPoint point)
+    {
+        var track = new Track();
+        track.Segments.Add(NewSegment(point));
+        return track;
+    }
 }

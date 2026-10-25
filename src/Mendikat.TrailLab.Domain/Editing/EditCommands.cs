@@ -56,6 +56,23 @@ public sealed class InsertPointCommand(List<TrailPoint> owner, int index, TrailP
     public void Undo() => owner.RemoveAt(index);
 }
 
+/// <summary>Adds a whole item (track, segment, waypoint…) at the end of its list.</summary>
+public sealed class AddItemCommand<T>(List<T> owner, T item) : IEditCommand
+    where T : class
+{
+    public void Do() => owner.Add(item);
+
+    public void Undo()
+    {
+        if (owner.Count == 0 || !ReferenceEquals(owner[^1], item))
+        {
+            throw new InvalidOperationException("The added item is no longer the last one.");
+        }
+
+        owner.RemoveAt(owner.Count - 1);
+    }
+}
+
 /// <summary>Removes a whole item (track or route) from its list.</summary>
 public sealed class RemoveItemCommand<T>(List<T> owner, T item) : IEditCommand
     where T : class

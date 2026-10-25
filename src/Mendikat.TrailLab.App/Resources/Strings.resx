@@ -6,6 +6,7 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="AppTitle" xml:space="preserve"><value>Mendikat TrailLab</value></data>
   <data name="MenuFile" xml:space="preserve"><value>_Archivo</value></data>
+  <data name="MenuNewGpx" xml:space="preserve"><value>_Nuevo GPX</value></data>
   <data name="MenuOpenGpx" xml:space="preserve"><value>Abrir _GPX...</value></data>
   <data name="MenuOpenWpt" xml:space="preserve"><value>Abrir _WPT...</value></data>
   <data name="MenuSave" xml:space="preserve"><value>_Guardar</value></data>
@@ -21,7 +22,7 @@
   <data name="ToolZoomOut" xml:space="preserve"><value>Alejar (Ctrl+-)</value></data>
   <data name="ToolZoomToData" xml:space="preserve"><value>Ajustar el mapa a los datos abiertos</value></data>
   <data name="ToolMapProvider" xml:space="preserve"><value>Cartografía</value></data>
-  <data name="ToolElevationProfile" xml:space="preserve"><value>Perfil de elevación (disponible en el incremento 5)</value></data>
+  <data name="ToolElevationProfile" xml:space="preserve"><value>Perfil de elevación del track o ruta seleccionado en «Capas»</value></data>
   <data name="ToolProfileButton" xml:space="preserve"><value>Perfil</value></data>
   <data name="CloseTabToolTip" xml:space="preserve"><value>Cerrar documento</value></data>
   <data name="StatusReady" xml:space="preserve"><value>Listo</value></data>
@@ -33,7 +34,11 @@
   <data name="StatusPointerOutside" xml:space="preserve"><value>—</value></data>
   <data name="StatusMapLoadFailed" xml:space="preserve"><value>No se pudo cargar la cartografía «{0}»: sin conexión o el servidor no responde.</value></data>
   <data name="StatusMapSaveSettingsFailed" xml:space="preserve"><value>No se pudo guardar la configuración.</value></data>
-  <data name="NoDocumentsHint" xml:space="preserve"><value>No hay documentos abiertos. Use Archivo › Abrir GPX... o Abrir WPT...</value></data>
+  <data name="NoDocumentsHint" xml:space="preserve"><value>No hay documentos abiertos. Use Archivo › Nuevo GPX, Abrir GPX... o Abrir WPT...</value></data>
+  <data name="NewDocumentTitle" xml:space="preserve"><value>Sin título {0}.gpx</value></data>
+  <data name="NewTrackName" xml:space="preserve"><value>Track 1</value></data>
+  <data name="StatusNewDocument" xml:space="preserve"><value>Nuevo documento «{0}». Ctrl+clic en el mapa para añadir puntos al track seleccionado.</value></data>
+  <data name="StatusPointAdded" xml:space="preserve"><value>Punto añadido. Ctrl+clic para añadir el siguiente.</value></data>
   <data name="FormatGpx" xml:space="preserve"><value>GPX {0}</value></data>
   <data name="FormatWptOzi" xml:space="preserve"><value>WPT (OziExplorer)</value></data>
   <data name="FormatWptCompeGps" xml:space="preserve"><value>WPT (CompeGPS / TwoNav)</value></data>
@@ -133,4 +138,16 @@
   <data name="ConfirmOverwrite" xml:space="preserve"><value>El archivo «{0}» ya existe.&#10;&#10;¿Desea reemplazarlo?</value></data>
   <data name="ErrorSaveAccessDenied" xml:space="preserve"><value>No hay permiso para escribir el archivo «{0}». El archivo original no se ha modificado.</value></data>
   <data name="ErrorSaveVerification" xml:space="preserve"><value>El archivo generado para «{0}» no superó la verificación y no se ha guardado. El archivo original no se ha modificado.</value></data>
+  <data name="ProfileWindowTitle" xml:space="preserve"><value>Perfil de elevación — {0} ({1})</value></data>
+  <data name="ProfileAxisDistance" xml:space="preserve"><value>Distancia (km)</value></data>
+  <data name="ProfileAxisElevation" xml:space="preserve"><value>Elevación (m)</value></data>
+  <data name="ProfileSummary" xml:space="preserve"><value>Distancia: {0} km · Elevación mínima: {1} m · máxima: {2} m</value></data>
+  <data name="ProfileSummaryNoElevation" xml:space="preserve"><value>Distancia: {0} km</value></data>
+  <data name="ProfileMissing" xml:space="preserve"><value>⚠ {0} de {1} puntos no tienen elevación; la curva se interrumpe en ellos.</value></data>
+  <data name="ProfileNoElevation" xml:space="preserve"><value>Este track o ruta no tiene elevaciones.</value></data>
+  <data name="ProfileNoPoints" xml:space="preserve"><value>No hay puntos.</value></data>
+  <data name="ProfileIncludeGaps" xml:space="preserve"><value>Contar la distancia entre segmentos</value></data>
+  <data name="ProfileHover" xml:space="preserve"><value>km {0} · {1} · punto {2}</value></data>
+  <data name="ProfileElevationMissingValue" xml:space="preserve"><value>sin elevación</value></data>
+  <data name="ProfileHint" xml:space="preserve"><value>Mueva el puntero sobre el perfil para ver el punto en el mapa; clic para seleccionarlo. Flechas ← → : punto anterior / siguiente.</value></data>
 </root>

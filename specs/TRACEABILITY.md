@@ -102,3 +102,28 @@ responsable: guardar y reabrir sus propios GPX y WPT.
 | SAVE-01 | ✅ | `FileDocumentStore.SaveAsync`, `TrailFileWriter` | `Store_saves_in_the_same_format_and_the_file_reopens_identically` (GPX, Ozi, CompeGPS) |
 | SAVE-02 | ✅ | `MainViewModel.SaveActiveAsAsync`, diálogo con `OverwritePrompt` | `Save_as_forces_the_extension…`, `Save_as_asks_before_overwriting…` |
 | SAVE-03 | ✅ | `Gpx/SafeFileWriter`, `TrailFileWriter.Verify` | `Writing_creates_or_replaces…`, `A_failed_replace_keeps_the_original_intact…`, `Verification_rejects_output…`, `Save_failures_keep_the_document_modified…` |
+
+## Incremento 5 — Perfil de elevación (2026-10-25)
+
+241 pruebas en total (223 al cerrar el incremento 4), todas en verde. El gráfico se comprobó renderizándolo fuera
+de pantalla (`RenderTargetBitmap`) con un track sintético con hueco de elevaciones y dos segmentos.
+Pendiente de comprobación manual por el responsable: la ventana con sus tracks y la sincronización con el mapa.
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| PROF-01 | ✅ 🖐 | `Views/ProfileWindow`, `Charting/ProfileChart` (dibujo WPF propio), `ProfileViewModel` | `Profile_window_is_titled_with_the_track…`, `Axis_*`, `Profile_of_100000_points_builds_quickly` |
+| PROF-02 | ✅ | `Domain/Profiles/ElevationProfile` (Karney, horizontal; hueco entre segmentos opcional) | `Distance_is_cumulative_geodesic_and_horizontal` (ACC-PROF-01), `The_gap_between_segments_is_not_counted_unless_asked` |
+| PROF-03 | ✅ | `ElevationProfile.ElevationRuns`, aviso en la ventana | `Missing_elevations_are_counted_and_split_the_curve`, `A_track_without_elevations_has_no_curve`, `Edits_update_the_profile…` |
+| PROF-04 | ✅ (🖐 pendiente) | `ProfileViewModel.Hover/SelectAt/Step`, `MapController.ShowHover` | `Hovering_the_profile_reports_the_point_and_clicking_selects_it`, `Selecting_a_point_in_the_list_or_map_moves_the_profile_cursor` (ACC-PROF-02), `Arrow_keys_step_through_the_points` |
+| PROF-05 | ✅ | `ElevationProfile.Nearest` (búsqueda binaria, primer duplicado) | `Empty_single_and_duplicated_points_do_not_fail` |
+| APP-06 | ✅ | Botón y menú «Perfil» habilitados con un track o ruta seleccionado | `Profile_button_is_enabled_only_for_tracks_and_routes` |
+| EDIT-07 | ✅ (perfil) | El perfil se recalcula tras cada edición y se cierra si se elimina el track | `Edits_update_the_profile_and_deleting_the_track_closes_it` |
+
+## Petición fuera de incremento — Archivo › Nuevo GPX (2026-10-25)
+
+Petición del responsable: crear un GPX a mano. 256 pruebas en total (15 nuevas), todas en verde.
+Pendiente de comprobación manual: ACC-APP-05 (Ctrl+clic en el mapa real).
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| APP-08 | ✅ 🖐 | `TrailDocument.CreateNew/IsNew`, `PointEditing.CreateAddition`, `AddItemCommand`, `MainViewModel.NewGpx/AddPointAt`, guardado de documentos nuevos en `MainViewModel.SaveActiveAsync`, Ctrl+clic en `MainWindow.OnMapTapped` | `NewDocumentTests` (10), `PointAdditionTests` (5) |

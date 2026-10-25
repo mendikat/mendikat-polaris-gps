@@ -55,11 +55,14 @@ public static class TrailLayerFactory
     }
 
     /// <summary>Highlight of selected points (LAY-02/LAY-03), drawn above everything else.</summary>
-    public static IEnumerable<IFeature> SelectionFeatures(IEnumerable<GeoPosition> positions) =>
+    public static IEnumerable<IFeature> SelectionFeatures(IEnumerable<GeoPosition> positions) => Markers(positions, MapStyles.SelectedPoint);
+
+    /// <summary>Markers with the given style at the given positions (selection, profile hover…).</summary>
+    public static IEnumerable<IFeature> Markers(IEnumerable<GeoPosition> positions, IStyle style) =>
         positions.Select(p =>
         {
             var feature = new PointFeature(WebMercator.ToWorld(p));
-            feature.Styles.Add(MapStyles.SelectedPoint);
+            feature.Styles.Add(style);
             return (IFeature)feature;
         });
 
