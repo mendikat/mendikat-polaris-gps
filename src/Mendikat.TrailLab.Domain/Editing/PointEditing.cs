@@ -30,6 +30,7 @@ public static class PointEditing
         var point = new TrailPoint(Geodesy.Midpoint(a.Position, b.Position))
         {
             Elevation = a.Elevation is { } ea && b.Elevation is { } eb ? (ea + eb) / 2 : null,
+            ElevationSource = a.Elevation is not null && b.Elevation is not null ? ElevationSource.Interpolated : ElevationSource.Original,
             Time = a.Time is { } ta && b.Time is { } tb ? ta + (tb - ta) / 2 : null,
             IsAdded = true,
         };

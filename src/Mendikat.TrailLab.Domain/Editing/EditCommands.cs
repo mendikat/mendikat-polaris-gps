@@ -99,17 +99,30 @@ public sealed class EditPointCommand : IEditCommand
     private readonly TrailPoint _point;
     private readonly PointValues _before;
     private readonly PointValues _after;
+    private readonly ElevationSource _sourceBefore;
 
     public EditPointCommand(TrailPoint point, PointValues after)
     {
         _point = point;
         _before = PointValues.From(point);
         _after = after;
+        _sourceBefore = point.ElevationSource;
     }
 
-    public void Do() => _after.ApplyTo(_point);
+    public void Do()
+    {
+        _after.ApplyTo(_point);
+        if (_after.Elevation != _before.Elevation)
+        {
+            _point.ElevationSource = ElevationSource.Edited;
+        }
+    }
 
-    public void Undo() => _before.ApplyTo(_point);
+    public void Undo()
+    {
+        _before.ApplyTo(_point);
+        _point.ElevationSource = _sourceBefore;
+    }
 }
 
 /// <summary>Sets the time of many points at once (TIME-*); undo restores each previous time, including "no time".</summary>

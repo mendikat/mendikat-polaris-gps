@@ -25,7 +25,8 @@ public sealed class ProfileChart : FrameworkElement
 
     private const double LeftMargin = 56;
     private const double RightMargin = 16;
-    private const double TopMargin = 12;
+    // Room above the plot for the elevation axis title, so it never touches the top tick label.
+    private const double TopMargin = 30;
     private const double BottomMargin = 40;
 
     private static readonly CultureInfo Spanish = CultureInfo.GetCultureInfo("es-ES");
@@ -193,7 +194,7 @@ public sealed class ProfileChart : FrameworkElement
 
         dc.DrawRectangle(null, AxisPen, plot);
         DrawText(dc, Strings.ProfileAxisDistance, new Point(plot.Left + plot.Width / 2, plot.Bottom + 20), 11, Brushes.Black, HorizontalAlignment.Center);
-        DrawText(dc, Strings.ProfileAxisElevation, new Point(4, plot.Top - 12 < 0 ? 0 : plot.Top - 12), 11, Brushes.Black, HorizontalAlignment.Left);
+        DrawText(dc, Strings.ProfileAxisElevation, new Point(4, 2), 11, Brushes.Black, HorizontalAlignment.Left);
     }
 
     private void DrawText(DrawingContext dc, string text, Point anchor, double size, Brush brush, HorizontalAlignment alignment)

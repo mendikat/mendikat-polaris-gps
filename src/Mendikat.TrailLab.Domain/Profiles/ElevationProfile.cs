@@ -32,7 +32,18 @@ public sealed class ElevationProfile
         MissingElevations = samples.Count - elevations.Count;
         MinElevation = elevations.Count > 0 ? elevations.Min() : null;
         MaxElevation = elevations.Count > 0 ? elevations.Max() : null;
+        (Ascent, Descent) = ProfileStatistics.ElevationGain(samples);
+        Times = ProfileStatistics.Times(samples);
     }
+
+    /// <summary>Total ascent in meters (PROF-06), filtered with <see cref="ProfileStatistics.ElevationHysteresis"/>; 0 without elevations.</summary>
+    public double Ascent { get; }
+
+    /// <summary>Total descent in meters, positive (PROF-06).</summary>
+    public double Descent { get; }
+
+    /// <summary>Total, moving and stopped time (PROF-07), or null if fewer than two points have a time.</summary>
+    public ProfileTimes? Times { get; }
 
     public IReadOnlyList<ProfileSample> Samples { get; }
 

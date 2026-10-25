@@ -102,6 +102,8 @@ Convenciones:
 | PROF-03 | 1 | 5 | Elevaciones ausentes producen huecos en la curva y un aviso «N puntos sin elevación». | Track sin elevaciones → mensaje y gráfico vacío sin error. |
 | PROF-04 | 1 | 5 | Mover el puntero sobre el perfil resalta el punto en el mapa; hacer clic lo selecciona en la lista. Seleccionar en mapa/lista mueve el cursor del perfil. | ACC-PROF-02. |
 | PROF-05 | 1 | 5 | Tracks con 0, 1 o puntos duplicados no generan errores. | Pruebas unitarias de casos degenerados. |
+| PROF-06 | 1 | 5 | El perfil muestra el desnivel positivo y negativo acumulados, con un filtro de histéresis de 5 m para no sumar el ruido del GPS (ADR-0008); los segmentos se miden por separado y las elevaciones ausentes se omiten. | Subida de 100 m con ruido de ±2 m → +100 m; oscilaciones de 3 m → 0 m. |
+| PROF-07 | 1 | 5 | El perfil muestra el tiempo total, en movimiento y detenido. Un tramo entre puntos consecutivos de un segmento cuenta como detenido si la velocidad horizontal es menor de 1 km/h; la pausa entre segmentos también. Sin horas: «los puntos no tienen hora». | Parada de 10 min en el mismo punto → 10 min detenido; pausa de 30 min entre segmentos → 30 min detenido. |
 
 ## DEM — Ajuste de altitud
 
@@ -110,7 +112,7 @@ Convenciones:
 | DEM-01 | 1 | 7 | Servicio de elevación `IElevationSource` independiente de UI y de GPX. Fuente(s) según D4/ADR-0007. | Pruebas con doble de la fuente. |
 | DEM-02 | 1 | 7 | Vista previa: nº de puntos que cambiarán, nº sin dato DEM, diferencia mín/máx/media. | — |
 | DEM-03 | 1 | 7 | Aplicar requiere confirmación; se puede cancelar durante la descarga; la operación se puede deshacer. | Cancelar no modifica el documento. |
-| DEM-04 | 1 | 7 | Puntos sin dato DEM conservan su elevación original. | — |
+| DEM-04 | 2 | 7 | Puntos sin dato DEM conservan su elevación original. Con el MDT del IGN, «sin dato» incluye las celdas a 0,000 (mar y fuera de España: el servicio no tiene valor NODATA) y la zona fuera de cobertura. | Un punto en el mar o en Francia no cambia; nunca pasa a 0 m. |
 | DEM-05 | 1 | 7 | Sin corrección geoidal implícita; el datum vertical de la fuente se muestra en la vista previa. | Texto del datum visible. |
 | DEM-06 | 1 | 7 | Los puntos ajustados se marcan en memoria con el origen de su elevación (original / DEM / editada manualmente) mientras dure la sesión. | El panel de detalle muestra el origen. |
 

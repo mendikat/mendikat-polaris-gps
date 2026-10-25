@@ -1,0 +1,86 @@
+using System.Runtime.ExceptionServices;
+using System.Windows;
+using Mendikat.TrailLab.App.ViewModels;
+using Mendikat.TrailLab.App.Views;
+using Mendikat.TrailLab.Domain.Documents;
+using Mendikat.TrailLab.Domain.Elevation;
+using Mendikat.TrailLab.Domain.Geo;
+using Mendikat.TrailLab.Domain.Model;
+
+namespace Mendikat.TrailLab.Tests.App;
+
+/// <summary>
+/// Builds every secondary window with its view model. XAML binding mistakes (e.g. a two-way binding to a read-only
+/// property, found in increment 7) throw while the window is created, so these tests catch them without showing anything.
+/// </summary>
+public sealed class WindowSmokeTests
+{
+    private static LayerItemViewModel TrackLayer()
+    {
+        var data = new TrailData();
+        var segment = new TrackSegment();
+        segment.Points.AddRange(Enumerable.Range(0, 5).Select(i => new TrailPoint(new GeoPosition(42 + i * 0.001, -1.6)) { Elevation = 500 + i }));
+        var track = new Track { Name = "T" };
+        track.Segments.Add(segment);
+        data.Tracks.Add(track);
+        return new DocumentViewModel(new TrailDocument(@"C:\data\t.gpx", DocumentFormat.Gpx, data)).Layers[0];
+    }
+
+    /// <summary>WPF needs a single-threaded apartment; exceptions are rethrown on the test thread.</summary>
+    private static void OnStaThread(Action action)
+    {
+        ExceptionDispatchInfo? failure = null;
+        var thread = new Thread(() =>
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                failure = ExceptionDispatchInfo.Capture(ex);
+            }
+        });
+        thread.SetApartmentState(ApartmentState.STA);
+        thread.Start();
+        thread.Join();
+        failure?.Throw();
+    }
+
+    [Fact]
+    [Trait("Req", "SIMP-04")]
+    [Trait("Req", "TIME-01")]
+    [Trait("Req", "DEM-02")]
+    [Trait("Req", "PROF-01")]
+    public void Secondary_windows_can_be_created_with_their_view_models()
+    {
+        OnStaThread(() =>
+        {
+            var layer = TrackLayer();
+            var document = new DocumentViewModel(new TrailDocument(@"C:\data\p.gpx", DocumentFormat.Gpx));
+            Window[] windows =
+            [
+                new SimplifyWindow(new SimplifyViewModel(layer)),
+                new TimesWindow(new TimesViewModel(layer)),
+                new DemWindow(new DemViewModel(layer, _ => new NoDataSource())),
+                new ProfileWindow(new ProfileViewModel(document, layer)),
+            ];
+            foreach (var window in windows)
+            {
+                window.Close();
+            }
+        });
+    }
+
+    private sealed class NoDataSource : IElevationSource
+    {
+        public string Name => "none";
+
+        public string VerticalDatum => "none";
+
+        public string Attribution => "none";
+
+        public Task<IReadOnlyList<double?>> GetElevationsAsync(IReadOnlyList<GeoPosition> positions, IProgress<double>? progress, CancellationToken cancellationToken) =>
+            Task.FromResult<IReadOnlyList<double?>>(positions.Select(_ => (double?)null).ToList());
+    }
+}

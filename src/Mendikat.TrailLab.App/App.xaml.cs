@@ -10,6 +10,7 @@ using Mendikat.TrailLab.App.Resources;
 using Mendikat.TrailLab.App.Services;
 using Mendikat.TrailLab.App.Settings;
 using Mendikat.TrailLab.App.ViewModels;
+using Mendikat.TrailLab.Mapping.Elevation;
 using Mendikat.TrailLab.Mapping.Tiles;
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +21,7 @@ public partial class App : Application
     private ILoggerFactory? _loggerFactory;
     private ILogger? _logger;
     private HttpClient? _tileHttpClient;
+    private HttpClient? _demHttpClient;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -39,9 +41,15 @@ public partial class App : Application
 
         var version = typeof(App).Assembly.GetName().Version?.ToString(3) ?? "0";
         _tileHttpClient = TileHttpClientFactory.Create(version);
+        // DEM tiles are larger and slower than map tiles: longer timeout (DEM-01).
+        _demHttpClient = TileHttpClientFactory.Create(version, timeout: TimeSpan.FromSeconds(30));
+        var demHttp = _demHttpClient;
         var settings = new JsonSettingsStore(JsonSettingsStore.DefaultPath, _loggerFactory.CreateLogger<JsonSettingsStore>());
         var viewModel = new MainViewModel(
-            new WpfDialogService(), new FileDocumentStore(), settings, _loggerFactory.CreateLogger<MainViewModel>());
+            new WpfDialogService(), new FileDocumentStore(), settings, _loggerFactory.CreateLogger<MainViewModel>())
+        {
+            ElevationSources = resolution => new IgnWcsElevationSource(demHttp, resolution),
+        };
         var window = new MainWindow(
             viewModel, map => new MapController(map, _tileHttpClient, _loggerFactory.CreateLogger<MapController>()));
         MainWindow = window;
@@ -71,6 +79,7 @@ public partial class App : Application
     {
         _logger?.LogInformation("Mendikat TrailLab exiting");
         _tileHttpClient?.Dispose();
+        _demHttpClient?.Dispose();
         _loggerFactory?.Dispose();
         base.OnExit(e);
     }

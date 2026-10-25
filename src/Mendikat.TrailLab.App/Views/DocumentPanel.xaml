@@ -162,8 +162,13 @@
                                          AutomationProperties.Name="{x:Static res:Strings.FieldLongitude}" />
 
                                 <TextBlock Grid.Row="5" Text="{x:Static res:Strings.FieldElevation}" Style="{StaticResource FieldLabel}" />
-                                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Elevation, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource FieldBox}"
-                                         AutomationProperties.Name="{x:Static res:Strings.FieldElevation}" />
+                                <!-- Elevation with its origin in this session: file, interpolated, DEM or typed (DEM-06) -->
+                                <DockPanel Grid.Row="5" Grid.Column="1">
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding ElevationOrigin}" Foreground="Gray" VerticalAlignment="Center" Margin="8,0,0,0"
+                                               ToolTip="{x:Static res:Strings.FieldElevationSource}" AutomationProperties.Name="{x:Static res:Strings.FieldElevationSource}" />
+                                    <TextBox Text="{Binding Elevation, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource FieldBox}"
+                                             AutomationProperties.Name="{x:Static res:Strings.FieldElevation}" />
+                                </DockPanel>
 
                                 <TextBlock Grid.Row="6" Text="{x:Static res:Strings.FieldTimeUtc}" Style="{StaticResource FieldLabel}" />
                                 <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding TimeUtc, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource FieldBox}"

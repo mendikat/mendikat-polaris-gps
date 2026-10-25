@@ -48,6 +48,7 @@ public sealed class ProfileViewModel : ObservableObject
             if (SetProperty(ref _profile, value))
             {
                 OnPropertyChanged(nameof(Summary));
+                OnPropertyChanged(nameof(TimeSummary));
                 OnPropertyChanged(nameof(MissingWarning));
                 OnPropertyChanged(nameof(HasMissingWarning));
             }
@@ -95,10 +96,23 @@ public sealed class ProfileViewModel : ObservableObject
         {
             var km = (Profile.TotalDistance / 1000).ToString("N2", Spanish);
             return Profile.HasElevation
-                ? string.Format(Spanish, Strings.ProfileSummary, km, Profile.MinElevation!.Value.ToString("N0", Spanish), Profile.MaxElevation!.Value.ToString("N0", Spanish))
+                ? string.Format(Spanish, Strings.ProfileSummary, km,
+                    Profile.Ascent.ToString("N0", Spanish), Profile.Descent.ToString("N0", Spanish),
+                    Profile.MinElevation!.Value.ToString("N0", Spanish), Profile.MaxElevation!.Value.ToString("N0", Spanish))
                 : string.Format(Spanish, Strings.ProfileSummaryNoElevation, km);
         }
     }
+
+    /// <summary>Total, moving and stopped time (PROF-07), or a note when the points have no times.</summary>
+    public string TimeSummary => Profile.Times is { } times
+        ? string.Format(Spanish, Strings.ProfileTimes, Duration(times.Total), Duration(times.Moving), Duration(times.Stopped))
+        : Strings.ProfileNoTimes;
+
+    /// <summary>"2 h 05 min", "12 min 30 s".</summary>
+    public static string Duration(TimeSpan duration) =>
+        duration.TotalHours >= 1
+            ? $"{(int)duration.TotalHours} h {duration.Minutes:00} min"
+            : $"{duration.Minutes} min {duration.Seconds:00} s";
 
     /// <summary>"N de M puntos no tienen elevación" when some (not all) are missing (PROF-03).</summary>
     public string? MissingWarning =>

@@ -42,6 +42,13 @@ public sealed class PointDetailViewModel : ObservableObject
         _elevation = _originalElevation = PointInput.FormatElevation(point.Elevation);
         _timeUtc = _originalTime = PointInput.FormatUtc(point.Time);
         LocalTime = point.Time is null ? "—" : PointInput.FormatLocal(point.Time);
+        ElevationOrigin = point.Elevation is null ? "—" : point.ElevationSource switch
+        {
+            ElevationSource.Interpolated => Strings.ElevationSourceInterpolated,
+            ElevationSource.Dem => Strings.ElevationSourceDem,
+            ElevationSource.Edited => Strings.ElevationSourceEdited,
+            _ => Strings.ElevationSourceOriginal,
+        };
         OtherFields = DescribeOtherFields(point.OtherElements);
     }
 
@@ -54,6 +61,9 @@ public sealed class PointDetailViewModel : ObservableObject
     public bool IsAdded => Point.IsAdded;
 
     public string LocalTime { get; }
+
+    /// <summary>Where the elevation comes from in this session: file, interpolated, DEM or typed (DEM-06).</summary>
+    public string ElevationOrigin { get; }
 
     /// <summary>Format fields without a typed property (sat, hdop, extensions…), read-only; "—" if none.</summary>
     public string OtherFields { get; }

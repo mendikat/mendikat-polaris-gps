@@ -55,6 +55,8 @@
             <MenuItem Header="{x:Static res:Strings.MenuTools}">
                 <MenuItem Header="{x:Static res:Strings.MenuSimplify}" Command="{Binding SimplifyCommand}" />
                 <MenuItem Header="{x:Static res:Strings.MenuRegenerateTimes}" Command="{Binding RegenerateTimesCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuAdjustElevations}" Command="{Binding AdjustElevationsCommand}" />
             </MenuItem>
             <MenuItem Header="{x:Static res:Strings.MenuView}">
                 <MenuItem Header="{x:Static res:Strings.MenuZoomIn}" Command="{Binding ZoomInCommand}" InputGestureText="Ctrl++" />

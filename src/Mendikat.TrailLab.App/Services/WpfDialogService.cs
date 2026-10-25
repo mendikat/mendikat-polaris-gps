@@ -60,6 +60,7 @@ public sealed class WpfDialogService : IDialogService
         {
             SimplifyViewModel simplify => new SimplifyWindow(simplify),
             TimesViewModel times => new TimesWindow(times),
+            DemViewModel dem => new DemWindow(dem),
             _ => throw new ArgumentException($"No dialog for {viewModel.GetType().Name}.", nameof(viewModel)),
         };
         dialog.Owner = Owner;

@@ -48,3 +48,13 @@
   en la vista previa. Tiempos redondeados al milisegundo. `SetTimesCommand` guarda las horas previas (incluida «sin hora»).
 - Herramientas aplicables a tracks y rutas (no a waypoints), desde el menú «Herramientas», con diálogo modal de vista
   previa; nada cambia hasta pulsar «Aplicar» y el resultado es un único paso de deshacer.
+
+## Estadísticas del perfil (2026-10-25, a petición del responsable)
+
+- **Desnivel positivo/negativo** (PROF-06): histéresis de 5 m (`ProfileStatistics.ElevationHysteresis`). Sólo se
+  suma un cambio cuando la elevación se ha alejado al menos 5 m del último nivel contado. Sin filtro, el ruido del GPS
+  infla mucho el desnivel (oscilaciones de ±3 m sumarían 6 m por oscilación). Por segmento; elevaciones ausentes omitidas.
+- **Tiempo** (PROF-07): total = último − primer punto con hora. En movimiento = suma de intervalos dentro de un segmento
+  con velocidad horizontal ≥ 1 km/h (`ProfileStatistics.StoppedSpeed`). Detenido = total − en movimiento (incluye
+  tramos lentos, pausas entre segmentos e intervalos con horas desordenadas).
+- Ambos umbrales son constantes documentadas; si hiciera falta, pueden pasar a ser opciones del usuario.

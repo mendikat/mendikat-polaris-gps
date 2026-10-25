@@ -146,3 +146,30 @@ fuera de pantalla. Pendiente de comprobación manual por el responsable: usar am
 | TIME-04 | ✅ | Hueco entre segmentos recorrido por defecto (opción) | `Segment_gaps_are_travelled_by_default_and_can_be_skipped` |
 | TIME-05 | ✅ | Conversión local→UTC única; horas inexistentes/ambiguas | `Nonexistent_and_ambiguous_local_start_times_are_detected`, `A_start_time_that_does_not_exist_is_rejected` |
 | TIME-06 | ✅ | `SetTimesCommand` sólo sobre el track/ruta elegido | `Regenerate_times_previews_and_changes_only_the_selected_track`, `Invalid_speed_gives_no_plan_and_undo_restores…`, `Tools_are_only_available_for_tracks_and_routes` |
+
+## Incremento 7 — Ajuste de altitudes con el MDT del IGN (2026-10-25)
+
+297 pruebas en total (276 al cerrar el incremento 6), todas en verde. Comprobaciones con el servicio real (fuera de
+las pruebas automáticas): puntos de prueba, mar, Francia y fuera de cobertura; cimas del Aneto y el Mulhacén; y el
+diálogo completo renderizado fuera de pantalla contra el servicio real. Esa comprobación encontró un fallo (enlace
+bidireccional de la barra de progreso a una propiedad de sólo lectura que impedía abrir el diálogo), corregido y
+cubierto por `WindowSmokeTests`. Pendiente de comprobación manual por el responsable: usar la herramienta con sus tracks.
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| DEM-01 | ✅ | `Domain/Elevation/IElevationSource`, `Mapping/Elevation/IgnWcsElevationSource`, `ArcGrid` | `IgnElevationTests` (multipart, NODATA, bilineal, URL, cuadrículas, errores), `Without_an_elevation_source…disabled` |
+| DEM-02 | ✅ 🖐 | `ElevationAdjustment.Plan`, `DemViewModel.Preview`, `Views/DemWindow` | `Plan_counts_changes_equal_values_and_points_without_data`, `Preview_shows_counts…` (ACC-DEM-01) |
+| DEM-03 | ✅ | Aplicar explícito, cancelación de la descarga, `SetElevationsCommand` deshacible | `Without_applying_nothing_changes`, `Cancelling_the_download_changes_nothing`, `Network_failures_and_cancellation_are_reported` |
+| DEM-04 | ✅ | Ceros y `ExtentError` = sin dato; esos puntos no cambian | `Exact_zeros_mean_no_data…`, `Sea_and_outside_the_coverage_give_no_data`, `Applying_marks_dem_points_keeps_points_without_data…` |
+| DEM-05 | ✅ | `IElevationSource.VerticalDatum` mostrado en el diálogo; sin corrección geoidal | `The_dialog_shows_the_vertical_datum…` |
+| DEM-06 | ✅ | `TrailPoint.ElevationSource`, `PointDetailViewModel.ElevationOrigin` | `Editing_or_inserting_records_the_elevation_origin`, `Applying_marks_dem_points…` |
+
+## Mejora del perfil (2026-10-25, a petición del responsable)
+
+306 pruebas en total, todas en verde. Ventana del perfil comprobada renderizándola fuera de pantalla.
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| PROF-06 | ✅ | `Domain/Profiles/ProfileStatistics.ElevationGain`, `ProfileViewModel.Summary` | `Ascent_and_descent_add_real_climbs_and_ignore_small_noise`, `Without_a_filter_noise_would_inflate_the_gain`, `Segments_are_measured_separately…` |
+| PROF-07 | ✅ | `ProfileStatistics.Times`, `ProfileViewModel.TimeSummary` | `Slow_intervals_count_as_stopped_time`, `The_pause_between_segments_is_stopped_time`, `Missing_or_single_times…`, `Durations_are_shown…` |
+| PROF-01 | ✅ | Título del eje de elevación por encima del gráfico (margen superior 30 px) | Comprobación visual |

@@ -38,4 +38,23 @@ public sealed class TrailPoint
 
     /// <summary>True for points inserted by the user during this session (drawn with a distinct symbol).</summary>
     public bool IsAdded { get; set; }
+
+    /// <summary>Where the current elevation comes from, for this session only (DEM-06). Not written to files.</summary>
+    public ElevationSource ElevationSource { get; set; }
+}
+
+/// <summary>Origin of a point's elevation during the session (DEM-06).</summary>
+public enum ElevationSource
+{
+    /// <summary>As read from the file (or none).</summary>
+    Original,
+
+    /// <summary>Interpolated from its neighbours when the point was inserted.</summary>
+    Interpolated,
+
+    /// <summary>Taken from a digital elevation model.</summary>
+    Dem,
+
+    /// <summary>Typed by the user.</summary>
+    Edited,
 }

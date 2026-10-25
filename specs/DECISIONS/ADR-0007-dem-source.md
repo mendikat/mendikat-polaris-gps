@@ -24,3 +24,31 @@
 
 1. ¿Aceptar IGN WCS (A) como fuente única inicial (sólo España)?
 2. ¿Se necesita cobertura fuera de España en v1? Si es así, ¿B (online, límites estrictos) o C (archivos locales)?
+
+## Implementación (incremento 7, 2026-10-25)
+
+Comportamiento del servicio verificado el 2026-10-25 (`DescribeCoverage` y `GetCoverage` reales):
+
+- `GetCoverage` con `FORMAT=application/asc` devuelve una respuesta `multipart/related` (frontera `wcs`) que contiene
+  un ArcGrid en grados, remuestreado al recuadro pedido. Coberturas `Elevacion4258_5` (5 m) y `Elevacion4258_25` (25 m).
+- **No hay valor NODATA**: el mar y las zonas fuera de España devuelven exactamente `0.000`. Decisión: los ceros
+  exactos se tratan como «sin dato» y esos puntos conservan su elevación (un punto real a 0,000 m tampoco cambia,
+  que es el resultado seguro).
+- Fuera de la envolvente de la cobertura el servicio devuelve un `ows:ExceptionReport` con `ExtentError`: sin dato.
+- Comprobación independiente de ejes y datum: máximo del MDT 5 m en el Aneto 3402,0 m (oficial 3404) y en el
+  Mulhacén 3476,7 m (oficial 3479).
+- Datum vertical, según los metadatos INSPIRE del servicio y del MDS05: altitudes ortométricas (PNOA-LiDAR) sobre el
+  nivel medio del mar en Alicante (Península) y nivel medio local (Baleares, Canarias), red REDNAP. El sistema
+  horizontal es ETRS89; la diferencia con WGS84 (< 1 m en 2026) es despreciable frente a la celda de 5 m.
+
+Diseño:
+
+- `Domain/Elevation/IElevationSource` (interfaz) y `ElevationAdjustment` (plan, recuentos, diferencias y
+  `SetElevationsCommand` deshacible). `TrailPoint.ElevationSource` registra en la sesión el origen de cada elevación
+  (archivo, interpolada, MDT, editada) y el panel de detalle lo muestra (DEM-06).
+- `Mapping/Elevation/IgnWcsElevationSource`: puntos agrupados en cuadrículas de 0,005° (≈ 0,5 km) con un margen de
+  una celda; una petición por cuadrícula, 4 en paralelo, `HttpClient` con 30 s de tiempo de espera, progreso y
+  cancelación. Interpolación bilineal entre centros de celda; si alguna celda con peso distinto de cero no tiene dato,
+  el punto queda sin dato. No se creó un proyecto aparte: la fuente usa la misma infraestructura HTTP que la cartografía.
+- Las pruebas usan un servidor simulado que reproduce las respuestas reales (multipart, ceros, `ExtentError`);
+  nunca acceden a la red.

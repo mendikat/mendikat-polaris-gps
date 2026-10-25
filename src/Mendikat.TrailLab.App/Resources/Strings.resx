@@ -141,7 +141,7 @@
   <data name="ProfileWindowTitle" xml:space="preserve"><value>Perfil de elevación — {0} ({1})</value></data>
   <data name="ProfileAxisDistance" xml:space="preserve"><value>Distancia (km)</value></data>
   <data name="ProfileAxisElevation" xml:space="preserve"><value>Elevación (m)</value></data>
-  <data name="ProfileSummary" xml:space="preserve"><value>Distancia: {0} km · Elevación mínima: {1} m · máxima: {2} m</value></data>
+  <data name="ProfileSummary" xml:space="preserve"><value>Distancia: {0} km · Desnivel positivo: +{1} m · Desnivel negativo: −{2} m · Elevación mínima: {3} m · máxima: {4} m</value></data>
   <data name="ProfileSummaryNoElevation" xml:space="preserve"><value>Distancia: {0} km</value></data>
   <data name="ProfileMissing" xml:space="preserve"><value>⚠ {0} de {1} puntos no tienen elevación; la curva se interrumpe en ellos.</value></data>
   <data name="ProfileNoElevation" xml:space="preserve"><value>Este track o ruta no tiene elevaciones.</value></data>
@@ -184,4 +184,28 @@
   <data name="UnitKmh" xml:space="preserve"><value>km/h</value></data>
   <data name="UnitMs" xml:space="preserve"><value>m/s</value></data>
   <data name="UnitMinKm" xml:space="preserve"><value>min/km (ritmo)</value></data>
+  <data name="MenuAdjustElevations" xml:space="preserve"><value>_Ajustar altitudes con el MDT del IGN...</value></data>
+  <data name="DemTitle" xml:space="preserve"><value>Ajustar altitudes de «{0}» con el MDT</value></data>
+  <data name="DemResolution" xml:space="preserve"><value>Modelo:</value></data>
+  <data name="DemResolution5" xml:space="preserve"><value>MDT IGN 5 m (más detalle)</value></data>
+  <data name="DemResolution25" xml:space="preserve"><value>MDT IGN 25 m (más rápido)</value></data>
+  <data name="DemQuery" xml:space="preserve"><value>Consultar</value></data>
+  <data name="DemStop" xml:space="preserve"><value>Detener</value></data>
+  <data name="DemDatum" xml:space="preserve"><value>Referencia vertical:</value></data>
+  <data name="DemPreviewCounts" xml:space="preserve"><value>{0} puntos: cambiarán {1} · iguales {2} · sin dato del MDT {3} (conservan su elevación).</value></data>
+  <data name="DemPreviewMissing" xml:space="preserve"><value>De los que cambian, {0} no tenían elevación.</value></data>
+  <data name="DemPreviewDifferences" xml:space="preserve"><value>Diferencia MDT − original: mínima {0} m · máxima {1} m · media {2} m.</value></data>
+  <data name="DemPreviewNothing" xml:space="preserve"><value>No hay nada que cambiar.</value></data>
+  <data name="DemCancelled" xml:space="preserve"><value>Consulta detenida. No se ha cambiado nada.</value></data>
+  <data name="DemServiceError" xml:space="preserve"><value>No se pudo consultar el servicio de elevaciones del IGN (sin conexión o el servicio no responde). No se ha cambiado nada.</value></data>
+  <data name="DemNote" xml:space="preserve"><value>Sólo hay datos para España; en el mar y fuera de España los puntos conservan su elevación. La elevación original del GPS puede estar referida a otra superficie (el elipsoide o EGM96); no se aplica ninguna corrección. Nada cambia hasta pulsar «Aplicar», que se puede deshacer con Ctrl+Z; el archivo original no se modifica hasta guardar.</value></data>
+  <data name="StatusElevationsAdjusted" xml:space="preserve"><value>Altitudes ajustadas con el MDT en «{0}»: {1} puntos.</value></data>
+  <data name="FieldElevationSource" xml:space="preserve"><value>Origen elevación</value></data>
+  <data name="ElevationSourceOriginal" xml:space="preserve"><value>del archivo</value></data>
+  <data name="ElevationSourceInterpolated" xml:space="preserve"><value>interpolada al insertar</value></data>
+  <data name="ElevationSourceDem" xml:space="preserve"><value>MDT del IGN</value></data>
+  <data name="ElevationSourceEdited" xml:space="preserve"><value>editada a mano</value></data>
+  <data name="ProfileTimes" xml:space="preserve"><value>Tiempo total: {0} · en movimiento: {1} · detenido: {2}</value></data>
+  <data name="ProfileNoTimes" xml:space="preserve"><value>Tiempo: los puntos no tienen hora.</value></data>
+  <data name="ProfileStatsHint" xml:space="preserve"><value>Desnivel con filtro de 5 m para no sumar el ruido del GPS. Detenido: tramos a menos de 1 km/h y pausas entre segmentos.</value></data>
 </root>
