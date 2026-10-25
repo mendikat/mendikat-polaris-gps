@@ -35,3 +35,16 @@
   guardado, de modo que deshacer hasta el estado guardado quita el indicador `*` (SAVE-04).
 - Las herramientas de los incrementos 6 y 7 podrán guardar una instantánea de los segmentos afectados (se revisará
   la memoria con tracks enormes en el incremento 8).
+
+## Implementación (incremento 6, 2026-10-25)
+
+- `Domain/Processing/TrackSimplifier`: Transverse Mercator **exacta** de GeographicLib (`k0 = 1`) centrada en la longitud
+  media del segmento (longitudes desenrolladas respecto al primer punto para segmentos que cruzan ±180°). La distancia
+  usada es **punto–segmento** (no a la recta infinita), de modo que una vuelta cerrada (inicio = fin) no se colapsa.
+  Douglas–Peucker iterativo con pila explícita (probado con 1 000 000 de puntos). El tramo «sub-meridiano» previsto para
+  segmentos muy anchos no se ha implementado: la escala de la TM exacta a 250 km del meridiano es 1,0008 (error < 0,1 %).
+- `Domain/Processing/TimeRegenerator`: la hora local se convierte a UTC una vez con `TimeZoneInfo`; una hora
+  **inexistente** (salto de horario de verano) se rechaza; una hora **ambigua** se toma como hora estándar y se avisa
+  en la vista previa. Tiempos redondeados al milisegundo. `SetTimesCommand` guarda las horas previas (incluida «sin hora»).
+- Herramientas aplicables a tracks y rutas (no a waypoints), desde el menú «Herramientas», con diálogo modal de vista
+  previa; nada cambia hasta pulsar «Aplicar» y el resultado es un único paso de deshacer.

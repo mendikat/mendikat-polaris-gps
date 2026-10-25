@@ -20,6 +20,10 @@ public interface IDialogService
 
     SaveChangesChoice AskSaveChanges(string documentName);
 
+    /// <summary>Shows the modal dialog of a tool view model (simplify, regenerate times).</summary>
+    /// <returns>True if the user accepted.</returns>
+    bool ShowToolDialog(object viewModel);
+
     /// <returns>True if the user confirms (EDIT-02).</returns>
     bool Confirm(string message);
 

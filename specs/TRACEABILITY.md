@@ -127,3 +127,22 @@ Pendiente de comprobación manual: ACC-APP-05 (Ctrl+clic en el mapa real).
 | Req | Estado | Código | Pruebas |
 |-----|--------|--------|---------|
 | APP-08 | ✅ 🖐 | `TrailDocument.CreateNew/IsNew`, `PointEditing.CreateAddition`, `AddItemCommand`, `MainViewModel.NewGpx/AddPointAt`, guardado de documentos nuevos en `MainViewModel.SaveActiveAsync`, Ctrl+clic en `MainWindow.OnMapTapped` | `NewDocumentTests` (10), `PointAdditionTests` (5) |
+
+## Incremento 6 — Simplificación y regeneración de tiempos (2026-10-25)
+
+276 pruebas en total (256 tras el incremento 5 y APP-08), todas en verde. Los diálogos se comprobaron renderizándolos
+fuera de pantalla. Pendiente de comprobación manual por el responsable: usar ambas herramientas con sus tracks.
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| SIMP-01 | ✅ | `Domain/Processing/TrackSimplifier` (TM local, tolerancia en m) | `Nearly_straight_segments_keep_only_their_ends…` (ACC-SIMP-01), `Deviations_larger_than_the_tolerance_are_kept`, `Tolerance_must_be_positive` |
+| SIMP-02 | ✅ | Por segmento, extremos siempre conservados | `Nearly_straight_segments…`, `Short_degenerate_and_duplicated_segments_are_handled` |
+| SIMP-03 | ✅ | `RemovePointsCommand` (los conservados no se tocan) | `Kept_points_are_unchanged_and_the_simplification_can_be_undone` |
+| SIMP-04 | ✅ 🖐 | `SimplifyViewModel`, `Views/SimplifyWindow`, `MainViewModel.Simplify` | `Simplify_shows_a_preview_and_applies_one_undoable_step`, `Cancelling_or_an_invalid_tolerance_changes_nothing` |
+| SIMP-05 | ✅ | Douglas–Peucker iterativo | `One_million_points_do_not_overflow_the_stack`, `Short_degenerate_and_duplicated_segments_are_handled` |
+| TIME-01 | ✅ 🖐 | `TimesViewModel`, `Views/TimesWindow`, `TimeRegenerator.ToMetersPerSecond` | `Speed_units_convert…`, `Times_dialog_starts_from_the_current_first_time_and_validates_input` |
+| TIME-02 | ✅ | `TimeRegenerator.Plan` (modo por distancia) | `Times_follow_distance_and_speed_across_a_daylight_saving_change` (ACC-TIME-01) |
+| TIME-03 | ✅ | Modo intervalo uniforme | `Uniform_mode_ignores_distance` |
+| TIME-04 | ✅ | Hueco entre segmentos recorrido por defecto (opción) | `Segment_gaps_are_travelled_by_default_and_can_be_skipped` |
+| TIME-05 | ✅ | Conversión local→UTC única; horas inexistentes/ambiguas | `Nonexistent_and_ambiguous_local_start_times_are_detected`, `A_start_time_that_does_not_exist_is_rejected` |
+| TIME-06 | ✅ | `SetTimesCommand` sólo sobre el track/ruta elegido | `Regenerate_times_previews_and_changes_only_the_selected_track`, `Invalid_speed_gives_no_plan_and_undo_restores…`, `Tools_are_only_available_for_tracks_and_routes` |

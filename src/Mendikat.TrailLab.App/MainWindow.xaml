@@ -52,6 +52,10 @@
                 <MenuItem Header="{x:Static res:Strings.MenuDelete}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />
                 <MenuItem Header="{x:Static res:Strings.MenuInsertPoint}" Command="{Binding InsertPointCommand}" InputGestureText="Insert" />
             </MenuItem>
+            <MenuItem Header="{x:Static res:Strings.MenuTools}">
+                <MenuItem Header="{x:Static res:Strings.MenuSimplify}" Command="{Binding SimplifyCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuRegenerateTimes}" Command="{Binding RegenerateTimesCommand}" />
+            </MenuItem>
             <MenuItem Header="{x:Static res:Strings.MenuView}">
                 <MenuItem Header="{x:Static res:Strings.MenuZoomIn}" Command="{Binding ZoomInCommand}" InputGestureText="Ctrl++" />
                 <MenuItem Header="{x:Static res:Strings.MenuZoomOut}" Command="{Binding ZoomOutCommand}" InputGestureText="Ctrl+-" />

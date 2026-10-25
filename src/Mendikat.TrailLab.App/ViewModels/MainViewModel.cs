@@ -54,6 +54,7 @@ public sealed partial class MainViewModel : ObservableObject
 
         ElevationProfileCommand = new RelayCommand(OpenProfile, () => ActiveDocument?.SelectedLayer?.IsSequence == true);
         InitializeEditingCommands();
+        InitializeToolCommands();
     }
 
     /// <summary>Asks the view to close the main window; the window then calls <see cref="ConfirmCloseAllAsync"/>.</summary>
@@ -485,6 +486,7 @@ public sealed partial class MainViewModel : ObservableObject
                 break;
             case nameof(DocumentViewModel.SelectedLayer):
                 ElevationProfileCommand.RaiseCanExecuteChanged();
+                RefreshToolCommands();
                 break;
         }
     }
@@ -500,5 +502,6 @@ public sealed partial class MainViewModel : ObservableObject
         ZoomToDataCommand.RaiseCanExecuteChanged();
         RefreshEditingCommands();
         ElevationProfileCommand.RaiseCanExecuteChanged();
+        RefreshToolCommands();
     }
 }

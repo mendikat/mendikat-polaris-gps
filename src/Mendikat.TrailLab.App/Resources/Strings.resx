@@ -150,4 +150,38 @@
   <data name="ProfileHover" xml:space="preserve"><value>km {0} · {1} · punto {2}</value></data>
   <data name="ProfileElevationMissingValue" xml:space="preserve"><value>sin elevación</value></data>
   <data name="ProfileHint" xml:space="preserve"><value>Mueva el puntero sobre el perfil para ver el punto en el mapa; clic para seleccionarlo. Flechas ← → : punto anterior / siguiente.</value></data>
+  <data name="MenuTools" xml:space="preserve"><value>_Herramientas</value></data>
+  <data name="MenuSimplify" xml:space="preserve"><value>_Simplificar track...</value></data>
+  <data name="MenuRegenerateTimes" xml:space="preserve"><value>_Regenerar tiempos...</value></data>
+  <data name="DialogCancel" xml:space="preserve"><value>Cancelar</value></data>
+  <data name="DialogApply" xml:space="preserve"><value>Aplicar</value></data>
+  <data name="SimplifyTitle" xml:space="preserve"><value>Simplificar «{0}»</value></data>
+  <data name="SimplifyTolerance" xml:space="preserve"><value>Tolerancia (m):</value></data>
+  <data name="SimplifyPreview" xml:space="preserve"><value>{0} → {1} puntos (se eliminan {2}) con tolerancia {3} m.</value></data>
+  <data name="SimplifyNote" xml:space="preserve"><value>Douglas–Peucker por segmento: se conservan el primer y el último punto de cada segmento y los segmentos no se unen. Los puntos conservados no cambian; los eliminados pierden sus campos y extensiones. Se puede deshacer con Ctrl+Z.</value></data>
+  <data name="SimplifyInvalidTolerance" xml:space="preserve"><value>La tolerancia debe ser un número de metros mayor que 0.</value></data>
+  <data name="StatusSimplified" xml:space="preserve"><value>«{0}» simplificado: {1} → {2} puntos.</value></data>
+  <data name="TimesTitle" xml:space="preserve"><value>Regenerar tiempos de «{0}»</value></data>
+  <data name="TimesStartDate" xml:space="preserve"><value>Fecha de inicio:</value></data>
+  <data name="TimesStartTime" xml:space="preserve"><value>Hora de inicio (HH:MM:SS):</value></data>
+  <data name="TimesTimeZone" xml:space="preserve"><value>Zona horaria:</value></data>
+  <data name="TimesModeDistance" xml:space="preserve"><value>Según la distancia recorrida y una velocidad</value></data>
+  <data name="TimesModeUniform" xml:space="preserve"><value>Intervalo fijo entre puntos (no tiene en cuenta la distancia)</value></data>
+  <data name="TimesSpeed" xml:space="preserve"><value>Velocidad:</value></data>
+  <data name="TimesInterval" xml:space="preserve"><value>Segundos entre puntos:</value></data>
+  <data name="TimesIncludeGaps" xml:space="preserve"><value>Recorrer el hueco entre segmentos a la misma velocidad</value></data>
+  <data name="TimesNote" xml:space="preserve"><value>Se sustituyen las horas de todos los puntos de este track o ruta; los waypoints y los demás documentos no cambian. Se guardan en UTC. Se puede deshacer con Ctrl+Z.</value></data>
+  <data name="TimesPreviewStart" xml:space="preserve"><value>Inicio: {0} (hora local) = {1}</value></data>
+  <data name="TimesPreviewEnd" xml:space="preserve"><value>Fin: {0} (hora local) = {1}</value></data>
+  <data name="TimesPreviewDuration" xml:space="preserve"><value>Duración: {0} · {1} puntos</value></data>
+  <data name="TimesPreviewReplaced" xml:space="preserve"><value>Se sustituirán las horas que ya tenían {0} puntos.</value></data>
+  <data name="TimesAmbiguousStart" xml:space="preserve"><value>⚠ La hora de inicio se repite por el cambio de horario; se ha tomado la hora estándar (invierno).</value></data>
+  <data name="TimesInvalidStart" xml:space="preserve"><value>Indica la fecha y la hora de inicio (HH:MM o HH:MM:SS).</value></data>
+  <data name="TimesInvalidDaylightStart" xml:space="preserve"><value>Esa hora no existe en la zona elegida por el cambio de horario de verano.</value></data>
+  <data name="TimesInvalidSpeed" xml:space="preserve"><value>La velocidad debe ser un número mayor que 0.</value></data>
+  <data name="TimesInvalidInterval" xml:space="preserve"><value>El intervalo debe ser un número de segundos mayor que 0.</value></data>
+  <data name="StatusTimesRegenerated" xml:space="preserve"><value>Tiempos regenerados en «{0}»: {1} puntos.</value></data>
+  <data name="UnitKmh" xml:space="preserve"><value>km/h</value></data>
+  <data name="UnitMs" xml:space="preserve"><value>m/s</value></data>
+  <data name="UnitMinKm" xml:space="preserve"><value>min/km (ritmo)</value></data>
 </root>

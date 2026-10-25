@@ -3,10 +3,10 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar tracks **GPX**
 y archivos de waypoints **WPT** sobre cartografía online (IGN España por defecto).
 
-> **Estado: Incremento 5 (perfil de elevación) terminado, pendiente de aprobación.**
+> **Estado: Incremento 6 (simplificación y tiempos) terminado, pendiente de aprobación.**
 > Se abren GPX y WPT, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan en el mismo formato de forma segura.
-> También muestra el perfil de elevación sincronizado con el mapa. Faltan las herramientas (simplificar, tiempos) y el ajuste DEM. Ver [specs/ROADMAP.md](specs/ROADMAP.md).
+> También muestra el perfil de elevación sincronizado con el mapa y permite simplificar tracks y regenerar sus tiempos. Falta el ajuste de altitudes con DEM. Ver [specs/ROADMAP.md](specs/ROADMAP.md).
 
 ## Uso rápido
 
@@ -20,6 +20,8 @@ y archivos de waypoints **WPT** sobre cartografía online (IGN España por defec
 | Editar nombre, descripción, elevación, hora | Panel «Punto seleccionado» › **Aplicar**; **Descartar** (Esc) deshace lo escrito |
 | Deshacer / rehacer | **Ctrl+Z** / **Ctrl+Y** (menú Edición) |
 | Perfil de elevación | Seleccionar un track o ruta en **Capas** › botón **Perfil** (o Ver › Perfil de elevación). Puntero sobre el perfil: marca el punto en el mapa; clic: lo selecciona; ← →: punto anterior / siguiente |
+| Simplificar un track o ruta | Seleccionarlo en **Capas** › *Herramientas › Simplificar track…*; tolerancia en metros con vista previa del número de puntos |
+| Regenerar tiempos | *Herramientas › Regenerar tiempos…*: fecha, hora y zona horaria de inicio, y velocidad (km/h, m/s, min/km) o intervalo fijo; vista previa en hora local y UTC |
 
 ## Documentación (Spec-Driven Development)
 

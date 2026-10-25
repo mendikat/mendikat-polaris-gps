@@ -28,6 +28,11 @@ internal sealed class FakeDialogService : IDialogService
         return SaveChangesAnswer;
     }
 
+    /// <summary>Simulates the user in a tool dialog: can change the view model and returns whether it was accepted.</summary>
+    public Func<object, bool> ToolDialog { get; set; } = _ => false;
+
+    public bool ShowToolDialog(object viewModel) => ToolDialog(viewModel);
+
     public bool ConfirmAnswer { get; set; } = true;
 
     public List<string> Confirmations { get; } = [];

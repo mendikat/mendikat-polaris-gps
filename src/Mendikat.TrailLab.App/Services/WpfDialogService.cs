@@ -1,6 +1,8 @@
 using System.IO;
 using System.Windows;
 using Mendikat.TrailLab.App.Resources;
+using Mendikat.TrailLab.App.ViewModels;
+using Mendikat.TrailLab.App.Views;
 using Mendikat.TrailLab.Domain.Documents;
 using Microsoft.Win32;
 
@@ -50,6 +52,18 @@ public sealed class WpfDialogService : IDialogService
             MessageBoxResult.No => SaveChangesChoice.Discard,
             _ => SaveChangesChoice.Cancel,
         };
+    }
+
+    public bool ShowToolDialog(object viewModel)
+    {
+        Window dialog = viewModel switch
+        {
+            SimplifyViewModel simplify => new SimplifyWindow(simplify),
+            TimesViewModel times => new TimesWindow(times),
+            _ => throw new ArgumentException($"No dialog for {viewModel.GetType().Name}.", nameof(viewModel)),
+        };
+        dialog.Owner = Owner;
+        return dialog.ShowDialog() == true;
     }
 
     public bool Confirm(string message) =>

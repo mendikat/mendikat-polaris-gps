@@ -112,6 +112,35 @@ public sealed class EditPointCommand : IEditCommand
     public void Undo() => _before.ApplyTo(_point);
 }
 
+/// <summary>Sets the time of many points at once (TIME-*); undo restores each previous time, including "no time".</summary>
+public sealed class SetTimesCommand : IEditCommand
+{
+    private readonly IReadOnlyList<(TrailPoint Point, DateTimeOffset Time)> _times;
+    private readonly DateTimeOffset?[] _previous;
+
+    public SetTimesCommand(IReadOnlyList<(TrailPoint Point, DateTimeOffset Time)> times)
+    {
+        _times = times;
+        _previous = times.Select(t => t.Point.Time).ToArray();
+    }
+
+    public void Do()
+    {
+        foreach (var (point, time) in _times)
+        {
+            point.Time = time;
+        }
+    }
+
+    public void Undo()
+    {
+        for (var i = 0; i < _times.Count; i++)
+        {
+            _times[i].Point.Time = _previous[i];
+        }
+    }
+}
+
 /// <summary>Several commands applied as one undo step.</summary>
 public sealed class CompositeCommand(IReadOnlyList<IEditCommand> commands) : IEditCommand
 {
