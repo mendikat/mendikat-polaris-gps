@@ -72,6 +72,25 @@ public sealed class WindowSmokeTests
         });
     }
 
+    [Fact]
+    [Trait("Req", "APP-01")]
+    public void Window_icon_is_an_embedded_resource_that_wpf_can_decode()
+    {
+        // MainWindow uses Icon="Assets/icon.ico": WPF looks it up in the assembly's "g" resources at run time.
+        // Without <Resource Include="Assets\icon.ico" /> the app failed on start-up.
+        OnStaThread(() =>
+        {
+            var resources = new System.Resources.ResourceManager("Mendikat.TrailLab.g", typeof(Mendikat.TrailLab.App.App).Assembly);
+            using var stream = resources.GetStream("assets/icon.ico");
+            Assert.NotNull(stream);
+
+            var decoder = System.Windows.Media.Imaging.BitmapDecoder.Create(
+                stream, System.Windows.Media.Imaging.BitmapCreateOptions.None, System.Windows.Media.Imaging.BitmapCacheOption.OnLoad);
+
+            Assert.NotEmpty(decoder.Frames);
+        });
+    }
+
     private sealed class NoDataSource : IElevationSource
     {
         public string Name => "none";
