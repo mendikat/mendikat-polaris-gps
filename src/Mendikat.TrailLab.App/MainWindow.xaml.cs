@@ -29,6 +29,7 @@ public partial class MainWindow : Window
     private readonly MapController _map;
     private bool _closeConfirmed;
     private DragState? _drag;
+    private System.Windows.Point? _addPointPress;
     private readonly List<ProfileWindow> _profileWindows = [];
 
     public MainWindow(MainViewModel viewModel, Func<Mapsui.Map, MapController> createMapController)
@@ -53,6 +54,8 @@ public partial class MainWindow : Window
         MapView.MapPointerReleased += OnMapPointerReleased;
         MapView.MapTapped += OnMapTapped;
         MapView.PreviewMouseRightButtonDown += OnMapRightButtonDown;
+        MapView.PreviewMouseLeftButtonDown += OnMapLeftButtonDown;
+        MapView.PreviewMouseLeftButtonUp += OnMapLeftButtonUp;
         MapView.MouseLeave += (_, _) => _viewModel.UpdatePointer(null);
     }
 
@@ -217,15 +220,8 @@ public partial class MainWindow : Window
     /// </summary>
     private void OnMapTapped(object? sender, MapEventArgs e)
     {
-        if (e.WorldPosition is null)
+        if (e.WorldPosition is null || IsControlPressed)
         {
-            return;
-        }
-
-        if (IsControlPressed)
-        {
-            _viewModel.AddPointAt(WebMercator.ToGeo(e.WorldPosition.X, e.WorldPosition.Y));
-            e.Handled = true;
             return;
         }
 
@@ -233,6 +229,37 @@ public partial class MainWindow : Window
     }
 
     private static bool IsControlPressed => (Keyboard.Modifiers & ModifierKeys.Control) != 0;
+
+    /// <summary>
+    /// Ctrl+click adds a point (APP-08). Handled on the WPF mouse events, before Mapsui sees them, so it does not
+    /// depend on Mapsui's tap detection and the press does not start panning the map.
+    /// </summary>
+    private void OnMapLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        _addPointPress = null;
+        if (IsControlPressed && _viewModel.ActiveDocument is not null)
+        {
+            _addPointPress = e.GetPosition(MapView);
+            e.Handled = true;
+        }
+    }
+
+    private void OnMapLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        if (_addPointPress is not { } press)
+        {
+            return;
+        }
+
+        _addPointPress = null;
+        e.Handled = true;
+        var screen = e.GetPosition(MapView);
+        if ((screen - press).Length < MinimumDragPixels)
+        {
+            var world = MapView.Map.Navigator.Viewport.ScreenToWorld(screen.X, screen.Y);
+            _viewModel.AddPointAt(WebMercator.ToGeo(world.X, world.Y));
+        }
+    }
 
     /// <summary>Right click selects the point under the pointer before the context menu opens.</summary>
     private void OnMapRightButtonDown(object sender, MouseButtonEventArgs e)

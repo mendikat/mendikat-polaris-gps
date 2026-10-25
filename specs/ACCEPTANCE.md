@@ -32,7 +32,7 @@ Fixtures: `tests/Mendikat.TrailLab.Tests/Fixtures/` (se crean en el incremento c
 
 **ACC-APP-05 — Crear un GPX a mano** (APP-08, SAVE-02, EDIT-05) [auto en ViewModel + manual]
 - Given la aplicación abierta
-- When elijo Archivo › Nuevo GPX y hago Ctrl+clic en tres lugares del mapa
+- When elijo Archivo › Nuevo GPX y hago Control + clic en tres lugares del mapa
 - Then aparece la pestaña «Sin título 1.gpx *» con «Track 1» de 3 puntos unidos en el orden de los clics; Ctrl+Z quita el último;
   Guardar pide nombre y ruta, la pestaña pasa a mostrar el nombre elegido y el archivo se reabre con sus puntos.
 

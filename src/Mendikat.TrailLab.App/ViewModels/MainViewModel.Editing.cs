@@ -97,6 +97,7 @@ public sealed partial class MainViewModel
         doc.Document.Execute(command);
         doc.SelectPoints([point]);
         StatusMessage = Strings.StatusPointAdded;
+        _logger.LogInformation("Added a point in {FileName}", doc.FileName);
     }
 
     /// <summary>Moves a point to a new position, e.g. after dragging it on the map (EDIT-04).</summary>

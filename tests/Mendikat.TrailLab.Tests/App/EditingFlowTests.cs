@@ -191,7 +191,7 @@ public sealed class EditingFlowTests
         Assert.Equal("Selecciona un punto o un track.", _vm.StatusMessage);
 
         _vm.InsertPoint();
-        Assert.Equal("Para insertar, selecciona un único punto de un track o de una ruta.", _vm.StatusMessage);
+        Assert.Equal("Para insertar, selecciona un único punto de un track o de una ruta. Para añadir puntos nuevos, usa Control + clic en el mapa.", _vm.StatusMessage);
 
         Select(Doc.Rows[0]);
         _vm.InsertPoint(); // waypoints are not a sequence

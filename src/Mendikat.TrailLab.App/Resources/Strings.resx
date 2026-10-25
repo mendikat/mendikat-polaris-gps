@@ -37,8 +37,8 @@
   <data name="NoDocumentsHint" xml:space="preserve"><value>No hay documentos abiertos. Use Archivo › Nuevo GPX, Abrir GPX... o Abrir WPT...</value></data>
   <data name="NewDocumentTitle" xml:space="preserve"><value>Sin título {0}.gpx</value></data>
   <data name="NewTrackName" xml:space="preserve"><value>Track 1</value></data>
-  <data name="StatusNewDocument" xml:space="preserve"><value>Nuevo documento «{0}». Ctrl+clic en el mapa para añadir puntos al track seleccionado.</value></data>
-  <data name="StatusPointAdded" xml:space="preserve"><value>Punto añadido. Ctrl+clic para añadir el siguiente.</value></data>
+  <data name="StatusNewDocument" xml:space="preserve"><value>Nuevo documento «{0}». Control + clic en el mapa para añadir puntos al track seleccionado.</value></data>
+  <data name="StatusPointAdded" xml:space="preserve"><value>Punto añadido. Control + clic para añadir el siguiente.</value></data>
   <data name="FormatGpx" xml:space="preserve"><value>GPX {0}</value></data>
   <data name="FormatWptOzi" xml:space="preserve"><value>WPT (OziExplorer)</value></data>
   <data name="FormatWptCompeGps" xml:space="preserve"><value>WPT (CompeGPS / TwoNav)</value></data>
@@ -108,8 +108,8 @@
   <data name="NoPointSelected" xml:space="preserve"><value>Selecciona un punto en la lista o en el mapa.</value></data>
   <data name="SeveralPointsSelected" xml:space="preserve"><value>{0} puntos seleccionados.</value></data>
   <data name="StatusSelectSomething" xml:space="preserve"><value>Selecciona un punto o un track.</value></data>
-  <data name="StatusInsertNeedsPoint" xml:space="preserve"><value>Para insertar, selecciona un único punto de un track o de una ruta.</value></data>
-  <data name="StatusInsertTooFewPoints" xml:space="preserve"><value>Hacen falta al menos dos puntos para insertar uno intermedio.</value></data>
+  <data name="StatusInsertNeedsPoint" xml:space="preserve"><value>Para insertar, selecciona un único punto de un track o de una ruta. Para añadir puntos nuevos, usa Control + clic en el mapa.</value></data>
+  <data name="StatusInsertTooFewPoints" xml:space="preserve"><value>Hacen falta al menos dos puntos para insertar uno intermedio. Usa Control + clic en el mapa para añadir puntos.</value></data>
   <data name="StatusDeletedPoints" xml:space="preserve"><value>Eliminados {0} puntos.</value></data>
   <data name="StatusDeletedItem" xml:space="preserve"><value>Eliminado «{0}».</value></data>
   <data name="StatusInserted" xml:space="preserve"><value>Punto insertado.</value></data>
