@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Mendikat test" xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
+     xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Aralar</name>
+    <time>2026-05-01T07:00:00Z</time>
+  </metadata>
+  <wpt lat="42.9853" lon="-2.0786">
+    <ele>1431</ele>
+    <name>Txindoki</name>
+    <cmt>Cima</cmt>
+    <desc>Cumbre de Txindoki</desc>
+    <sym>Summit</sym>
+  </wpt>
+  <wpt lat="42.9921" lon="-2.0610">
+    <name>Larraitz</name>
+    <extensions><custom:info xmlns:custom="urn:example:custom">aparcamiento</custom:info></extensions>
+  </wpt>
+  <rte>
+    <name>Ruta planificada</name>
+    <rtept lat="42.9921" lon="-2.0610"><name>R1</name></rtept>
+    <rtept lat="42.9890" lon="-2.0700"><name>R2</name></rtept>
+    <rtept lat="42.9853" lon="-2.0786"><name>R3</name></rtept>
+  </rte>
+  <trk>
+    <name>Subida a Txindoki</name>
+    <type>hiking</type>
+    <trkseg>
+      <trkpt lat="42.9921" lon="-2.0610">
+        <ele>500.5</ele>
+        <time>2026-05-01T07:00:00Z</time>
+        <sat>8</sat>
+        <hdop>1.2</hdop>
+        <extensions><gpxtpx:TrackPointExtension><gpxtpx:hr>110</gpxtpx:hr></gpxtpx:TrackPointExtension></extensions>
+      </trkpt>
+      <trkpt lat="42.9900" lon="-2.0660">
+        <ele>700</ele>
+        <time>2026-05-01T09:30:00+02:00</time>
+      </trkpt>
+      <trkpt lat="42.9880" lon="-2.0720">
+        <ele>950</ele>
+        <time>2026-05-01T07:50:00Z</time>
+      </trkpt>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="42.9870" lon="-2.0750"><ele>1200</ele><time>2026-05-01T08:30:00Z</time></trkpt>
+      <trkpt lat="42.9853" lon="-2.0786"><ele>1431</ele><time>2026-05-01T09:00:00Z</time></trkpt>
+    </trkseg>
+  </trk>
+  <extensions><custom:root xmlns:custom="urn:example:custom" value="1" /></extensions>
+</gpx>

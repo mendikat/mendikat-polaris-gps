@@ -1,0 +1,27 @@
+using Mendikat.TrailLab.Domain.Geo;
+using Mendikat.TrailLab.Domain.Model;
+
+namespace Mendikat.TrailLab.Domain.Editing;
+
+/// <summary>The user-editable values of a point (EDIT-04, WPE-02).</summary>
+public sealed record PointValues(
+    GeoPosition Position,
+    double? Elevation,
+    DateTimeOffset? Time,
+    string? Name,
+    string? Comment,
+    string? Description)
+{
+    public static PointValues From(TrailPoint point) =>
+        new(point.Position, point.Elevation, point.Time, point.Name, point.Comment, point.Description);
+
+    public void ApplyTo(TrailPoint point)
+    {
+        point.Position = Position;
+        point.Elevation = Elevation;
+        point.Time = Time;
+        point.Name = Name;
+        point.Comment = Comment;
+        point.Description = Description;
+    }
+}

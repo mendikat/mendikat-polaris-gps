@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- GPX and WPT file formats (reading in increment 2, writing in increment 4). No UI dependencies. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mendikat.TrailLab.Domain\Mendikat.TrailLab.Domain.csproj" />
+  </ItemGroup>
+</Project>

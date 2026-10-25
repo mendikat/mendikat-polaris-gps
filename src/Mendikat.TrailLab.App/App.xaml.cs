@@ -1,0 +1,114 @@
+using System.Globalization;
+using System.IO;
+using System.Net.Http;
+using System.Windows;
+using System.Windows.Markup;
+using System.Windows.Threading;
+using Mendikat.TrailLab.App.Logging;
+using Mendikat.TrailLab.App.Map;
+using Mendikat.TrailLab.App.Resources;
+using Mendikat.TrailLab.App.Services;
+using Mendikat.TrailLab.App.Settings;
+using Mendikat.TrailLab.App.ViewModels;
+using Mendikat.TrailLab.Mapping.Tiles;
+using Microsoft.Extensions.Logging;
+
+namespace Mendikat.TrailLab.App;
+
+public partial class App : Application
+{
+    private ILoggerFactory? _loggerFactory;
+    private ILogger? _logger;
+    private HttpClient? _tileHttpClient;
+
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        base.OnStartup(e);
+        ApplySpanishCulture();
+
+        var logDirectory = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Mendikat", "TrailLab", "logs");
+        _loggerFactory = LoggerFactory.Create(builder => builder
+            .SetMinimumLevel(LogLevel.Information)
+            .AddProvider(new FileLoggerProvider(logDirectory, PathRedactor.ForCurrentUser())));
+        _logger = _loggerFactory.CreateLogger<App>();
+        RegisterGlobalExceptionHandlers();
+        _logger.LogInformation("Mendikat TrailLab {Version} starting", typeof(App).Assembly.GetName().Version);
+
+        RouteMapsuiLogging();
+
+        var version = typeof(App).Assembly.GetName().Version?.ToString(3) ?? "0";
+        _tileHttpClient = TileHttpClientFactory.Create(version);
+        var settings = new JsonSettingsStore(JsonSettingsStore.DefaultPath, _loggerFactory.CreateLogger<JsonSettingsStore>());
+        var viewModel = new MainViewModel(
+            new WpfDialogService(), new FileDocumentStore(), settings, _loggerFactory.CreateLogger<MainViewModel>());
+        var window = new MainWindow(
+            viewModel, map => new MapController(map, _tileHttpClient, _loggerFactory.CreateLogger<MapController>()));
+        MainWindow = window;
+        window.Show();
+    }
+
+    /// <summary>
+    /// Sends Mapsui's own errors to the technical log. Tile failures are reported by MapController
+    /// (once per state change), so they are skipped here to avoid flooding the log when offline.
+    /// </summary>
+    private void RouteMapsuiLogging()
+    {
+        var logger = _loggerFactory!.CreateLogger("Mapsui");
+        Mapsui.Logging.Logger.LogDelegate = (level, message, exception) =>
+        {
+            if (level != Mapsui.Logging.LogLevel.Error
+                || exception is HttpRequestException or OperationCanceledException or IOException)
+            {
+                return;
+            }
+
+            logger.LogError(exception, "{Message}", message);
+        };
+    }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        _logger?.LogInformation("Mendikat TrailLab exiting");
+        _tileHttpClient?.Dispose();
+        _loggerFactory?.Dispose();
+        base.OnExit(e);
+    }
+
+    /// <summary>UI is Spanish with decimal comma regardless of the Windows regional settings (NFR-07).</summary>
+    private static void ApplySpanishCulture()
+    {
+        var culture = CultureInfo.GetCultureInfo("es-ES");
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+        FrameworkElement.LanguageProperty.OverrideMetadata(
+            typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(culture.IetfLanguageTag)));
+    }
+
+    /// <summary>Last-resort handlers (NFR-03): log, inform the user and keep the application alive when possible.</summary>
+    private void RegisterGlobalExceptionHandlers()
+    {
+        DispatcherUnhandledException += OnDispatcherUnhandledException;
+        TaskScheduler.UnobservedTaskException += (_, args) =>
+        {
+            _logger?.LogError(args.Exception, "Unobserved task exception");
+            args.SetObserved();
+        };
+        AppDomain.CurrentDomain.UnhandledException += (_, args) =>
+            _logger?.LogCritical(args.ExceptionObject as Exception, "Fatal unhandled exception");
+    }
+
+    private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+        _logger?.LogError(e.Exception, "Unhandled exception on UI thread");
+        MessageBox.Show(
+            MainWindow,
+            string.Format(Strings.ErrorUnexpected, e.Exception.Message),
+            Strings.DialogErrorTitle,
+            MessageBoxButton.OK,
+            MessageBoxImage.Error);
+        e.Handled = true;
+    }
+}

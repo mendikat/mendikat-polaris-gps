@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Data model and business rules. Must not reference any UI framework (SAVE-06). -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Geodesic distances and midpoints on WGS84 (Karney), ADR-0003 / ADR-0008. -->
+    <PackageReference Include="GeographicLib.NET" Version="2.3.2" />
+  </ItemGroup>
+</Project>

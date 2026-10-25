@@ -1,0 +1,24 @@
+using Mendikat.TrailLab.Mapping.Providers;
+
+namespace Mendikat.TrailLab.App.Settings;
+
+/// <summary>Per-user preferences kept between sessions. Stored as JSON; never contains secrets.</summary>
+public sealed record UserSettings
+{
+    public MapSettings Map { get; init; } = new();
+}
+
+public sealed record MapSettings
+{
+    /// <summary>Selected map provider id (MAP-04). IGN Spain on first run (MAP-03).</summary>
+    public string Provider { get; init; } = MapProviderCatalog.DefaultId;
+}
+
+public interface ISettingsStore
+{
+    /// <summary>Returns the saved settings, or defaults if there are none or they cannot be read.</summary>
+    UserSettings Load();
+
+    /// <returns>False if the settings could not be written (the error is logged).</returns>
+    bool Save(UserSettings settings);
+}

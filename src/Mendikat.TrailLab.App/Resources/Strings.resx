@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AppTitle" xml:space="preserve"><value>Mendikat TrailLab</value></data>
+  <data name="MenuFile" xml:space="preserve"><value>_Archivo</value></data>
+  <data name="MenuOpenGpx" xml:space="preserve"><value>Abrir _GPX...</value></data>
+  <data name="MenuOpenWpt" xml:space="preserve"><value>Abrir _WPT...</value></data>
+  <data name="MenuSave" xml:space="preserve"><value>_Guardar</value></data>
+  <data name="MenuSaveAs" xml:space="preserve"><value>Guardar _como...</value></data>
+  <data name="MenuCloseDocument" xml:space="preserve"><value>_Cerrar archivo</value></data>
+  <data name="MenuExit" xml:space="preserve"><value>_Salir</value></data>
+  <data name="MenuView" xml:space="preserve"><value>_Ver</value></data>
+  <data name="MenuZoomIn" xml:space="preserve"><value>_Acercar</value></data>
+  <data name="MenuZoomOut" xml:space="preserve"><value>A_lejar</value></data>
+  <data name="MenuZoomToData" xml:space="preserve"><value>Ajustar a los _datos</value></data>
+  <data name="MenuElevationProfile" xml:space="preserve"><value>_Perfil de elevación</value></data>
+  <data name="ToolZoomIn" xml:space="preserve"><value>Acercar (Ctrl++)</value></data>
+  <data name="ToolZoomOut" xml:space="preserve"><value>Alejar (Ctrl+-)</value></data>
+  <data name="ToolZoomToData" xml:space="preserve"><value>Ajustar el mapa a los datos abiertos</value></data>
+  <data name="ToolMapProvider" xml:space="preserve"><value>Cartografía</value></data>
+  <data name="ToolElevationProfile" xml:space="preserve"><value>Perfil de elevación (disponible en el incremento 5)</value></data>
+  <data name="ToolProfileButton" xml:space="preserve"><value>Perfil</value></data>
+  <data name="CloseTabToolTip" xml:space="preserve"><value>Cerrar documento</value></data>
+  <data name="StatusReady" xml:space="preserve"><value>Listo</value></data>
+  <data name="StatusOpening" xml:space="preserve"><value>Abriendo {0}...</value></data>
+  <data name="StatusOpened" xml:space="preserve"><value>Abierto: {0}</value></data>
+  <data name="StatusAlreadyOpen" xml:space="preserve"><value>«{0}» ya está abierto.</value></data>
+  <data name="StatusClosed" xml:space="preserve"><value>Cerrado: {0}</value></data>
+  <data name="StatusOpenFailed" xml:space="preserve"><value>No se pudo abrir {0}.</value></data>
+  <data name="StatusPointerOutside" xml:space="preserve"><value>—</value></data>
+  <data name="StatusMapLoadFailed" xml:space="preserve"><value>No se pudo cargar la cartografía «{0}»: sin conexión o el servidor no responde.</value></data>
+  <data name="StatusMapSaveSettingsFailed" xml:space="preserve"><value>No se pudo guardar la configuración.</value></data>
+  <data name="NoDocumentsHint" xml:space="preserve"><value>No hay documentos abiertos. Use Archivo › Abrir GPX... o Abrir WPT...</value></data>
+  <data name="FormatGpx" xml:space="preserve"><value>GPX {0}</value></data>
+  <data name="FormatWptOzi" xml:space="preserve"><value>WPT (OziExplorer)</value></data>
+  <data name="FormatWptCompeGps" xml:space="preserve"><value>WPT (CompeGPS / TwoNav)</value></data>
+  <data name="SummaryCounts" xml:space="preserve"><value>Tracks: {0} · Rutas: {1} · Waypoints: {2} · Puntos: {3}</value></data>
+  <data name="SummaryTrack" xml:space="preserve"><value>Track «{0}»: {1} segmento(s), {2} puntos</value></data>
+  <data name="SummaryRoute" xml:space="preserve"><value>Ruta «{0}»: {1} puntos</value></data>
+  <data name="SummaryWaypoints" xml:space="preserve"><value>{0} waypoints</value></data>
+  <data name="UnnamedItem" xml:space="preserve"><value>(sin nombre)</value></data>
+  <data name="WarningTimesWithoutZone" xml:space="preserve"><value>Marcas de tiempo sin zona horaria: {0}. Se han interpretado como UTC.</value></data>
+  <data name="WarningGpx10" xml:space="preserve"><value>Archivo GPX 1.0: al guardarlo se convertirá a GPX 1.1.</value></data>
+  <data name="WarningGpxWithoutNamespace" xml:space="preserve"><value>El archivo no declara el espacio de nombres GPX estándar; se ha interpretado como GPX.</value></data>
+  <data name="WarningNoData" xml:space="preserve"><value>El archivo no contiene puntos.</value></data>
+  <data name="FilterGpx" xml:space="preserve"><value>Archivos GPX (*.gpx)&#124;*.gpx&#124;Todos los archivos (*.*)&#124;*.*</value></data>
+  <data name="FilterWpt" xml:space="preserve"><value>Archivos de waypoints (*.wpt)&#124;*.wpt&#124;Todos los archivos (*.*)&#124;*.*</value></data>
+  <data name="DialogOpenGpxTitle" xml:space="preserve"><value>Abrir GPX</value></data>
+  <data name="DialogOpenWptTitle" xml:space="preserve"><value>Abrir WPT</value></data>
+  <data name="DialogSaveAsTitle" xml:space="preserve"><value>Guardar como</value></data>
+  <data name="DialogErrorTitle" xml:space="preserve"><value>Error</value></data>
+  <data name="DialogInfoTitle" xml:space="preserve"><value>Información</value></data>
+  <data name="SaveChangesQuestion" xml:space="preserve"><value>El documento «{0}» tiene cambios sin guardar.&#10;&#10;¿Desea guardarlos antes de cerrarlo?</value></data>
+  <data name="AtLine" xml:space="preserve"><value>, línea {0}</value></data>
+  <data name="ErrorFileNotFound" xml:space="preserve"><value>No se encuentra el archivo «{0}».</value></data>
+  <data name="ErrorAccessDenied" xml:space="preserve"><value>No hay permiso para leer el archivo «{0}».</value></data>
+  <data name="ErrorEmptyFile" xml:space="preserve"><value>El archivo «{0}» está vacío.</value></data>
+  <data name="ErrorReadFailed" xml:space="preserve"><value>No se pudo leer el archivo «{0}».</value></data>
+  <data name="ErrorInvalidXml" xml:space="preserve"><value>El archivo «{0}» no es un XML válido{1}.</value></data>
+  <data name="ErrorNotGpx" xml:space="preserve"><value>El archivo «{0}» no es un GPX: su elemento raíz o su espacio de nombres no corresponde a GPX 1.0 ni 1.1.</value></data>
+  <data name="ErrorInvalidCoordinate" xml:space="preserve"><value>Coordenadas no válidas en «{0}»{1}: {2}.&#10;La latitud debe estar entre −90 y 90 y la longitud entre −180 y 180.</value></data>
+  <data name="ErrorInvalidNumber" xml:space="preserve"><value>Valor numérico no válido en «{0}»{1}: {2}.</value></data>
+  <data name="ErrorInvalidDate" xml:space="preserve"><value>Fecha u hora no válida en «{0}»{1}: {2}.</value></data>
+  <data name="ErrorUnsupportedWptDialect" xml:space="preserve"><value>El archivo «{0}» no corresponde a ningún formato WPT admitido (OziExplorer o CompeGPS / TwoNav).</value></data>
+  <data name="ErrorUnsupportedDatum" xml:space="preserve"><value>El archivo «{0}» usa el datum «{2}»{1}. Solo se admite WGS 84 y no se convierte automáticamente.</value></data>
+  <data name="ErrorUnsupportedCoordinateSystem" xml:space="preserve"><value>El archivo «{0}» usa un sistema de coordenadas no admitido ({2}){1}. Solo se admiten coordenadas geográficas (latitud y longitud).</value></data>
+  <data name="ErrorUnexpected" xml:space="preserve"><value>Se ha producido un error inesperado. La aplicación sigue funcionando y los detalles técnicos se han guardado en el registro.&#10;&#10;{0}</value></data>
+  <data name="ErrorSaveFailed" xml:space="preserve"><value>No se pudo guardar el archivo «{0}». El archivo original no se ha modificado.</value></data>
+  <data name="MenuEdit" xml:space="preserve"><value>_Edición</value></data>
+  <data name="MenuUndo" xml:space="preserve"><value>_Deshacer</value></data>
+  <data name="MenuRedo" xml:space="preserve"><value>_Rehacer</value></data>
+  <data name="MenuDelete" xml:space="preserve"><value>_Eliminar</value></data>
+  <data name="MenuInsertPoint" xml:space="preserve"><value>_Insertar punto</value></data>
+  <data name="PanelLayers" xml:space="preserve"><value>Capas</value></data>
+  <data name="PanelPoints" xml:space="preserve"><value>Puntos</value></data>
+  <data name="PanelPoint" xml:space="preserve"><value>Punto seleccionado</value></data>
+  <data name="LayerVisibleToolTip" xml:space="preserve"><value>Mostrar u ocultar en el mapa</value></data>
+  <data name="WaypointsLayerName" xml:space="preserve"><value>Waypoints</value></data>
+  <data name="LayerDetailsLine" xml:space="preserve"><value>{0} puntos · {1} km</value></data>
+  <data name="LayerDetailsPoints" xml:space="preserve"><value>{0} puntos</value></data>
+  <data name="ColNumber" xml:space="preserve"><value>#</value></data>
+  <data name="ColName" xml:space="preserve"><value>Nombre</value></data>
+  <data name="ColLatitude" xml:space="preserve"><value>Latitud</value></data>
+  <data name="ColLongitude" xml:space="preserve"><value>Longitud</value></data>
+  <data name="ColElevation" xml:space="preserve"><value>Elev. (m)</value></data>
+  <data name="ColTime" xml:space="preserve"><value>Hora local</value></data>
+  <data name="FieldName" xml:space="preserve"><value>Nombre</value></data>
+  <data name="FieldComment" xml:space="preserve"><value>Comentario</value></data>
+  <data name="FieldDescription" xml:space="preserve"><value>Descripción</value></data>
+  <data name="FieldLatitude" xml:space="preserve"><value>Latitud (°)</value></data>
+  <data name="FieldLongitude" xml:space="preserve"><value>Longitud (°)</value></data>
+  <data name="FieldElevation" xml:space="preserve"><value>Elevación (m)</value></data>
+  <data name="FieldTimeUtc" xml:space="preserve"><value>Hora UTC</value></data>
+  <data name="FieldTimeLocal" xml:space="preserve"><value>Hora local</value></data>
+  <data name="FieldOther" xml:space="preserve"><value>Otros campos</value></data>
+  <data name="FieldAdded" xml:space="preserve"><value>Punto añadido en esta sesión</value></data>
+  <data name="FieldTimeUtcHint" xml:space="preserve"><value>AAAA-MM-DD HH:MM:SS; vacío = sin hora</value></data>
+  <data name="ApplyButton" xml:space="preserve"><value>Aplicar</value></data>
+  <data name="RevertButton" xml:space="preserve"><value>Descartar</value></data>
+  <data name="NoPointSelected" xml:space="preserve"><value>Selecciona un punto en la lista o en el mapa.</value></data>
+  <data name="SeveralPointsSelected" xml:space="preserve"><value>{0} puntos seleccionados.</value></data>
+  <data name="StatusSelectSomething" xml:space="preserve"><value>Selecciona un punto o un track.</value></data>
+  <data name="StatusInsertNeedsPoint" xml:space="preserve"><value>Para insertar, selecciona un único punto de un track o de una ruta.</value></data>
+  <data name="StatusInsertTooFewPoints" xml:space="preserve"><value>Hacen falta al menos dos puntos para insertar uno intermedio.</value></data>
+  <data name="StatusDeletedPoints" xml:space="preserve"><value>Eliminados {0} puntos.</value></data>
+  <data name="StatusDeletedItem" xml:space="preserve"><value>Eliminado «{0}».</value></data>
+  <data name="StatusInserted" xml:space="preserve"><value>Punto insertado.</value></data>
+  <data name="StatusMoved" xml:space="preserve"><value>Punto movido.</value></data>
+  <data name="StatusPointUpdated" xml:space="preserve"><value>Punto actualizado.</value></data>
+  <data name="StatusUndone" xml:space="preserve"><value>Deshecho.</value></data>
+  <data name="StatusRedone" xml:space="preserve"><value>Rehecho.</value></data>
+  <data name="DialogConfirmTitle" xml:space="preserve"><value>Confirmar</value></data>
+  <data name="ConfirmDeleteTrack" xml:space="preserve"><value>¿Eliminar el track «{0}» con {1} puntos?&#10;&#10;Se puede deshacer con Ctrl+Z.</value></data>
+  <data name="ConfirmDeleteRoute" xml:space="preserve"><value>¿Eliminar la ruta «{0}» con {1} puntos?&#10;&#10;Se puede deshacer con Ctrl+Z.</value></data>
+  <data name="ConfirmDeletePoints" xml:space="preserve"><value>¿Eliminar {0} puntos?&#10;&#10;Se puede deshacer con Ctrl+Z.</value></data>
+  <data name="ValidationLatitude" xml:space="preserve"><value>La latitud debe ser un número entre −90 y 90.</value></data>
+  <data name="ValidationLongitude" xml:space="preserve"><value>La longitud debe ser un número entre −180 y 180.</value></data>
+  <data name="ValidationElevation" xml:space="preserve"><value>La elevación debe ser un número entre −500 y 9000 m, o quedar vacía.</value></data>
+  <data name="ValidationTime" xml:space="preserve"><value>La hora debe tener el formato AAAA-MM-DD HH:MM:SS (UTC), o quedar vacía.</value></data>
+  <data name="ValidationNoSpaces" xml:space="preserve"><value>En CompeGPS / TwoNav el nombre no puede contener espacios.</value></data>
+  <data name="ValidationNoCommas" xml:space="preserve"><value>OziExplorer no admite comas en los textos.</value></data>
+  <data name="SaveNotAvailable" xml:space="preserve"><value>Guardar archivos {0} no está disponible.</value></data>
+  <data name="StatusSaving" xml:space="preserve"><value>Guardando {0}...</value></data>
+  <data name="StatusSaved" xml:space="preserve"><value>Guardado: {0}</value></data>
+  <data name="StatusSaveFailed" xml:space="preserve"><value>No se pudo guardar {0}.</value></data>
+  <data name="ConfirmSaveWithIssues" xml:space="preserve"><value>Al guardar «{0}»:&#10;&#10;{1}&#10;&#10;¿Guardar de todos modos?</value></data>
+  <data name="SaveIssueGpxUpgrade" xml:space="preserve"><value>• El archivo es GPX 1.0 y se guardará como GPX 1.1. Los campos sin equivalente en GPX 1.1 se conservan dentro de «extensions».</value></data>
+  <data name="SaveIssueUnrepresentable" xml:space="preserve"><value>• {0} caracteres no se pueden representar en la codificación del archivo y se guardarán como «?».</value></data>
+  <data name="SaveIssueMissingElevation" xml:space="preserve"><value>• {0} waypoints sin elevación se guardarán con elevación 0 (CompeGPS no admite waypoints sin altitud).</value></data>
+  <data name="ConfirmOverwrite" xml:space="preserve"><value>El archivo «{0}» ya existe.&#10;&#10;¿Desea reemplazarlo?</value></data>
+  <data name="ErrorSaveAccessDenied" xml:space="preserve"><value>No hay permiso para escribir el archivo «{0}». El archivo original no se ha modificado.</value></data>
+  <data name="ErrorSaveVerification" xml:space="preserve"><value>El archivo generado para «{0}» no superó la verificación y no se ha guardado. El archivo original no se ha modificado.</value></data>
+</root>

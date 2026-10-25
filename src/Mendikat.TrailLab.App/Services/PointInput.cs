@@ -1,0 +1,99 @@
+using System.Globalization;
+using Mendikat.TrailLab.Domain.Model;
+using Mendikat.TrailLab.Gpx;
+using Mendikat.TrailLab.Gpx.Wpt;
+
+namespace Mendikat.TrailLab.App.Services;
+
+/// <summary>Which point fields the source format can store (WPE-02) and its text restrictions (WPE-03).</summary>
+public sealed record PointFieldSupport(bool Comment, bool NameAllowsSpaces, bool TextAllowsCommas)
+{
+    public static PointFieldSupport Gpx { get; } = new(Comment: true, NameAllowsSpaces: true, TextAllowsCommas: true);
+
+    /// <summary>OziExplorer: no comment field; commas are the field separator (ADR-0006).</summary>
+    public static PointFieldSupport OziExplorer { get; } = new(Comment: false, NameAllowsSpaces: true, TextAllowsCommas: false);
+
+    /// <summary>CompeGPS: no comment field; the name is a single whitespace-delimited token.</summary>
+    public static PointFieldSupport CompeGps { get; } = new(Comment: false, NameAllowsSpaces: false, TextAllowsCommas: true);
+
+    public static PointFieldSupport For(TrailData data) => data.FormatState switch
+    {
+        WptFormatState { DialectId: "ozi" } => OziExplorer,
+        WptFormatState { DialectId: "compegps" } => CompeGps,
+        GpxFormatState => Gpx,
+        _ => Gpx,
+    };
+}
+
+/// <summary>Parsing and display of point values typed by the user (EDIT-04, WPE-03). Display uses Spanish format.</summary>
+public static class PointInput
+{
+    public const double MinElevation = -500;
+    public const double MaxElevation = 9000;
+
+    private static readonly CultureInfo Spanish = CultureInfo.GetCultureInfo("es-ES");
+    private static readonly string[] UtcFormats = ["yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm:ssZ"];
+
+    public static string FormatCoordinate(double degrees) => degrees.ToString("0.0000000", Spanish);
+
+    public static string FormatElevation(double? meters) => meters?.ToString("0.0", Spanish) ?? string.Empty;
+
+    public static string FormatUtc(DateTimeOffset? time) =>
+        time?.UtcDateTime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture) ?? string.Empty;
+
+    public static string FormatLocal(DateTimeOffset? time) =>
+        time is { } t ? TimeZoneInfo.ConvertTime(t, TimeZoneInfo.Local).ToString("dd/MM/yyyy HH:mm:ss", Spanish) : string.Empty;
+
+    /// <summary>Accepts a decimal comma or point; thousands separators are not allowed (avoids "42.5" → 425).</summary>
+    public static bool TryParseNumber(string? text, out double value)
+    {
+        value = 0;
+        var normalized = text?.Trim().Replace(',', '.');
+        return !string.IsNullOrEmpty(normalized)
+            && double.TryParse(normalized, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value)
+            && double.IsFinite(value);
+    }
+
+    public static bool TryParseLatitude(string? text, out double value) =>
+        TryParseNumber(text, out value) && value is >= -90 and <= 90;
+
+    public static bool TryParseLongitude(string? text, out double value) =>
+        TryParseNumber(text, out value) && value is >= -180 and <= 180;
+
+    /// <summary>Empty means "no elevation".</summary>
+    public static bool TryParseElevation(string? text, out double? value)
+    {
+        value = null;
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return true;
+        }
+
+        if (TryParseNumber(text, out var meters) && meters is >= MinElevation and <= MaxElevation)
+        {
+            value = meters;
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>UTC date and time; empty means "no time". The value is never converted between time zones.</summary>
+    public static bool TryParseUtc(string? text, out DateTimeOffset? value)
+    {
+        value = null;
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return true;
+        }
+
+        if (DateTime.TryParseExact(text.Trim(), UtcFormats, CultureInfo.InvariantCulture,
+                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out var utc))
+        {
+            value = new DateTimeOffset(utc, TimeSpan.Zero);
+            return true;
+        }
+
+        return false;
+    }
+}
