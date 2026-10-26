@@ -39,7 +39,8 @@ public sealed partial class MapProviderCatalogTests
             Assert.Contains("{x}", p.UrlTemplate);
             Assert.Contains("{y}", p.UrlTemplate);
             Assert.Contains("{z}", p.UrlTemplate);
-            Assert.DoesNotContain("apikey", p.UrlTemplate, StringComparison.OrdinalIgnoreCase);
+            // No personal keys: only the public shared key of IGN for its SCAN maps is allowed (ADR-0004).
+            Assert.DoesNotContain("apikey", p.UrlTemplate.Replace("apikey=" + MapProviderCatalog.IgnScanPublicKey, string.Empty), StringComparison.OrdinalIgnoreCase);
             Assert.Equal(p.UrlTemplate.Contains("{s}"), p.ServerNodes is { Count: > 0 });
         });
     }

@@ -31,3 +31,23 @@ actualizados · dependencias nuevas registradas con licencia.
                    └──► 7
 D1 (instalar SDK .NET 10) ─► 1
 ```
+
+## Después del plan (2026-10-26, a petición del responsable)
+
+Hechas, con pruebas y documentadas en TRACEABILITY.md:
+
+| Cambio | Requisitos / decisiones |
+|--------|-------------------------|
+| Desnivel con el filtro gaussiano de mendikat.net (`GaussianElevationAnalyzer.php`); idéntico al PHP en 573 segmentos reales | PROF-06, ADR-0008 |
+| Sólo GPX: se retira WPT (lector, escritor, menú) | WPT-01..07 retirados, ADR-0006 retirada, WPE-01..04 |
+| Perfil: fichas con iconos (recorrido / tiempo), velocidad media y máxima (30 s), icono de track en la ventana | PROF-07, PROF-08, ADR-0008 |
+| Menú Ayuda: guía HTML (F1), ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones, Acerca de (versión 0.0.1) | APP-09 |
+| Géoportail muestra el SCAN 25 (clave pública `ign_scan_ws`) | ADR-0004 |
+| Tarea `watch (Hot Reload)` y configuración de depuración en `.vscode/` | — |
+
+Pendiente:
+
+- Comprobaciones manuales de TRACEABILITY.md (NFR-09 fluidez con 100 000 puntos, NFR-02, NFR-08 con el Narrador, sin red, arrastre, perfil).
+- Licencias antes de distribuir: SCAN 25 del IGN francés, Esri y OSM (ADR-0004, README).
+- Dirección definitiva de «Buscar actualizaciones» (`AboutViewModel.UpdatesUrl`, hoy https://www.mendikat.net).
+- Redibujado incremental del mapa para tracks de cientos de miles de puntos (limitación conocida).

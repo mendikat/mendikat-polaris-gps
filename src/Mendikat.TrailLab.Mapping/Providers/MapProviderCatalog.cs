@@ -2,11 +2,14 @@ namespace Mendikat.TrailLab.Mapping.Providers;
 
 /// <summary>
 /// The only place where tile URLs are defined (MAP-02). Endpoints, attributions and limits were verified on
-/// 2026-10-24; see ADR-0004 for terms of use. None of them needs an API key.
+/// 2026-10-24; see ADR-0004 for terms of use. None needs a personal API key: Géoportail uses the public shared key of IGN.
 /// </summary>
 public static class MapProviderCatalog
 {
     public const string DefaultId = "ign-es";
+
+    /// <summary>Public key published by IGN for its SCAN maps on the Géoplateforme; not personal, not secret (ADR-0004).</summary>
+    public const string IgnScanPublicKey = "ign_scan_ws";
 
     private static readonly string[] Abc = ["a", "b", "c"];
 
@@ -62,12 +65,15 @@ public static class MapProviderCatalog
         new(
             "geoportail-fr",
             "Géoportail IGN (France)",
-            "https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
-                + "&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image/png",
-            "© IGN-F / Géoportail (Licence Ouverte Etalab 2.0)",
-            "https://geoservices.ign.fr/",
-            MaxZoom: 19,
-            UsageNote: "Cobertura: Francia."),
+            // SCAN 25 (classic 1:25 000 topographic map; smaller scales of the same series when zoomed out). It is
+            // served by the "private" flow with ign_scan_ws, the public shared key IGN publishes for its SCAN maps.
+            "https://data.geopf.fr/private/wmts?apikey=" + IgnScanPublicKey
+                + "&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                + "&STYLE=normal&TILEMATRIXSET=PM_0_18&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image/jpeg",
+            "© IGN-F / Géoportail – SCAN 25®",
+            "https://cartes.gouv.fr/cgu/",
+            MaxZoom: 18,
+            UsageNote: "Cobertura: Francia. Licencia del SCAN 25 por confirmar antes de distribuir (ADR-0004)."),
         new(
             "mtbmap",
             "MtbMap",

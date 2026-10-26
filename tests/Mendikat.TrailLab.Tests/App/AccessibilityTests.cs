@@ -106,6 +106,7 @@ public sealed class AccessibilityTests
         yield return new TimesWindow(new TimesViewModel(layer));
         yield return new DemWindow(new DemViewModel(layer, _ => new WindowSmokeTests.NoDataSource()));
         yield return new ProfileWindow(new ProfileViewModel(document, layer));
+        yield return new AboutWindow(new AboutViewModel(), _ => { });
     }
 
     private static IEnumerable<DependencyObject> LogicalDescendants(DependencyObject root)

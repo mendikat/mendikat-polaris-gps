@@ -25,6 +25,11 @@
     <!-- ApplicationIcon only sets the .exe icon. The window icon (Icon="Assets/icon.ico" in MainWindow.xaml)
          is loaded at run time from the assembly resources, so the file must be a WPF Resource too. -->
     <Resource Include="Assets\icon.ico" />
+    <Resource Include="Assets\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- User guide (APP-09): plain HTML and CSS, opened in the default browser; also published. -->
+    <Content Include="Help\**" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
     <!-- UI texts (Spanish). The strongly typed class is generated into obj/ at build time. -->

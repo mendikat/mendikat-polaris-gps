@@ -1,4 +1,5 @@
 using Mendikat.TrailLab.App.Services;
+using Mendikat.TrailLab.App.ViewModels;
 using Mendikat.TrailLab.Domain.Documents;
 
 namespace Mendikat.TrailLab.Tests.Fakes;
@@ -46,4 +47,12 @@ internal sealed class FakeDialogService : IDialogService
     public void ShowError(string message) => Errors.Add(message);
 
     public void ShowInfo(string message) => Infos.Add(message);
+
+    public List<string> OpenedExternally { get; } = [];
+
+    public void OpenExternal(string target) => OpenedExternally.Add(target);
+
+    public AboutViewModel? AboutShown { get; private set; }
+
+    public void ShowAbout(AboutViewModel about) => AboutShown = about;
 }

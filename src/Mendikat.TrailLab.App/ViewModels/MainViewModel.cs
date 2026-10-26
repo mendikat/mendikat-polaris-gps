@@ -57,6 +57,7 @@ public sealed partial class MainViewModel : ObservableObject
         ElevationProfileCommand = new RelayCommand(OpenProfile, () => ActiveDocument?.SelectedLayer?.IsSequence == true);
         InitializeEditingCommands();
         InitializeToolCommands();
+        InitializeHelpCommands();
     }
 
     /// <summary>Asks the view to close the main window; the window then calls <see cref="ConfirmCloseAllAsync"/>.</summary>

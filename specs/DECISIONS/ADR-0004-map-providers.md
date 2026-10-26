@@ -20,7 +20,7 @@ Las definiciones viven sólo en `Mendikat.TrailLab.Mapping/Providers/MapProvider
 | `osm` | OpenStreetMap | XYZ `https://tile.openstreetmap.org/{z}/{x}/{y}.png` | «© OpenStreetMap contributors» | No | **Tile Usage Policy**: User-Agent identificativo obligatorio, sin descarga masiva, respetar caché HTTP. |
 | `esri-imagery` | Mapa satélite (ESRI) | XYZ `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}` (¡orden y/x!) | «Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community» | No (hoy) | **Condiciones Esri a revisar** para distribución: los servicios básicos públicos admiten uso no comercial; uso comercial puede requerir cuenta ArcGIS. |
 | `esri-topo` | Mapa Topográfico (ESRI) | XYZ `…/World_Topo_Map/MapServer/tile/{z}/{y}/{x}` | «Tiles © Esri — Esri, HERE, Garmin, … » (texto completo del servicio) | No (hoy) | Ídem. Esri lo marca como *mature support*. |
-| `geoportail-fr` | Géoportail IGN (France) | WMTS KVP `https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image/png` | «© IGN-F / Géoportail» (Licence Ouverte Etalab 2.0) | No | Capa **Plan IGN v2** (abierta). La capa SCAN 25 requiere clave/licencia y **no** se incluye. |
+| `geoportail-fr` | Géoportail IGN (France) | WMTS KVP `https://data.geopf.fr/private/wmts?apikey=ign_scan_ws&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS&STYLE=normal&TILEMATRIXSET=PM_0_18&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image/jpeg` (desde 2026-10-26; antes Plan IGN v2) | «© IGN-F / Géoportail – SCAN 25®» | Clave **pública** compartida `ign_scan_ws` (no personal) | SCAN 25 del IGN francés (escalas menores al alejarse), zoom 0–18. Gratuito según la Géoplateforme («salvo licencia específica»); la ficha del SCAN 25 indica «Atribución» y remite a las condiciones del IGN: **confirmar la licencia antes de distribuir**. |
 | `mtbmap` | MtbMap | XYZ `https://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png` | «© OpenStreetMap contributors & USGS, estilo MtbMap.cz» | No | Proyecto personal sin SLA; cobertura principalmente Europa. Se marca «disponibilidad no garantizada». |
 
 ## Thunderforest — descartado (2026-10-24)
@@ -50,3 +50,12 @@ se especificará de nuevo (clave en la configuración local de usuario, nunca en
 - **Atribución** (MAP-06): la muestra la aplicación como enlace sobre el mapa, a partir de `MapProvider`. No se
   pasa a la fuente de mosaicos de Mapsui, que si no dibuja una segunda copia superpuesta (comprobado el 2026-10-24).
 - Antes de distribuir públicamente la aplicación se revisarán de nuevo las condiciones de cada proveedor (especialmente Esri y OSM).
+
+## Géoportail: SCAN 25 en lugar del Plan IGN (2026-10-26, a petición del responsable)
+
+El responsable quiere ver en Géoportail el mapa topográfico clásico (SCAN 25), no el Plan IGN v2. El SCAN 25 no está en
+el flujo abierto `data.geopf.fr/wmts`; está en el flujo «private» con `apikey=ign_scan_ws`, la clave pública y compartida
+que el IGN usa para sus SCAN (comprobado: GetCapabilities y mosaicos de los zooms 6 a 18 en el Mont Baïgura). Se relaja la
+regla «sin clave de API»: se prohíben las claves personales o secretas, no esta clave pública
+(`MapProviderCatalog.IgnScanPublicKey`, prueba `Every_provider_has_attribution_https_and_tile_placeholders`).
+Pendiente: confirmar en las condiciones del IGN que el uso del SCAN 25 en una aplicación distribuida está permitido.

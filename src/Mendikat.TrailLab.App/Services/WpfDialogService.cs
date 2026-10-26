@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using Mendikat.TrailLab.App.Resources;
@@ -76,6 +78,21 @@ public sealed class WpfDialogService : IDialogService
 
     public void ShowInfo(string message) =>
         MessageBox.Show(Owner, message, Strings.DialogInfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+
+    public void OpenExternal(string target)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo(target) { UseShellExecute = true })?.Dispose();
+        }
+        catch (Win32Exception)
+        {
+            // No program is associated (e.g. no browser or mail client): tell the user where to go instead.
+            ShowError(string.Format(Strings.ErrorOpenExternal, target));
+        }
+    }
+
+    public void ShowAbout(AboutViewModel about) => new AboutWindow(about, OpenExternal) { Owner = Owner }.ShowDialog();
 
     private static Window Owner => Application.Current.MainWindow;
 

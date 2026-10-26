@@ -3,7 +3,8 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: Incremento 8 (robustez) terminado, pendiente de aprobación. Es el último incremento del plan.**
+> **Estado: versión 0.0.1. Los 8 incrementos del plan están terminados; después se han añadido mejoras pedidas por el responsable
+> (ver «Después del plan» en [specs/ROADMAP.md](specs/ROADMAP.md)).**
 > Se abren archivos GPX (sólo GPX: WPT se retiró el 2026-10-26), se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -26,6 +27,7 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Ajustar altitudes con el MDT | *Herramientas › Ajustar altitudes con el MDT del IGN…* › **Consultar** (5 m o 25 m; requiere Internet) › revisar cuántos puntos cambian y cuántos no tienen dato › **Aplicar**. Sólo España; el origen de cada elevación se ve en el detalle del punto |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
 | Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |
+| Ayuda | **F1** o *Ayuda › Ayuda de Mendikat TrailLab* (guía HTML en el navegador). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones y Acerca de (versión, autor) |
 
 ## Documentación (Spec-Driven Development)
 
@@ -98,7 +100,7 @@ WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido
 ## Cartografía
 
 Predeterminada: Mapa IGN (España). Disponibles: Mapa IGN (España), CyclOSM, OpenTopoMap, OpenStreetMap,
-Mapa satélite (ESRI), Mapa Topográfico (ESRI), Géoportail IGN (France) y MtbMap. Ninguna requiere clave API.
+Mapa satélite (ESRI), Mapa Topográfico (ESRI), Géoportail IGN (France, SCAN 25) y MtbMap. Ninguna requiere clave personal (Géoportail usa la clave pública del IGN).
 La elegida se recuerda entre sesiones. Detalles, atribuciones y condiciones en
 [ADR-0004](specs/DECISIONS/ADR-0004-map-providers.md).
 
@@ -135,5 +137,5 @@ Datos: mosaicos y MDT del IGN España bajo CC BY 4.0 (scne.es); datos OSM bajo O
 - El comportamiento sin conexión (MAP-07) está probado con red simulada; falta la comprobación manual sin red.
 - Las pruebas de interfaz crean las ventanas reales sin mostrarlas (enlaces, nombres accesibles, cierre); el uso con ratón
   y el dibujo del mapa se comprueban a mano.
-- Condiciones de uso de Esri y OSM a revisar antes de distribuir públicamente.
+- Condiciones de uso de Esri, OSM y del SCAN 25 del IGN francés a revisar antes de distribuir públicamente.
 - MtbMap y CyclOSM son servidores comunitarios sin garantía de disponibilidad.

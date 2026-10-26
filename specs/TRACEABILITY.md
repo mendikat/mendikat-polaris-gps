@@ -229,3 +229,19 @@ renderizando la ventana fuera de pantalla con tracks reales con y sin horas, anc
 |-----|--------|--------|---------|
 | PROF-08 | ✅ | `ProfileTimes.MovingDistance/AverageSpeed/MaxSpeed`, `ProfileStatistics.MaxSpeed`, fichas de `ProfileViewModel.TimeStats` | `Average_speed_counts_only_the_time_in_movement`, `Maximum_speed_is_the_fastest_stretch_of_at_least_30_seconds`, `A_gps_jump_does_not_set_the_maximum_speed`, `Without_30_seconds_of_data_there_is_no_maximum_speed` |
 | PROF-02/06/07 | ✅ | `ProfileViewModel.RouteStats/TimeStats/NoTimesNote`, `ProfileStat`, plantilla de fichas en `ProfileWindow.xaml` | `Profile_window_is_titled_with_the_track_and_shows_a_summary` |
+
+## Menú Ayuda (2026-10-26, a petición del responsable)
+
+306 pruebas en total, todas en verde. Versión 0.0.1. Guía comprobada con una captura de Edge sin ventana y ventana
+«Acerca de» renderizada fuera de pantalla.
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| APP-09 | ✅ | `MainViewModel.Help` (Help/Donate/About), `AboutViewModel`, `Views/AboutWindow`, `Help/ayuda.html`, `IDialogService.OpenExternal/ShowAbout` | `HelpMenuTests` (4), `Every_menu_item_has_an_access_key_unique_within_its_menu`, `Every_input_control_has_an_accessible_name` (incluye «Acerca de») |
+
+## Géoportail SCAN 25 y enlace a la web (2026-10-26, a petición del responsable)
+
+307 pruebas, todas en verde. Géoportail muestra el SCAN 25 del IGN francés (ADR-0004); el menú Ayuda y la cabecera de la guía enlazan a
+https://www.mendikat.net (`Web_opens_mendikat_net`, `The_user_guide_has_the_donation_form_and_working_internal_links`).
+Después: menú Ayuda reordenado (¡Dona ahora! antes que la web), nueva descripción en «Acerca de» y «Buscar actualizaciones»
+en el menú y en «Acerca de», provisionalmente a https://www.mendikat.net (`Check_for_updates_opens_mendikat_net_for_now`).

@@ -184,6 +184,25 @@
   <data name="UnitMs" xml:space="preserve"><value>m/s</value></data>
   <data name="UnitMinKm" xml:space="preserve"><value>min/km (ritmo)</value></data>
   <data name="MenuAdjustElevations" xml:space="preserve"><value>_Ajustar altitudes con el MDT del IGN...</value></data>
+  <data name="MenuHelp" xml:space="preserve"><value>Ay_uda</value></data>
+  <data name="MenuHelpContents" xml:space="preserve"><value>_Ayuda de Mendikat TrailLab</value></data>
+  <data name="MenuWeb" xml:space="preserve"><value>Web de _Mendikat (www.mendikat.net)</value></data>
+  <data name="MenuCheckUpdates" xml:space="preserve"><value>_Buscar actualizaciones...</value></data>
+  <data name="AboutCheckUpdates" xml:space="preserve"><value>Buscar actualizaciones</value></data>
+  <data name="MenuDonate" xml:space="preserve"><value>¡_Dona ahora!</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>A_cerca de Mendikat TrailLab...</value></data>
+  <data name="ErrorHelpNotFound" xml:space="preserve"><value>No se encuentra el archivo de ayuda. Vuelva a instalar la aplicación o consulte https://www.mendikat.net.</value></data>
+  <data name="ErrorOpenExternal" xml:space="preserve"><value>Windows no tiene ningún programa para abrir «{0}». Ábralo manualmente.</value></data>
+  <data name="AboutTitle" xml:space="preserve"><value>Acerca de Mendikat TrailLab</value></data>
+  <data name="AboutVersion" xml:space="preserve"><value>Versión {0}</value></data>
+  <data name="AboutAuthor" xml:space="preserve"><value>Autor: {0}</value></data>
+  <data name="AboutDescription" xml:space="preserve"><value>Gestiona, visualiza y perfecciona tus tracks GPS. Edita recorridos, analiza perfiles de elevación y ajusta altitudes sobre cartografía especializada. Todo lo que necesitas para llevar tus rutas más lejos.</value></data>
+  <data name="AboutEmailLabel" xml:space="preserve"><value>Correo:</value></data>
+  <data name="AboutWebLabel" xml:space="preserve"><value>Web:</value></data>
+  <data name="AboutDonateHint" xml:space="preserve"><value>Si la aplicación te resulta útil, puedes apoyar a Mendikat con un donativo.</value></data>
+  <data name="AboutDonateButton" xml:space="preserve"><value>¡Dona ahora!</value></data>
+  <data name="AboutDonateToolTip" xml:space="preserve"><value>PayPal. La forma rápida y segura de pagar en Internet.</value></data>
+  <data name="DialogClose" xml:space="preserve"><value>Cerrar</value></data>
   <data name="DemTitle" xml:space="preserve"><value>Ajustar altitudes de «{0}» con el MDT</value></data>
   <data name="DemResolution" xml:space="preserve"><value>Modelo:</value></data>
   <data name="DemResolution5" xml:space="preserve"><value>MDT IGN 5 m (más detalle)</value></data>

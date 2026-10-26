@@ -30,4 +30,10 @@ public interface IDialogService
     void ShowError(string message);
 
     void ShowInfo(string message);
+
+    /// <summary>Opens a web page, an e-mail address (mailto:) or a local file with the default program of Windows.</summary>
+    void OpenExternal(string target);
+
+    /// <summary>Shows the modal "About" window (APP-09).</summary>
+    void ShowAbout(ViewModels.AboutViewModel about);
 }

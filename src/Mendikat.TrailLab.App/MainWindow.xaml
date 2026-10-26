@@ -29,6 +29,7 @@
         <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" />
         <KeyBinding Key="Insert" Command="{Binding InsertPointCommand}" />
         <KeyBinding Key="Escape" Command="{Binding CancelOperationCommand}" />
+        <KeyBinding Key="F1" Command="{Binding HelpCommand}" />
     </Window.InputBindings>
 
     <DockPanel>
@@ -65,6 +66,15 @@
                 <MenuItem Header="{x:Static res:Strings.MenuZoomToData}" Command="{Binding ZoomToDataCommand}" />
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuElevationProfile}" Command="{Binding ElevationProfileCommand}" />
+            </MenuItem>
+            <MenuItem Header="{x:Static res:Strings.MenuHelp}">
+                <MenuItem Header="{x:Static res:Strings.MenuHelpContents}" Command="{Binding HelpCommand}" InputGestureText="F1" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuDonate}" Command="{Binding DonateCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuWeb}" Command="{Binding WebCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuCheckUpdates}" Command="{Binding CheckUpdatesCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuAbout}" Command="{Binding AboutCommand}" />
             </MenuItem>
         </Menu>
 

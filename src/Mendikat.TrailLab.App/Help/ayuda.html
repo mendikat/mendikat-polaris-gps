@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ayuda de Mendikat TrailLab</title>
+<style>
+  :root {
+    --text: #1f2933;
+    --muted: #5f6b7a;
+    --line: #e1e5eb;
+    --soft: #f3f5f8;
+    --accent: #dc143c;
+    --accent-dark: #a50f2d;
+    --link: #1f5fbf;
+    --warn-bg: #fff8e1;
+    --warn-line: #f0d58a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text);
+    background: #fff;
+  }
+  header {
+    background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+    color: #fff;
+    padding: 28px 24px 22px;
+  }
+  header .wrap { display: flex; align-items: center; gap: 16px; }
+  header svg { flex: none; }
+  header h1 { margin: 0; font-size: 26px; font-weight: 600; }
+  header .web {
+    margin-left: auto; color: #fff; text-decoration: none; font-weight: 600;
+    border: 1px solid rgba(255,255,255,.7); border-radius: 8px; padding: 8px 14px; white-space: nowrap;
+  }
+  header .web:hover { background: rgba(255,255,255,.15); }
+  header p { margin: 4px 0 0; opacity: .9; }
+  .layout { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 220px 1fr; gap: 32px; padding: 24px; }
+  nav { position: sticky; top: 16px; align-self: start; font-size: 14px; }
+  nav h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 8px; }
+  nav a { display: block; padding: 5px 10px; border-radius: 6px; color: var(--text); text-decoration: none; }
+  nav a:hover { background: var(--soft); color: var(--accent-dark); }
+  main { min-width: 0; }
+  section { margin-bottom: 36px; scroll-margin-top: 16px; }
+  h2 { font-size: 21px; margin: 0 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--line); }
+  h3 { font-size: 16px; margin: 20px 0 6px; }
+  p { margin: 0 0 10px; }
+  a { color: var(--link); }
+  ul, ol { margin: 0 0 12px; padding-left: 22px; }
+  li { margin-bottom: 4px; }
+  .path { font-weight: 600; white-space: nowrap; }
+  kbd {
+    display: inline-block; min-width: 22px; padding: 1px 6px; text-align: center;
+    font-family: "Segoe UI", sans-serif; font-size: 13px;
+    background: var(--soft); border: 1px solid #c9d0d9; border-bottom-width: 2px; border-radius: 4px;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--soft); font-weight: 600; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 8px 0 14px; }
+  .card { background: var(--soft); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+  .card strong { display: block; margin-bottom: 2px; }
+  .card span { color: var(--muted); font-size: 14px; }
+  .note { background: var(--soft); border-left: 4px solid var(--link); border-radius: 4px; padding: 10px 14px; margin: 10px 0 14px; }
+  .donate {
+    display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+    background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 10px; padding: 18px 20px;
+  }
+  .donate p { margin: 0; max-width: 560px; }
+  .donate form { margin: 0; }
+  .btn-warning {
+    font: inherit; font-weight: 600; font-size: 17px; cursor: pointer;
+    background: #ffc107; color: #212529; border: 1px solid #e0a800; border-radius: 8px; padding: 10px 22px;
+  }
+  .btn-warning:hover { background: #e0a800; }
+  footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding: 16px 24px 28px; text-align: center; }
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; gap: 8px; }
+    nav { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <svg width="48" height="48" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M6,26 C10,17 15,25 17,16 S25,12 26,6" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="6" cy="26" r="3.5" fill="#2e7d32" stroke="#fff" stroke-width="1.2"/>
+      <circle cx="26" cy="6" r="3.5" fill="#fff" stroke="#8b0000" stroke-width="1.2"/>
+    </svg>
+    <div>
+      <h1>Ayuda de Mendikat TrailLab</h1>
+      <p>Abre, revisa, edita y guarda archivos GPX sobre el mapa.</p>
+    </div>
+    <a class="web" href="https://www.mendikat.net">www.mendikat.net ↗</a>
+  </div>
+</header>
+
+<div class="layout">
+  <nav aria-label="Contenido">
+    <h2>Contenido</h2>
+    <a href="#empezar">Primeros pasos</a>
+    <a href="#mapa">Mapa y coordenadas</a>
+    <a href="#capas">Capas y puntos</a>
+    <a href="#editar">Editar</a>
+    <a href="#perfil">Perfil de elevación</a>
+    <a href="#herramientas">Herramientas</a>
+    <a href="#teclado">Atajos de teclado</a>
+    <a href="#archivos">Archivos y guardado</a>
+    <a href="#problemas">Problemas frecuentes</a>
+    <a href="#apoya">Apoya a Mendikat</a>
+    <a href="#acerca">Acerca de</a>
+  </nav>
+
+  <main>
+    <section id="empezar">
+      <h2>Primeros pasos</h2>
+      <ol>
+        <li><span class="path">Archivo › Abrir Track…</span> (<kbd>Ctrl</kbd>+<kbd>O</kbd>) y elija un archivo <strong>.gpx</strong>. Se pueden abrir varios a la vez: cada uno aparece en su pestaña y con su color en el mapa.</li>
+        <li>El mapa se ajusta a los datos. En el panel izquierdo, <strong>Capas</strong> muestra los tracks, rutas y waypoints del archivo, y <strong>Puntos</strong> los puntos del elemento seleccionado.</li>
+        <li>Para empezar un track nuevo: <span class="path">Archivo › Nuevo Track</span> (<kbd>Ctrl</kbd>+<kbd>N</kbd>) y <kbd>Ctrl</kbd> + clic en el mapa para añadir puntos.</li>
+      </ol>
+      <div class="note">Los archivos grandes muestran el porcentaje de carga en la barra de estado. Se puede detener con el botón <strong>Cancelar</strong> o con <kbd>Esc</kbd>.</div>
+    </section>
+
+    <section id="mapa">
+      <h2>Mapa y coordenadas</h2>
+      <p>Arrastre para desplazarse y use la rueda para acercar o alejar. La barra de herramientas tiene <strong>+</strong>, <strong>−</strong> y <strong>⤢</strong> (ajustar a los datos), y el selector de cartografía:</p>
+      <div class="cards">
+        <div class="card"><strong>Mapa IGN (España)</strong><span>Predeterminada. Topográfico oficial.</span></div>
+        <div class="card"><strong>OpenTopoMap · CyclOSM · OpenStreetMap</strong><span>Mundial, datos OSM.</span></div>
+        <div class="card"><strong>Satélite y Topográfico (ESRI)</strong><span>Imagen aérea y relieve.</span></div>
+        <div class="card"><strong>Géoportail IGN (France)</strong><span>Mapa topográfico SCAN 25 del IGN francés.</span></div>
+        <div class="card"><strong>MtbMap</strong><span>Mapa para BTT.</span></div>
+      </div>
+      <p>La cartografía elegida se recuerda para la próxima vez. Sin conexión no se ve el fondo, pero los archivos se abren, editan y guardan igual.</p>
+      <p>Al mover el puntero, la barra de estado muestra la posición en <strong>UTM WGS84</strong> (por ejemplo <code>30T 575700 4760048</code>) y en <strong>grados, minutos y segundos</strong>.</p>
+    </section>
+
+    <section id="capas">
+      <h2>Capas y puntos</h2>
+      <ul>
+        <li>La casilla de cada capa la muestra u oculta en el mapa.</li>
+        <li>Al seleccionar una capa, su lista de puntos aparece debajo. Un clic en la lista o en el mapa selecciona un punto; <kbd>Ctrl</kbd> o <kbd>Mayús</kbd> + clic en la lista selecciona varios.</li>
+        <li>Los <strong>waypoints</strong> del GPX se dibujan como triángulos con su nombre al acercarse.</li>
+        <li>El panel <strong>Punto seleccionado</strong> muestra y permite cambiar nombre, comentario, descripción, latitud, longitud, elevación y hora. También indica de dónde viene la elevación: archivo, interpolada, MDT o escrita a mano.</li>
+      </ul>
+    </section>
+
+    <section id="editar">
+      <h2>Editar</h2>
+      <table>
+        <tr><th>Acción</th><th>Cómo</th></tr>
+        <tr><td>Eliminar puntos</td><td><kbd>Supr</kbd> o clic derecho › Eliminar. Sin puntos seleccionados, elimina el track o la ruta (pide confirmación).</td></tr>
+        <tr><td>Insertar un punto intermedio</td><td><kbd>Insert</kbd>: añade el punto medio entre el seleccionado y el siguiente.</td></tr>
+        <tr><td>Añadir puntos</td><td><kbd>Ctrl</kbd> + clic en el mapa: tras el punto seleccionado o al final del elemento.</td></tr>
+        <tr><td>Mover un punto</td><td>Seleccionarlo y arrastrarlo en el mapa, o cambiar latitud y longitud en el panel y pulsar <strong>Aplicar</strong> (<kbd>Intro</kbd>).</td></tr>
+        <tr><td>Deshacer / rehacer</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd>. Cada documento tiene su propio historial.</td></tr>
+      </table>
+      <p>Un asterisco <strong>*</strong> en la pestaña y en el título indica cambios sin guardar.</p>
+    </section>
+
+    <section id="perfil">
+      <h2>Perfil de elevación</h2>
+      <p>Seleccione un track o ruta en <strong>Capas</strong> y pulse <strong>Perfil</strong> (o <span class="path">Ver › Perfil de elevación</span>).</p>
+      <div class="cards">
+        <div class="card"><strong>Recorrido</strong><span>Distancia, desnivel positivo y negativo, elevación mínima y máxima.</span></div>
+        <div class="card"><strong>Tiempo</strong><span>Total, en movimiento, detenido, velocidad media y máxima.</span></div>
+      </div>
+      <ul>
+        <li>El <strong>desnivel</strong> se calcula como en mendikat.net: sobre el perfil suavizado con una media gaussiana de 100 m, para no sumar el ruido del GPS. En un circuito, el negativo se iguala al positivo.</li>
+        <li><strong>Detenido</strong>: tramos a menos de 1 km/h y pausas entre segmentos. La <strong>velocidad media</strong> sólo cuenta el tiempo en movimiento; la <strong>máxima</strong> es la mayor mantenida durante al menos 30 s.</li>
+        <li>Al pasar el puntero por el perfil, el punto se marca en el mapa; un clic lo selecciona y <kbd>←</kbd> <kbd>→</kbd> recorren los puntos.</li>
+      </ul>
+    </section>
+
+    <section id="herramientas">
+      <h2>Herramientas</h2>
+      <p>Se aplican al track o ruta seleccionado en <strong>Capas</strong>. Todas muestran una vista previa, no cambian nada hasta pulsar <strong>Aplicar</strong> y se deshacen con <kbd>Ctrl</kbd>+<kbd>Z</kbd>.</p>
+      <h3>Simplificar track</h3>
+      <p>Reduce puntos con el algoritmo de Douglas–Peucker. La tolerancia en metros indica cuánto puede separarse la línea simplificada de la original. Se conservan el primer y el último punto de cada segmento.</p>
+      <h3>Regenerar tiempos</h3>
+      <p>Pone horas nuevas a partir de una fecha, hora y zona horaria de inicio, con una velocidad (km/h, m/s o min/km) o un intervalo fijo entre puntos.</p>
+      <h3>Ajustar altitudes con el MDT del IGN</h3>
+      <p>Consulta el Modelo Digital del Terreno del IGN (5 m o 25 m) y sustituye las elevaciones. Sólo cubre España y necesita conexión. Los puntos sin dato (mar o fuera de España) conservan su elevación.</p>
+    </section>
+
+    <section id="teclado">
+      <h2>Atajos de teclado</h2>
+      <table>
+        <tr><th>Teclas</th><th>Acción</th></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>N</kbd></td><td>Nuevo track</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td>Abrir track</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Guardar</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>F4</kbd></td><td>Cerrar archivo</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Deshacer / rehacer</td></tr>
+        <tr><td><kbd>Supr</kbd> / <kbd>Insert</kbd></td><td>Eliminar / insertar punto</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>Ctrl</kbd>+<kbd>−</kbd></td><td>Acercar / alejar el mapa</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Cancelar la apertura de un archivo</td></tr>
+        <tr><td><kbd>F1</kbd></td><td>Esta ayuda</td></tr>
+        <tr><td><kbd>Alt</kbd> + letra subrayada</td><td>Abrir los menús con el teclado</td></tr>
+      </table>
+    </section>
+
+    <section id="archivos">
+      <h2>Archivos y guardado</h2>
+      <ul>
+        <li>Se abren <strong>GPX 1.1 y 1.0</strong>, y siempre se guarda GPX 1.1 válido. Si el archivo era GPX 1.0, se avisa antes de guardar.</li>
+        <li>Se conservan los metadatos, las extensiones y los campos que la aplicación no edita.</li>
+        <li>Guardar es seguro: primero se escribe un archivo temporal, se comprueba y sólo entonces sustituye al original.</li>
+        <li>La configuración se guarda en <code>%APPDATA%\Mendikat\TrailLab</code> y el registro técnico en <code>%LOCALAPPDATA%\Mendikat\TrailLab\logs</code>.</li>
+      </ul>
+    </section>
+
+    <section id="problemas">
+      <h2>Problemas frecuentes</h2>
+      <h3>No se ve el mapa de fondo</h3>
+      <p>Sin conexión o con el servidor caído, la barra de estado lo indica en rojo. Pruebe otra cartografía.</p>
+      <h3>Un archivo no se abre</h3>
+      <p>El mensaje indica el motivo y, si se conoce, la línea del archivo con el problema (por ejemplo, una coordenada fuera de rango).</p>
+      <h3>El desnivel no coincide con el de otro programa</h3>
+      <p>Cada programa filtra el ruido del GPS a su manera. TrailLab usa el mismo método que mendikat.net.</p>
+    </section>
+
+    <section id="apoya">
+      <h2>Apoya a Mendikat</h2>
+      <div class="donate">
+        <p>Mendikat TrailLab es gratuita. Si te resulta útil, puedes ayudar a mantener Mendikat con un donativo.</p>
+        <form action="https://www.paypal.com/donate" method="post" target="_top">
+          <input type="hidden" name="hosted_button_id" value="4BNLU9ACSHTFN">
+          <input type="submit" class="btn btn-lg btn-warning" value="¡Dona ahora!" title="PayPal. La forma rápida y segura de pagar en Internet.">
+        </form>
+      </div>
+    </section>
+
+    <section id="acerca">
+      <h2>Acerca de</h2>
+      <p><strong>Mendikat TrailLab</strong>. La versión instalada se ve en <span class="path">Ayuda › Acerca de Mendikat TrailLab…</span></p>
+      <p>Autor: Javier Urrutia · <a href="mailto:javi@mendikat.net">javi@mendikat.net</a> · <a href="https://www.mendikat.net">www.mendikat.net</a></p>
+      <p>Cartografía y MDT del IGN España bajo CC BY 4.0 (scne.es); datos de OpenStreetMap bajo ODbL.</p>
+    </section>
+  </main>
+</div>
+
+<footer>© Mendikat · <a href="https://www.mendikat.net">www.mendikat.net</a></footer>
+
+</body>
+</html>
