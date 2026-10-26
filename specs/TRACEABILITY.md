@@ -13,7 +13,7 @@ Estado: ✅ cubierto y probado · 🟡 parcial (se completa en el incremento ind
 | APP-02 | ✅ | `MainWindow.xaml` (menú Archivo), `MainViewModel` (CanExecute) | `Without_documents_only_open_and_exit_are_enabled`, `Save_is_enabled_only_when_the_active_document_has_changes` |
 | APP-03 | ✅ | `MainViewModel.Documents/ActiveDocument`, `TabControl` | `Opening_a_second_file_keeps_the_first_one`, `Closing_the_active_document_activates_a_neighbour` |
 | APP-04 | ✅ | `MainViewModel.CloseDocumentAsync/ConfirmCloseAllAsync`, `MainWindow.OnClosing` | 6 pruebas `APP-04` en `MainViewModelTests` |
-| APP-05 | 🟡 (Inc 2: errores de formato y cartografía) | `DocumentLoadException`, `UserMessages`, `App.OnDispatcherUnhandledException` | `Load_error_shows_a_spanish_message_and_adds_no_document`, `FileProbeDocumentStoreTests` |
+| APP-05 | ✅ (completado en Inc 2 y 7; revisado 2026-10-26) | `DocumentLoadException` (todos los tipos con mensaje en `UserMessages.ForLoadError`), estado de cartografía (MAP-07), errores del MDT en su diálogo (DEM-03), `App.OnDispatcherUnhandledException` | `Load_error_shows_a_spanish_message_and_adds_no_document`, `Load_errors_have_spanish_messages`, `Zero_byte_file_is_reported_as_empty`, `A_service_failure_is_shown_in_the_dialog_and_changes_nothing` |
 | APP-07 | ✅ | `TrailDocument.IsSameFile`, `MainViewModel.OpenPathAsync` | `Opening_an_already_open_file_activates_it_instead_of_duplicating`, `IsSameFile_compares_full_paths_case_insensitively` |
 | SAVE-04 | 🟡 (Inc 3: volver a limpio al deshacer) | `TrailDocument.IsDirty`, `DocumentViewModel.Header` | `TrailDocumentTests`, `Save_as_saves_to_the_chosen_path_and_clears_the_indicator` |
 | SAVE-05 | ✅ | Sólo `MainViewModel.SaveAsync` llama a `IDocumentStore.SaveAsync` | Revisión de código |
