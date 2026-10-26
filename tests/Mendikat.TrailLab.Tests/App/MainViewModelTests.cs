@@ -27,7 +27,6 @@ public sealed class MainViewModelTests
     public void Without_documents_only_open_and_exit_are_enabled()
     {
         Assert.True(_vm.OpenGpxCommand.CanExecute(null));
-        Assert.True(_vm.OpenWptCommand.CanExecute(null));
         Assert.True(_vm.ExitCommand.CanExecute(null));
         Assert.False(_vm.SaveCommand.CanExecute(null));
         Assert.False(_vm.SaveAsCommand.CanExecute(null));

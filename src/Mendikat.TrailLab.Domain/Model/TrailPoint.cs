@@ -33,9 +33,6 @@ public sealed class TrailPoint
     /// <summary>Source elements without a typed property (GPX: fix, sat, hdop, link, extensions…), kept for saving.</summary>
     public List<XmlFragment> OtherElements { get; } = [];
 
-    /// <summary>Opaque data owned by the file format (e.g. the original WPT line), used to save unedited fields verbatim.</summary>
-    public object? FormatState { get; set; }
-
     /// <summary>True for points inserted by the user during this session (drawn with a distinct symbol).</summary>
     public bool IsAdded { get; set; }
 

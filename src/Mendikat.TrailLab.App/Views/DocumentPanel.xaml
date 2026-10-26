@@ -143,10 +143,8 @@
                                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource FieldBox}"
                                          AutomationProperties.Name="{x:Static res:Strings.FieldName}" />
 
-                                <TextBlock Grid.Row="1" Text="{x:Static res:Strings.FieldComment}" Style="{StaticResource FieldLabel}"
-                                           Visibility="{Binding ShowComment, Converter={StaticResource BoolToVisibility}}" />
+                                <TextBlock Grid.Row="1" Text="{x:Static res:Strings.FieldComment}" Style="{StaticResource FieldLabel}" />
                                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource FieldBox}"
-                                         Visibility="{Binding ShowComment, Converter={StaticResource BoolToVisibility}}"
                                          AutomationProperties.Name="{x:Static res:Strings.FieldComment}" />
 
                                 <TextBlock Grid.Row="2" Text="{x:Static res:Strings.FieldDescription}" Style="{StaticResource FieldLabel}" />

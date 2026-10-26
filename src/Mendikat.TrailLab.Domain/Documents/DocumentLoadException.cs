@@ -22,15 +22,6 @@ public enum DocumentLoadError
 
     /// <summary>A date/time field that cannot be parsed.</summary>
     InvalidDate,
-
-    /// <summary>A .wpt file whose content does not match any supported dialect.</summary>
-    UnsupportedWptDialect,
-
-    /// <summary>A datum other than WGS 84. <see cref="DocumentLoadException.Detail"/> holds the datum name.</summary>
-    UnsupportedDatum,
-
-    /// <summary>A coordinate system the reader does not support (e.g. CompeGPS UTM files).</summary>
-    UnsupportedCoordinateSystem,
 }
 
 /// <summary>Expected failure while loading a document; carries a typed reason instead of a UI text.</summary>

@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <!-- GPX and WPT file formats (reading in increment 2, writing in increment 4). No UI dependencies. -->
+  <!-- GPX file format (reading in increment 2, writing in increment 4). No UI dependencies. WPT was removed on 2026-10-26. -->
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>

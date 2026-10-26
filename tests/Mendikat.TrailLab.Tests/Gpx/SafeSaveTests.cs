@@ -67,8 +67,6 @@ public sealed class SafeSaveTests : IDisposable
     [Trait("Req", "SAVE-01")]
     [Trait("Req", "GPX-03")]
     [InlineData("gpx/valid-11.gpx", DocumentFormat.Gpx)]
-    [InlineData("wpt/ozi-sample.wpt", DocumentFormat.Wpt)]
-    [InlineData("wpt/compegps-ansi.wpt", DocumentFormat.Wpt)]
     public async Task Store_saves_in_the_same_format_and_the_file_reopens_identically(string fixture, DocumentFormat format)
     {
         var store = new FileDocumentStore();

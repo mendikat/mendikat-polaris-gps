@@ -29,10 +29,9 @@ public sealed class PointDetailViewModel : ObservableObject
     private string _timeUtc;
     private string? _error;
 
-    public PointDetailViewModel(TrailPoint point, PointFieldSupport support)
+    public PointDetailViewModel(TrailPoint point)
     {
         Point = point;
-        Support = support;
         _original = PointValues.From(point);
         _name = point.Name ?? string.Empty;
         _comment = point.Comment ?? string.Empty;
@@ -53,10 +52,6 @@ public sealed class PointDetailViewModel : ObservableObject
     }
 
     public TrailPoint Point { get; }
-
-    public PointFieldSupport Support { get; }
-
-    public bool ShowComment => Support.Comment;
 
     public bool IsAdded => Point.IsAdded;
 
@@ -139,22 +134,12 @@ public sealed class PointDetailViewModel : ObservableObject
             return Strings.ValidationTime;
         }
 
-        if (!Support.NameAllowsSpaces && _name.Any(char.IsWhiteSpace))
-        {
-            return Strings.ValidationNoSpaces;
-        }
-
-        if (!Support.TextAllowsCommas && (_name.Contains(',') || _description.Contains(',')))
-        {
-            return Strings.ValidationNoCommas;
-        }
-
         result = new PointValues(
             new GeoPosition(lat, lon),
             elevation,
             time,
             Keep(_name, _original.Name),
-            Support.Comment ? Keep(_comment, _original.Comment) : _original.Comment,
+            Keep(_comment, _original.Comment),
             Keep(_description, _original.Description));
         return null;
     }

@@ -169,6 +169,59 @@ public sealed class ProfileStatisticsTests
         Assert.Equal(TimeSpan.FromMinutes(30), times.Stopped);
     }
 
+    /// <summary>Points northwards at the given distances from the start (meters) and times (seconds).</summary>
+    private static List<TrailPoint> Walk(IEnumerable<(double Meters, double Seconds)> steps) =>
+        steps.Select(s => new TrailPoint(new GeoPosition(42 + (s.Meters / 111_050.0), -1.6)) { Time = Start.AddSeconds(s.Seconds) }).ToList();
+
+    [Fact]
+    [Trait("Req", "PROF-08")]
+    public void Average_speed_counts_only_the_time_in_movement()
+    {
+        // 100 m in 60 s, a 10-minute stop, 100 m in 60 s: 200 m in 2 moving minutes = 6 km/h.
+        var times = ElevationProfile.Build([Walk([(0, 0), (100, 60), (100, 660), (200, 720)])]).Times!;
+
+        Assert.Equal(200, times.MovingDistance, 0);
+        Assert.Equal(6.0, times.AverageSpeed!.Value * 3.6, 1);
+    }
+
+    [Fact]
+    [Trait("Req", "PROF-08")]
+    public void Maximum_speed_is_the_fastest_stretch_of_at_least_30_seconds()
+    {
+        // Every 10 s: 2 minutes at 1 m/s, then 1 minute at 3 m/s.
+        var steps = Enumerable.Range(0, 13).Select(i => ((double)i * 10, i * 10.0))
+            .Concat(Enumerable.Range(1, 6).Select(i => (120 + (i * 30.0), 120 + (i * 10.0))));
+
+        var times = ElevationProfile.Build([Walk(steps)]).Times!;
+
+        Assert.Equal(3.0, times.MaxSpeed!.Value, 2);
+    }
+
+    [Fact]
+    [Trait("Req", "PROF-08")]
+    public void A_gps_jump_does_not_set_the_maximum_speed()
+    {
+        // 1 m/s every 5 s for 2 minutes, but one point jumps 45 m ahead and back: 9 m/s point to point.
+        var steps = Enumerable.Range(0, 25).Select(i => (i * 5.0 + (i == 12 ? 45 : 0), i * 5.0)).ToList();
+        var samples = ElevationProfile.Build([Walk(steps)]).Samples;
+        var pointToPoint = samples.Zip(samples.Skip(1), (a, b) => (b.Distance - a.Distance) / 5).Max();
+
+        var max = ProfileStatistics.Times(samples)!.MaxSpeed!.Value;
+
+        Assert.True(pointToPoint > 8, $"point to point {pointToPoint}");
+        Assert.True(max < 4.1, $"max {max}");
+    }
+
+    [Fact]
+    [Trait("Req", "PROF-08")]
+    public void Without_30_seconds_of_data_there_is_no_maximum_speed()
+    {
+        var times = ElevationProfile.Build([Walk([(0, 0), (20, 10), (40, 20)])]).Times!;
+
+        Assert.Null(times.MaxSpeed);
+        Assert.NotNull(times.AverageSpeed);
+    }
+
     [Fact]
     [Trait("Req", "PROF-07")]
     [Trait("Req", "PROF-05")]

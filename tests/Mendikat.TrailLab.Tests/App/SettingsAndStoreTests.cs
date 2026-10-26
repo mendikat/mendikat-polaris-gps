@@ -2,7 +2,6 @@ using Mendikat.TrailLab.App.Services;
 using Mendikat.TrailLab.App.Settings;
 using Mendikat.TrailLab.Domain.Documents;
 using Mendikat.TrailLab.Domain.Model;
-using Mendikat.TrailLab.Gpx.Wpt;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Mendikat.TrailLab.Tests.App;
@@ -57,17 +56,6 @@ public sealed class SettingsAndStoreTests : IDisposable
         Assert.False(document.IsDirty);
     }
 
-    [Fact]
-    [Trait("Req", "WPT-01")]
-    public async Task File_store_loads_wpt()
-    {
-        var document = await new FileDocumentStore().LoadAsync(
-            Fixture.PathOf("wpt/ozi-sample.wpt"), DocumentFormat.Wpt, null, TestContext.Current.CancellationToken);
-
-        Assert.Equal(3, document.Data.Waypoints.Count);
-        Assert.IsType<WptFormatState>(document.Data.FormatState);
-    }
-
     [Theory]
     [Trait("Req", "APP-05")]
     [InlineData("missing.gpx", DocumentLoadError.FileNotFound)]
@@ -98,8 +86,7 @@ public sealed class SettingsAndStoreTests : IDisposable
     [Trait("Req", "APP-05")]
     [Trait("Req", "GPX-02")]
     [InlineData(DocumentLoadError.InvalidXml, 12, null, "El archivo «r.gpx» no es un XML válido, línea 12.")]
-    [InlineData(DocumentLoadError.UnsupportedDatum, 2, "European 1950", "El archivo «r.gpx» usa el datum «European 1950», línea 2. Solo se admite WGS 84 y no se convierte automáticamente.")]
-    [InlineData(DocumentLoadError.UnsupportedWptDialect, null, null, "El archivo «r.gpx» no corresponde a ningún formato WPT admitido (OziExplorer o CompeGPS / TwoNav).")]
+    [InlineData(DocumentLoadError.InvalidCoordinate, 2, "lat=\"95\"", "Coordenadas no válidas en «r.gpx», línea 2: lat=\"95\".\nLa latitud debe estar entre −90 y 90 y la longitud entre −180 y 180.")]
     public void Load_errors_have_spanish_messages(DocumentLoadError error, int? line, string? detail, string expected)
     {
         var message = UserMessages.ForLoadError(new DocumentLoadException(error, detail, line), "r.gpx");
@@ -114,17 +101,5 @@ public sealed class SettingsAndStoreTests : IDisposable
         Assert.Equal(
             "Marcas de tiempo sin zona horaria: 3. Se han interpretado como UTC.",
             UserMessages.ForWarning(new LoadWarning(LoadWarningKind.TimesWithoutZone, 3)));
-    }
-
-    [Fact]
-    [Trait("Req", "WPT-01")]
-    public void Source_format_names_the_wpt_dialect()
-    {
-        var data = new TrailData
-        {
-            FormatState = new WptFormatState { DialectId = "compegps", Encoding = WaypointFileReader.Windows1252, HeaderLines = [] },
-        };
-
-        Assert.Equal("WPT (CompeGPS / TwoNav)", UserMessages.SourceFormat(DocumentFormat.Wpt, data));
     }
 }

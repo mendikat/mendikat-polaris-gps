@@ -2,7 +2,6 @@ using Mendikat.TrailLab.App.Resources;
 using Mendikat.TrailLab.Domain.Documents;
 using Mendikat.TrailLab.Domain.Model;
 using Mendikat.TrailLab.Gpx;
-using Mendikat.TrailLab.Gpx.Wpt;
 
 namespace Mendikat.TrailLab.App.Services;
 
@@ -21,9 +20,6 @@ public static class UserMessages
             DocumentLoadError.InvalidCoordinate => Strings.ErrorInvalidCoordinate,
             DocumentLoadError.InvalidNumber => Strings.ErrorInvalidNumber,
             DocumentLoadError.InvalidDate => Strings.ErrorInvalidDate,
-            DocumentLoadError.UnsupportedWptDialect => Strings.ErrorUnsupportedWptDialect,
-            DocumentLoadError.UnsupportedDatum => Strings.ErrorUnsupportedDatum,
-            DocumentLoadError.UnsupportedCoordinateSystem => Strings.ErrorUnsupportedCoordinateSystem,
             _ => Strings.ErrorReadFailed,
         };
         var location = exception.Line is { } line ? string.Format(Strings.AtLine, line) : string.Empty;
@@ -42,24 +38,19 @@ public static class UserMessages
     public static string ForSaveIssue(SaveIssue issue) => issue.Kind switch
     {
         SaveIssueKind.GpxVersionUpgrade => Strings.SaveIssueGpxUpgrade,
-        SaveIssueKind.UnrepresentableCharacters => string.Format(Strings.SaveIssueUnrepresentable, issue.Count),
-        SaveIssueKind.MissingElevationWrittenAsZero => string.Format(Strings.SaveIssueMissingElevation, issue.Count),
         _ => issue.Kind.ToString(),
     };
 
     public static string FormatName(DocumentFormat format) => format switch
     {
         DocumentFormat.Gpx => "GPX",
-        DocumentFormat.Wpt => "WPT",
         _ => format.ToString(),
     };
 
-    /// <summary>Format and dialect as read, e.g. "GPX 1.1" or "WPT (OziExplorer)".</summary>
+    /// <summary>Format as read, e.g. "GPX 1.1".</summary>
     public static string SourceFormat(DocumentFormat format, TrailData data) => data.FormatState switch
     {
         GpxFormatState gpx => string.Format(Strings.FormatGpx, gpx.SourceVersion),
-        WptFormatState { DialectId: "ozi" } => Strings.FormatWptOzi,
-        WptFormatState { DialectId: "compegps" } => Strings.FormatWptCompeGps,
         _ => FormatName(format),
     };
 }

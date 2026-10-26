@@ -81,7 +81,7 @@ public sealed class PointInputTests
     {
         var point = new TrailPoint(new GeoPosition(42.98530001234, -2.0786)) { Name = "Txindoki" };
 
-        var detail = new PointDetailViewModel(point, PointFieldSupport.Gpx);
+        var detail = new PointDetailViewModel(point);
 
         Assert.Equal("42,9853000", detail.Latitude);
         Assert.Equal("", detail.Elevation);
@@ -96,7 +96,7 @@ public sealed class PointInputTests
     public void Untouched_fields_keep_their_exact_original_values()
     {
         var point = new TrailPoint(new GeoPosition(42.98530001234, -2.07860009876)) { Elevation = 1431.123456, Name = "A" };
-        var detail = new PointDetailViewModel(point, PointFieldSupport.Gpx) { Name = "B" };
+        var detail = new PointDetailViewModel(point) { Name = "B" };
 
         Assert.True(detail.TryBuild(out var values));
 
@@ -109,7 +109,7 @@ public sealed class PointInputTests
     [Trait("Req", "WPE-03")]
     public void Invalid_values_are_not_built_and_an_error_is_shown()
     {
-        var detail = new PointDetailViewModel(new TrailPoint(new GeoPosition(42, -1)), PointFieldSupport.Gpx) { Latitude = "95" };
+        var detail = new PointDetailViewModel(new TrailPoint(new GeoPosition(42, -1))) { Latitude = "95" };
 
         Assert.False(detail.TryBuild(out _));
         Assert.Equal("La latitud debe ser un número entre −90 y 90.", detail.Error);
@@ -122,23 +122,9 @@ public sealed class PointInputTests
 
     [Fact]
     [Trait("Req", "WPE-02")]
-    [Trait("Req", "WPE-03")]
-    public void Format_restrictions_apply_to_wpt_texts()
-    {
-        var compe = new PointDetailViewModel(new TrailPoint(new GeoPosition(42, -1)), PointFieldSupport.CompeGps) { Name = "dos palabras" };
-        Assert.False(compe.TryBuild(out _));
-        Assert.False(compe.ShowComment);
-
-        var ozi = new PointDetailViewModel(new TrailPoint(new GeoPosition(42, -1)), PointFieldSupport.OziExplorer) { Description = "a, b" };
-        Assert.False(ozi.TryBuild(out _));
-        Assert.Equal("OziExplorer no admite comas en los textos.", ozi.Error);
-    }
-
-    [Fact]
-    [Trait("Req", "WPE-02")]
     public void Clearing_a_text_removes_the_value()
     {
-        var detail = new PointDetailViewModel(new TrailPoint(new GeoPosition(42, -1)) { Description = "x", Elevation = 10 }, PointFieldSupport.Gpx)
+        var detail = new PointDetailViewModel(new TrailPoint(new GeoPosition(42, -1)) { Description = "x", Elevation = 10 })
         {
             Description = "",
             Elevation = "",

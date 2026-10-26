@@ -3,7 +3,14 @@ namespace Mendikat.TrailLab.Domain.Profiles;
 /// <param name="Total">From the first to the last timed point.</param>
 /// <param name="Moving">Sum of the intervals inside segments where the horizontal speed reaches <see cref="ProfileStatistics.StoppedSpeed"/>.</param>
 /// <param name="Stopped">Total − moving: slow intervals, pauses between segments and intervals without usable times.</param>
-public sealed record ProfileTimes(TimeSpan Total, TimeSpan Moving, TimeSpan Stopped);
+/// <param name="MovingDistance">Meters covered in the moving intervals.</param>
+/// <param name="MaxSpeed">Highest speed (m/s) kept for at least <see cref="ProfileStatistics.MaxSpeedWindow"/>, or null if no stretch
+/// lasts that long.</param>
+public sealed record ProfileTimes(TimeSpan Total, TimeSpan Moving, TimeSpan Stopped, double MovingDistance = 0, double? MaxSpeed = null)
+{
+    /// <summary>Average moving speed in m/s: moving distance ÷ moving time; null without movement.</summary>
+    public double? AverageSpeed => Moving > TimeSpan.Zero ? MovingDistance / Moving.TotalSeconds : null;
+}
 
 /// <summary>
 /// Ascent/descent and time statistics of a profile (PROF-06, PROF-07). GPS elevations and positions are noisy, so both
@@ -34,6 +41,12 @@ public static class ProfileStatistics
 
     /// <summary>Below this horizontal speed (1 km/h, in m/s) an interval counts as stopped.</summary>
     public const double StoppedSpeed = 1 / 3.6;
+
+    /// <summary>
+    /// The maximum speed is the highest average over any stretch of at least this duration. Point-to-point speeds
+    /// are dominated by GPS jumps (a 10 m error in 1 s reads as 36 km/h).
+    /// </summary>
+    public static readonly TimeSpan MaxSpeedWindow = TimeSpan.FromSeconds(30);
 
     public static (double Ascent, double Descent) ElevationGain(IReadOnlyList<ProfileSample> samples)
     {
@@ -163,6 +176,7 @@ public static class ProfileStatistics
         }
 
         var moving = TimeSpan.Zero;
+        var movingDistance = 0.0;
         for (var i = 1; i < timed.Count; i++)
         {
             var (previous, current) = (timed[i - 1], timed[i]);
@@ -176,10 +190,41 @@ public static class ProfileStatistics
             if (speed >= stoppedSpeed)
             {
                 moving += interval;
+                movingDistance += current.Distance - previous.Distance;
             }
         }
 
         moving = moving > total ? total : moving;
-        return new ProfileTimes(total, moving, total - moving);
+        return new ProfileTimes(total, moving, total - moving, movingDistance, MaxSpeed(timed));
+    }
+
+    /// <summary>
+    /// Highest average speed over a stretch of at least <see cref="MaxSpeedWindow"/> inside one segment (two pointers:
+    /// for each start, the first point at least that much later). Null if no stretch lasts long enough.
+    /// </summary>
+    /// <param name="timed">Samples with a time, in order.</param>
+    public static double? MaxSpeed(IReadOnlyList<ProfileSample> timed)
+    {
+        double? max = null;
+        var end = 0;
+        for (var start = 0; start < timed.Count; start++)
+        {
+            end = Math.Max(end, start + 1);
+            var startTime = timed[start].Point.Time!.Value;
+            while (end < timed.Count && timed[end].Segment == timed[start].Segment && timed[end].Point.Time!.Value - startTime < MaxSpeedWindow)
+            {
+                end++;
+            }
+
+            if (end >= timed.Count || timed[end].Segment != timed[start].Segment)
+            {
+                continue; // no stretch from this point lasts long enough within its segment
+            }
+
+            var speed = (timed[end].Distance - timed[start].Distance) / (timed[end].Point.Time!.Value - startTime).TotalSeconds;
+            max = max is { } m ? Math.Max(m, speed) : speed;
+        }
+
+        return max;
     }
 }

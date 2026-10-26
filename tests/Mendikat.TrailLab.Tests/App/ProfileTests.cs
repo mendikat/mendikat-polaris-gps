@@ -62,8 +62,13 @@ public sealed class ProfileTests
 
         Assert.Equal("Perfil de elevación — Subida (perfil.gpx)", profile.Title);
         Assert.Equal(10, profile.Profile.Samples.Count);
-        Assert.Equal("Distancia: 1,00 km · Desnivel positivo: +90 m · Desnivel negativo: −0 m · Elevación mínima: 500 m · máxima: 590 m", profile.Summary);
-        Assert.Equal("Tiempo total: 9 min 00 s · en movimiento: 9 min 00 s · detenido: 0 min 00 s", profile.TimeSummary);
+        Assert.Equal(
+            ["Distancia: 1,00 km", "Desnivel positivo: +90 m", "Desnivel negativo: −0 m", "Elevación mínima: 500 m", "Elevación máxima: 590 m"],
+            profile.RouteStats.Select(s => s.Description));
+        Assert.Equal(
+            ["Tiempo total: 9 min 00 s", "En movimiento: 9 min 00 s", "Detenido: 0 min 00 s", "Velocidad media: 6,7 km/h", "Velocidad máxima: 6,7 km/h"],
+            profile.TimeStats.Select(s => s.Description));
+        Assert.Null(profile.NoTimesNote);
         Assert.False(profile.HasMissingWarning);
     }
 

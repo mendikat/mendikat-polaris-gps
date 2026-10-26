@@ -1,6 +1,8 @@
 # ADR-0006 — Dialecto WPT soportado inicialmente
 
-- Estado: **Aceptada** (2026-10-24): se soportan **OziExplorer v1.1 y CompeGPS/TwoNav** (opción C)
+- Estado: **Retirada** (2026-10-26): el responsable decide trabajar sólo con GPX; se elimina la lectura y escritura de WPT
+  (código, pruebas y fixtures; quedan en el historial de git, commit 77ff3ee y anteriores). Los waypoints se editan dentro de
+  un GPX. Antes: **Aceptada** (2026-10-24), se soportaban **OziExplorer v1.1 y CompeGPS/TwoNav** (opción C)
 - Fecha: 2026-10-24
 
 ## Contexto

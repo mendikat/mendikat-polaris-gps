@@ -14,7 +14,7 @@ public sealed class WpfDialogService : IDialogService
     {
         var dialog = new OpenFileDialog
         {
-            Title = format == DocumentFormat.Gpx ? Strings.DialogOpenGpxTitle : Strings.DialogOpenWptTitle,
+            Title = Strings.DialogOpenGpxTitle,
             Filter = FilterFor(format),
             CheckFileExists = true,
             Multiselect = false,
@@ -30,7 +30,7 @@ public sealed class WpfDialogService : IDialogService
             Filter = FilterFor(format),
             FileName = Path.GetFileName(suggestedPath),
             InitialDirectory = Path.GetDirectoryName(suggestedPath),
-            DefaultExt = format == DocumentFormat.Gpx ? ".gpx" : ".wpt",
+            DefaultExt = ".gpx",
             AddExtension = true,
             OverwritePrompt = true,
         };
@@ -79,6 +79,9 @@ public sealed class WpfDialogService : IDialogService
 
     private static Window Owner => Application.Current.MainWindow;
 
-    private static string FilterFor(DocumentFormat format) =>
-        format == DocumentFormat.Gpx ? Strings.FilterGpx : Strings.FilterWpt;
+    private static string FilterFor(DocumentFormat format) => format switch
+    {
+        DocumentFormat.Gpx => Strings.FilterGpx,
+        _ => throw new ArgumentOutOfRangeException(nameof(format), format, null),
+    };
 }

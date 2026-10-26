@@ -15,7 +15,7 @@ Convenciones:
 | Id | Ver | Inc | Requisito | Criterios de aceptación |
 |----|-----|-----|-----------|-------------------------|
 | APP-01 | 1 | 1 | La ventana principal muestra título «Mendikat TrailLab», menú superior clásico, área de documentos y barra de estado. | Al arrancar se ven los cuatro elementos; el título incluye el documento activo y `*` si tiene cambios. |
-| APP-02 | 1 | 1 | Menú **Archivo**: Abrir GPX…, Abrir WPT…, Guardar, Guardar como…, Cerrar documento, Salir. | Guardar/Guardar como/Cerrar están deshabilitados sin documento activo; Guardar está deshabilitado si el documento activo no tiene cambios. |
+| APP-02 | 2 | 1 | Menú **Archivo**: Nuevo GPX, Abrir GPX… (sólo GPX desde 2026-10-26), Guardar, Guardar como…, Cerrar documento, Salir. | Guardar/Guardar como/Cerrar están deshabilitados sin documento activo; Guardar está deshabilitado si el documento activo no tiene cambios. |
 | APP-03 | 1 | 1 | Varios documentos abiertos simultáneamente, en pestañas dentro de la ventana principal (ADR-0002). Cada documento conserva su estado, ruta y formato. | Abrir un segundo archivo no cierra ni modifica el primero; cambiar de pestaña restaura su vista. |
 | APP-04 | 1 | 1 | Cerrar un documento con cambios (o salir) pregunta Guardar / No guardar / Cancelar. | Cancelar conserva el documento y sus cambios; No guardar descarta; Guardar guarda y cierra (si falla, no cierra). |
 | APP-05 | 1 | 1 | Los errores de archivo y cartografía se muestran con mensajes comprensibles en español sin bloquear ni cerrar la aplicación. | Abrir un archivo corrupto muestra un mensaje con el motivo; la aplicación sigue operativa. |
@@ -64,13 +64,13 @@ Convenciones:
 
 | Id | Ver | Inc | Requisito | Criterios de aceptación |
 |----|-----|-----|-----------|-------------------------|
-| WPT-01 | 1 | 2 | Lector/escritor de **OziExplorer Waypoint File v1.1** (ADR-0006), diseñado tras una interfaz `IWaypointFileFormat` con detección por contenido para añadir dialectos. | Fixture OziExplorer se carga con nombre, lat, lon, alt, fecha, descripción. |
-| WPT-06 | 2 | 2 | Lector/escritor de **CompeGPS/TwoNav WPT** (líneas `G`, `U`, `W`, `w`), datum WGS 84, sólo coordenadas geográficas (`U 1`); `U 0` (UTM) se rechaza con mensaje claro. Altitud en metros. Líneas de tipo desconocido se conservan. | Fixture CompeGPS geográfico se carga; fixture UTM → error comprensible. |
-| WPT-07 | 1 | 2 | La detección de dialecto es por contenido, no por extensión; un `.wpt` no reconocido produce un error que indica que el dialecto no está soportado. | Fixture desconocido → error claro. |
-| WPT-02 | 1 | 2 | Sólo datum «WGS 84» en v1; otro datum → error claro indicando el datum encontrado (no se convierte en silencio). | Fixture con «European 1950» → error comprensible. |
-| WPT-03 | 1 | 2 | Altitud OziExplorer en pies se convierte a metros para el modelo; `-777` = sin altitud. Al guardar se reconvierte; si el valor no se editó, se escribe el texto original. | Ida y vuelta conserva el texto original de altitud no editada. |
-| WPT-04 | 1 | 4 | Los campos no editables (símbolo, colores, formato, proximidad…) se conservan textualmente al guardar. | Ida y vuelta byte a byte de líneas no modificadas (salvo fin de línea normalizado CRLF). |
-| WPT-05 | 2 | 2 | Codificación detectada (UTF-8 válido con no-ASCII → UTF-8; si no, Windows-1252) y conservada. OziExplorer: el carácter 209 no se convierte al leer (es «Ñ» en Windows-1252); al escribir textos editados, las comas se sustituyen por el carácter 209 (ADR-0006). | Fixture con «Ñ» se lee como «Ñ»; fixtures ANSI y UTF-8 se leen correctamente. |
+| WPT-01 | 1 | 2 | *Retirado (2026-10-26)*: sólo GPX. Antes: Lector/escritor de **OziExplorer Waypoint File v1.1** (ADR-0006), diseñado tras una interfaz `IWaypointFileFormat` con detección por contenido para añadir dialectos. | Fixture OziExplorer se carga con nombre, lat, lon, alt, fecha, descripción. |
+| WPT-06 | 2 | 2 | *Retirado (2026-10-26)*: sólo GPX. Antes: Lector/escritor de **CompeGPS/TwoNav WPT** (líneas `G`, `U`, `W`, `w`), datum WGS 84, sólo coordenadas geográficas (`U 1`); `U 0` (UTM) se rechaza con mensaje claro. Altitud en metros. Líneas de tipo desconocido se conservan. | Fixture CompeGPS geográfico se carga; fixture UTM → error comprensible. |
+| WPT-07 | 1 | 2 | *Retirado (2026-10-26)*: sólo GPX. Antes: La detección de dialecto es por contenido, no por extensión; un `.wpt` no reconocido produce un error que indica que el dialecto no está soportado. | Fixture desconocido → error claro. |
+| WPT-02 | 1 | 2 | *Retirado (2026-10-26)*: sólo GPX. Antes: Sólo datum «WGS 84» en v1; otro datum → error claro indicando el datum encontrado (no se convierte en silencio). | Fixture con «European 1950» → error comprensible. |
+| WPT-03 | 1 | 2 | *Retirado (2026-10-26)*: sólo GPX. Antes: Altitud OziExplorer en pies se convierte a metros para el modelo; `-777` = sin altitud. Al guardar se reconvierte; si el valor no se editó, se escribe el texto original. | Ida y vuelta conserva el texto original de altitud no editada. |
+| WPT-04 | 1 | 4 | *Retirado (2026-10-26)*: sólo GPX. Antes: Los campos no editables (símbolo, colores, formato, proximidad…) se conservan textualmente al guardar. | Ida y vuelta byte a byte de líneas no modificadas (salvo fin de línea normalizado CRLF). |
+| WPT-05 | 2 | 2 | *Retirado (2026-10-26)*: sólo GPX. Antes: Codificación detectada (UTF-8 válido con no-ASCII → UTF-8; si no, Windows-1252) y conservada. OziExplorer: el carácter 209 no se convierte al leer (es «Ñ» en Windows-1252); al escribir textos editados, las comas se sustituyen por el carácter 209 (ADR-0006). | Fixture con «Ñ» se lee como «Ñ»; fixtures ANSI y UTF-8 se leen correctamente. |
 
 ## LAY — Capas y selección
 
@@ -104,6 +104,7 @@ Convenciones:
 | PROF-05 | 1 | 5 | Tracks con 0, 1 o puntos duplicados no generan errores. | Pruebas unitarias de casos degenerados. |
 | PROF-06 | 1 | 5 | El perfil muestra el desnivel positivo y negativo acumulados, calculados como en mendikat.net: perfil suavizado con una media móvil gaussiana de 100 m (ADR-0008). Los segmentos se miden por separado, las elevaciones ausentes se omiten y en un circuito (inicio y fin a menos de 100 m) el negativo se iguala al positivo. | Subida de 100 m entre tramos llanos → +100 m; oscilaciones de 3 m cada 10 m → sólo queda la diferencia neta; mismos valores que `GaussianElevationAnalyzer.php`. |
 | PROF-07 | 1 | 5 | El perfil muestra el tiempo total, en movimiento y detenido. Un tramo entre puntos consecutivos de un segmento cuenta como detenido si la velocidad horizontal es menor de 1 km/h; la pausa entre segmentos también. Sin horas: «los puntos no tienen hora». | Parada de 10 min en el mismo punto → 10 min detenido; pausa de 30 min entre segmentos → 30 min detenido. |
+| PROF-08 | 1 | — | El perfil muestra la velocidad media (distancia en movimiento ÷ tiempo en movimiento, con el mismo umbral de 1 km/h que PROF-07) y la velocidad máxima: la mayor media de cualquier tramo de al menos 30 s dentro de un segmento, para que los saltos del GPS no la fijen (ADR-0008). En km/h con un decimal; sin horas no se muestran. | 100 m en 60 s, parada de 10 min y 100 m en 60 s → media 6,0 km/h; 2 min a 1 m/s y 1 min a 3 m/s → máxima 10,8 km/h; un salto de 45 m en un punto no la fija. |
 
 ## DEM — Ajuste de altitud
 
@@ -141,10 +142,10 @@ Convenciones:
 
 | Id | Ver | Inc | Requisito | Criterios de aceptación |
 |----|-----|-----|-----------|-------------------------|
-| WPE-01 | 1 | 3 | Lista de waypoints del documento y su representación en el mapa, con selección sincronizada. | — |
-| WPE-02 | 1 | 3 | Editar nombre, comentario/descripción, lat, lon, elevación y fecha según el formato de origen. | Campos no soportados por el formato no se ofrecen. |
-| WPE-03 | 2 | 3 | Validación: lat ∈ [−90, 90], lon ∈ [−180, 180], elevación ∈ [−500, 9000] m o vacía, hora UTC `AAAA-MM-DD HH:MM:SS` o vacía; números con coma o punto decimal, sin separador de miles. Restricciones de formato: OziExplorer no admite comas en textos; CompeGPS no admite espacios en el nombre. No se aplica longitud máxima de nombre (no hay un límite fiable documentado; nunca se trunca). | Valores inválidos no se aplican y se informa. |
-| WPE-04 | 1 | 4 | Guardar / Guardar como en el mismo formato; aviso si un cambio implica pérdida (p. ej. texto con caracteres no representables en Windows-1252). | — |
+| WPE-01 | 2 | 3 | Lista de los waypoints (`wpt`) del GPX y su representación en el mapa (triángulo con su nombre al acercarse), con selección sincronizada. | Un GPX sólo con waypoints muestra todos en el mapa y en la lista. |
+| WPE-02 | 2 | 3 | Editar nombre, comentario, descripción, lat, lon, elevación y fecha. | Todos los campos se ofrecen (GPX los admite todos). |
+| WPE-03 | 2 | 3 | Validación: lat ∈ [−90, 90], lon ∈ [−180, 180], elevación ∈ [−500, 9000] m o vacía, hora UTC `AAAA-MM-DD HH:MM:SS` o vacía; números con coma o punto decimal, sin separador de miles. No se aplica longitud máxima de nombre (no hay un límite fiable documentado; nunca se trunca). | Valores inválidos no se aplican y se informa. |
+| WPE-04 | 2 | 4 | Guardar / Guardar como en GPX; aviso si el archivo cambiará (GPX 1.0 → 1.1). | — |
 
 ## SAVE — Guardado y seguridad de datos
 

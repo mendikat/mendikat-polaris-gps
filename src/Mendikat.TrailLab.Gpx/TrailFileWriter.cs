@@ -1,7 +1,6 @@
 using Mendikat.TrailLab.Domain.Documents;
 using Mendikat.TrailLab.Domain.Geo;
 using Mendikat.TrailLab.Domain.Model;
-using Mendikat.TrailLab.Gpx.Wpt;
 
 namespace Mendikat.TrailLab.Gpx;
 
@@ -12,14 +11,12 @@ public static class TrailFileWriter
     public static IReadOnlyList<SaveIssue> Check(TrailData data, DocumentFormat format) => format switch
     {
         DocumentFormat.Gpx => GpxWriter.Check(data),
-        DocumentFormat.Wpt => WaypointFileWriter.Check(data),
         _ => throw new ArgumentOutOfRangeException(nameof(format), format, null),
     };
 
     public static byte[] Serialize(TrailData data, DocumentFormat format) => format switch
     {
         DocumentFormat.Gpx => new GpxWriter().Write(data),
-        DocumentFormat.Wpt => WaypointFileWriter.Write(data),
         _ => throw new ArgumentOutOfRangeException(nameof(format), format, null),
     };
 
@@ -39,7 +36,9 @@ public static class TrailFileWriter
         try
         {
             using var stream = new MemoryStream(bytes, writable: false);
-            actual = Shape(format == DocumentFormat.Gpx ? new GpxReader().Read(stream).Data : new WaypointFileReader().Read(stream).Data);
+            actual = format == DocumentFormat.Gpx
+                ? Shape(new GpxReader().Read(stream).Data)
+                : throw new ArgumentOutOfRangeException(nameof(format), format, null);
         }
         catch (DocumentLoadException)
         {
@@ -56,7 +55,7 @@ public static class TrailFileWriter
 
     private static List<GeoPosition> Positions(List<TrailPoint> points) => points.Select(p => p.Position).ToList();
 
-    /// <summary>Same count and positions within 1e-6° (~10 cm; WPT dialects store fewer decimals than the model).</summary>
+    /// <summary>Same count and positions within 1e-6° (~10 cm).</summary>
     private static bool Same(IReadOnlyList<GeoPosition> expected, IReadOnlyList<GeoPosition> actual) =>
         expected.Count == actual.Count
         && expected.Zip(actual).All(p =>

@@ -24,7 +24,6 @@ public sealed class DocumentViewModel : ObservableObject
     {
         Document = document;
         ColorIndex = colorIndex;
-        FieldSupport = PointFieldSupport.For(document.Data);
         SyncLayers();
         SelectedLayer = Layers.FirstOrDefault();
         Document.Changed += OnDocumentChanged;
@@ -43,8 +42,6 @@ public sealed class DocumentViewModel : ObservableObject
 
     /// <summary>Index into <see cref="MapStyles.DocumentColors"/>; the same color is used on the map and in the tab.</summary>
     public int ColorIndex { get; }
-
-    public PointFieldSupport FieldSupport { get; }
 
     /// <summary>The user already accepted that this GPX 1.0 document is saved as GPX 1.1 (asked once).</summary>
     public bool GpxUpgradeAccepted { get; set; }
@@ -141,7 +138,7 @@ public sealed class DocumentViewModel : ObservableObject
         }
 
         SelectedRows = selection;
-        Detail = selection.Count == 1 ? new PointDetailViewModel(selection[0].Point, FieldSupport) : null;
+        Detail = selection.Count == 1 ? new PointDetailViewModel(selection[0].Point) : null;
         OnPropertyChanged(nameof(SelectionHint));
         SelectionChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -173,7 +170,7 @@ public sealed class DocumentViewModel : ObservableObject
     {
         if (SelectedRows.Count == 1)
         {
-            Detail = new PointDetailViewModel(SelectedRows[0].Point, FieldSupport);
+            Detail = new PointDetailViewModel(SelectedRows[0].Point);
         }
     }
 

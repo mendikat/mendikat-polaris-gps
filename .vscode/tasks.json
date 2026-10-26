@@ -15,6 +15,24 @@
             "problemMatcher": "$msCompile"
         },
         {
+            // Hot Reload: C# changes apply to the running app on save. Changes that cannot be applied live
+            // (XAML, new classes, signatures...) rebuild and restart the app automatically.
+            "label": "watch (Hot Reload)",
+            "type": "process",
+            "command": "dotnet",
+            "args": [
+                "watch",
+                "--project",
+                "${workspaceFolder}/src/Mendikat.TrailLab.App/Mendikat.TrailLab.App.csproj",
+                "run"
+            ],
+            "options": {
+                "env": { "DOTNET_WATCH_RESTART_ON_RUDE_EDIT": "true" }
+            },
+            "isBackground": true,
+            "problemMatcher": "$msCompile"
+        },
+        {
             "label": "test",
             "type": "process",
             "command": "dotnet",

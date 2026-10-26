@@ -95,3 +95,14 @@ Diferencias con el PHP: ninguna en el cálculo. El PHP trata una elevación ause
 **Verificación**: los dos cálculos sobre 573 segmentos de 500 tracks elegidos al azar de mendikat.net (sin elevaciones
 ausentes), más 3 tracks de prueba de Mendikat y 5 casos sintéticos (ruido, puntos dispersos, paradas, circuito), dan
 el mismo resultado al milímetro (2026-10-26). `ProfileStatisticsTests.Gives_the_same_result_as_mendikat_net` fija un caso.
+
+## Velocidad media y máxima (2026-10-26, a petición del responsable)
+
+mendikat.net no calcula velocidades (sólo usa umbrales para detectar paradas), así que se fija aquí el criterio (PROF-08):
+
+- **Media**: distancia recorrida en los intervalos en movimiento ÷ tiempo en movimiento (`ProfileTimes.AverageSpeed`).
+  Usa el mismo umbral de 1 km/h que el tiempo en movimiento (PROF-07), así que las paradas no la rebajan.
+- **Máxima**: la mayor media de cualquier tramo de al menos 30 s (`ProfileStatistics.MaxSpeedWindow`) dentro de un
+  segmento, calculada con dos índices en un solo recorrido. La velocidad entre dos puntos seguidos no sirve: un error de
+  10 m en 1 s se lee como 36 km/h. El tramo de 30 s atenúa esos saltos sin borrar un tramo rápido real. Si ningún tramo
+  dura 30 s, no hay máxima.

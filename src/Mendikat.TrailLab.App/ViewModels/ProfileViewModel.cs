@@ -47,10 +47,11 @@ public sealed class ProfileViewModel : ObservableObject
         {
             if (SetProperty(ref _profile, value))
             {
-                OnPropertyChanged(nameof(Summary));
-                OnPropertyChanged(nameof(TimeSummary));
+                OnPropertyChanged(nameof(RouteStats));
+                OnPropertyChanged(nameof(TimeStats));
                 OnPropertyChanged(nameof(MissingWarning));
                 OnPropertyChanged(nameof(HasMissingWarning));
+                OnPropertyChanged(nameof(NoTimesNote));
             }
         }
     }
@@ -90,23 +91,45 @@ public sealed class ProfileViewModel : ObservableObject
         private set => SetProperty(ref _hoverText, value);
     }
 
-    public string Summary
+    /// <summary>Distance, ascent, descent, lowest and highest elevation (PROF-02, PROF-06); "—" without elevations.</summary>
+    public IReadOnlyList<ProfileStat> RouteStats
     {
         get
         {
-            var km = (Profile.TotalDistance / 1000).ToString("N2", Spanish);
-            return Profile.HasElevation
-                ? string.Format(Spanish, Strings.ProfileSummary, km,
-                    Profile.Ascent.ToString("N0", Spanish), Profile.Descent.ToString("N0", Spanish),
-                    Profile.MinElevation!.Value.ToString("N0", Spanish), Profile.MaxElevation!.Value.ToString("N0", Spanish))
-                : string.Format(Spanish, Strings.ProfileSummaryNoElevation, km);
+            var elevation = Profile.HasElevation;
+            return
+            [
+                new(ProfileStatKind.Distance, Strings.StatDistance, $"{(Profile.TotalDistance / 1000).ToString("N2", Spanish)} km"),
+                new(ProfileStatKind.Ascent, Strings.StatAscent, elevation ? $"+{Profile.Ascent.ToString("N0", Spanish)} m" : NoValue),
+                new(ProfileStatKind.Descent, Strings.StatDescent, elevation ? $"−{Profile.Descent.ToString("N0", Spanish)} m" : NoValue),
+                new(ProfileStatKind.MinElevation, Strings.StatMinElevation, Meters(Profile.MinElevation)),
+                new(ProfileStatKind.MaxElevation, Strings.StatMaxElevation, Meters(Profile.MaxElevation)),
+            ];
         }
     }
 
-    /// <summary>Total, moving and stopped time (PROF-07), or a note when the points have no times.</summary>
-    public string TimeSummary => Profile.Times is { } times
-        ? string.Format(Spanish, Strings.ProfileTimes, Duration(times.Total), Duration(times.Moving), Duration(times.Stopped))
-        : Strings.ProfileNoTimes;
+    /// <summary>Total, moving and stopped time, average moving speed and sustained maximum speed (PROF-07, PROF-08); empty when the points have no times (see <see cref="NoTimesNote"/>).</summary>
+    public IReadOnlyList<ProfileStat> TimeStats => Profile.Times is { } times
+        ?
+        [
+            new(ProfileStatKind.TotalTime, Strings.StatTotalTime, Duration(times.Total)),
+            new(ProfileStatKind.MovingTime, Strings.StatMovingTime, Duration(times.Moving)),
+            new(ProfileStatKind.StoppedTime, Strings.StatStoppedTime, Duration(times.Stopped)),
+            new(ProfileStatKind.AverageSpeed, Strings.StatAverageSpeed, Speed(times.AverageSpeed)),
+            new(ProfileStatKind.MaxSpeed, Strings.StatMaxSpeed, Speed(times.MaxSpeed)),
+        ]
+        : [];
+
+    /// <summary>Shown instead of the time figures when the points have no times.</summary>
+    public string? NoTimesNote => Profile.Times is null ? Strings.ProfileNoTimes : null;
+
+    private const string NoValue = "—";
+
+    private static string Meters(double? meters) => meters is { } m ? $"{m.ToString("N0", Spanish)} m" : NoValue;
+
+    /// <summary>"4,3 km/h" from meters per second.</summary>
+    private static string Speed(double? metersPerSecond) =>
+        metersPerSecond is { } v ? $"{(v * 3.6).ToString("N1", Spanish)} km/h" : NoValue;
 
     /// <summary>"2 h 05 min", "12 min 30 s".</summary>
     public static string Duration(TimeSpan duration) =>
@@ -207,4 +230,26 @@ public sealed class ProfileViewModel : ObservableObject
     }
 
     private void OnSelectionChanged(object? sender, EventArgs e) => UpdateCursor();
+}
+
+/// <summary>What a figure of the profile summary measures; the view picks its icon from it.</summary>
+public enum ProfileStatKind
+{
+    Distance,
+    Ascent,
+    Descent,
+    MinElevation,
+    MaxElevation,
+    TotalTime,
+    MovingTime,
+    StoppedTime,
+    AverageSpeed,
+    MaxSpeed,
+}
+
+/// <summary>One figure of the profile summary: "+267 m" labelled "Desnivel positivo".</summary>
+public sealed record ProfileStat(ProfileStatKind Kind, string Label, string Value)
+{
+    /// <summary>"Desnivel positivo: +267 m", read by screen readers.</summary>
+    public string Description => $"{Label}: {Value}";
 }

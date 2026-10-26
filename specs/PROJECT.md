@@ -5,7 +5,7 @@ Versión del documento: 0.1 (Incremento 0) · Fecha: 2026-10-24 · Estado: borra
 ## 1. Visión
 
 Mendikat TrailLab es una aplicación de escritorio Windows para abrir, visualizar, inspeccionar,
-editar y guardar tracks GPX y archivos WPT de waypoints sobre cartografía online, priorizando
+editar y guardar archivos GPX (tracks, rutas y waypoints) sobre cartografía online, priorizando
 la **exactitud de los datos GPS** y la **preservación de la información original**.
 
 ## 2. Objetivos
@@ -30,7 +30,7 @@ Se asume un usuario de Windows con conocimientos básicos de GPS, no necesariame
 ## 4. Alcance (versión 1)
 
 - Apertura, visualización, edición y guardado de GPX 1.1 (y lectura de GPX 1.0, ver ADR-0005).
-- Apertura, edición y guardado de un dialecto WPT acordado (ver ADR-0006, **decisión abierta**).
+- Los waypoints se trabajan dentro del GPX. Los archivos WPT no se admiten (retirados el 2026-10-26, ADR-0006).
 - Mapa interactivo con los proveedores listados en ADR-0004.
 - Barra de estado con coordenadas UTM y WGS84 (DMS).
 - Panel de capas, lista de puntos, edición de puntos (Supr / Insert), deshacer.
@@ -58,10 +58,10 @@ Se asume un usuario de Windows con conocimientos básicos de GPS, no necesariame
 
 | Término | Definición |
 |---------|------------|
-| Documento | Contenido cargado en memoria desde un archivo (GPX o WPT), con su ruta de origen, formato y estado de cambios. Independiente del archivo en disco. |
+| Documento | Contenido cargado en memoria desde un archivo GPX, con su ruta de origen, formato y estado de cambios. Independiente del archivo en disco. |
 | Track / segmento / punto | `trk` / `trkseg` / `trkpt` de GPX. Un track tiene ≥0 segmentos; un segmento, ≥0 puntos ordenados. |
 | Ruta | `rte` de GPX: lista ordenada de `rtept`. |
-| Waypoint | Punto con nombre independiente (`wpt` en GPX, una línea en WPT). |
+| Waypoint | Punto con nombre independiente (`wpt` en GPX). |
 | WGS84 | Datum/elipsoide EPSG:4326 usado por GPX. Latitud/longitud en grados decimales. |
 | UTM | Proyección Transverse Mercator por husos de 6°. **Zona** = número de huso (1–60). **Banda** = letra de latitud (C–X, sin I ni O), cada 8° (X: 12°). No son lo mismo. |
 | UPS | Universal Polar Stereographic, para latitudes fuera de UTM (> 84° N, < 80° S). |
@@ -75,7 +75,7 @@ Se asume un usuario de Windows con conocimientos básicos de GPS, no necesariame
 | Id | Decisión | Estado (2026-10-24) | Documento |
 |----|----------|---------------------|-----------|
 | D1 | Instalar el **SDK de .NET 10** (sólo hay runtime .NET 9). | Resuelta: el responsable instala el SDK oficial. **Bloquea el Incremento 1 hasta que esté instalado.** | ADR-0001 |
-| D2 | **Dialecto WPT** inicial. | Resuelta: OziExplorer v1.1 **y** CompeGPS/TwoNav. | ADR-0006 |
+| D2 | **Dialecto WPT** inicial. | Resuelta: OziExplorer v1.1 **y** CompeGPS/TwoNav. Retirada el 2026-10-26: sólo GPX. | ADR-0006 |
 | D3 | **Thunderforest**: ¿API key propia? | Resuelta: Thunderforest se elimina del catálogo. | ADR-0004 |
 | D4 | **Fuente DEM**. | Resuelta: IGN MDT WCS, sólo España. | ADR-0007 |
 | D5 | **Formato DMS**: el ejemplo del documento base mezcla hemisferios. | Resuelta: latitud primero, «43º 22' 23,11'' N 1º 45' 10,00'' W». | ADR-0003 |

@@ -1,29 +1,8 @@
 using System.Globalization;
 using Mendikat.TrailLab.Domain.Model;
 using Mendikat.TrailLab.Gpx;
-using Mendikat.TrailLab.Gpx.Wpt;
 
 namespace Mendikat.TrailLab.App.Services;
-
-/// <summary>Which point fields the source format can store (WPE-02) and its text restrictions (WPE-03).</summary>
-public sealed record PointFieldSupport(bool Comment, bool NameAllowsSpaces, bool TextAllowsCommas)
-{
-    public static PointFieldSupport Gpx { get; } = new(Comment: true, NameAllowsSpaces: true, TextAllowsCommas: true);
-
-    /// <summary>OziExplorer: no comment field; commas are the field separator (ADR-0006).</summary>
-    public static PointFieldSupport OziExplorer { get; } = new(Comment: false, NameAllowsSpaces: true, TextAllowsCommas: false);
-
-    /// <summary>CompeGPS: no comment field; the name is a single whitespace-delimited token.</summary>
-    public static PointFieldSupport CompeGps { get; } = new(Comment: false, NameAllowsSpaces: false, TextAllowsCommas: true);
-
-    public static PointFieldSupport For(TrailData data) => data.FormatState switch
-    {
-        WptFormatState { DialectId: "ozi" } => OziExplorer,
-        WptFormatState { DialectId: "compegps" } => CompeGps,
-        GpxFormatState => Gpx,
-        _ => Gpx,
-    };
-}
 
 /// <summary>Parsing and display of point values typed by the user (EDIT-04, WPE-03). Display uses Spanish format.</summary>
 public static class PointInput

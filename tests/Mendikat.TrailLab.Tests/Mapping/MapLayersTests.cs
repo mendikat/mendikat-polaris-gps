@@ -77,6 +77,31 @@ public sealed class MapLayersTests
     }
 
     [Fact]
+    [Trait("Req", "WPE-01")]
+    public void A_gpx_with_only_waypoints_shows_each_one_with_its_symbol_and_name()
+    {
+        // Like the 890 summits of mendikat.net's waypoints.gpx: no tracks or routes.
+        const string gpx = """
+            <gpx version="1.1" creator="Mendikat" xmlns="http://www.topografix.com/GPX/1/1">
+              <wpt lat="42.714503443806" lon="-4.0036630710306"><ele>1047</ele><name>Adrero (1047 m)</name><sym>summit</sym></wpt>
+              <wpt lat="42.047284334594" lon="-3.0413745024086"><ele>1909</ele><name>Aguda, Peña (1909 m)</name><sym>summit</sym></wpt>
+              <wpt lat="42.1" lon="-3.5"><ele>1000</ele></wpt>
+            </gpx>
+            """;
+        using var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(gpx));
+        var data = new GpxReader().Read(stream, TestContext.Current.CancellationToken).Data;
+
+        var item = Assert.Single(TrailLayerFactory.CreateLayers(data, MapStyles.ColorFor(0), "waypoints"));
+
+        Assert.Same(data.Waypoints, item.Model);
+        var features = ((MemoryLayer)item.Layers.Single()).Features.ToList();
+        Assert.Equal(3, features.Count);
+        Assert.All(features, f => Assert.IsType<Mapsui.Styles.SymbolStyle>(f.Styles.First()));
+        Assert.Equal("Aguda, Peña (1909 m)", ((Mapsui.Styles.LabelStyle)features[1].Styles.Last()).GetLabelText(features[1]));
+        Assert.Single(features[2].Styles); // without a name there is no label
+    }
+
+    [Fact]
     [Trait("Req", "LAY-02")]
     public void Added_points_use_their_own_symbol()
     {

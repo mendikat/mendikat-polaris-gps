@@ -238,7 +238,7 @@ public sealed class EditingFlowTests
     [Fact]
     [Trait("Req", "WPE-02")]
     [Trait("Req", "WPE-03")]
-    [Trait("Acc", "ACC-WPT-02")]
+    [Trait("Acc", "ACC-WPE-02")]
     public void Point_detail_changes_apply_only_when_valid()
     {
         var waypoint = _data.Waypoints[0];

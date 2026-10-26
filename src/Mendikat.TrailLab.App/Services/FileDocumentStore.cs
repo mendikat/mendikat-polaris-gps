@@ -1,12 +1,11 @@
 using System.IO;
 using Mendikat.TrailLab.Domain.Documents;
 using Mendikat.TrailLab.Gpx;
-using Mendikat.TrailLab.Gpx.Wpt;
 
 namespace Mendikat.TrailLab.App.Services;
 
 /// <summary>
-/// Loads GPX and WPT files with the format readers, off the UI thread (NFR-01).
+/// Loads GPX files with the GPX reader, off the UI thread (NFR-01).
 /// Saving writes the same format, verified and without risk of truncating the file (increment 4).
 /// </summary>
 public sealed class FileDocumentStore : IDocumentStore
@@ -65,7 +64,6 @@ public sealed class FileDocumentStore : IDocumentStore
             cancellationToken);
     }
 
-    /// <summary>WPT files are small (waypoints only) and are read at once; only GPX reports progress.</summary>
     private static TrailDocument Read(string filePath, DocumentFormat format, IProgress<double>? progress, CancellationToken cancellationToken)
     {
         using var stream = new FileStream(
@@ -73,7 +71,6 @@ public sealed class FileDocumentStore : IDocumentStore
         var result = format switch
         {
             DocumentFormat.Gpx => new GpxReader().Read(stream, progress, cancellationToken),
-            DocumentFormat.Wpt => new WaypointFileReader().Read(stream),
             _ => throw new ArgumentOutOfRangeException(nameof(format), format, null),
         };
         return new TrailDocument(filePath, format, result.Data, result.Warnings);

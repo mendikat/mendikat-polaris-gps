@@ -202,3 +202,30 @@ navegar con teclado (Alt, Tab, flechas) y con el Narrador de Windows; ACC-NFR-01
 | Req | Estado | Código | Pruebas |
 |-----|--------|--------|---------|
 | PROF-06 | ✅ | `ProfileStatistics.ElevationGain/WindowPoints/Smooth/GainAndLoss` | `A_climb_between_flat_stretches_is_counted_in_full`, `Gps_noise_is_smoothed_out`, `The_window_is_100_m_whatever_the_point_spacing` (5), `Stops_do_not_shrink_the_mean_spacing`, `In_a_circuit_the_descent_equals_the_ascent`, `Gives_the_same_result_as_mendikat_net`, `Segments_are_measured_separately…` |
+
+## Sólo GPX: se retira WPT (2026-10-26, a petición del responsable)
+
+298 pruebas en total (330 antes; se eliminan las 33 de WPT y se añade 1), todas en verde. Se eliminan `Gpx/Wpt/` (lector,
+escritor y dialectos), sus 8 fixtures y pruebas, el menú «Abrir WPT», `PointFieldSupport` (restricciones de campos de
+OziExplorer/CompeGPS), `TrailPoint.FormatState` y los errores y avisos de guardado exclusivos de WPT. `DocumentFormat`
+conserva sólo `Gpx`. Las filas WPT de las secciones anteriores quedan como historia. Comprobado con `waypoints.gpx`
+(890 cimas de Burgos de mendikat.net): el mapa renderizado fuera de pantalla muestra los 890 triángulos y, al acercarse, sus nombres.
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| WPT-01..07 | Retirados | — | — |
+| APP-02 | ✅ | Menú Archivo sin «Abrir WPT» | `Without_documents_only_open_and_exit_are_enabled` |
+| WPE-01 | ✅ | Waypoints del GPX: `TrailLayerFactory` (triángulo + nombre), lista de puntos | `A_gpx_with_only_waypoints_shows_each_one_with_its_symbol_and_name` |
+| WPE-02/03 | ✅ | `PointDetailViewModel`: todos los campos, sin restricciones de formato | `PointInputTests`, `Point_detail_changes_apply_only_when_valid` (ACC-WPE-02) |
+| WPE-04 | ✅ | Sólo el aviso GPX 1.0 → 1.1 | `Save_issues_are_confirmed_and_cancelling_keeps_the_changes` |
+
+## Perfil: fichas con iconos, velocidades e icono de ventana (2026-10-26, a petición del responsable)
+
+302 pruebas en total, todas en verde. La cabecera del perfil pasa de dos líneas de texto a fichas (icono, valor y
+etiqueta) en dos filas, «Recorrido» y «Tiempo»; la ventana muestra un icono de track en la barra de título. Comprobado
+renderizando la ventana fuera de pantalla con tracks reales con y sin horas, ancha y estrecha.
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| PROF-08 | ✅ | `ProfileTimes.MovingDistance/AverageSpeed/MaxSpeed`, `ProfileStatistics.MaxSpeed`, fichas de `ProfileViewModel.TimeStats` | `Average_speed_counts_only_the_time_in_movement`, `Maximum_speed_is_the_fastest_stretch_of_at_least_30_seconds`, `A_gps_jump_does_not_set_the_maximum_speed`, `Without_30_seconds_of_data_there_is_no_maximum_speed` |
+| PROF-02/06/07 | ✅ | `ProfileViewModel.RouteStats/TimeStats/NoTimesNote`, `ProfileStat`, plantilla de fichas en `ProfileWindow.xaml` | `Profile_window_is_titled_with_the_track_and_shows_a_summary` |

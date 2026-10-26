@@ -67,14 +67,14 @@ public sealed class SaveFlowTests : IDisposable
     [Trait("Req", "WPE-04")]
     public async Task Save_issues_are_confirmed_and_cancelling_keeps_the_changes()
     {
-        _store.Issues.Add(new SaveIssue(SaveIssueKind.UnrepresentableCharacters, 2));
+        _store.Issues.Add(new SaveIssue(SaveIssueKind.GpxVersionUpgrade));
         _dialogs.ConfirmAnswer = false;
 
         Assert.False(await _vm.SaveActiveAsync());
 
         Assert.Empty(_store.SavedPaths);
         Assert.True(_vm.ActiveDocument!.IsDirty);
-        Assert.Contains("2 caracteres no se pueden representar", _dialogs.Confirmations.Single());
+        Assert.Contains("se guardará como GPX 1.1", _dialogs.Confirmations.Single());
     }
 
     [Fact]

@@ -38,7 +38,6 @@
                 <MenuItem Header="{x:Static res:Strings.MenuNewGpx}" Command="{Binding NewGpxCommand}" InputGestureText="Ctrl+N" />
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuOpenGpx}" Command="{Binding OpenGpxCommand}" InputGestureText="Ctrl+O" />
-                <MenuItem Header="{x:Static res:Strings.MenuOpenWpt}" Command="{Binding OpenWptCommand}" />
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuSave}" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S" />
                 <MenuItem Header="{x:Static res:Strings.MenuSaveAs}" Command="{Binding SaveAsCommand}" />

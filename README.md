@@ -1,11 +1,11 @@
 # Mendikat TrailLab
 
-Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar tracks **GPX**
-y archivos de waypoints **WPT** sobre cartografía online (IGN España por defecto).
+Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
+y waypoints) sobre cartografía online (IGN España por defecto).
 
 > **Estado: Incremento 8 (robustez) terminado, pendiente de aprobación. Es el último incremento del plan.**
-> Se abren GPX y WPT, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
-> mover y editar puntos con deshacer/rehacer, y se guardan en el mismo formato de forma segura.
+> Se abren archivos GPX (sólo GPX: WPT se retiró el 2026-10-26), se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
+> mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
 > Los archivos grandes se abren con porcentaje de progreso y se pueden cancelar. Ver [specs/ROADMAP.md](specs/ROADMAP.md).
 
@@ -36,7 +36,7 @@ y archivos de waypoints **WPT** sobre cartografía online (IGN España por defec
 | [specs/ACCEPTANCE.md](specs/ACCEPTANCE.md) | Escenarios Given/When/Then |
 | [specs/ROADMAP.md](specs/ROADMAP.md) | Incrementos, dependencias y definición de terminado |
 | [specs/TRACEABILITY.md](specs/TRACEABILITY.md) | Requisito → código → prueba |
-| [specs/DECISIONS/](specs/DECISIONS/) | ADR: plataforma, UI, coordenadas, cartografía, GPX, WPT, DEM, algoritmos, estructura |
+| [specs/DECISIONS/](specs/DECISIONS/) | ADR: plataforma, UI, coordenadas, cartografía, GPX, DEM, algoritmos, estructura (WPT retirado) |
 
 ## Requisitos
 
@@ -83,7 +83,7 @@ WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido
 | Proyecto | Contenido |
 |----------|-----------|
 | `src/Mendikat.TrailLab.Domain` | Modelo: documentos, tracks, segmentos, puntos, waypoints. Sin dependencias de UI |
-| `src/Mendikat.TrailLab.Gpx` | Lectores GPX 1.0/1.1 y WPT (OziExplorer, CompeGPS/TwoNav) |
+| `src/Mendikat.TrailLab.Gpx` | Lector y escritor GPX 1.0/1.1 |
 | `src/Mendikat.TrailLab.Mapping` | Catálogo de cartografías, descarga de mosaicos, capas del mapa, formato UTM/DMS |
 | `src/Mendikat.TrailLab.App` | WPF: ventana, ViewModels, `MapController`, diálogos, configuración, logging, textos en `Resources/Strings.resx` |
 | `tests/Mendikat.TrailLab.Tests` | xUnit v3 con fixtures propios en `Fixtures/`; sin acceso a la red |
@@ -92,9 +92,8 @@ WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido
 
 - **GPX 1.1** y **1.0**: lectura y escritura. Se guarda siempre GPX 1.1 válido (un GPX 1.0 se convierte, con aviso)
   conservando metadatos, campos desconocidos y extensiones con sus prefijos. Horas sin zona → UTC con aviso.
-- **WPT OziExplorer v1.1** y **CompeGPS/TwoNav**: lectura y escritura (las líneas no editadas se copian tal cual), sólo datum WGS 84; CompeGPS sólo en latitud/longitud.
-  Codificación ANSI (Windows-1252) o UTF-8 detectada automáticamente. Detalles y casos especiales en
-  [ADR-0006](specs/DECISIONS/ADR-0006-wpt-format.md).
+- Los waypoints (`wpt`) del GPX se dibujan como triángulos del color del documento, con su nombre al acercarse.
+- Los archivos **WPT** (OziExplorer, CompeGPS) ya no se admiten (ADR-0006, retirada el 2026-10-26).
 
 ## Cartografía
 
@@ -124,14 +123,11 @@ Datos: mosaicos y MDT del IGN España bajo CC BY 4.0 (scne.es); datos OSM bajo O
 ## Limitaciones conocidas
 
 - Guardar escribe primero un archivo temporal, lo verifica y sólo entonces sustituye el original. Al guardar se avisa
-  si algo cambiará en el archivo (GPX 1.0 → 1.1, caracteres que la codificación del WPT no admite, waypoints
-  CompeGPS sin altitud). Los números se escriben con su valor exacto, pero su texto puede cambiar (-2.0610 → -2.061).
+  si algo cambiará en el archivo (GPX 1.0 → 1.1). Los números se escriben con su valor exacto, pero su texto puede cambiar (-2.0610 → -2.061).
 - El perfil mide la distancia horizontal y, por defecto, no cuenta el hueco entre segmentos (casilla para incluirlo).
 - Tras cada edición se redibuja el documento completo en el mapa: unos 0,2 s con 100 000 puntos y casi 1 s con 500 000.
   Evitarlo exige actualizar el mapa por partes (rediseño de las capas); queda fuera de este plan.
-- Los textos de OziExplorer no admiten comas y los nombres de CompeGPS no admiten espacios (limitaciones de esos formatos).
-- Los WPT CompeGPS en coordenadas UTM (`U 0`) se rechazan; no se convierten datums distintos de WGS 84.
-- OziExplorer: el carácter 209 se muestra como «Ñ» (no se convierte en coma; ADR-0006).
+- Con muchos waypoints juntos, sus nombres se solapan en el mapa al acercarse.
 - MDT del IGN: sólo España. El servicio no marca «sin dato» (devuelve 0 en el mar y fuera de España), así que las celdas a 0,000 m se tratan como sin dato y esos puntos no cambian. No se aplica ninguna corrección geoidal (ADR-0007).
 - Un GPX de 50 MB (500 000 puntos) tarda unos 5 s en abrirse y ocupa unos 190 MB de memoria. Guardarlo prepara el
   archivo en la ventana principal (~2 s sin respuesta); la verificación y la escritura van en segundo plano. Guardar no se puede cancelar.

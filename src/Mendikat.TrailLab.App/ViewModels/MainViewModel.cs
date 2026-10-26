@@ -43,7 +43,6 @@ public sealed partial class MainViewModel : ObservableObject
 
         NewGpxCommand = new RelayCommand(NewGpx, () => !IsBusy);
         OpenGpxCommand = new RelayCommand(_ => OpenAsync(DocumentFormat.Gpx), _ => !IsBusy);
-        OpenWptCommand = new RelayCommand(_ => OpenAsync(DocumentFormat.Wpt), _ => !IsBusy);
         SaveCommand = new RelayCommand(_ => SaveActiveAsync(), _ => !IsBusy && ActiveDocument?.IsDirty == true);
         SaveAsCommand = new RelayCommand(_ => SaveActiveAsAsync(), _ => !IsBusy && ActiveDocument is not null);
         CloseDocumentCommand = new RelayCommand(
@@ -185,8 +184,6 @@ public sealed partial class MainViewModel : ObservableObject
     public RelayCommand NewGpxCommand { get; }
 
     public RelayCommand OpenGpxCommand { get; }
-
-    public RelayCommand OpenWptCommand { get; }
 
     public RelayCommand SaveCommand { get; }
 
@@ -358,7 +355,11 @@ public sealed partial class MainViewModel : ObservableObject
         }
 
         // The format never changes silently (SAVE-01/02): a different extension gets the right one appended.
-        var extension = format == DocumentFormat.Gpx ? ".gpx" : ".wpt";
+        var extension = format switch
+        {
+            DocumentFormat.Gpx => ".gpx",
+            _ => throw new ArgumentOutOfRangeException(nameof(document), format, null),
+        };
         if (!string.Equals(Path.GetExtension(path), extension, StringComparison.OrdinalIgnoreCase))
         {
             path += extension;
@@ -547,7 +548,6 @@ public sealed partial class MainViewModel : ObservableObject
     {
         NewGpxCommand.RaiseCanExecuteChanged();
         OpenGpxCommand.RaiseCanExecuteChanged();
-        OpenWptCommand.RaiseCanExecuteChanged();
         SaveCommand.RaiseCanExecuteChanged();
         SaveAsCommand.RaiseCanExecuteChanged();
         CloseDocumentCommand.RaiseCanExecuteChanged();

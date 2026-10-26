@@ -28,7 +28,7 @@ Fixtures: `tests/Mendikat.TrailLab.Tests/Fixtures/` (se crean en el incremento c
 
 **ACC-APP-04 — Menú según estado** (APP-02) [auto en ViewModel]
 - Given ningún documento abierto
-- Then Guardar, Guardar como y Cerrar documento están deshabilitados; Abrir GPX/WPT y Salir habilitados.
+- Then Guardar, Guardar como y Cerrar documento están deshabilitados; Abrir GPX y Salir habilitados.
 
 **ACC-APP-05 — Crear un GPX a mano** (APP-08, SAVE-02, EDIT-05) [auto en ViewModel + manual]
 - Given la aplicación abierta
@@ -89,7 +89,7 @@ Implementado en `tests/.../Mapping/CoordinateFormatterTests.cs` (incremento 2).
 **ACC-COORD-04 — Formato español** (COORD-02, NFR-07) [auto]
 - Given segundos 23,114 → Then se muestra `23,11''` (coma decimal, 2 decimales, redondeo correcto incluyendo 59,999″ → incremento de minuto).
 
-## GPX / WPT
+## GPX
 
 **ACC-GPX-01 — Ida y vuelta** (GPX-03) [auto]
 - Given `with-extensions.gpx` (Garmin TrackPointExtension, atributos desconocidos, metadatos)
@@ -103,17 +103,12 @@ Implementado en `tests/.../Mapping/CoordinateFormatterTests.cs` (incremento 2).
 **ACC-GPX-03 — Coordenadas fuera de rango** (GPX-02) [auto]
 - Given un `trkpt lat="95"` → Then error «Latitud fuera de rango (95) en el punto N».
 
-**ACC-WPT-01 — OziExplorer** (WPT-01, WPT-03, WPT-04) [auto]
-- Given `ozi-sample.wpt` (WGS 84, 3 waypoints, uno con altitud −777)
-- When lo cargo
-- Then hay 3 waypoints, la altitud del tercero es nula y las demás están en metros (pies × 0,3048).
-- When lo guardo sin cambios
-- Then cada línea de waypoint es idéntica a la original.
+*ACC-WPT-01 — OziExplorer: retirado (2026-10-26), la aplicación sólo trabaja con GPX.*
 
-**ACC-WPT-02 — Editar y guardar** (WPE-02, WPE-03, WPE-04) [auto + manual]
-- Given un waypoint seleccionado
+**ACC-WPE-02 — Editar y guardar un waypoint** (WPE-02, WPE-03, WPE-04) [auto + manual] (antes ACC-WPT-02)
+- Given un waypoint de un GPX seleccionado
 - When cambio su nombre y su latitud a 43,5 y guardo
-- Then al reabrir el waypoint tiene el nuevo nombre y latitud; el resto de campos de la línea no cambia.
+- Then al reabrir el waypoint tiene el nuevo nombre y latitud; el resto de sus campos y extensiones no cambia.
 - When intento poner latitud 91 → Then se rechaza con mensaje y no se aplica.
 
 ## Edición
@@ -158,7 +153,7 @@ Implementado en `tests/.../Mapping/CoordinateFormatterTests.cs` (incremento 2).
 ## No funcionales
 
 **ACC-NFR-01 — Sin internet** (NFR-05) [manual]
-- Given sin conexión → When abro, edito y guardo un GPX y un WPT → Then todo funciona; sólo el fondo cartográfico falta.
+- Given sin conexión → When abro, edito y guardo un GPX → Then todo funciona; sólo el fondo cartográfico falta.
 
 **ACC-NFR-02 — Archivo grande** (NFR-01, NFR-09) [manual + auto de rendimiento]
 - Given un GPX de 100 000 puntos → When lo abro → Then la UI responde durante la carga (progreso visible) y el desplazamiento del mapa es fluido.
