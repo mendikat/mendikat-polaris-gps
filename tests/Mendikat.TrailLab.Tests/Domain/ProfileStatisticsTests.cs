@@ -17,25 +17,105 @@ public sealed class ProfileStatisticsTests
             Time = seconds is null ? null : Start.AddSeconds(seconds[i]),
         }).ToList();
 
+    /// <summary>Points <paramref name="spacing"/> meters apart northwards with the given elevations.</summary>
+    private static List<TrailPoint> Spaced(double spacing, IEnumerable<double> elevations) =>
+        elevations.Select((e, i) => new TrailPoint(new GeoPosition(42 + (i * spacing / 111_000.0), -1.6)) { Elevation = e }).ToList();
+
     [Fact]
     [Trait("Req", "PROF-06")]
-    public void Ascent_and_descent_add_real_climbs_and_ignore_small_noise()
+    public void A_climb_between_flat_stretches_is_counted_in_full()
     {
-        // Up 100 m with ±2 m GPS noise, then down 60 m.
-        var profile = ElevationProfile.Build([Points([500, 502, 500, 520, 518, 560, 600, 598, 600, 570, 540])]);
+        // 200 m flat at 500 m, climb to 600 m in 200 m, 200 m flat; points every 10 m (a 10-point window).
+        var elevations = Enumerable.Repeat(500.0, 20)
+            .Concat(Enumerable.Range(1, 20).Select(i => 500.0 + (i * 5)))
+            .Concat(Enumerable.Repeat(600.0, 20));
+
+        var profile = ElevationProfile.Build([Spaced(10, elevations)]);
 
         Assert.Equal(100, profile.Ascent, 6);
-        Assert.Equal(60, profile.Descent, 6);
+        Assert.Equal(0, profile.Descent, 6);
     }
 
     [Fact]
     [Trait("Req", "PROF-06")]
-    public void Without_a_filter_noise_would_inflate_the_gain()
+    public void Gps_noise_is_smoothed_out()
     {
-        var samples = ElevationProfile.Build([Points([500, 503, 500, 503, 500, 503, 500])]).Samples;
+        // ±1.5 m oscillation every 10 m along 1 km: summing point to point would give ~150 m each way.
+        var elevations = Enumerable.Range(0, 100).Select(i => i % 2 == 0 ? 500.0 : 503.0).ToList();
+        var samples = ElevationProfile.Build([Spaced(10, elevations)]).Samples;
 
-        Assert.Equal((0.0, 0.0), ProfileStatistics.ElevationGain(samples));        // 5 m filter
-        Assert.Equal((9.0, 9.0), ProfileStatistics.ElevationGain(samples, 0)); // raw sum
+        var (ascent, descent) = ProfileStatistics.ElevationGain(samples);
+
+        Assert.Equal((150.0, 147.0), ProfileStatistics.GainAndLoss(elevations));
+        // Only the net 1.5 m from the low first value to the high last one remains (ends keep their elevation).
+        Assert.Equal(1.5, ascent, 6);
+        Assert.Equal(0, descent, 6);
+    }
+
+    [Theory]
+    [Trait("Req", "PROF-06")]
+    [InlineData(10, 50, 10)]   // 100 m / 10 m
+    [InlineData(3, 200, 33)]   // 100 m / 3 m, rounded
+    [InlineData(200, 50, 1)]   // points further apart than the window: no smoothing
+    [InlineData(1, 500, 100)]  // steps of 1 m are stops: no movement, largest window (100 m / 1 m)…
+    [InlineData(1, 40, 40)]    // …but never more points than there are
+    public void The_window_is_100_m_whatever_the_point_spacing(double spacing, int count, int expected)
+    {
+        var samples = ElevationProfile.Build([Spaced(spacing, Enumerable.Repeat(500.0, count))]).Samples;
+
+        Assert.Equal(expected, ProfileStatistics.WindowPoints(samples, count));
+    }
+
+    [Fact]
+    [Trait("Req", "PROF-06")]
+    public void Stops_do_not_shrink_the_mean_spacing()
+    {
+        // 10 m steps with the device left still for 30 points in the middle: the window stays at 10 points.
+        var line = Spaced(10, Enumerable.Repeat(500.0, 31));
+        var points = Enumerable.Range(0, 60)
+            .Select(i => new TrailPoint(line[i <= 20 ? i : i < 50 ? 20 : i - 29].Position) { Elevation = 500 })
+            .ToList();
+
+        var samples = ElevationProfile.Build([points]).Samples;
+
+        Assert.Equal(10, ProfileStatistics.WindowPoints(samples, points.Count));
+    }
+
+    [Fact]
+    [Trait("Req", "PROF-06")]
+    public void In_a_circuit_the_descent_equals_the_ascent()
+    {
+        // There and back along the same line: start and end coincide.
+        var elevations = Enumerable.Range(0, 30).Select(i => 500.0 + (i * 2)).Concat(Enumerable.Range(0, 30).Select(i => 558.0 - (i * 1.9)));
+        var points = Spaced(10, elevations);
+        for (var i = 30; i < 60; i++)
+        {
+            points[i].Position = points[59 - i].Position;
+        }
+
+        var profile = ElevationProfile.Build([points]);
+
+        Assert.True(profile.Ascent > 50);
+        Assert.Equal(profile.Ascent, profile.Descent);
+    }
+
+    [Fact]
+    [Trait("Req", "PROF-06")]
+    public void Gives_the_same_result_as_mendikat_net()
+    {
+        // Values computed by GaussianElevationAnalyzer.php (mendikat.net, commit d259429a). The same comparison on
+        // 573 segments of 500 real tracks (2026-10-26) gave identical results to 0.001 m.
+        var points = new List<TrailPoint>
+        {
+            new(new GeoPosition(42, -1.6)) { Elevation = 500 },
+            new(new GeoPosition(42.0001, -1.6)) { Elevation = 510 },
+            new(new GeoPosition(42.0002, -1.6)) { Elevation = 505 },
+        };
+
+        var profile = ElevationProfile.Build([points]);
+
+        Assert.Equal(7.337, profile.Ascent, 3);
+        Assert.Equal(7.337, profile.Descent, 3); // 22 m from start to end: a circuit
     }
 
     [Fact]
@@ -46,7 +126,7 @@ public sealed class ProfileStatisticsTests
         var first = new TrackSegment();
         first.Points.AddRange(Points([500, null, 520]));
         var second = new TrackSegment();
-        second.Points.AddRange(Points([900, 910])); // the 380 m jump between segments is not counted
+        second.Points.AddRange(Points([900, 905, 910])); // the 380 m jump between segments is not counted
         track.Segments.AddRange([first, second]);
 
         var profile = ElevationProfile.Build(track);

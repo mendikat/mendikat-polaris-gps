@@ -36,7 +36,7 @@ public sealed class ElevationProfile
         Times = ProfileStatistics.Times(samples);
     }
 
-    /// <summary>Total ascent in meters (PROF-06), filtered with <see cref="ProfileStatistics.ElevationHysteresis"/>; 0 without elevations.</summary>
+    /// <summary>Total ascent in meters (PROF-06), from the Gaussian-smoothed profile (<see cref="ProfileStatistics.ElevationGain"/>); 0 without elevations.</summary>
     public double Ascent { get; }
 
     /// <summary>Total descent in meters, positive (PROF-06).</summary>

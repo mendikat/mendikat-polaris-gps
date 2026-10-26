@@ -102,7 +102,7 @@ Convenciones:
 | PROF-03 | 1 | 5 | Elevaciones ausentes producen huecos en la curva y un aviso «N puntos sin elevación». | Track sin elevaciones → mensaje y gráfico vacío sin error. |
 | PROF-04 | 1 | 5 | Mover el puntero sobre el perfil resalta el punto en el mapa; hacer clic lo selecciona en la lista. Seleccionar en mapa/lista mueve el cursor del perfil. | ACC-PROF-02. |
 | PROF-05 | 1 | 5 | Tracks con 0, 1 o puntos duplicados no generan errores. | Pruebas unitarias de casos degenerados. |
-| PROF-06 | 1 | 5 | El perfil muestra el desnivel positivo y negativo acumulados, con un filtro de histéresis de 5 m para no sumar el ruido del GPS (ADR-0008); los segmentos se miden por separado y las elevaciones ausentes se omiten. | Subida de 100 m con ruido de ±2 m → +100 m; oscilaciones de 3 m → 0 m. |
+| PROF-06 | 1 | 5 | El perfil muestra el desnivel positivo y negativo acumulados, calculados como en mendikat.net: perfil suavizado con una media móvil gaussiana de 100 m (ADR-0008). Los segmentos se miden por separado, las elevaciones ausentes se omiten y en un circuito (inicio y fin a menos de 100 m) el negativo se iguala al positivo. | Subida de 100 m entre tramos llanos → +100 m; oscilaciones de 3 m cada 10 m → sólo queda la diferencia neta; mismos valores que `GaussianElevationAnalyzer.php`. |
 | PROF-07 | 1 | 5 | El perfil muestra el tiempo total, en movimiento y detenido. Un tramo entre puntos consecutivos de un segmento cuenta como detenido si la velocidad horizontal es menor de 1 km/h; la pausa entre segmentos también. Sin horas: «los puntos no tienen hora». | Parada de 10 min en el mismo punto → 10 min detenido; pausa de 30 min entre segmentos → 30 min detenido. |
 
 ## DEM — Ajuste de altitud

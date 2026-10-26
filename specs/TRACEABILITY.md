@@ -194,3 +194,11 @@ volvía a llamar a `Close()` durante el cierre y saltaba un error.
 
 Pendiente de comprobación manual por el responsable: abrir un GPX muy grande y cancelar; Simplificar con ese track;
 navegar con teclado (Alt, Tab, flechas) y con el Narrador de Windows; ACC-NFR-01 (sin red).
+
+## Desnivel con filtro gaussiano (2026-10-26, a petición del responsable)
+
+330 pruebas en total, todas en verde. Mismo resultado que `GaussianElevationAnalyzer.php` en 573 segmentos reales (ADR-0008).
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| PROF-06 | ✅ | `ProfileStatistics.ElevationGain/WindowPoints/Smooth/GainAndLoss` | `A_climb_between_flat_stretches_is_counted_in_full`, `Gps_noise_is_smoothed_out`, `The_window_is_100_m_whatever_the_point_spacing` (5), `Stops_do_not_shrink_the_mean_spacing`, `In_a_circuit_the_descent_equals_the_ascent`, `Gives_the_same_result_as_mendikat_net`, `Segments_are_measured_separately…` |

@@ -52,9 +52,8 @@
 
 ## Estadísticas del perfil (2026-10-25, a petición del responsable)
 
-- **Desnivel positivo/negativo** (PROF-06): histéresis de 5 m (`ProfileStatistics.ElevationHysteresis`). Sólo se
-  suma un cambio cuando la elevación se ha alejado al menos 5 m del último nivel contado. Sin filtro, el ruido del GPS
-  infla mucho el desnivel (oscilaciones de ±3 m sumarían 6 m por oscilación). Por segmento; elevaciones ausentes omitidas.
+- **Desnivel positivo/negativo** (PROF-06): media móvil gaussiana de 100 m, el mismo método que mendikat.net (ver
+  «Desnivel con filtro gaussiano» más abajo). Sustituye a la histéresis de 5 m usada hasta el 2026-10-26.
 - **Tiempo** (PROF-07): total = último − primer punto con hora. En movimiento = suma de intervalos dentro de un segmento
   con velocidad horizontal ≥ 1 km/h (`ProfileStatistics.StoppedSpeed`). Detenido = total − en movimiento (incluye
   tramos lentos, pausas entre segmentos e intervalos con horas desordenadas).
@@ -70,3 +69,29 @@ Medido con un GPX sintético de 500 000 puntos (49 MB):
 - Por encima de 20 000 puntos, el diálogo calcula en segundo plano tras 300 ms sin teclear; una tolerancia nueva o
   cerrar el diálogo cancela el cálculo anterior (Douglas–Peucker comprueba la cancelación cada 4 096 pasos).
 - Aplicar y deshacer: ver la revisión de `RemovePointsCommand` arriba.
+
+## Desnivel con filtro gaussiano (2026-10-26, a petición del responsable)
+
+**Decisión**: el desnivel positivo y negativo se calcula como en mendikat.net (`GaussianElevationAnalyzer.php`, versión
+18.6, commit `d259429a`), para que la aplicación y la web den las mismas cifras. Sustituye a la histéresis de 5 m.
+
+Por cada segmento (`ProfileStatistics.ElevationGain`):
+
+1. Se toman las elevaciones de los puntos que la tienen.
+2. Ventana de **100 m** (`SmoothingWindow`) convertida a puntos: 100 m ÷ separación media de los tramos de más de 1 m
+   (`MinimumStep`; las paradas no cuentan), redondeado y acotado entre 1 y el número de puntos. Sin movimiento: 100 puntos.
+   Con puntos a más de 100 m entre sí no se suaviza.
+3. Media móvil gaussiana centrada (ALMA, offset 0,5, σ = 6): pesos e^(−(j − m)²/2s²), m = (k − 1)/2, s = k/σ. Los
+   extremos se prolongan repitiendo el primer y el último valor, así el inicio y el fin conservan su elevación.
+4. Desnivel = suma de subidas y de bajadas del perfil suavizado.
+5. Circuito (inicio y fin a menos de 100 m, `CircuitDistance`): el negativo se iguala al positivo.
+
+El mínimo y el máximo se siguen tomando del perfil sin suavizar. Según el estudio de mendikat.net sobre 2000 tracks, la
+ventana de 100 m es la que más se acerca a la histéresis (mediana +0,1 %) sin depender de la densidad de puntos.
+
+Diferencias con el PHP: ninguna en el cálculo. El PHP trata una elevación ausente como 0, mientras que aquí se omite
+(PROF-03); el `snap` de la librería PHP sólo elimina ruido de coma flotante.
+
+**Verificación**: los dos cálculos sobre 573 segmentos de 500 tracks elegidos al azar de mendikat.net (sin elevaciones
+ausentes), más 3 tracks de prueba de Mendikat y 5 casos sintéticos (ruido, puntos dispersos, paradas, circuito), dan
+el mismo resultado al milímetro (2026-10-26). `ProfileStatisticsTests.Gives_the_same_result_as_mendikat_net` fija un caso.

@@ -220,5 +220,5 @@
   <data name="ElevationSourceEdited" xml:space="preserve"><value>editada a mano</value></data>
   <data name="ProfileTimes" xml:space="preserve"><value>Tiempo total: {0} · en movimiento: {1} · detenido: {2}</value></data>
   <data name="ProfileNoTimes" xml:space="preserve"><value>Tiempo: los puntos no tienen hora.</value></data>
-  <data name="ProfileStatsHint" xml:space="preserve"><value>Desnivel con filtro de 5 m para no sumar el ruido del GPS. Detenido: tramos a menos de 1 km/h y pausas entre segmentos.</value></data>
+  <data name="ProfileStatsHint" xml:space="preserve"><value>Desnivel calculado sobre el perfil suavizado con una media gaussiana de 100 m, como en mendikat.net, para no sumar el ruido del GPS. En un circuito el desnivel negativo se iguala al positivo. Detenido: tramos a menos de 1 km/h y pausas entre segmentos.</value></data>
 </root>
