@@ -217,6 +217,8 @@
   <data name="DemCancelled" xml:space="preserve"><value>Consulta detenida. No se ha cambiado nada.</value></data>
   <data name="DemServiceError" xml:space="preserve"><value>No se pudo consultar el servicio de elevaciones del IGN (sin conexión o el servicio no responde). No se ha cambiado nada.</value></data>
   <data name="DemNote" xml:space="preserve"><value>Sólo hay datos para España; en el mar y fuera de España los puntos conservan su elevación. La elevación original del GPS puede estar referida a otra superficie (el elipsoide o EGM96); no se aplica ninguna corrección. Nada cambia hasta pulsar «Aplicar», que se puede deshacer con Ctrl+Z; el archivo original no se modifica hasta guardar.</value></data>
+  <data name="MenuReverse" xml:space="preserve"><value>_Invertir track</value></data>
+  <data name="StatusReversed" xml:space="preserve"><value>«{0}» invertido: {1} puntos.</value></data>
   <data name="StatusElevationsAdjusted" xml:space="preserve"><value>Altitudes ajustadas con el MDT en «{0}»: {1} puntos.</value></data>
   <data name="FieldElevationSource" xml:space="preserve"><value>Origen elevación</value></data>
   <data name="ElevationSourceOriginal" xml:space="preserve"><value>del archivo</value></data>

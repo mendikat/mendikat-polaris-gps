@@ -24,6 +24,7 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Perfil de elevación | Seleccionar un track o ruta en **Capas** › botón **Perfil** (o Ver › Perfil de elevación). Muestra distancia, desnivel positivo y negativo, elevación mínima y máxima, y tiempo total, en movimiento y detenido. Puntero sobre el perfil: marca el punto en el mapa; clic: lo selecciona; ← →: punto anterior / siguiente |
 | Simplificar un track o ruta | Seleccionarlo en **Capas** › *Herramientas › Simplificar track…*; tolerancia en metros con vista previa del número de puntos |
 | Regenerar tiempos | *Herramientas › Regenerar tiempos…*: fecha, hora y zona horaria de inicio, y velocidad (km/h, m/s, min/km) o intervalo fijo; vista previa en hora local y UTC |
+| Invertir el sentido | *Herramientas › Invertir track*: invierte puntos y segmentos del track o ruta seleccionado; las horas se reflejan (mismo inicio y fin, mismos intervalos). Se deshace con Ctrl+Z |
 | Ajustar altitudes con el MDT | *Herramientas › Ajustar altitudes con el MDT del IGN…* › **Consultar** (5 m o 25 m; requiere Internet) › revisar cuántos puntos cambian y cuántos no tienen dato › **Aplicar**. Sólo España; el origen de cada elevación se ve en el detalle del punto |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
 | Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |

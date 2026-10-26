@@ -57,6 +57,7 @@
             <MenuItem Header="{x:Static res:Strings.MenuTools}">
                 <MenuItem Header="{x:Static res:Strings.MenuSimplify}" Command="{Binding SimplifyCommand}" />
                 <MenuItem Header="{x:Static res:Strings.MenuRegenerateTimes}" Command="{Binding RegenerateTimesCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuReverse}" Command="{Binding ReverseCommand}" />
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuAdjustElevations}" Command="{Binding AdjustElevationsCommand}" />
             </MenuItem>

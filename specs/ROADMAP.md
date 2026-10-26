@@ -43,6 +43,7 @@ Hechas, con pruebas y documentadas en TRACEABILITY.md:
 | Perfil: fichas con iconos (recorrido / tiempo), velocidad media y máxima (30 s), icono de track en la ventana | PROF-07, PROF-08, ADR-0008 |
 | Menú Ayuda: guía HTML (F1), ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones, Acerca de (versión 0.0.1) | APP-09 |
 | Géoportail muestra el SCAN 25 (clave pública `ign_scan_ws`) | ADR-0004 |
+| Herramientas › Invertir track: puntos y segmentos en orden inverso, horas reflejadas, deshacible | REV-01..03 |
 | Tarea `watch (Hot Reload)` y configuración de depuración en `.vscode/` | — |
 
 Pendiente:

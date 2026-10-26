@@ -187,5 +187,27 @@ public sealed class ToolsFlowTests
 
         Assert.False(_vm.SimplifyCommand.CanExecute(null));
         Assert.False(_vm.RegenerateTimesCommand.CanExecute(null));
+        Assert.False(_vm.ReverseCommand.CanExecute(null));
+    }
+
+    [Fact]
+    [Trait("Req", "REV-03")]
+    public void Reverse_applies_one_undoable_step_to_the_selected_track_only()
+    {
+        var (first, last) = (TrackPoints[0], TrackPoints[^1]);
+        var waypointTime = _data.Waypoints[0].Time;
+
+        _vm.ReverseCommand.Execute(null);
+
+        Assert.Same(last, TrackPoints[0]);
+        Assert.Same(first, TrackPoints[^1]);
+        Assert.Equal(new DateTimeOffset(2026, 5, 1, 7, 0, 0, TimeSpan.Zero), first.Time); // single time: mirrored onto itself
+        Assert.Equal(waypointTime, _data.Waypoints[0].Time);
+        Assert.Equal("«Recta» invertido: 50 puntos.", _vm.StatusMessage);
+        Assert.True(_vm.ActiveDocument!.IsDirty);
+
+        _vm.Undo();
+        Assert.Same(first, TrackPoints[0]);
+        Assert.False(_vm.ActiveDocument.IsDirty);
     }
 }

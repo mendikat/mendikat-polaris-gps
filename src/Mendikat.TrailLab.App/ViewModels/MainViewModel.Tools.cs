@@ -1,5 +1,7 @@
 using Mendikat.TrailLab.App.Resources;
 using Mendikat.TrailLab.Domain.Elevation;
+using Mendikat.TrailLab.Domain.Model;
+using Mendikat.TrailLab.Domain.Processing;
 using Mendikat.TrailLab.Mapping.Elevation;
 using Microsoft.Extensions.Logging;
 
@@ -13,6 +15,8 @@ public sealed partial class MainViewModel
     public RelayCommand RegenerateTimesCommand { get; private set; } = null!;
 
     public RelayCommand AdjustElevationsCommand { get; private set; } = null!;
+
+    public RelayCommand ReverseCommand { get; private set; } = null!;
 
     /// <summary>Elevation models by resolution (DEM-01). Set at startup; without it the DEM tool is disabled.</summary>
     public Func<IgnDemResolution, IElevationSource>? ElevationSources { get; init; }
@@ -84,8 +88,28 @@ public sealed partial class MainViewModel
             layer.Kind, doc.FileName, dialog.Resolution.Resolution, plan.Changed, plan.NoData);
     }
 
+    /// <summary>Reverses the selected track or route, mirroring its times; one undoable step, no dialog (REV-03).</summary>
+    public void Reverse()
+    {
+        if (ActiveDocument is not { SelectedLayer: { IsSequence: true } layer } doc)
+        {
+            StatusMessage = Strings.StatusSelectSomething;
+            return;
+        }
+
+        doc.Document.Execute(layer.Model switch
+        {
+            Track track => TrackReverser.Reverse(track),
+            Route route => TrackReverser.Reverse(route),
+            _ => throw new InvalidOperationException("Only tracks and routes can be reversed."),
+        });
+        StatusMessage = string.Format(Strings.StatusReversed, layer.Name, layer.PointCount);
+        _logger.LogInformation("Reversed a {Kind} in {FileName}: {Count} points", layer.Kind, doc.FileName, layer.PointCount);
+    }
+
     private void InitializeToolCommands()
     {
+        ReverseCommand = new RelayCommand(Reverse, CanUseTools);
         SimplifyCommand = new RelayCommand(Simplify, CanUseTools);
         RegenerateTimesCommand = new RelayCommand(RegenerateTimes, CanUseTools);
         AdjustElevationsCommand = new RelayCommand(AdjustElevations, () => CanUseTools() && ElevationSources is not null);
@@ -98,5 +122,6 @@ public sealed partial class MainViewModel
         SimplifyCommand.RaiseCanExecuteChanged();
         RegenerateTimesCommand.RaiseCanExecuteChanged();
         AdjustElevationsCommand.RaiseCanExecuteChanged();
+        ReverseCommand.RaiseCanExecuteChanged();
     }
 }

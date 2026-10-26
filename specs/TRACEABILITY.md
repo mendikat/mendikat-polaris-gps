@@ -245,3 +245,13 @@ renderizando la ventana fuera de pantalla con tracks reales con y sin horas, anc
 https://www.mendikat.net (`Web_opens_mendikat_net`, `The_user_guide_has_the_donation_form_and_working_internal_links`).
 Después: menú Ayuda reordenado (¡Dona ahora! antes que la web), nueva descripción en «Acerca de» y «Buscar actualizaciones»
 en el menú y en «Acerca de», provisionalmente a https://www.mendikat.net (`Check_for_updates_opens_mendikat_net_for_now`).
+
+## Invertir track (2026-10-26, a petición del responsable)
+
+313 pruebas, todas en verde. Nueva entrada *Herramientas › Invertir track*, sin diálogo y deshacible.
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| REV-01 | ✅ | `Domain/Processing/TrackReverser`, `ReverseOrderCommand<T>` | `Segments_and_points_are_reversed_and_times_mirrored`, `Empty_and_single_point_tracks_are_handled` |
+| REV-02 | ✅ | `TrackReverser` (horas reflejadas con `SetTimesCommand`) | `Segments_and_points_are_reversed_and_times_mirrored`, `Points_without_time_keep_having_none` |
+| REV-03 | ✅ 🖐 | `MainViewModel.Reverse`, `ReverseCommand`, menú Herramientas | `Undo_restores_order_and_times`, `Reverse_applies_one_undoable_step_to_the_selected_track_only`, `Tools_are_only_available_for_tracks_and_routes` |

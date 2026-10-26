@@ -139,6 +139,14 @@ Convenciones:
 | TIME-05 | 1 | 6 | Los tiempos se escriben en UTC ISO 8601 (`yyyy-MM-ddTHH:mm:ssZ`, con fracción si procede); conversión local→UTC una sola vez y visible en la vista previa. | Prueba en cambio de horario de verano. |
 | TIME-06 | 1 | 6 | Sólo afecta al track seleccionado; nunca a waypoints ni a otros documentos. Vista previa y cancelar; deshacer. | — |
 
+## REV — Invertir track
+
+| Id | Ver | Inc | Requisito | Criterios de aceptación |
+|----|-----|-----|-----------|-------------------------|
+| REV-01 | 1 | — | *Herramientas › Invertir track* invierte el sentido del track o ruta seleccionado: el orden de los segmentos y el de los puntos de cada segmento. Los segmentos no se fusionan y los puntos conservan todos sus campos. | Dos segmentos → orden inverso de segmentos y puntos; track vacío o de un punto sin error. |
+| REV-02 | 1 | — | Las horas se reflejan, `t' = t_primera + t_última − t`, para que el resultado siga en orden cronológico con la misma hora de inicio y fin y los mismos intervalos entre puntos. Los puntos sin hora siguen sin hora. | 0, 60, 180, 600, 660 s → 0, 60, 480, 600, 660 s. |
+| REV-03 | 1 | — | Sin diálogo; un único paso que se deshace; sólo afecta a la capa seleccionada (nunca a waypoints). | Deshacer restaura orden y horas. |
+
 ## WPE — Edición de waypoints
 
 | Id | Ver | Inc | Requisito | Criterios de aceptación |
