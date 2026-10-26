@@ -62,6 +62,9 @@ public partial class App : Application
     /// </summary>
     private void RouteMapsuiLogging()
     {
+        // Mapsui draws its log entries over the map whenever a debugger is attached (F5); they belong in the log file.
+        Mapsui.Widgets.InfoWidgets.LoggingWidget.ShowLoggingInMap = Mapsui.Widgets.ActiveMode.No;
+
         var logger = _loggerFactory!.CreateLogger("Mapsui");
         Mapsui.Logging.Logger.LogDelegate = (level, message, exception) =>
         {

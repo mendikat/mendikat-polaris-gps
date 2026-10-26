@@ -49,7 +49,7 @@ public sealed class SettingsAndStoreTests : IDisposable
     public async Task File_store_loads_gpx_with_content_and_warnings()
     {
         var document = await new FileDocumentStore().LoadAsync(
-            Fixture.PathOf("gpx/gpx10.gpx"), DocumentFormat.Gpx, TestContext.Current.CancellationToken);
+            Fixture.PathOf("gpx/gpx10.gpx"), DocumentFormat.Gpx, null, TestContext.Current.CancellationToken);
 
         Assert.Equal("gpx10.gpx", document.FileName);
         Assert.Single(document.Data.Tracks);
@@ -62,7 +62,7 @@ public sealed class SettingsAndStoreTests : IDisposable
     public async Task File_store_loads_wpt()
     {
         var document = await new FileDocumentStore().LoadAsync(
-            Fixture.PathOf("wpt/ozi-sample.wpt"), DocumentFormat.Wpt, TestContext.Current.CancellationToken);
+            Fixture.PathOf("wpt/ozi-sample.wpt"), DocumentFormat.Wpt, null, TestContext.Current.CancellationToken);
 
         Assert.Equal(3, document.Data.Waypoints.Count);
         Assert.IsType<WptFormatState>(document.Data.FormatState);
@@ -76,7 +76,7 @@ public sealed class SettingsAndStoreTests : IDisposable
     public async Task File_store_reports_typed_errors(string fixture, DocumentLoadError expected)
     {
         var ex = await Assert.ThrowsAsync<DocumentLoadException>(() =>
-            new FileDocumentStore().LoadAsync(Fixture.PathOf(fixture), DocumentFormat.Gpx, TestContext.Current.CancellationToken));
+            new FileDocumentStore().LoadAsync(Fixture.PathOf(fixture), DocumentFormat.Gpx, null, TestContext.Current.CancellationToken));
 
         Assert.Equal(expected, ex.Error);
     }
@@ -89,7 +89,7 @@ public sealed class SettingsAndStoreTests : IDisposable
         await File.WriteAllBytesAsync(path, [], TestContext.Current.CancellationToken);
 
         var ex = await Assert.ThrowsAsync<DocumentLoadException>(() =>
-            new FileDocumentStore().LoadAsync(path, DocumentFormat.Gpx, TestContext.Current.CancellationToken));
+            new FileDocumentStore().LoadAsync(path, DocumentFormat.Gpx, null, TestContext.Current.CancellationToken));
 
         Assert.Equal(DocumentLoadError.EmptyFile, ex.Error);
     }

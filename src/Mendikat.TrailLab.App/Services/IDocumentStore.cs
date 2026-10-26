@@ -6,8 +6,10 @@ namespace Mendikat.TrailLab.App.Services;
 /// <summary>Loads and saves documents. File I/O runs off the UI thread (NFR-01).</summary>
 public interface IDocumentStore
 {
+    /// <param name="progress">Receives the fraction read, from 0 to 1, when the format can measure it (NFR-02).</param>
     /// <exception cref="DocumentLoadException">The file cannot be loaded for an expected reason.</exception>
-    Task<TrailDocument> LoadAsync(string filePath, DocumentFormat format, CancellationToken cancellationToken);
+    /// <exception cref="OperationCanceledException">Loading was cancelled.</exception>
+    Task<TrailDocument> LoadAsync(string filePath, DocumentFormat format, IProgress<double>? progress, CancellationToken cancellationToken);
 
     /// <summary>Whether saving is implemented for the format.</summary>
     bool CanSave(DocumentFormat format);

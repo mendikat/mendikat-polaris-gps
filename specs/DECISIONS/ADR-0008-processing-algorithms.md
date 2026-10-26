@@ -33,8 +33,9 @@
   objetos originales, así que deshacer restaura exactamente los mismos puntos con todos sus campos.
 - Cada estado del contenido tiene un identificador; el documento está modificado si el estado actual no es el
   guardado, de modo que deshacer hasta el estado guardado quita el indicador `*` (SAVE-04).
-- Las herramientas de los incrementos 6 y 7 podrán guardar una instantánea de los segmentos afectados (se revisará
-  la memoria con tracks enormes en el incremento 8).
+- Las herramientas de los incrementos 6 y 7 guardan referencias a los puntos afectados, no copias. Revisado en el
+  incremento 8 con 500 000 puntos: `RemovePointsCommand` recorre la lista una sola vez al hacer y al deshacer (antes
+  borraba e insertaba punto a punto: 11 s por operación; ahora milisegundos).
 
 ## Implementación (incremento 6, 2026-10-25)
 
@@ -58,3 +59,14 @@
   con velocidad horizontal ≥ 1 km/h (`ProfileStatistics.StoppedSpeed`). Detenido = total − en movimiento (incluye
   tramos lentos, pausas entre segmentos e intervalos con horas desordenadas).
 - Ambos umbrales son constantes documentadas; si hiciera falta, pueden pasar a ser opciones del usuario.
+
+## Revisión con tracks enormes (incremento 8, 2026-10-26)
+
+Medido con un GPX sintético de 500 000 puntos (49 MB):
+
+- La proyección Transverse Mercator era ~2/3 del tiempo de cada vista previa y no depende de la tolerancia.
+  `TrackSimplifier.Prepare` proyecta una vez por diálogo y `PreparedSimplification.Plan` prueba cada tolerancia
+  (~150 ms en lugar de ~440 ms). `TrackSimplifier.Plan` se mantiene como atajo.
+- Por encima de 20 000 puntos, el diálogo calcula en segundo plano tras 300 ms sin teclear; una tolerancia nueva o
+  cerrar el diálogo cancela el cálculo anterior (Douglas–Peucker comprueba la cancelación cada 4 096 pasos).
+- Aplicar y deshacer: ver la revisión de `RemovePointsCommand` arriba.

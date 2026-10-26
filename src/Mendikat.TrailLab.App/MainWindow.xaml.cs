@@ -60,20 +60,45 @@ public partial class MainWindow : Window
     }
 
     /// <summary>Asks about unsaved documents before closing (APP-04). Cancelling keeps everything open.</summary>
-    protected override async void OnClosing(CancelEventArgs e)
+    /// <summary>
+    /// Asks about unsaved documents (APP-04). When the answer is known at once (nothing modified, or Discard/Cancel),
+    /// the close goes ahead or stops right here: calling Close() again while the window is closing throws.
+    /// Only if saving is still running is the close postponed and repeated afterwards.
+    /// </summary>
+    protected override void OnClosing(CancelEventArgs e)
     {
         base.OnClosing(e);
-        if (_closeConfirmed)
+        if (_closeConfirmed || e.Cancel)
         {
             return;
         }
 
+        var confirmation = _viewModel.ConfirmCloseAllAsync();
+        if (confirmation.IsCompleted)
+        {
+            _closeConfirmed = confirmation.Result;
+            e.Cancel = !_closeConfirmed;
+            return;
+        }
+
         e.Cancel = true;
-        if (await _viewModel.ConfirmCloseAllAsync())
+        CloseWhenConfirmed(confirmation);
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        _viewModel.CancelOperation();
+        _map.Dispose();
+        base.OnClosed(e);
+    }
+
+    /// <summary>async void on purpose: an unexpected error reaches the global handler (NFR-03) instead of being lost.</summary>
+    private async void CloseWhenConfirmed(Task<bool> confirmation)
+    {
+        if (await confirmation)
         {
             _closeConfirmed = true;
-            _map.Dispose();
-            Close();
+            await Dispatcher.InvokeAsync(Close);
         }
     }
 

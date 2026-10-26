@@ -28,6 +28,7 @@
         <KeyBinding Key="Y" Modifiers="Control" Command="{Binding RedoCommand}" />
         <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" />
         <KeyBinding Key="Insert" Command="{Binding InsertPointCommand}" />
+        <KeyBinding Key="Escape" Command="{Binding CancelOperationCommand}" />
     </Window.InputBindings>
 
     <DockPanel>
@@ -94,22 +95,31 @@
                     <DockPanel LastChildFill="True" />
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
-            <StatusBarItem DockPanel.Dock="Right" Width="260" ToolTip="WGS84, grados minutos segundos">
-                <TextBlock Text="{Binding PointerDms}" AutomationProperties.Name="Coordenadas geográficas WGS84" />
+            <StatusBarItem DockPanel.Dock="Right" Width="260" ToolTip="{x:Static res:Strings.A11yDmsToolTip}">
+                <TextBlock Text="{Binding PointerDms}" AutomationProperties.Name="{x:Static res:Strings.A11yDmsName}" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
-            <StatusBarItem DockPanel.Dock="Right" Width="190" ToolTip="UTM WGS84: zona y banda, Este, Norte (m)">
-                <TextBlock Text="{Binding PointerUtm}" AutomationProperties.Name="Coordenadas UTM" />
+            <StatusBarItem DockPanel.Dock="Right" Width="190" ToolTip="{x:Static res:Strings.A11yUtmToolTip}">
+                <TextBlock Text="{Binding PointerUtm}" AutomationProperties.Name="{x:Static res:Strings.A11yUtmName}" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
+            <!-- Long operations: progress and Cancel (NFR-02) -->
+            <StatusBarItem DockPanel.Dock="Right" Visibility="{Binding CanCancelOperation, Converter={StaticResource BoolToVisibility}}">
+                <Button Content="{x:Static res:Strings.CancelOperation}" Padding="8,0" Command="{Binding CancelOperationCommand}"
+                        ToolTip="{x:Static res:Strings.CancelOperationToolTip}"
+                        AutomationProperties.Name="{x:Static res:Strings.CancelOperationToolTip}" />
+            </StatusBarItem>
             <StatusBarItem DockPanel.Dock="Right" Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}">
-                <ProgressBar IsIndeterminate="True" Width="80" Height="12" />
+                <ProgressBar Width="120" Height="12" Minimum="0" Maximum="1"
+                             Value="{Binding Progress, Mode=OneWay, TargetNullValue=0}"
+                             IsIndeterminate="{Binding IsProgressIndeterminate, Mode=OneWay}"
+                             AutomationProperties.Name="{x:Static res:Strings.ProgressName}" />
             </StatusBarItem>
             <StatusBarItem DockPanel.Dock="Right" Visibility="{Binding MapStatus, Converter={StaticResource NullToCollapsed}}">
-                <TextBlock Text="{Binding MapStatus}" Foreground="DarkRed" AutomationProperties.Name="Estado de la cartografía" />
+                <TextBlock Text="{Binding MapStatus}" Foreground="DarkRed" AutomationProperties.Name="{x:Static res:Strings.A11yMapStatusName}" />
             </StatusBarItem>
             <StatusBarItem>
-                <TextBlock Text="{Binding StatusMessage}" TextTrimming="CharacterEllipsis" AutomationProperties.Name="Estado" />
+                <TextBlock Text="{Binding StatusMessage}" TextTrimming="CharacterEllipsis" AutomationProperties.Name="{x:Static res:Strings.A11yStatusName}" />
             </StatusBarItem>
         </StatusBar>
 
@@ -153,7 +163,7 @@
 
             <!-- Shared map with the layers of all documents (MAP-01) -->
             <Grid Grid.Column="2">
-                <mapsui:MapControl x:Name="MapView">
+                <mapsui:MapControl x:Name="MapView" AutomationProperties.Name="{x:Static res:Strings.A11yMapName}">
                     <mapsui:MapControl.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="{x:Static res:Strings.MenuDelete}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />

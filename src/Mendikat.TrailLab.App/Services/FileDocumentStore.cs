@@ -11,7 +11,8 @@ namespace Mendikat.TrailLab.App.Services;
 /// </summary>
 public sealed class FileDocumentStore : IDocumentStore
 {
-    public async Task<TrailDocument> LoadAsync(string filePath, DocumentFormat format, CancellationToken cancellationToken)
+    public async Task<TrailDocument> LoadAsync(
+        string filePath, DocumentFormat format, IProgress<double>? progress, CancellationToken cancellationToken)
     {
         var info = new FileInfo(filePath);
         if (!info.Exists)
@@ -26,7 +27,7 @@ public sealed class FileDocumentStore : IDocumentStore
 
         try
         {
-            return await Task.Run(() => Read(filePath, format, cancellationToken), cancellationToken);
+            return await Task.Run(() => Read(filePath, format, progress, cancellationToken), cancellationToken);
         }
         catch (UnauthorizedAccessException ex)
         {
@@ -64,13 +65,14 @@ public sealed class FileDocumentStore : IDocumentStore
             cancellationToken);
     }
 
-    private static TrailDocument Read(string filePath, DocumentFormat format, CancellationToken cancellationToken)
+    /// <summary>WPT files are small (waypoints only) and are read at once; only GPX reports progress.</summary>
+    private static TrailDocument Read(string filePath, DocumentFormat format, IProgress<double>? progress, CancellationToken cancellationToken)
     {
         using var stream = new FileStream(
             filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 64 * 1024, FileOptions.SequentialScan);
         var result = format switch
         {
-            DocumentFormat.Gpx => new GpxReader().Read(stream, cancellationToken),
+            DocumentFormat.Gpx => new GpxReader().Read(stream, progress, cancellationToken),
             DocumentFormat.Wpt => new WaypointFileReader().Read(stream),
             _ => throw new ArgumentOutOfRangeException(nameof(format), format, null),
         };

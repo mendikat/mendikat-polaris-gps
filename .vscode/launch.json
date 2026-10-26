@@ -1,0 +1,23 @@
+{
+    // F5 compila (tarea "build") y arranca Mendikat TrailLab con el depurador de .NET (extensión C#).
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Mendikat TrailLab",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/Mendikat.TrailLab.App/bin/Debug/net10.0-windows10.0.19041.0/Mendikat.TrailLab.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Mendikat.TrailLab.App",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "justMyCode": true
+        },
+        {
+            "name": "Adjuntar a un proceso",
+            "type": "coreclr",
+            "request": "attach"
+        }
+    ]
+}

@@ -72,11 +72,11 @@ public sealed class SafeSaveTests : IDisposable
     public async Task Store_saves_in_the_same_format_and_the_file_reopens_identically(string fixture, DocumentFormat format)
     {
         var store = new FileDocumentStore();
-        var document = await store.LoadAsync(Fixture.PathOf(fixture), format, TestContext.Current.CancellationToken);
+        var document = await store.LoadAsync(Fixture.PathOf(fixture), format, null, TestContext.Current.CancellationToken);
         var target = PathOf("copy" + Path.GetExtension(fixture));
 
         await store.SaveAsync(document, target, TestContext.Current.CancellationToken);
-        var reopened = await store.LoadAsync(target, format, TestContext.Current.CancellationToken);
+        var reopened = await store.LoadAsync(target, format, null, TestContext.Current.CancellationToken);
 
         Assert.Equal(TrailFileWriter.Shape(document.Data), TrailFileWriter.Shape(reopened.Data), ShapeComparer.Instance);
         Assert.Equal(document.Data.Waypoints.Select(w => (w.Name, w.Elevation, w.Time)), reopened.Data.Waypoints.Select(w => (w.Name, w.Elevation, w.Time)));

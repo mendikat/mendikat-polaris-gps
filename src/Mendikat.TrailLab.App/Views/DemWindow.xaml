@@ -18,7 +18,8 @@
 
         <DockPanel Margin="0,10,0,0" Visibility="{Binding IsQuerying, Converter={StaticResource BoolToVisibility}}">
             <Button DockPanel.Dock="Right" Content="{x:Static res:Strings.DemStop}" Command="{Binding CancelQueryCommand}" Padding="10,2" Margin="8,0,0,0" />
-            <ProgressBar Height="14" Minimum="0" Maximum="1" Value="{Binding Progress, Mode=OneWay}" />
+            <ProgressBar Height="14" Minimum="0" Maximum="1" Value="{Binding Progress, Mode=OneWay}"
+                         AutomationProperties.Name="{x:Static res:Strings.ProgressName}" />
         </DockPanel>
 
         <Border BorderBrush="LightGray" BorderThickness="0,1,0,0" Margin="0,12,0,0" Padding="0,8,0,0">

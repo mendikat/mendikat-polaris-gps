@@ -38,4 +38,8 @@ dejarían de encontrar su runtime. `global.json` fija 10.0.402.
 
 ## Consecuencias
 
-- El usuario final necesitará el runtime de escritorio .NET 10, o se publicará *self-contained* (decisión de distribución en el incremento 8).
+- Distribución (decidida por el responsable en el incremento 8, 2026-10-26): **dependiente del runtime**. El usuario
+  instala una vez el runtime de escritorio .NET 10 (x64) y recibe una carpeta de unos 48 MB con la aplicación y sus
+  bibliotecas (`dotnet publish srcMendikat.TrailLab.App -p:PublishProfile=win-x64` → `artifactspublishwin-x64`).
+  Se descartó la publicación autocontenida (~150 MB por copia) porque el runtime se instala una sola vez. Los símbolos
+  nativos de SkiaSharp y HarfBuzz (~100 MB) no se publican; los `.pdb` propios sí, para tener números de línea en el registro.

@@ -61,6 +61,33 @@ public sealed class ToolsFlowTests
     }
 
     [Fact]
+    [Trait("Req", "NFR-02")]
+    public async Task Large_tracks_are_previewed_in_the_background_and_only_the_last_tolerance_counts()
+    {
+        var layer = _vm.ActiveDocument!.SelectedLayer!;
+        var dialog = new SimplifyViewModel(layer, backgroundThreshold: 10);
+        Assert.True(dialog.IsComputing);
+        Assert.False(dialog.CanApply);
+        Assert.Equal("Calculando...", dialog.Preview);
+
+        dialog.ToleranceText = "1000";
+        await dialog.Computation;
+
+        Assert.False(dialog.IsComputing);
+        Assert.Equal(1000, dialog.Plan!.ToleranceMeters);
+        Assert.True(dialog.CanApply);
+        Assert.Equal(50, TrackPoints.Count); // the preview changes nothing
+
+        dialog.ToleranceText = "7";
+        dialog.Cancel();
+        await dialog.Computation;
+
+        Assert.False(dialog.IsComputing);
+        Assert.Null(dialog.Plan);
+        Assert.False(dialog.CanApply);
+    }
+
+    [Fact]
     [Trait("Req", "SIMP-04")]
     public void Cancelling_or_an_invalid_tolerance_changes_nothing()
     {

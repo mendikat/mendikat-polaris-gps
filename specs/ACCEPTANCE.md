@@ -162,3 +162,12 @@ Implementado en `tests/.../Mapping/CoordinateFormatterTests.cs` (incremento 2).
 
 **ACC-NFR-02 — Archivo grande** (NFR-01, NFR-09) [manual + auto de rendimiento]
 - Given un GPX de 100 000 puntos → When lo abro → Then la UI responde durante la carga (progreso visible) y el desplazamiento del mapa es fluido.
+
+**ACC-NFR-03 — Cancelar operaciones largas** (NFR-02) [auto + manual]
+- Given un GPX de 500 000 puntos (49 MB) → When lo abro → Then la barra de estado muestra el porcentaje y un botón «Cancelar» (también Esc).
+- When pulso Cancelar → Then no se añade ningún documento, los abiertos no cambian y la barra de estado dice «Apertura de … cancelada.».
+- Given ese track abierto → When abro Simplificar y escribo tolerancias → Then la ventana no se bloquea («Calculando...»), sólo cuenta la última tolerancia, y aplicar y deshacer tardan menos de un segundo.
+
+**ACC-NFR-04 — Teclado y lector de pantalla** (NFR-08) [auto + manual]
+- Given cualquier ventana → Then cada campo, lista, botón de símbolo y barra de progreso tiene nombre accesible.
+- Given el menú → When pulso Alt y la letra subrayada → Then se abre el menú; dentro de cada menú ninguna letra se repite.

@@ -36,6 +36,14 @@
       <PublicClass>true</PublicClass>
     </EmbeddedResource>
   </ItemGroup>
+  <!-- Native debug symbols of SkiaSharp and HarfBuzz (~100 MB) are useless to users. Our own .pdb files are kept:
+       they add line numbers to the stack traces in the technical log. -->
+  <Target Name="DropNativeSymbolsFromPublish" AfterTargets="ComputeResolvedFilesToPublishList">
+    <ItemGroup>
+      <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)"
+                             Condition="'%(Extension)' == '.pdb' and ('%(Filename)' == 'libSkiaSharp' or '%(Filename)' == 'libHarfBuzzSharp')" />
+    </ItemGroup>
+  </Target>
   <!-- WPF compiles XAML in a temporary project before resources are generated; generate the
        strongly typed Strings class first so both XAML and code can use it. -->
   <Target Name="GenerateStringsBeforeMarkup" BeforeTargets="MarkupCompilePass1" DependsOnTargets="PrepareResourceNames;ResGen">

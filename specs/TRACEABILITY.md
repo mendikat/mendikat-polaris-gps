@@ -173,3 +173,24 @@ cubierto por `WindowSmokeTests`. Pendiente de comprobación manual por el respon
 | PROF-06 | ✅ | `Domain/Profiles/ProfileStatistics.ElevationGain`, `ProfileViewModel.Summary` | `Ascent_and_descent_add_real_climbs_and_ignore_small_noise`, `Without_a_filter_noise_would_inflate_the_gain`, `Segments_are_measured_separately…` |
 | PROF-07 | ✅ | `ProfileStatistics.Times`, `ProfileViewModel.TimeSummary` | `Slow_intervals_count_as_stopped_time`, `The_pause_between_segments_is_stopped_time`, `Missing_or_single_times…`, `Durations_are_shown…` |
 | PROF-01 | ✅ | Título del eje de elevación por encima del gráfico (margen superior 30 px) | Comprobación visual |
+
+## Incremento 8 — Robustez (2026-10-26)
+
+322 pruebas en total (307 al empezar), todas en verde; compila sin advertencias. Mediciones con un GPX sintético de
+500 000 puntos (49 MB) antes → después: abrir 5,2 s sin progreso → 5,2 s con porcentaje y cancelable; aplicar o deshacer
+una simplificación 11 s → milisegundos; vista previa de Simplificar ~440 ms por tecla en la interfaz → ~150 ms en segundo
+plano. La versión publicada (`artifacts\publish\win-x64`) arranca y se cierra sin errores en el registro.
+Fallo encontrado en el registro real (2026-10-25 12:13) y corregido: al salir sin cambios pendientes, `MainWindow.OnClosing`
+volvía a llamar a `Close()` durante el cierre y saltaba un error.
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| NFR-02 | ✅ 🖐 | Abrir: `GpxReader.Read(stream, progress, token)`, `LoadProgress`/`ProgressStream`, `MainViewModel.Progress/CancelOperationCommand` (botón y Esc). Simplificar: `TrackSimplifier.Prepare`, `PreparedSimplification`, `SimplifyViewModel` en segundo plano. `RemovePointsCommand` lineal. DEM: ya cancelable (Inc 7) | `LoadProgressTests` (3), `Opening_can_be_cancelled_and_adds_no_document`, `Large_tracks_are_previewed_in_the_background…`, `LargeEditTests` (6) |
+| NFR-08 | ✅ 🖐 | `AutomationProperties.Name` en todos los controles de entrada, listas, barras de progreso, mapa y botones de símbolo; «Guardar co_mo» deja de compartir la C con «_Cerrar archivo» | `AccessibilityTests.Every_input_control_has_an_accessible_name`, `Every_menu_item_has_an_access_key_unique_within_its_menu` |
+| NFR-07 | ✅ | Textos de la barra de estado que estaban en el XAML pasan a `Strings.resx` | Revisión de código |
+| NFR-01 | ✅ | Carga en segundo plano con progreso medible (se cierra el 🟡 del Inc 1) | `LoadProgressTests` |
+| APP-04 | ✅ | `MainWindow.OnClosing`: si la respuesta se conoce al momento, se cierra o se cancela sin volver a llamar a `Close()` | `Main_window_without_changes_closes_at_the_first_attempt`, `Main_window_with_changes_stays_open_when_the_user_cancels` |
+| NFR-09 | 🟡 🖐 | Sin cambios. Rehacer las capas tras una edición: ~0,2 s con 100 000 puntos, ~0,7–1 s con 500 000 | Pendiente: comprobación manual de la fluidez del mapa |
+
+Pendiente de comprobación manual por el responsable: abrir un GPX muy grande y cancelar; Simplificar con ese track;
+navegar con teclado (Alt, Tab, flechas) y con el Narrador de Windows; ACC-NFR-01 (sin red).

@@ -3,10 +3,11 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar tracks **GPX**
 y archivos de waypoints **WPT** sobre cartografía online (IGN España por defecto).
 
-> **Estado: Incremento 7 (ajuste de altitudes con el MDT del IGN) terminado, pendiente de aprobación.**
+> **Estado: Incremento 8 (robustez) terminado, pendiente de aprobación. Es el último incremento del plan.**
 > Se abren GPX y WPT, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan en el mismo formato de forma segura.
-> También muestra el perfil de elevación sincronizado con el mapa permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN. Queda el incremento 8 (robustez y cierre). Ver [specs/ROADMAP.md](specs/ROADMAP.md).
+> También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
+> Los archivos grandes se abren con porcentaje de progreso y se pueden cancelar. Ver [specs/ROADMAP.md](specs/ROADMAP.md).
 
 ## Uso rápido
 
@@ -23,6 +24,8 @@ y archivos de waypoints **WPT** sobre cartografía online (IGN España por defec
 | Simplificar un track o ruta | Seleccionarlo en **Capas** › *Herramientas › Simplificar track…*; tolerancia en metros con vista previa del número de puntos |
 | Regenerar tiempos | *Herramientas › Regenerar tiempos…*: fecha, hora y zona horaria de inicio, y velocidad (km/h, m/s, min/km) o intervalo fijo; vista previa en hora local y UTC |
 | Ajustar altitudes con el MDT | *Herramientas › Ajustar altitudes con el MDT del IGN…* › **Consultar** (5 m o 25 m; requiere Internet) › revisar cuántos puntos cambian y cuántos no tienen dato › **Aplicar**. Sólo España; el origen de cada elevación se ve en el detalle del punto |
+| Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
+| Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |
 
 ## Documentación (Spec-Driven Development)
 
@@ -39,7 +42,7 @@ y archivos de waypoints **WPT** sobre cartografía online (IGN España por defec
 
 - Windows 10 versión 2004 o posterior / Windows 11, x64 (exigido por SkiaSharp, usado por el mapa; ADR-0009).
 - Desarrollo: SDK de .NET 10 (`global.json` fija 10.0.402).
-- Ejecución: runtime de escritorio .NET 10 (o publicación autocontenida, a decidir en el incremento 8).
+- Ejecución: [runtime de escritorio .NET 10](https://dotnet.microsoft.com/download/dotnet/10.0) (x64), instalado una vez.
 - Internet sólo para la cartografía: abrir y ver archivos funciona sin conexión.
 
 ## Compilar, probar y ejecutar
@@ -60,6 +63,18 @@ Archivos de usuario:
 - Configuración: `%APPDATA%\Mendikat\TrailLab\settings.json` (cartografía elegida).
 - Registro técnico: `%LOCALAPPDATA%\Mendikat\TrailLab\logs\traillab-AAAAMMDD.log` (se conservan los 10 últimos;
   la carpeta del perfil de usuario se sustituye por `%USERPROFILE%`).
+
+## Distribuir
+
+La aplicación se distribuye dependiente del runtime (ADR-0001): cada usuario instala una vez el runtime de escritorio
+.NET 10 (x64) y recibe una carpeta de unos 48 MB.
+
+```powershell
+dotnet publish src\Mendikat.TrailLab.App -p:PublishProfile=win-x64   # genera artifacts\publish\win-x64\
+```
+
+Se comprime esa carpeta y el usuario ejecuta `Mendikat.TrailLab.exe`. Si falta el runtime, Windows muestra un aviso con el
+enlace de descarga.
 
 ## Arquitectura
 
@@ -112,13 +127,17 @@ Datos: mosaicos y MDT del IGN España bajo CC BY 4.0 (scne.es); datos OSM bajo O
   si algo cambiará en el archivo (GPX 1.0 → 1.1, caracteres que la codificación del WPT no admite, waypoints
   CompeGPS sin altitud). Los números se escriben con su valor exacto, pero su texto puede cambiar (-2.0610 → -2.061).
 - El perfil mide la distancia horizontal y, por defecto, no cuenta el hueco entre segmentos (casilla para incluirlo).
-- Tras cada edición se redibuja el documento completo en el mapa; con tracks de cientos de miles de puntos puede notarse (se revisará en el Inc 8).
+- Tras cada edición se redibuja el documento completo en el mapa: unos 0,2 s con 100 000 puntos y casi 1 s con 500 000.
+  Evitarlo exige actualizar el mapa por partes (rediseño de las capas); queda fuera de este plan.
 - Los textos de OziExplorer no admiten comas y los nombres de CompeGPS no admiten espacios (limitaciones de esos formatos).
 - Los WPT CompeGPS en coordenadas UTM (`U 0`) se rechazan; no se convierten datums distintos de WGS 84.
 - OziExplorer: el carácter 209 se muestra como «Ñ» (no se convierte en coma; ADR-0006).
 - MDT del IGN: sólo España. El servicio no marca «sin dato» (devuelve 0 en el mar y fuera de España), así que las celdas a 0,000 m se tratan como sin dato y esos puntos no cambian. No se aplica ninguna corrección geoidal (ADR-0007).
-- Abrir un archivo muestra progreso indeterminado; no se puede cancelar todavía (Inc 8).
+- Un GPX de 50 MB (500 000 puntos) tarda unos 5 s en abrirse y ocupa unos 190 MB de memoria. Guardarlo prepara el
+  archivo en la ventana principal (~2 s sin respuesta); la verificación y la escritura van en segundo plano. Guardar no se puede cancelar.
+- El lector de pantalla no anuncia por sí solo los cambios de la barra de estado: hay que ir a ella para leerlos.
 - El comportamiento sin conexión (MAP-07) está probado con red simulada; falta la comprobación manual sin red.
-- Sin pruebas automatizadas de interfaz; la ventana se comprueba manualmente.
+- Las pruebas de interfaz crean las ventanas reales sin mostrarlas (enlaces, nombres accesibles, cierre); el uso con ratón
+  y el dibujo del mapa se comprueban a mano.
 - Condiciones de uso de Esri y OSM a revisar antes de distribuir públicamente.
 - MtbMap y CyclOSM son servidores comunitarios sin garantía de disponibilidad.

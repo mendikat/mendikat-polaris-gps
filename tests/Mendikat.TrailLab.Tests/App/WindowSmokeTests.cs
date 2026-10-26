@@ -1,11 +1,18 @@
+using System.Net;
+using System.Net.Http;
 using System.Runtime.ExceptionServices;
 using System.Windows;
+using Mendikat.TrailLab.App;
+using Mendikat.TrailLab.App.Map;
+using Mendikat.TrailLab.App.Services;
 using Mendikat.TrailLab.App.ViewModels;
 using Mendikat.TrailLab.App.Views;
 using Mendikat.TrailLab.Domain.Documents;
 using Mendikat.TrailLab.Domain.Elevation;
 using Mendikat.TrailLab.Domain.Geo;
 using Mendikat.TrailLab.Domain.Model;
+using Mendikat.TrailLab.Tests.Fakes;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Mendikat.TrailLab.Tests.App;
 
@@ -15,7 +22,7 @@ namespace Mendikat.TrailLab.Tests.App;
 /// </summary>
 public sealed class WindowSmokeTests
 {
-    private static LayerItemViewModel TrackLayer()
+    internal static LayerItemViewModel TrackLayer()
     {
         var data = new TrailData();
         var segment = new TrackSegment();
@@ -27,7 +34,7 @@ public sealed class WindowSmokeTests
     }
 
     /// <summary>WPF needs a single-threaded apartment; exceptions are rethrown on the test thread.</summary>
-    private static void OnStaThread(Action action)
+    internal static void OnStaThread(Action action)
     {
         ExceptionDispatchInfo? failure = null;
         var thread = new Thread(() =>
@@ -91,7 +98,65 @@ public sealed class WindowSmokeTests
         });
     }
 
-    private sealed class NoDataSource : IElevationSource
+    [Fact]
+    [Trait("Req", "APP-04")]
+    public void Main_window_without_changes_closes_at_the_first_attempt()
+    {
+        // Regression: Close() was called again while the window was closing, which throws (log of 2026-10-25).
+        OnStaThread(() =>
+        {
+            var window = CreateMainWindow();
+            var closed = false;
+            window.Closed += (_, _) => closed = true;
+
+            window.Close();
+
+            Assert.True(closed);
+        });
+    }
+
+    [Fact]
+    [Trait("Req", "APP-04")]
+    public void Main_window_with_changes_stays_open_when_the_user_cancels()
+    {
+        OnStaThread(() =>
+        {
+            var dialogs = new FakeDialogService { SaveChangesAnswer = SaveChangesChoice.Cancel };
+            var window = CreateMainWindow(dialogs);
+            var viewModel = (MainViewModel)window.DataContext;
+            viewModel.NewGpx();
+            viewModel.ActiveDocument!.Document.MarkChanged();
+            var closed = false;
+            window.Closed += (_, _) => closed = true;
+
+            window.Close();
+
+            Assert.False(closed);
+            Assert.Single(dialogs.SaveChangesQuestions);
+
+            dialogs.SaveChangesAnswer = SaveChangesChoice.Discard;
+            window.Close();
+
+            Assert.True(closed);
+        });
+    }
+
+    internal static MainWindow CreateMainWindow(FakeDialogService? dialogs = null)
+    {
+        var viewModel = new MainViewModel(
+            dialogs ?? new FakeDialogService(), new FakeDocumentStore(), new FakeSettingsStore(), NullLogger<MainViewModel>.Instance);
+        var httpClient = new HttpClient(new OfflineHandler());
+        return new MainWindow(viewModel, map => new MapController(map, httpClient, NullLogger<MapController>.Instance));
+    }
+
+    /// <summary>The tests never reach the network.</summary>
+    private sealed class OfflineHandler : HttpMessageHandler
+    {
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) =>
+            Task.FromResult(new HttpResponseMessage(HttpStatusCode.ServiceUnavailable));
+    }
+
+    internal sealed class NoDataSource : IElevationSource
     {
         public string Name => "none";
 

@@ -10,7 +10,7 @@
   <data name="MenuOpenGpx" xml:space="preserve"><value>Abrir _Track...</value></data>
   <data name="MenuOpenWpt" xml:space="preserve"><value>Abrir _WPT...</value></data>
   <data name="MenuSave" xml:space="preserve"><value>_Guardar</value></data>
-  <data name="MenuSaveAs" xml:space="preserve"><value>Guardar _como...</value></data>
+  <data name="MenuSaveAs" xml:space="preserve"><value>Guardar co_mo...</value></data>
   <data name="MenuCloseDocument" xml:space="preserve"><value>_Cerrar archivo</value></data>
   <data name="MenuExit" xml:space="preserve"><value>_Salir</value></data>
   <data name="MenuView" xml:space="preserve"><value>_Ver</value></data>
@@ -31,6 +31,18 @@
   <data name="StatusAlreadyOpen" xml:space="preserve"><value>«{0}» ya está abierto.</value></data>
   <data name="StatusClosed" xml:space="preserve"><value>Cerrado: {0}</value></data>
   <data name="StatusOpenFailed" xml:space="preserve"><value>No se pudo abrir {0}.</value></data>
+  <data name="StatusOpenCancelled" xml:space="preserve"><value>Apertura de {0} cancelada.</value></data>
+  <data name="CancelOperation" xml:space="preserve"><value>Cancelar</value></data>
+  <data name="CancelOperationToolTip" xml:space="preserve"><value>Cancelar la apertura en curso (Esc)</value></data>
+  <data name="ProgressName" xml:space="preserve"><value>Progreso</value></data>
+  <data name="A11yDmsToolTip" xml:space="preserve"><value>WGS84, grados minutos segundos</value></data>
+  <data name="A11yDmsName" xml:space="preserve"><value>Coordenadas geográficas WGS84</value></data>
+  <data name="A11yUtmToolTip" xml:space="preserve"><value>UTM WGS84: zona y banda, Este, Norte (m)</value></data>
+  <data name="A11yUtmName" xml:space="preserve"><value>Coordenadas UTM</value></data>
+  <data name="A11yMapStatusName" xml:space="preserve"><value>Estado de la cartografía</value></data>
+  <data name="A11yStatusName" xml:space="preserve"><value>Estado</value></data>
+  <data name="A11yMapName" xml:space="preserve"><value>Mapa</value></data>
+  <data name="A11ySpeedUnitName" xml:space="preserve"><value>Unidad de velocidad</value></data>
   <data name="StatusPointerOutside" xml:space="preserve"><value>—</value></data>
   <data name="StatusMapLoadFailed" xml:space="preserve"><value>No se pudo cargar la cartografía «{0}»: sin conexión o el servidor no responde.</value></data>
   <data name="StatusMapSaveSettingsFailed" xml:space="preserve"><value>No se pudo guardar la configuración.</value></data>
@@ -160,6 +172,7 @@
   <data name="SimplifyPreview" xml:space="preserve"><value>{0} → {1} puntos (se eliminan {2}) con tolerancia {3} m.</value></data>
   <data name="SimplifyNote" xml:space="preserve"><value>Douglas–Peucker por segmento: se conservan el primer y el último punto de cada segmento y los segmentos no se unen. Los puntos conservados no cambian; los eliminados pierden sus campos y extensiones. Se puede deshacer con Ctrl+Z.</value></data>
   <data name="SimplifyInvalidTolerance" xml:space="preserve"><value>La tolerancia debe ser un número de metros mayor que 0.</value></data>
+  <data name="SimplifyComputing" xml:space="preserve"><value>Calculando...</value></data>
   <data name="StatusSimplified" xml:space="preserve"><value>«{0}» simplificado: {1} → {2} puntos.</value></data>
   <data name="TimesTitle" xml:space="preserve"><value>Regenerar tiempos de «{0}»</value></data>
   <data name="TimesStartDate" xml:space="preserve"><value>Fecha de inicio:</value></data>

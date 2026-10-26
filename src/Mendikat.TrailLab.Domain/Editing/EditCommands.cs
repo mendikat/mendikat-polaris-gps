@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Mendikat.TrailLab.Domain.Model;
 
 namespace Mendikat.TrailLab.Domain.Editing;
@@ -29,19 +30,42 @@ public sealed class RemovePointsCommand : IEditCommand
 
     public int Count => _removed.Count;
 
+    // Do and Undo make a single pass over the list: removing or inserting the points one by one shifts the list
+    // once per point, which takes seconds when simplifying tracks of hundreds of thousands of points.
+
     public void Do()
     {
-        for (var i = _removed.Count - 1; i >= 0; i--)
+        var next = 0;
+        var write = 0;
+        for (var read = 0; read < _owner.Count; read++)
         {
-            _owner.RemoveAt(_removed[i].Index);
+            if (next < _removed.Count && _removed[next].Index == read)
+            {
+                next++;
+                continue;
+            }
+
+            _owner[write++] = _owner[read];
         }
+
+        _owner.RemoveRange(write, _owner.Count - write);
     }
 
     public void Undo()
     {
-        foreach (var (index, point) in _removed)
+        var source = _owner.Count - 1;
+        CollectionsMarshal.SetCount(_owner, _owner.Count + _removed.Count);
+        var next = _removed.Count - 1;
+        for (var target = _owner.Count - 1; target >= 0; target--)
         {
-            _owner.Insert(index, point);
+            if (next >= 0 && _removed[next].Index == target)
+            {
+                _owner[target] = _removed[next--].Point;
+            }
+            else
+            {
+                _owner[target] = _owner[source--];
+            }
         }
     }
 }

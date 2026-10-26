@@ -28,6 +28,8 @@ public sealed partial class MainViewModel : ObservableObject
     private string _pointerDms = Strings.StatusPointerOutside;
     private MapProvider _selectedMapProvider;
     private bool _isBusy;
+    private double? _progress;
+    private CancellationTokenSource? _openCancellation;
     private int _nextColorIndex;
     private int _nextNewDocumentNumber = 1;
 
@@ -47,6 +49,7 @@ public sealed partial class MainViewModel : ObservableObject
         CloseDocumentCommand = new RelayCommand(
             p => CloseDocumentAsync(p as DocumentViewModel ?? ActiveDocument),
             p => !IsBusy && (p as DocumentViewModel ?? ActiveDocument) is not null);
+        CancelOperationCommand = new RelayCommand(CancelOperation, () => CanCancelOperation);
         ExitCommand = new RelayCommand(() => ExitRequested?.Invoke(this, EventArgs.Empty));
         ZoomInCommand = new RelayCommand(() => MapRequested?.Invoke(this, new MapRequest.ZoomIn()));
         ZoomOutCommand = new RelayCommand(() => MapRequested?.Invoke(this, new MapRequest.ZoomOut()));
@@ -159,6 +162,26 @@ public sealed partial class MainViewModel : ObservableObject
         }
     }
 
+    /// <summary>Progress of the running operation from 0 to 1, or null while it cannot be measured (NFR-02).</summary>
+    public double? Progress
+    {
+        get => _progress;
+        private set
+        {
+            if (SetProperty(ref _progress, value))
+            {
+                OnPropertyChanged(nameof(IsProgressIndeterminate));
+            }
+        }
+    }
+
+    public bool IsProgressIndeterminate => Progress is null;
+
+    /// <summary>True while a file is being opened; the status bar then shows a Cancel button (Esc).</summary>
+    public bool CanCancelOperation => _openCancellation is not null;
+
+    public RelayCommand CancelOperationCommand { get; }
+
     public RelayCommand NewGpxCommand { get; }
 
     public RelayCommand OpenGpxCommand { get; }
@@ -250,9 +273,21 @@ public sealed partial class MainViewModel : ObservableObject
 
         IsBusy = true;
         StatusMessage = string.Format(Strings.StatusOpening, fileName);
+        using var cancellation = new CancellationTokenSource();
+        SetOpenCancellation(cancellation);
+        Progress = null;
+
+        // Reports queued before the load ended are ignored once it has finished.
+        var progress = new Progress<double>(p =>
+        {
+            if (ReferenceEquals(_openCancellation, cancellation))
+            {
+                Progress = p;
+            }
+        });
         try
         {
-            var document = await _store.LoadAsync(path, format, CancellationToken.None);
+            var document = await _store.LoadAsync(path, format, progress, cancellation.Token);
             var viewModel = new DocumentViewModel(document, _nextColorIndex++);
             Documents.Add(viewModel);
             OnPropertyChanged(nameof(HasDocuments));
@@ -273,10 +308,27 @@ public sealed partial class MainViewModel : ObservableObject
             StatusMessage = string.Format(Strings.StatusOpenFailed, fileName);
             _dialogs.ShowError(UserMessages.ForLoadError(ex, fileName));
         }
+        catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
+        {
+            _logger.LogInformation("Opening {FileName} was cancelled", fileName);
+            StatusMessage = string.Format(Strings.StatusOpenCancelled, fileName);
+        }
         finally
         {
+            SetOpenCancellation(null);
+            Progress = null;
             IsBusy = false;
         }
+    }
+
+    /// <summary>Stops opening a file (NFR-02). Nothing is added; open documents are not affected.</summary>
+    public void CancelOperation() => _openCancellation?.Cancel();
+
+    private void SetOpenCancellation(CancellationTokenSource? cancellation)
+    {
+        _openCancellation = cancellation;
+        OnPropertyChanged(nameof(CanCancelOperation));
+        CancelOperationCommand.RaiseCanExecuteChanged();
     }
 
     /// <summary>Saves to the document's file; a new document has none, so it asks for a path as "Save as" (APP-08).</summary>

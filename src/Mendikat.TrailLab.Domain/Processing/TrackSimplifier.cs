@@ -21,55 +21,58 @@ public static class TrackSimplifier
 {
     private static readonly TransverseMercator Projection = new(Geodesic.WGS84, 1.0);
 
-    /// <param name="segments">The point lists to simplify (track segments, or one route list).</param>
-    public static SimplificationPlan Plan(IReadOnlyList<List<TrailPoint>> segments, double toleranceMeters)
-    {
-        if (!double.IsFinite(toleranceMeters) || toleranceMeters <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(toleranceMeters), toleranceMeters, "Tolerance must be positive.");
-        }
+    /// <summary>Cancellation is checked once every this many Douglas–Peucker steps.</summary>
+    private const int StepsPerCheck = 4096;
 
-        var commands = new List<IEditCommand>();
-        var original = 0;
-        var result = 0;
+    /// <param name="segments">The point lists to simplify (track segments, or one route list).</param>
+    public static SimplificationPlan Plan(IReadOnlyList<List<TrailPoint>> segments, double toleranceMeters) =>
+        Prepare(segments).Plan(toleranceMeters);
+
+    /// <summary>
+    /// Projects the segments once, so that several tolerances can be tried quickly (the dialog preview). The
+    /// projection takes most of the time on large tracks.
+    /// </summary>
+    /// <exception cref="OperationCanceledException">Cancelled.</exception>
+    public static PreparedSimplification Prepare(IReadOnlyList<List<TrailPoint>> segments, CancellationToken cancellationToken = default)
+    {
+        var projected = new List<(double[] X, double[] Y)>(segments.Count);
         foreach (var segment in segments)
         {
-            var kept = KeptIndices(segment, toleranceMeters);
-            original += segment.Count;
-            result += kept.Count;
-            if (kept.Count < segment.Count)
-            {
-                var keptSet = kept.ToHashSet();
-                commands.Add(new RemovePointsCommand(segment, segment.Where((_, i) => !keptSet.Contains(i))));
-            }
+            cancellationToken.ThrowIfCancellationRequested();
+            projected.Add(segment.Count <= 2 ? ([], []) : Project(segment));
         }
 
-        var command = commands.Count switch
-        {
-            0 => null,
-            1 => commands[0],
-            _ => new CompositeCommand(commands),
-        };
-        return new SimplificationPlan(original, result, toleranceMeters, command);
+        return new PreparedSimplification(segments, projected);
     }
 
     /// <summary>Indices (ascending) of the points of one segment that Douglas–Peucker keeps.</summary>
     public static List<int> KeptIndices(IReadOnlyList<TrailPoint> points, double toleranceMeters)
     {
-        var count = points.Count;
+        var (xs, ys) = points.Count <= 2 ? ([], []) : Project(points);
+        return KeptIndices(points.Count, xs, ys, toleranceMeters, CancellationToken.None);
+    }
+
+    /// <summary>Douglas–Peucker on projected coordinates (ignored when there are two points or fewer).</summary>
+    internal static List<int> KeptIndices(int count, double[] xs, double[] ys, double toleranceMeters, CancellationToken cancellationToken)
+    {
         if (count <= 2)
         {
             return Enumerable.Range(0, count).ToList();
         }
 
-        var (xs, ys) = Project(points);
         var keep = new bool[count];
         keep[0] = keep[count - 1] = true;
         var stack = new Stack<(int First, int Last)>();
         stack.Push((0, count - 1));
 
+        var steps = 0;
         while (stack.Count > 0)
         {
+            if (++steps % StepsPerCheck == 0)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+
             var (first, last) = stack.Pop();
             var farthest = -1;
             var maxDistance = toleranceMeters;
@@ -131,5 +134,53 @@ public static class TrackSimplifier
         var cx = ax + t * dx - px;
         var cy = ay + t * dy - py;
         return Math.Sqrt(cx * cx + cy * cy);
+    }
+}
+
+/// <summary>Segments already projected by <see cref="TrackSimplifier.Prepare"/>; plans any tolerance on them.</summary>
+public sealed class PreparedSimplification
+{
+    private readonly IReadOnlyList<List<TrailPoint>> _segments;
+    private readonly IReadOnlyList<(double[] X, double[] Y)> _projected;
+
+    internal PreparedSimplification(IReadOnlyList<List<TrailPoint>> segments, IReadOnlyList<(double[] X, double[] Y)> projected)
+    {
+        _segments = segments;
+        _projected = projected;
+    }
+
+    /// <exception cref="ArgumentOutOfRangeException">The tolerance is not a positive number.</exception>
+    /// <exception cref="OperationCanceledException">Cancelled.</exception>
+    public SimplificationPlan Plan(double toleranceMeters, CancellationToken cancellationToken = default)
+    {
+        if (!double.IsFinite(toleranceMeters) || toleranceMeters <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(toleranceMeters), toleranceMeters, "Tolerance must be positive.");
+        }
+
+        var commands = new List<IEditCommand>();
+        var original = 0;
+        var result = 0;
+        for (var s = 0; s < _segments.Count; s++)
+        {
+            var segment = _segments[s];
+            var (xs, ys) = _projected[s];
+            var kept = TrackSimplifier.KeptIndices(segment.Count, xs, ys, toleranceMeters, cancellationToken);
+            original += segment.Count;
+            result += kept.Count;
+            if (kept.Count < segment.Count)
+            {
+                var keptSet = kept.ToHashSet();
+                commands.Add(new RemovePointsCommand(segment, segment.Where((_, i) => !keptSet.Contains(i))));
+            }
+        }
+
+        var command = commands.Count switch
+        {
+            0 => null,
+            1 => commands[0],
+            _ => new CompositeCommand(commands),
+        };
+        return new SimplificationPlan(original, result, toleranceMeters, command);
     }
 }

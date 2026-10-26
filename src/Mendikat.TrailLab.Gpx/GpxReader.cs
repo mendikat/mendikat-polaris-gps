@@ -17,12 +17,29 @@ public sealed partial class GpxReader
     public const string Gpx11Namespace = "http://www.topografix.com/GPX/1/1";
     public const string Gpx10Namespace = "http://www.topografix.com/GPX/1/0";
 
-    private int _timesWithoutZone;
+    /// <summary>Share of the reported progress taken by XML parsing; converting the points takes the rest.</summary>
+    private const double ParseShare = 0.25;
 
-    public TrailFileResult Read(Stream stream, CancellationToken cancellationToken = default)
+    /// <summary>Progress and cancellation are checked once every this many points.</summary>
+    private const int PointsPerCheck = 1024;
+
+    private int _timesWithoutZone;
+    private LoadProgress _progress = new(null, CancellationToken.None);
+    private int _pointTotal;
+    private int _pointsRead;
+
+    public TrailFileResult Read(Stream stream, CancellationToken cancellationToken = default) => Read(stream, null, cancellationToken);
+
+    /// <summary>Reads a GPX file reporting progress from 0 to 1; cancellable at any point (NFR-02).</summary>
+    /// <exception cref="OperationCanceledException">Reading was cancelled.</exception>
+    public TrailFileResult Read(Stream stream, IProgress<double>? progress, CancellationToken cancellationToken)
     {
         _timesWithoutZone = 0;
-        var root = LoadRoot(stream);
+        _progress = new LoadProgress(progress, cancellationToken);
+        _progress.Report(0);
+        var root = LoadRoot(stream.CanSeek ? new ProgressStream(stream, f => _progress.Report(f * ParseShare)) : stream);
+        _pointTotal = root.Descendants().Count(e => e.Name.LocalName is "trkpt" or "rtept" or "wpt");
+        _pointsRead = 0;
         var ns = root.Name.Namespace;
         var warnings = new List<LoadWarning>();
         var version = DetectVersion(root, warnings);
@@ -70,6 +87,7 @@ public sealed partial class GpxReader
             warnings.Add(new LoadWarning(LoadWarningKind.NoData));
         }
 
+        _progress.Report(1);
         return new TrailFileResult(data, warnings);
     }
 
@@ -212,6 +230,11 @@ public sealed partial class GpxReader
 
     private TrailPoint ReadPoint(XElement element)
     {
+        if (++_pointsRead % PointsPerCheck == 0)
+        {
+            _progress.Report(ParseShare + ((1 - ParseShare) * _pointsRead / Math.Max(1, _pointTotal)));
+        }
+
         var ns = element.Name.Namespace;
         var point = new TrailPoint(ReadPosition(element));
         foreach (var child in element.Elements())

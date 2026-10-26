@@ -20,8 +20,18 @@ internal sealed class FakeDocumentStore : IDocumentStore
 
     public List<string> SavedPaths { get; } = [];
 
-    public Task<TrailDocument> LoadAsync(string filePath, DocumentFormat format, CancellationToken cancellationToken)
+    /// <summary>When set, loading reports half progress and then waits for it (or for cancellation).</summary>
+    public TaskCompletionSource? PendingLoad { get; set; }
+
+    public async Task<TrailDocument> LoadAsync(
+        string filePath, DocumentFormat format, IProgress<double>? progress, CancellationToken cancellationToken)
     {
+        if (PendingLoad is { } pending)
+        {
+            progress?.Report(0.5);
+            await pending.Task.WaitAsync(cancellationToken);
+        }
+
         if (LoadErrors.TryGetValue(filePath, out var error))
         {
             throw new DocumentLoadException(error, line: 3);
@@ -33,7 +43,7 @@ internal sealed class FakeDocumentStore : IDocumentStore
             data.Waypoints.Add(new TrailPoint(new GeoPosition(42, -1)));
         }
 
-        return Task.FromResult(new TrailDocument(filePath, format, data));
+        return new TrailDocument(filePath, format, data);
     }
 
     public bool CanSave(DocumentFormat format) => SavingSupported;

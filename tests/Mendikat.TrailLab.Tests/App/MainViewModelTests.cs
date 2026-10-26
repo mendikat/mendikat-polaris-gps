@@ -263,6 +263,31 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
+    [Trait("Req", "NFR-02")]
+    public async Task Opening_can_be_cancelled_and_adds_no_document()
+    {
+        Open(PathA);
+        _store.PendingLoad = new TaskCompletionSource();
+        Assert.False(_vm.CancelOperationCommand.CanExecute(null));
+
+        var opening = _vm.OpenPathAsync(PathB, DocumentFormat.Gpx);
+        Assert.True(_vm.IsBusy);
+        Assert.True(_vm.CanCancelOperation);
+        Assert.True(_vm.CancelOperationCommand.CanExecute(null));
+
+        _vm.CancelOperationCommand.Execute(null);
+        await opening;
+
+        var remaining = Assert.Single(_vm.Documents);
+        Assert.Same(remaining, _vm.ActiveDocument);
+        Assert.Equal("Apertura de b.gpx cancelada.", _vm.StatusMessage);
+        Assert.False(_vm.IsBusy);
+        Assert.False(_vm.CanCancelOperation);
+        Assert.Null(_vm.Progress);
+        Assert.Empty(_dialogs.Errors);
+    }
+
+    [Fact]
     [Trait("Req", "MAP-07")]
     public void Tile_failures_show_a_status_that_clears_when_tiles_load()
     {

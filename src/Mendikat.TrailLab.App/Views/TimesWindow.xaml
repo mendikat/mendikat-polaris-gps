@@ -39,7 +39,8 @@
             <TextBlock Text="{x:Static res:Strings.TimesSpeed}" Style="{StaticResource Label}" />
             <TextBox Width="70" Text="{Binding SpeedText, UpdateSourceTrigger=PropertyChanged}" Margin="0,3,6,3"
                      AutomationProperties.Name="{x:Static res:Strings.TimesSpeed}" />
-            <ComboBox Width="130" ItemsSource="{Binding SpeedUnits}" SelectedItem="{Binding SelectedSpeedUnit}" Margin="0,3" />
+            <ComboBox Width="130" ItemsSource="{Binding SpeedUnits}" SelectedItem="{Binding SelectedSpeedUnit}" Margin="0,3"
+                      AutomationProperties.Name="{x:Static res:Strings.A11ySpeedUnitName}" />
         </StackPanel>
         <CheckBox Content="{x:Static res:Strings.TimesIncludeGaps}" IsChecked="{Binding IncludeSegmentGaps}" Margin="22,4,0,0"
                   IsEnabled="{Binding ByDistance}" Visibility="{Binding HasSeveralSegments, Converter={StaticResource BoolToVisibility}}" />
