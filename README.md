@@ -3,7 +3,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.0.2. Los 8 incrementos del plan están terminados; después se han añadido mejoras pedidas por el responsable
+> **Estado: versión 0.0.3. Los 8 incrementos del plan están terminados; después se han añadido mejoras pedidas por el responsable
 > (ver «Después del plan» en [specs/ROADMAP.md](specs/ROADMAP.md)).**
 > Se abren archivos GPX, y KML, KMZ y TCX convertidos a GPX (WPT se retiró el 2026-10-26), se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
@@ -26,8 +26,10 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Regenerar tiempos | *Herramientas › Regenerar tiempos…*: fecha, hora y zona horaria de inicio, y velocidad (km/h, m/s, min/km) o intervalo fijo; vista previa en hora local y UTC |
 | Invertir el sentido | *Herramientas › Invertir track*: invierte puntos y segmentos del track o ruta seleccionado; las horas se reflejan (mismo inicio y fin, mismos intervalos). Se deshace con Ctrl+Z |
 | Ajustar altitudes con el MDT | *Herramientas › Ajustar altitudes con el MDT del IGN…* › **Consultar** (5 m o 25 m; requiere Internet) › revisar cuántos puntos cambian y cuántos no tienen dato › **Aplicar**. Sólo España; el origen de cada elevación se ve en el detalle del punto |
+| Abrir arrastrando | Soltar sobre la ventana uno o varios archivos GPX, KML, KMZ, TCX (se abren como documentos) o `.map`, `.imp`, `.asc`, `.hgt` (como cartografía de usuario) |
 | Abrir KML, KMZ o TCX | *Archivo › Abrir archivo…* (Ctrl+O): se abre como un GPX nuevo «nombre.gpx» sin guardar; **Guardar** pide dónde guardarlo |
-| Convertir varios archivos a GPX | *Herramientas › Convertir a GPX…*: elegir los KML, KMZ o TCX, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
+| Convertir varios archivos a GPX | *Archivo › Convertir a GPX…*: elegir los KML, KMZ o TCX, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
+| Ver un mapa escaneado o un MDT propio | *Archivo › Abrir cartografía…*: mapas `.map` (OziExplorer) e `.imp` (CompeGPS/TwoNav) con su imagen JPG, PNG, BMP, GIF o TIFF, y MDT `.asc` (con su `.prj`) y `.hgt`. Se listan en **Cartografías Usuario (n)** de la barra de herramientas: arrastrar ≡ (o Ctrl+↑/↓) para decidir cuál queda encima (la de arriba de la lista; la cartografía en línea siempre al fondo), deslizador de opacidad para ver la de debajo, casilla para mostrar u ocultar (en un MDT, para usarlo), ⤢ para ir a ella y ✕ para quitarla |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
 | Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |
 | Ayuda | **F1** o *Ayuda › Ayuda de Mendikat TrailLab* (guía HTML en el navegador). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones y Acerca de (versión, autor) |
@@ -99,7 +101,7 @@ WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido
   conservando metadatos, campos desconocidos y extensiones con sus prefijos. Horas sin zona → UTC con aviso.
 - Los waypoints (`wpt`) del GPX se dibujan como triángulos del color del documento, con su nombre al acercarse.
 - **KML** y **KMZ** (Google Earth) y **TCX** (Garmin): sólo lectura. Se abren como un GPX nuevo sin guardar
-  («ruta.kml» → «ruta.gpx»; el original no se modifica) o se convierten por lotes con *Herramientas › Convertir a GPX…*.
+  («ruta.kml» → «ruta.gpx»; el original no se modifica) o se convierten por lotes con *Archivo › Convertir a GPX…*.
   El formato se reconoce por el contenido, no por la extensión.
   - KML: cada punto → waypoint (nombre, descripción, altitud si la tiene); las líneas (`LineString`, `gx:Track` con horas)
     de cada marca → un track con un segmento por línea; se recorren todas las carpetas. Polígonos, superposiciones y
@@ -108,6 +110,27 @@ WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido
   - TCX: cada actividad → un track con un segmento por vuelta; pulso y cadencia → extensión `gpxtpx` de Garmin
     (la que leen Strava, Garmin y la mayoría de programas). Distancia, velocidad y potencia no se convierten (aviso).
 - Los archivos **WPT** (OziExplorer, CompeGPS) ya no se admiten (ADR-0006, retirada el 2026-10-26).
+
+### Cartografía y MDT locales (*Archivo › Abrir cartografía…*)
+
+Sólo lectura, con lectores propios y sin dependencias nuevas (decisión D7). No son documentos: no se guardan ni se
+recuerdan al cerrar la aplicación.
+
+| Formato | Qué se lee | Limitaciones |
+|---------|-----------|--------------|
+| OziExplorer `.map` (2.x) | Imagen, datum, proyección, puntos de calibración (grados y minutos o cuadrícula UTM) o, si faltan, las esquinas `MMPLL` | Imagen JPG, PNG, BMP, GIF o TIFF; **OZF2/OZFX3 no** (formato propietario) |
+| CompeGPS/TwoNav `.imp` | Imagen (`Bitmap=`), datum y puntos `Pn` en UTM o longitud/latitud (`A`) | Probado con archivos de referencia propios; faltan muestras reales |
+| SRTM `.hgt` | 1″ (3601²) y 3″ (1201²), esquina por el nombre (`N42W001`), huecos −32768 = sin dato | Alturas sobre el geoide EGM96, sin convertir |
+| ESRI ASCII Grid `.asc` | `xllcorner`/`xllcenter`, `NODATA_value`; sistema del `.prj` (WKT, formato de ArcInfo o `EPSG:n`) o, en los MDT del IGN, del nombre (`MDT05-0112-H30-LIDAR`, `PNOA_MDT05_ETRS89_HU30_…`) | Sin `.prj` ni nombre del IGN no se abre; un MDT05 del IGN (170 MB) tarda unos 3 s y ocupa unos 90 MB |
+
+- Datums: WGS84, ETRS89 (igual a WGS84 a escala de mapa) y ED50 en los husos 29, 30 y 31, con la misma transformación
+  de Helmert que mendikat.net. Proyecciones: geográficas, UTM y Transverse Mercator. Cualquier otro sistema se rechaza
+  con un mensaje, en vez de colocar el mapa mal.
+- Los mapas se dibujan sobre la cartografía en línea y bajo los tracks, reproyectados a Web Mercator. Las imágenes de
+  más de 50 megapíxeles se cargan a tamaño reducido (se pierde detalle al acercarse mucho).
+- Los MDT no se dibujan: dan la altitud bajo el puntero (antes que el MDT del IGN, sin conexión) y aparecen en
+  *Ajustar altitudes* después de las resoluciones del IGN.
+- Aplazados: GeoTIFF, ECW y RMAP de TwoNav (D7, D8, D9).
 
 ## Cartografía
 
@@ -138,6 +161,10 @@ del IGN (`Alt. 846 m (MDT IGN 5 m)`, sólo España y con conexión; sin dato, «
 Datos: mosaicos y MDT del IGN España bajo CC BY 4.0 (scne.es); datos OSM bajo ODbL. Servicio de elevaciones: WCS «Modelos Digitales del Terreno de España» (servicios.idee.es/wcs-inspire/mdt).
 
 ## Limitaciones conocidas
+
+- Cartografía local: imágenes OZF, ECW, GeoTIFF georreferenciados y RMAP no se admiten (D7). Una imagen enorme se
+  carga reducida a 50 megapíxeles. ED50 sólo en los husos 29 a 31; su latitud difiere unos 0,3 m de la que da
+  mendikat.net, que corta antes un cálculo iterativo (D12).
 
 - Guardar escribe primero un archivo temporal, lo verifica y sólo entonces sustituye el original. Al guardar se avisa
   si algo cambiará en el archivo (GPX 1.0 → 1.1). Los números se escriben con su valor exacto, pero su texto puede cambiar (-2.0610 → -2.061).

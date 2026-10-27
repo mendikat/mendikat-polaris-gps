@@ -239,8 +239,8 @@
   <data name="StatGroupRoute" xml:space="preserve"><value>Recorrido</value></data>
   <data name="StatGroupTime" xml:space="preserve"><value>Tiempo</value></data>
   <data name="ProfileStatsHint" xml:space="preserve"><value>Desnivel calculado sobre el perfil suavizado con una media gaussiana de 100 m, como en mendikat.net, para no sumar el ruido del GPS. En un circuito el desnivel negativo se iguala al positivo. Detenido: tramos a menos de 1 km/h y pausas entre segmentos. Velocidad media: distancia en movimiento ÷ tiempo en movimiento. Velocidad máxima: la mayor mantenida al menos 30 s, para no contar los saltos del GPS.</value></data>
-  <data name="FilterOpen" xml:space="preserve"><value>Archivos admitidos (*.gpx;*.kml;*.kmz;*.tcx)&#124;*.gpx;*.kml;*.kmz;*.tcx&#124;GPX (*.gpx)&#124;*.gpx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Todos los archivos (*.*)&#124;*.*</value></data>
-  <data name="FilterConvert" xml:space="preserve"><value>KML, KMZ y TCX (*.kml;*.kmz;*.tcx)&#124;*.kml;*.kmz;*.tcx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Todos los archivos (*.*)&#124;*.*</value></data>
+  <data name="FilterOpen" xml:space="preserve"><value>Archivos admitidos (*.gpx;*.kml;*.kmz;*.tcx;*.map;*.imp;*.asc;*.hgt)&#124;*.gpx;*.kml;*.kmz;*.tcx;*.map;*.imp;*.asc;*.hgt&#124;GPX (*.gpx)&#124;*.gpx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Cartografía: mapas y MDT (*.map;*.imp;*.asc;*.hgt)&#124;*.map;*.imp;*.asc;*.hgt&#124;Todos los archivos (*.*)&#124;*.*</value></data>
+  <data name="FilterConvert" xml:space="preserve"><value>KML, KMZ y TCX (*.kml;*.kmz;*.tcx)&#124;*.kml;*.kmz;*.tcx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Cartografía: mapas y MDT (*.map;*.imp;*.asc;*.hgt)&#124;*.map;*.imp;*.asc;*.hgt&#124;Todos los archivos (*.*)&#124;*.*</value></data>
   <data name="ErrorUnsupportedFormat" xml:space="preserve"><value>El archivo «{0}» no es GPX, KML, KMZ ni TCX (su elemento raíz es «{2}»).</value></data>
   <data name="ErrorInvalidArchive" xml:space="preserve"><value>El archivo «{0}» no es un KMZ válido: no es un ZIP correcto, no contiene ningún KML o es demasiado grande al descomprimirlo.</value></data>
   <data name="WarningConvertedFrom" xml:space="preserve"><value>Convertido desde {0} a GPX. El archivo original no se modifica; al guardar se pide dónde guardar el GPX.</value></data>
@@ -249,7 +249,7 @@
   <data name="WarningDataNotConverted" xml:space="preserve"><value>Puntos con datos de TCX sin equivalente en GPX (distancia, velocidad o potencia) que no se han convertido: {0}. El pulso y la cadencia sí se conservan.</value></data>
   <data name="FormatConverted" xml:space="preserve"><value>{0} (convertido a GPX)</value></data>
   <data name="StatusConverted" xml:space="preserve"><value>«{0}» convertido a GPX como «{1}» (sin guardar).</value></data>
-  <data name="MenuConvertToGpx" xml:space="preserve"><value>_Convertir a GPX...</value></data>
+  <data name="MenuConvertToGpx" xml:space="preserve"><value>Con_vertir a GPX...</value></data>
   <data name="DialogConvertFilesTitle" xml:space="preserve"><value>Archivos que convertir a GPX</value></data>
   <data name="DialogConvertFolderTitle" xml:space="preserve"><value>Carpeta de destino de los GPX</value></data>
   <data name="ConvertTitle" xml:space="preserve"><value>Convertir a GPX</value></data>
@@ -288,4 +288,36 @@
   <data name="A11yElevationToolTip" xml:space="preserve"><value>Altitud bajo el puntero: la del punto del archivo si lo hay; si no, la del terreno según el MDT del IGN (sólo España, necesita Internet).</value></data>
   <data name="A11yDatumName" xml:space="preserve"><value>Datum de las coordenadas</value></data>
   <data name="A11yDatumToolTip" xml:space="preserve"><value>Datum de las coordenadas del archivo activo. GPX, KML y TCX usan siempre WGS84.</value></data>
+  <data name="MenuOpenLocalMap" xml:space="preserve"><value>Abrir car_tografía...</value></data>
+  <data name="DialogOpenLocalMapTitle" xml:space="preserve"><value>Abrir cartografía local</value></data>
+  <data name="FilterLocalMaps" xml:space="preserve"><value>Mapas y MDT (*.map;*.imp;*.asc;*.hgt)&#124;*.map;*.imp;*.asc;*.hgt&#124;Mapas de OziExplorer (*.map)&#124;*.map&#124;Mapas de CompeGPS/TwoNav (*.imp)&#124;*.imp&#124;MDT ESRI ASCII Grid (*.asc)&#124;*.asc&#124;MDT SRTM (*.hgt)&#124;*.hgt&#124;Todos los archivos (*.*)&#124;*.*</value></data>
+  <data name="LocalMapsHeader" xml:space="preserve"><value>Cartografías Usuario ({0})</value></data>
+  <data name="LocalMapsToolTip" xml:space="preserve"><value>Cartografías del usuario (mapas y modelos digitales del terreno) abiertas con Archivo › Abrir cartografía. Arrastre ≡ para cambiar cuál queda encima; la cartografía en línea siempre queda al fondo.</value></data>
+  <data name="LocalKindMap" xml:space="preserve"><value>Mapa</value></data>
+  <data name="LocalKindDem" xml:space="preserve"><value>MDT</value></data>
+  <data name="LocalMapShowToolTip" xml:space="preserve"><value>Mostrar u ocultar el mapa</value></data>
+  <data name="LocalDemUseToolTip" xml:space="preserve"><value>Usar este MDT para la altitud bajo el puntero y en «Ajustar altitudes»</value></data>
+  <data name="LocalZoomTo" xml:space="preserve"><value>Ajustar el mapa a su extensión</value></data>
+  <data name="LocalRemove" xml:space="preserve"><value>Quitar</value></data>
+  <data name="LocalMapsEmpty" xml:space="preserve"><value>No hay cartografías de usuario. Use Archivo › Abrir cartografía (.map, .imp, .asc, .hgt).</value></data>
+  <data name="LocalMapDetails" xml:space="preserve"><value>{0} · {1} · {2} × {3} píxeles · {4} puntos de calibración, error máximo {5} píxeles{6}</value></data>
+  <data name="LocalMapReduced" xml:space="preserve"><value> · imagen reducida al {0} % para caber en memoria</value></data>
+  <data name="LocalDemDetails" xml:space="preserve"><value>MDT de {0} × {1} nodos · {2} · {3}</value></data>
+  <data name="StatusLocalMapOpened" xml:space="preserve"><value>Mapa «{0}» abierto.</value></data>
+  <data name="StatusLocalDemOpened" xml:space="preserve"><value>MDT «{0}» abierto: se usa para la altitud bajo el puntero y en «Ajustar altitudes».</value></data>
+  <data name="StatusLocalMapRemoved" xml:space="preserve"><value>«{0}» quitado.</value></data>
+  <data name="ErrorLocalUnsupportedFormat" xml:space="preserve"><value>El archivo «{0}» no es un formato de cartografía admitido ({2}). Se admiten mapas .map (OziExplorer) e .imp (CompeGPS/TwoNav), y MDT .asc y .hgt.</value></data>
+  <data name="ErrorLocalInvalidCalibration" xml:space="preserve"><value>La calibración de «{0}» no es válida{1}: {2}.</value></data>
+  <data name="ErrorLocalImageMissing" xml:space="preserve"><value>No se encuentra la imagen del mapa «{0}»: «{2}». Debe estar en esa ruta o en la misma carpeta que el archivo de calibración.</value></data>
+  <data name="ErrorLocalUnsupportedImage" xml:space="preserve"><value>La imagen «{2}» del mapa «{0}» está en un formato que no se admite. Se admiten JPG, PNG, BMP, GIF y TIFF; OZF (OziExplorer) y ECW no.</value></data>
+  <data name="ErrorLocalInvalidImage" xml:space="preserve"><value>No se pudo leer la imagen «{2}» del mapa «{0}»: está dañada o no es una imagen.</value></data>
+  <data name="ErrorLocalUnsupportedCrs" xml:space="preserve"><value>«{0}» usa un sistema de coordenadas que no se admite{1}: {2}. Se admiten WGS84, ETRS89 y ED50 (husos 29 a 31), en geográficas, UTM o Transverse Mercator.</value></data>
+  <data name="ErrorLocalMissingProjection" xml:space="preserve"><value>Falta el archivo «{2}» con el sistema de coordenadas de «{0}». Sin él no se puede saber dónde colocar el MDT.</value></data>
+  <data name="ErrorLocalInvalidDem" xml:space="preserve"><value>El MDT «{0}» no es válido{1}: {2}.</value></data>
+  <data name="ErrorLocalTooLarge" xml:space="preserve"><value>«{0}» es demasiado grande para abrirlo ({2}).</value></data>
+  <data name="LocalOpacityName" xml:space="preserve"><value>Opacidad de {0}</value></data>
+  <data name="LocalOpacityToolTip" xml:space="preserve"><value>Opacidad: a la izquierda se ve lo que hay debajo</value></data>
+  <data name="LocalDragHandle" xml:space="preserve"><value>Arrastre para cambiar el orden (o Ctrl+↑ / Ctrl+↓). La de arriba se dibuja encima.</value></data>
+  <data name="A11yLocalMapsList" xml:space="preserve"><value>Cartografías de usuario, de la de encima a la de debajo</value></data>
+  <data name="StatusDropSkipped" xml:space="preserve"><value>{0} archivos soltados no se han abierto: no son GPX, KML, KMZ, TCX, .map, .imp, .asc ni .hgt.</value></data>
 </root>

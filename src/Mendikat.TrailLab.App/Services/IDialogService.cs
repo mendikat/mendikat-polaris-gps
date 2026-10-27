@@ -19,6 +19,10 @@ public interface IDialogService
     /// <returns>Selected paths, or null if the user cancelled.</returns>
     IReadOnlyList<string>? AskConvertFilePaths();
 
+    /// <summary>Local maps and DEMs to open (.map, .imp, .asc, .hgt; several can be chosen; LMAP-01).</summary>
+    /// <returns>Selected paths, or null if the user cancelled.</returns>
+    IReadOnlyList<string>? AskLocalMapPaths();
+
     /// <returns>Selected folder, or null if the user cancelled.</returns>
     string? AskFolder(string? initialFolder);
 

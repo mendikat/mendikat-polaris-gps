@@ -77,7 +77,7 @@ public sealed partial class MainViewModel
             return;
         }
 
-        var dialog = new DemViewModel(layer, ElevationSources);
+        var dialog = new DemViewModel(layer, ElevationSources, LocalDems);
         if (!_dialogs.ShowToolDialog(dialog) || dialog.Plan is not { Command: { } command } plan)
         {
             return;
@@ -87,7 +87,7 @@ public sealed partial class MainViewModel
         StatusMessage = string.Format(Strings.StatusElevationsAdjusted, layer.Name, plan.Changed);
         _logger.LogInformation(
             "Adjusted elevations of a {Kind} in {FileName} with {Source}: {Changed} changed, {NoData} without data",
-            layer.Kind, doc.FileName, dialog.Resolution.Resolution, plan.Changed, plan.NoData);
+            layer.Kind, doc.FileName, dialog.Resolution.DisplayName, plan.Changed, plan.NoData);
     }
 
     /// <summary>Reverses the selected track or route, mirroring its times; one undoable step, no dialog (REV-03).</summary>

@@ -23,7 +23,7 @@ public sealed class DemViewModel : ObservableObject
     private double _progress;
     private CancellationTokenSource? _cancellation;
 
-    public DemViewModel(LayerItemViewModel layer, Func<IgnDemResolution, IElevationSource> sources)
+    public DemViewModel(LayerItemViewModel layer, Func<IgnDemResolution, IElevationSource> sources, IEnumerable<IElevationSource>? localSources = null)
     {
         Layer = layer;
         _sources = sources;
@@ -33,6 +33,8 @@ public sealed class DemViewModel : ObservableObject
             new(IgnDemResolution.FiveMeters, Strings.DemResolution5),
             new(IgnDemResolution.TwentyFiveMeters, Strings.DemResolution25),
         ];
+        // Local DEMs loaded with File › Open cartography (LDEM-01) are offered after the IGN ones.
+        Resolutions = [.. Resolutions, .. (localSources ?? []).Select(s => new DemResolutionOption(IgnDemResolution.FiveMeters, s.Name, s))];
         _resolution = Resolutions[0];
         QueryCommand = new RelayCommand(_ => QueryAsync(), _ => !IsQuerying && _points.Count > 0);
         CancelQueryCommand = new RelayCommand(CancelQuery, () => IsQuerying);
@@ -62,7 +64,7 @@ public sealed class DemViewModel : ObservableObject
     {
         get
         {
-            var source = _sources(Resolution.Resolution);
+            var source = Source(Resolution);
             return $"{source.Attribution}{Environment.NewLine}{Strings.DemDatum} {source.VerticalDatum}";
         }
     }
@@ -159,7 +161,7 @@ public sealed class DemViewModel : ObservableObject
         Progress = 0;
         try
         {
-            var source = _sources(Resolution.Resolution);
+            var source = Source(Resolution);
             var progress = new Progress<double>(p => Progress = p);
             var values = await source.GetElevationsAsync(_points.Select(p => p.Position).ToList(), progress, _cancellation.Token);
             Plan = ElevationAdjustment.Plan(_points, values);
@@ -183,13 +185,15 @@ public sealed class DemViewModel : ObservableObject
     /// <summary>Stops the download (also called when the dialog is closed while querying).</summary>
     public void CancelQuery() => _cancellation?.Cancel();
 
+    private IElevationSource Source(DemResolutionOption option) => option.Local ?? _sources(option.Resolution);
+
     private static string N(int value) => value.ToString("N0", Spanish);
 
     private static string Signed(double meters) => meters.ToString("+0.0;−0.0;0.0", Spanish);
 }
 
-/// <summary>A DEM resolution with its display name.</summary>
-public sealed record DemResolutionOption(IgnDemResolution Resolution, string DisplayName)
+/// <summary>An IGN DEM resolution, or a local DEM (<paramref name="Local"/>), with its display name.</summary>
+public sealed record DemResolutionOption(IgnDemResolution Resolution, string DisplayName, IElevationSource? Local = null)
 {
     public override string ToString() => DisplayName;
 }

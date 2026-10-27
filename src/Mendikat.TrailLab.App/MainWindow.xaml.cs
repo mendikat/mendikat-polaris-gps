@@ -52,6 +52,19 @@ public partial class MainWindow : Window
         viewModel.MapRequested += (_, request) => _map.Handle(request);
         viewModel.ProfileRequested += (_, profile) => ShowProfile(profile);
         viewModel.Documents.CollectionChanged += OnDocumentsChanged;
+        viewModel.LocalMapAdded += (_, item) =>
+        {
+            _map.AddLocalMap(item);
+            item.VisibilityChanged += (_, _) => _map.SetLocalMapVisibility(item);
+            item.OpacityChanged += (_, _) => _map.SetLocalMapOpacity(item);
+        };
+        viewModel.LocalMapsReordered += (_, _) => _map.OrderLocalMaps(viewModel.LocalMaps);
+        viewModel.LocalMapRemoved += (_, item) => _map.RemoveLocalMap(item);
+
+        // Files dropped anywhere on the window are opened: tracks as documents, maps and DEMs as cartography (APP-10).
+        AllowDrop = true;
+        PreviewDragOver += OnFileDragOver;
+        PreviewDrop += OnFileDrop;
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
         MapView.MapPointerMoved += OnMapPointerMoved;
@@ -184,6 +197,102 @@ public partial class MainWindow : Window
         {
             _map.EnsureVisible(points[0]);
         }
+    }
+
+    private static string[]? DroppedFiles(DragEventArgs e) =>
+        e.Data.GetDataPresent(DataFormats.FileDrop) ? e.Data.GetData(DataFormats.FileDrop) as string[] : null;
+
+    /// <summary>The cursor shows "copy" only when at least one dropped file can be opened, and only while not busy.</summary>
+    private void OnFileDragOver(object sender, DragEventArgs e)
+    {
+        if (DroppedFiles(e) is not { } files)
+        {
+            return; // not files (e.g. reordering user cartographies): let the controls handle it
+        }
+
+        e.Effects = !_viewModel.IsBusy && MainViewModel.CanOpenAny(files) ? DragDropEffects.Copy : DragDropEffects.None;
+        e.Handled = true;
+    }
+
+    private async void OnFileDrop(object sender, DragEventArgs e)
+    {
+        if (DroppedFiles(e) is not { } files)
+        {
+            return;
+        }
+
+        e.Handled = true;
+        if (_viewModel.IsBusy)
+        {
+            return;
+        }
+
+        Activate();
+        await _viewModel.OpenFilesAsync(files);
+    }
+
+    /// <summary>The user cartographies list closes when clicking elsewhere: the button must pop up again.</summary>
+    private void OnLocalMapsPopupClosed(object? sender, EventArgs e) => LocalMapsButton.IsChecked = false;
+
+    private Point? _localMapDragStart;
+
+    /// <summary>Dragging starts only from the ≡ handle, so the check box, slider and buttons keep working (LMAP-11).</summary>
+    private void OnLocalMapHandleDown(object sender, MouseButtonEventArgs e) => _localMapDragStart = e.GetPosition(LocalMapsList);
+
+    private void OnLocalMapHandleMove(object sender, MouseEventArgs e)
+    {
+        if (_localMapDragStart is not { } start || e.LeftButton != MouseButtonState.Pressed
+            || sender is not FrameworkElement { DataContext: LocalMapItemViewModel item })
+        {
+            return;
+        }
+
+        var delta = e.GetPosition(LocalMapsList) - start;
+        if (Math.Abs(delta.Y) < SystemParameters.MinimumVerticalDragDistance && Math.Abs(delta.X) < SystemParameters.MinimumHorizontalDragDistance)
+        {
+            return;
+        }
+
+        _localMapDragStart = null;
+        DragDrop.DoDragDrop((DependencyObject)sender, item, DragDropEffects.Move);
+    }
+
+    private void OnLocalMapsDragOver(object sender, DragEventArgs e)
+    {
+        e.Effects = e.Data.GetDataPresent(typeof(LocalMapItemViewModel)) ? DragDropEffects.Move : DragDropEffects.None;
+        e.Handled = true;
+    }
+
+    /// <summary>Dropped on another cartography: takes its place in the list (and in the drawing order).</summary>
+    private void OnLocalMapsDrop(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetData(typeof(LocalMapItemViewModel)) is not LocalMapItemViewModel dragged)
+        {
+            return;
+        }
+
+        var target = (e.OriginalSource as DependencyObject) is { } source
+            ? System.Windows.Controls.ItemsControl.ContainerFromElement(LocalMapsList, source) as System.Windows.Controls.ListBoxItem
+            : null;
+        var to = target?.DataContext is LocalMapItemViewModel over ? _viewModel.LocalMaps.IndexOf(over) : _viewModel.LocalMaps.Count - 1;
+        _viewModel.MoveLocalMap(_viewModel.LocalMaps.IndexOf(dragged), to);
+        LocalMapsList.SelectedItem = dragged;
+        e.Handled = true;
+    }
+
+    /// <summary>Ctrl+↑ / Ctrl+↓ move the selected cartography up or down (keyboard alternative to dragging).</summary>
+    private void OnLocalMapsKeyDown(object sender, KeyEventArgs e)
+    {
+        if (Keyboard.Modifiers != ModifierKeys.Control || LocalMapsList.SelectedItem is not LocalMapItemViewModel item || e.Key is not (Key.Up or Key.Down))
+        {
+            return;
+        }
+
+        var from = _viewModel.LocalMaps.IndexOf(item);
+        _viewModel.MoveLocalMap(from, from + (e.Key == Key.Up ? -1 : 1));
+        LocalMapsList.SelectedItem = item;
+        (LocalMapsList.ItemContainerGenerator.ContainerFromItem(item) as UIElement)?.Focus();
+        e.Handled = true;
     }
 
     private void OnMapPointerMoved(object? sender, MapEventArgs e)

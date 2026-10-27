@@ -77,6 +77,16 @@ public sealed partial class MainViewModel
                 return;
             }
 
+            // Local DEMs first (LDEM-01): offline and usually more detailed than the IGN service.
+            foreach (var dem in LocalDems)
+            {
+                if (dem.ElevationAt(position) is { } local)
+                {
+                    ShowElevation(local, dem.Name, $"{dem.Name}. {dem.VerticalDatum}");
+                    return;
+                }
+            }
+
             if (ElevationSources is null || DateTime.UtcNow < _terrainPausedUntil)
             {
                 return;

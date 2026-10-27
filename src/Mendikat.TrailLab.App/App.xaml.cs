@@ -52,6 +52,7 @@ public partial class App : Application
             new WpfDialogService(), new FileDocumentStore(), settings, _loggerFactory.CreateLogger<MainViewModel>())
         {
             ElevationSources = resolution => resolution == IgnDemResolution.FiveMeters ? dem5 : dem25,
+            LocalMapLoader = (path, cancellationToken) => Mapping.Local.LocalMapLoader.Load(path, new WpfRasterImageDecoder(), cancellationToken),
         };
         var window = new MainWindow(
             viewModel, map => new MapController(map, _tileHttpClient, _loggerFactory.CreateLogger<MapController>()));

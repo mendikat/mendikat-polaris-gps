@@ -26,6 +26,11 @@ internal sealed class FakeDialogService : IDialogService
 
     public IReadOnlyList<string>? AskConvertFilePaths() => ConvertPaths.Count > 0 ? ConvertPaths.Dequeue() : null;
 
+    /// <summary>Answers to "open cartography", in order; null when empty (the user cancelled).</summary>
+    public Queue<IReadOnlyList<string>?> LocalMapPaths { get; } = new();
+
+    public IReadOnlyList<string>? AskLocalMapPaths() => LocalMapPaths.Count > 0 ? LocalMapPaths.Dequeue() : null;
+
     public string? Folder { get; set; }
 
     public string? AskFolder(string? initialFolder) => Folder;

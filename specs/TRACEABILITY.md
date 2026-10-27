@@ -262,8 +262,8 @@ Requisitos nuevos aún sin código ni pruebas. Decisiones abiertas D7–D11 en P
 
 | Req | Estado | Incremento |
 |-----|--------|------------|
-| LMAP-01..10 | ⏳ pendiente | 9 — Cartografía local georreferenciada (OziExplorer `.map`, GeoTIFF, `.imp`, `.rmap`, ECW) |
-| LDEM-01..07 | ⏳ pendiente | 9 — DEM locales (HGT, GeoTIFF, ASCII Grid) |
+| LMAP-05, 07, 08 | aplazado (D7) | GeoTIFF, RMAP y ECW |
+| LDEM-03 | aplazado (D7) | DEM GeoTIFF |
 
 ## Incremento 10 — Importar KML, KMZ y TCX y convertir a GPX (2026-10-26, a petición del responsable)
 
@@ -302,3 +302,57 @@ Pendiente (🖐): uso del diálogo con ratón y con KML/KMZ/TCX reales de Google
 | COORD-08 | ✅ 🖐 | `MainViewModel.Pointer` (espera, `PointAt` con el hit test del mapa, MDT IGN 5 m), caché de teselas de `IgnWcsElevationSource`, fuentes únicas por resolución en `App` | `Over_a_point_of_the_file_its_elevation_is_shown…`, `Elsewhere_the_terrain_elevation_of_the_dem_is_shown`, `Without_dem_data_or_outside_the_map_nothing_is_shown`, `Moving_the_pointer_cancels_the_pending_lookup`, `Without_connection_the_terrain_is_not_queried_again_for_a_while`, `Downloaded_tiles_are_reused` |
 
 Pendiente (🖐): altitud del terreno con el servicio real del IGN moviendo el puntero por el mapa.
+
+## Incremento 9 — Cartografía y MDT locales, alcance de D7 (2026-10-27, a petición del responsable)
+
+416 pruebas, todas en verde (45 nuevas). Lectores propios en `Mapping/Local`, sin dependencias nuevas. Archivos de
+referencia generados en cada prueba (imágenes PNG de colores conocidos, `.map`, `.imp`, `.hgt` y `.asc` con `.prj`).
+Comprobaciones con datos reales: el HGT `N42W001` (SRTM 1″) da en cinco puntos del Pirineo valores a 0,5–3 m del MDT
+del IGN de 25 m (21 m en una ladera fuerte); ventana con «Cartografías Usuario» renderizada fuera de pantalla.
+Valores de referencia de ED50 calculados con el PHP de mendikat.net (`Geoposition::fromUtm(...)->toWGS84()`).
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| LMAP-01 | ✅ 🖐 | *Archivo › Abrir cartografía…*, `MainViewModel.LocalMaps`, `LocalMapItemViewModel`, desplegable en `MainWindow.xaml`, `MapController.AddLocalMap` (grupo de capas entre la base y los tracks) | `A_dem_is_listed_and_used_for_the_pointer_elevation`, `A_map_can_be_removed_and_is_not_opened_twice`, `Opening_cartography_does_not_touch_the_documents`, `Maps_and_dems_chosen_with_open_file_are_opened_as_cartography` |
+| LMAP-02 | ✅ | `LocalMapLoader`, `LocalMapException`, `UserMessages.ForLocalMapError` | `Missing_empty_and_unknown_files_give_clear_errors` (3), `Truncated_or_incomplete_calibrations_are_rejected`, `A_failure_explains_why_and_adds_nothing` |
+| LMAP-03 | ✅ | `OziMapReader`, `LocalFiles.ResolveImage`, `PixelTransform`, `GeoreferencedMap` | `Ozi_utm_calibration_points_land_where_they_say`, `Ozi_latitude_longitude_points_in_degrees_and_minutes`, `Without_points_the_wgs84_corners_are_used`, `An_image_path_from_another_computer_is_found_next_to_the_map`, `Missing_or_unsupported_images_are_reported_by_name` (3), `A_calibration_with_two_points_in_the_same_row_is_rejected` |
+| LMAP-04 | ✅ | `Crs` (GeographicLib), `DatumShift` (Helmert de mendikat.net) | `Ed50_utm_gives_the_same_wgs84_as_mendikat_net` (5), `Wgs84_round_trips_through_every_datum` (3), `Ozi_ed50_map_is_placed_with_the_mendikat_net_transformation`, `Unsupported_datums_and_projections_are_rejected_instead_of_misplaced` (3), `Ed50_outside_zones_29_to_31_is_not_supported` |
+| LMAP-06 | ✅ 🖐 | `CompeImpReader` | `Compegps_imp_utm_ed50_gives_the_same_placement_as_ozi`, `Compegps_imp_with_longitude_latitude_points`, `An_imp_without_bitmap_or_with_a_missing_image_is_rejected`. Pendiente: muestras `.imp` reales |
+| LMAP-09 | 🟡 | `WpfRasterImageDecoder` (reducción a 50 Mpx), `LocalMapTileSource` (teselas bajo demanda en segundo plano), `PngEncoder` | `Large_images_are_decoded_at_a_reduced_size`, `Tiles_show_the_image_where_it_is_calibrated_and_nothing_outside`. Sin lectura por ventanas ni pirámides (D7) |
+| LMAP-10 | ✅ | `LocalMapContent` (mapa o MDT), `IRasterImageDecoder`; el mapa sólo conoce `LocalMapTileSource` | Revisión de código |
+| LDEM-01 | ✅ | `ElevationGrid : IElevationSource`, `MainViewModel.LocalDems`, `DemResolutionOption.Local`, altitud del puntero | `A_dem_answers_elevation_queries_like_any_elevation_source`, `An_unchecked_dem_is_not_used`, `Adjust_elevations_offers_the_local_dems_after_the_ign_ones` |
+| LDEM-02 | ✅ | `HgtReader` | `Hgt_nodes_and_interpolation_from_the_file_name_corner`, `Hgt_voids_and_positions_outside_the_tile_have_no_data`, `Invalid_hgt_files_are_rejected` (2) |
+| LDEM-04 | ✅ | `AscReader`, `PrjReader` | `Ascii_grid_with_corner_and_with_center_gives_the_same_values`, `Ascii_grid_without_prj_is_rejected_instead_of_guessed`, `Ascii_grids_with_wrong_values_are_rejected` (3), `Prj_files_are_recognised` (4), `Unsupported_systems_are_rejected` (2) |
+| LDEM-05 | ✅ | `ElevationGrid.VerticalDatum` (EGM96 en HGT; desconocida en ASC) | `Ascii_grid_reports_its_system_and_an_unknown_vertical_reference` |
+| LDEM-06 | ✅ | `ElevationGrid.ElevationAt` (sin dato si un nodo con peso no tiene valor) | `Hgt_voids_and_positions_outside_the_tile_have_no_data`, `Ascii_grid_with_corner_and_with_center_gives_the_same_values` |
+| LDEM-07 | 🟡 | Varios MDT abiertos se consultan en orden | Sin carga por mosaicos bajo demanda |
+| LMAP-05, 07, 08; LDEM-03 | aplazado (D7) | — | — |
+
+### Cartografías Usuario: orden y opacidad (2026-10-27, a petición del responsable)
+
+419 pruebas, todas en verde. El desplegable pasa a llamarse «Cartografías Usuario»; desplegable renderizado fuera de
+pantalla con dos mapas (uno al 60 %) y un MDT.
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| LMAP-11 | ✅ 🖐 | `LocalMapItemViewModel.Opacity`, `MainViewModel.MoveLocalMap`/`LocalMapsReordered`, `MapController.OrderLocalMaps`/`SetLocalMapOpacity`, arrastre por el asa ≡ y Ctrl+↑/↓ en `MainWindow` | `Moving_reorders_the_list_and_announces_it`, `Opacity_is_clamped_shown_as_percent_and_announced`, `On_the_map_user_cartographies_stay_above_the_online_one_in_list_order`. Pendiente (🖐): arrastrar con el ratón en la aplicación |
+
+### MDT del IGN reales: `.prj` de ArcInfo, nombres y Ctrl+Z (2026-10-27, a petición del responsable)
+
+437 pruebas, todas en verde. Con la carpeta `MDT05-LIDAR` del responsable (355 `.asc` del IGN, 186 `.prj`) se vio que:
+los `.prj` usan el formato clásico de ArcInfo, a veces se llaman «nombre .PRJ» (con un espacio), algunos dan un huso
+equivocado (p. ej. `MDT05-0028-H29-LIDAR`: X desde 727 000, huso 29, y su `.prj` dice huso 30) y los archivos acaban
+en Ctrl+Z. Ahora se cargan 15 de 15 de una muestra repartida, en 2–3 s y unos 90 MB cada uno, con altitudes a
+0–0,5 m de las del MDT del IGN en línea (cuatro archivos, incluido uno de Canarias, dos puntos cada uno).
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| LDEM-04 | ✅ | `PrjReader.ParseArcInfo`, `IgnName`, `AscReader.CoordinateSystem`/`FindPrj`, Ctrl+Z en el lector, `MapDatum.Regcan95` | `Arcinfo_prj_files_are_recognised` (4), `Ign_terrain_model_names_state_their_system` (8), `An_ign_grid_ending_with_ctrl_z_and_a_prj_named_with_a_space_is_read`, `An_ign_name_wins_over_a_prj_with_another_zone_and_says_so`, `An_ign_grid_without_prj_uses_its_name`, `The_prj_is_found_whatever_its_case` (3) |
+
+## Abrir soltando archivos sobre la ventana (2026-10-27, a petición del responsable)
+
+442 pruebas, todas en verde.
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| APP-10 | ✅ 🖐 | `MainViewModel.OpenFilesAsync`/`CanOpenAny`/`DroppableExtensions`, `MainWindow.OnFileDragOver`/`OnFileDrop` (eventos `Preview`, sólo para archivos) | `Dropped_tracks_and_cartography_each_go_to_their_place`, `Other_files_and_folders_are_skipped_and_counted`, `The_drop_cursor_accepts_only_supported_files` (3). Pendiente (🖐): soltar desde el Explorador |

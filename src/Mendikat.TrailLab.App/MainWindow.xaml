@@ -39,6 +39,8 @@
                 <MenuItem Header="{x:Static res:Strings.MenuNewGpx}" Command="{Binding NewGpxCommand}" InputGestureText="Ctrl+N" />
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuOpenGpx}" Command="{Binding OpenGpxCommand}" InputGestureText="Ctrl+O" />
+                <MenuItem Header="{x:Static res:Strings.MenuConvertToGpx}" Command="{Binding ConvertToGpxCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuOpenLocalMap}" Command="{Binding OpenLocalMapCommand}" />
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuSave}" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S" />
                 <MenuItem Header="{x:Static res:Strings.MenuSaveAs}" Command="{Binding SaveAsCommand}" />
@@ -60,8 +62,6 @@
                 <MenuItem Header="{x:Static res:Strings.MenuReverse}" Command="{Binding ReverseCommand}" />
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuAdjustElevations}" Command="{Binding AdjustElevationsCommand}" />
-                <Separator />
-                <MenuItem Header="{x:Static res:Strings.MenuConvertToGpx}" Command="{Binding ConvertToGpxCommand}" />
             </MenuItem>
             <MenuItem Header="{x:Static res:Strings.MenuView}">
                 <MenuItem Header="{x:Static res:Strings.MenuZoomIn}" Command="{Binding ZoomInCommand}" InputGestureText="Ctrl++" />
@@ -93,6 +93,52 @@
             <TextBlock Text="{x:Static res:Strings.ToolMapProvider}" VerticalAlignment="Center" Margin="4,0" />
             <ComboBox Width="220" ItemsSource="{Binding MapProviders}" SelectedItem="{Binding SelectedMapProvider}"
                       DisplayMemberPath="DisplayName" AutomationProperties.Name="{x:Static res:Strings.ToolMapProvider}" />
+            <!-- User cartographies (LMAP-01, LMAP-11, LDEM-01): order by dragging (first on top), opacity, show/hide or use, zoom to, remove -->
+            <ToggleButton x:Name="LocalMapsButton" Content="{Binding LocalMapsHeader}" Margin="6,0,0,0" Padding="6,0"
+                          ToolTip="{x:Static res:Strings.LocalMapsToolTip}" AutomationProperties.Name="{x:Static res:Strings.LocalMapsToolTip}" />
+            <Popup IsOpen="{Binding IsChecked, ElementName=LocalMapsButton}" PlacementTarget="{Binding ElementName=LocalMapsButton}"
+                   Placement="Bottom" StaysOpen="False" Closed="OnLocalMapsPopupClosed">
+                <Border Background="{x:Static SystemColors.WindowBrush}" BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1" Padding="6" MinWidth="380">
+                    <StackPanel>
+                        <TextBlock Text="{x:Static res:Strings.LocalMapsEmpty}" Foreground="DimGray" TextWrapping="Wrap" MaxWidth="360"
+                                   Visibility="{Binding HasLocalMaps, Converter={StaticResource InverseBoolToVisibility}}" />
+                        <ListBox x:Name="LocalMapsList" ItemsSource="{Binding LocalMaps}" BorderThickness="0" AllowDrop="True"
+                                 HorizontalContentAlignment="Stretch" MaxHeight="420"
+                                 Visibility="{Binding HasLocalMaps, Converter={StaticResource BoolToVisibility}}"
+                                 DragOver="OnLocalMapsDragOver" Drop="OnLocalMapsDrop" PreviewKeyDown="OnLocalMapsKeyDown"
+                                 AutomationProperties.Name="{x:Static res:Strings.A11yLocalMapsList}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,2" ToolTip="{Binding Details}">
+                                        <DockPanel>
+                                            <TextBlock DockPanel.Dock="Left" Text="≡" FontSize="16" Width="18" Cursor="SizeAll" VerticalAlignment="Center"
+                                                       Foreground="DimGray" ToolTip="{x:Static res:Strings.LocalDragHandle}"
+                                                       MouseLeftButtonDown="OnLocalMapHandleDown" MouseMove="OnLocalMapHandleMove" />
+                                            <Button DockPanel.Dock="Right" Content="✕" Width="24" Margin="4,0,0,0"
+                                                    Command="{Binding DataContext.RemoveLocalMapCommand, Source={x:Reference LocalMapsButton}}" CommandParameter="{Binding}"
+                                                    ToolTip="{x:Static res:Strings.LocalRemove}" AutomationProperties.Name="{x:Static res:Strings.LocalRemove}" />
+                                            <Button DockPanel.Dock="Right" Content="⤢" Width="24" Margin="4,0,0,0"
+                                                    Command="{Binding DataContext.ZoomToLocalMapCommand, Source={x:Reference LocalMapsButton}}" CommandParameter="{Binding}"
+                                                    ToolTip="{x:Static res:Strings.LocalZoomTo}" AutomationProperties.Name="{x:Static res:Strings.LocalZoomTo}" />
+                                            <CheckBox IsChecked="{Binding IsVisible}" VerticalAlignment="Center" ToolTip="{Binding VisibilityToolTip}">
+                                                <TextBlock>
+                                                    <Run Text="{Binding Kind, Mode=OneWay}" Foreground="DimGray" /><Run Text=" " /><Run Text="{Binding Name, Mode=OneWay}" />
+                                                </TextBlock>
+                                            </CheckBox>
+                                        </DockPanel>
+                                        <DockPanel Margin="18,2,56,0" Visibility="{Binding HasOpacity, Converter={StaticResource BoolToVisibility}}">
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding OpacityText}" Width="40" TextAlignment="Right" Foreground="DimGray" VerticalAlignment="Center" />
+                                            <Slider Minimum="0" Maximum="1" SmallChange="0.05" LargeChange="0.1" Value="{Binding Opacity}"
+                                                    VerticalAlignment="Center" ToolTip="{x:Static res:Strings.LocalOpacityToolTip}"
+                                                    AutomationProperties.Name="{Binding OpacityName}" />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+            </Popup>
             <Separator />
             <!-- ToolTip shown even when disabled: the button explains when it becomes available. -->
             <Button Content="{x:Static res:Strings.ToolProfileButton}" Command="{Binding ElevationProfileCommand}"

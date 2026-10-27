@@ -36,6 +36,18 @@ public sealed class WpfDialogService : IDialogService
         return dialog.ShowDialog(Owner) == true ? dialog.FileNames : null;
     }
 
+    public IReadOnlyList<string>? AskLocalMapPaths()
+    {
+        var dialog = new OpenFileDialog
+        {
+            Title = Strings.DialogOpenLocalMapTitle,
+            Filter = Strings.FilterLocalMaps,
+            CheckFileExists = true,
+            Multiselect = true,
+        };
+        return dialog.ShowDialog(Owner) == true ? dialog.FileNames : null;
+    }
+
     public string? AskFolder(string? initialFolder)
     {
         var dialog = new OpenFolderDialog { Title = Strings.DialogConvertFolderTitle, InitialDirectory = initialFolder ?? string.Empty };

@@ -58,6 +58,7 @@ public sealed partial class MainViewModel : ObservableObject
         InitializeEditingCommands();
         InitializeToolCommands();
         InitializeHelpCommands();
+        InitializeLocalMapCommands();
     }
 
     /// <summary>Asks the view to close the main window; the window then calls <see cref="ConfirmCloseAllAsync"/>.</summary>
@@ -260,9 +261,49 @@ public sealed partial class MainViewModel : ObservableObject
         await OpenPathAsync(path, format);
     }
 
+    /// <summary>Extensions that can be dropped on the window: tracks (GPX, KML, KMZ, TCX) and cartography (APP-10).</summary>
+    public static IReadOnlyList<string> DroppableExtensions { get; } =
+        [.. TrailFileReader.Extensions, .. Mapping.Local.LocalMapLoader.Extensions];
+
+    /// <summary>True if at least one of the paths is a file that can be opened (the drop cursor shows it).</summary>
+    public static bool CanOpenAny(IEnumerable<string> paths) =>
+        paths.Any(p => DroppableExtensions.Contains(Path.GetExtension(p).ToLowerInvariant()));
+
+    /// <summary>
+    /// Opens files dropped on the window (APP-10), one after another: tracks as documents, maps and DEMs as user
+    /// cartography. Folders and files of other types are skipped and counted in the status bar.
+    /// </summary>
+    public async Task OpenFilesAsync(IEnumerable<string> paths)
+    {
+        var skipped = 0;
+        foreach (var path in paths)
+        {
+            if (!DroppableExtensions.Contains(Path.GetExtension(path).ToLowerInvariant()) || Directory.Exists(path))
+            {
+                skipped++;
+                continue;
+            }
+
+            await OpenPathAsync(path, DocumentFormat.Gpx);
+        }
+
+        if (skipped > 0)
+        {
+            StatusMessage = string.Format(Strings.StatusDropSkipped, skipped);
+        }
+    }
+
     /// <summary>Opens <paramref name="path"/> as a new document, or activates it if it is already open (APP-07).</summary>
     public async Task OpenPathAsync(string path, DocumentFormat format)
     {
+        // Maps and DEMs chosen with "Open file" are cartography, not documents (LMAP-01).
+        if (LocalMapLoader is not null
+            && Mapping.Local.LocalMapLoader.Extensions.Contains(Path.GetExtension(path).ToLowerInvariant()))
+        {
+            await OpenLocalMapAsync(path);
+            return;
+        }
+
         var fileName = Path.GetFileName(path);
         var existing = Documents.FirstOrDefault(d => d.Document.IsOpenedFrom(path));
         if (existing is not null)
@@ -552,6 +593,7 @@ public sealed partial class MainViewModel : ObservableObject
 
     private void RefreshCommands()
     {
+        RefreshLocalMapCommands();
         NewGpxCommand.RaiseCanExecuteChanged();
         OpenGpxCommand.RaiseCanExecuteChanged();
         SaveCommand.RaiseCanExecuteChanged();

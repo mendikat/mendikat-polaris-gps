@@ -2,6 +2,7 @@ using Mendikat.TrailLab.App.Resources;
 using Mendikat.TrailLab.Domain.Documents;
 using Mendikat.TrailLab.Domain.Model;
 using Mendikat.TrailLab.Gpx;
+using Mendikat.TrailLab.Mapping.Local;
 
 namespace Mendikat.TrailLab.App.Services;
 
@@ -22,6 +23,28 @@ public static class UserMessages
             DocumentLoadError.InvalidDate => Strings.ErrorInvalidDate,
             DocumentLoadError.UnsupportedFormat => Strings.ErrorUnsupportedFormat,
             DocumentLoadError.InvalidArchive => Strings.ErrorInvalidArchive,
+            _ => Strings.ErrorReadFailed,
+        };
+        var location = exception.Line is { } line ? string.Format(Strings.AtLine, line) : string.Empty;
+        return string.Format(template, fileName, location, exception.Detail ?? string.Empty);
+    }
+
+    /// <summary>Why a local map or DEM could not be opened (LMAP-02): names the file and the cause.</summary>
+    public static string ForLocalMapError(LocalMapException exception, string fileName)
+    {
+        var template = exception.Error switch
+        {
+            LocalMapError.FileNotFound => Strings.ErrorFileNotFound,
+            LocalMapError.EmptyFile => Strings.ErrorEmptyFile,
+            LocalMapError.UnsupportedFormat => Strings.ErrorLocalUnsupportedFormat,
+            LocalMapError.InvalidCalibration => Strings.ErrorLocalInvalidCalibration,
+            LocalMapError.ImageMissing => Strings.ErrorLocalImageMissing,
+            LocalMapError.UnsupportedImage => Strings.ErrorLocalUnsupportedImage,
+            LocalMapError.InvalidImage => Strings.ErrorLocalInvalidImage,
+            LocalMapError.UnsupportedCrs => Strings.ErrorLocalUnsupportedCrs,
+            LocalMapError.MissingProjection => Strings.ErrorLocalMissingProjection,
+            LocalMapError.InvalidDem => Strings.ErrorLocalInvalidDem,
+            LocalMapError.TooLarge => Strings.ErrorLocalTooLarge,
             _ => Strings.ErrorReadFailed,
         };
         var location = exception.Line is { } line ? string.Format(Strings.AtLine, line) : string.Empty;

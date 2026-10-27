@@ -7,6 +7,7 @@ using Mendikat.TrailLab.Domain.Geo;
 using Mendikat.TrailLab.Domain.Model;
 using Mendikat.TrailLab.Mapping.Coordinates;
 using Mendikat.TrailLab.Mapping.Layers;
+using Mendikat.TrailLab.Mapping.Local;
 using Mendikat.TrailLab.Mapping.Providers;
 using Mendikat.TrailLab.Mapping.Tiles;
 using Microsoft.Extensions.Logging;
@@ -27,9 +28,10 @@ public sealed class MapController : IDisposable
     private const double MinimumFitSize = 1000;
 
     private const int BaseLayerGroup = 0;
-    private const int DataLayerGroup = 1;
-    private const int SelectionLayerGroup = 2;
-    private const int HoverLayerGroup = 3;
+    private const int LocalMapLayerGroup = 1;
+    private const int DataLayerGroup = 2;
+    private const int SelectionLayerGroup = 3;
+    private const int HoverLayerGroup = 4;
 
     private readonly Mapsui.Map _map;
     private readonly HttpClient _httpClient;
@@ -37,6 +39,7 @@ public sealed class MapController : IDisposable
     private readonly Dictionary<DocumentViewModel, IReadOnlyList<ItemLayers>> _documentLayers = [];
     private readonly MemoryLayer _selectionLayer = new("selection") { Style = null };
     private readonly MemoryLayer _hoverLayer = new("profile-hover") { Style = null };
+    private readonly Dictionary<LocalMapItemViewModel, TileLayer> _localLayers = [];
     private TileLayer? _baseLayer;
     private ObservedTileSource? _tileSource;
     private bool _lastTileFailed;
@@ -179,8 +182,78 @@ public sealed class MapController : IDisposable
         }
     }
 
+    /// <summary>Draws a local map above the base cartography and below the tracks (LMAP-01). DEMs are not drawn.</summary>
+    public void AddLocalMap(LocalMapItemViewModel item)
+    {
+        if (item.Content is not LocalRasterMap raster || _localLayers.ContainsKey(item))
+        {
+            return;
+        }
+
+        var layer = new TileLayer(new LocalMapTileSource(raster.Map, raster.Image, item.Name)) { Name = $"local:{item.Name}", Enabled = item.IsVisible };
+        _localLayers[item] = layer;
+        _map.Layers.Add(layer, LocalMapLayerGroup);
+    }
+
+    public void RemoveLocalMap(LocalMapItemViewModel item)
+    {
+        if (_localLayers.Remove(item, out var layer))
+        {
+            RemoveLayers([layer]);
+        }
+    }
+
+    public void SetLocalMapOpacity(LocalMapItemViewModel item)
+    {
+        if (_localLayers.TryGetValue(item, out var layer))
+        {
+            layer.Opacity = item.Opacity;
+            _map.RefreshGraphics();
+        }
+    }
+
+    /// <summary>
+    /// Redraws the user cartographies in the given order, first on top (LMAP-11). They stay in their own layer group,
+    /// so the online cartography is always below them and the tracks always above.
+    /// </summary>
+    public void OrderLocalMaps(IReadOnlyList<LocalMapItemViewModel> topFirst)
+    {
+        var layers = topFirst.Select(i => _localLayers.GetValueOrDefault(i)).OfType<TileLayer>().ToList();
+        if (layers.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var layer in layers)
+        {
+            _map.Layers.Remove(layer);
+        }
+
+        // Within a group, a layer added later is drawn on top: add from the bottom one up.
+        for (var i = layers.Count - 1; i >= 0; i--)
+        {
+            _map.Layers.Add(layers[i], LocalMapLayerGroup);
+        }
+
+        _map.RefreshGraphics();
+    }
+
+    public void SetLocalMapVisibility(LocalMapItemViewModel item)
+    {
+        if (_localLayers.TryGetValue(item, out var layer))
+        {
+            layer.Enabled = item.IsVisible;
+            _map.RefreshData();
+        }
+    }
+
     public void Dispose()
     {
+        foreach (var layer in _localLayers.Values)
+        {
+            layer.Dispose();
+        }
+
         foreach (var layer in _documentLayers.Values.SelectMany(items => items.SelectMany(i => i.Layers)))
         {
             layer.Dispose();
