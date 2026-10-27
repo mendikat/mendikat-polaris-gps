@@ -3,7 +3,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.0.1. Los 8 incrementos del plan están terminados; después se han añadido mejoras pedidas por el responsable
+> **Estado: versión 0.0.2. Los 8 incrementos del plan están terminados; después se han añadido mejoras pedidas por el responsable
 > (ver «Después del plan» en [specs/ROADMAP.md](specs/ROADMAP.md)).**
 > Se abren archivos GPX, y KML, KMZ y TCX convertidos a GPX (WPT se retiró el 2026-10-26), se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
