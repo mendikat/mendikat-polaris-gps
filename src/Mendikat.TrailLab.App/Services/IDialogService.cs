@@ -15,6 +15,13 @@ public interface IDialogService
     /// <returns>Selected path, or null if the user cancelled.</returns>
     string? AskOpenFilePath(DocumentFormat format);
 
+    /// <summary>Files to convert to GPX (KML, KMZ, TCX; several can be chosen, CONV-06).</summary>
+    /// <returns>Selected paths, or null if the user cancelled.</returns>
+    IReadOnlyList<string>? AskConvertFilePaths();
+
+    /// <returns>Selected folder, or null if the user cancelled.</returns>
+    string? AskFolder(string? initialFolder);
+
     /// <returns>Selected path, or null if the user cancelled. The dialog asks before overwriting.</returns>
     string? AskSaveFilePath(DocumentFormat format, string suggestedPath);
 

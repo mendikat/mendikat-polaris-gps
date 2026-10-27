@@ -10,6 +10,9 @@ public sealed class GpxFormatState
 
     public string? Creator { get; init; }
 
+    /// <summary>"KML", "KMZ" or "TCX" when the data was converted from another format (CONV-02); null for a GPX file.</summary>
+    public string? ConvertedFrom { get; init; }
+
     /// <summary>Namespace declarations of the root element (prefix → URI), excluding the GPX default namespace.</summary>
     public List<KeyValuePair<string, string>> NamespaceDeclarations { get; } = [];
 

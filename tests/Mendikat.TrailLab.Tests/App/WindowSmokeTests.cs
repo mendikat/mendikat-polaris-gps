@@ -58,6 +58,7 @@ public sealed class WindowSmokeTests
     [Trait("Req", "SIMP-04")]
     [Trait("Req", "TIME-01")]
     [Trait("Req", "DEM-02")]
+    [Trait("Req", "CONV-06")]
     [Trait("Req", "PROF-01")]
     public void Secondary_windows_can_be_created_with_their_view_models()
     {
@@ -71,6 +72,7 @@ public sealed class WindowSmokeTests
                 new TimesWindow(new TimesViewModel(layer)),
                 new DemWindow(new DemViewModel(layer, _ => new NoDataSource())),
                 new ProfileWindow(new ProfileViewModel(document, layer)),
+                new ConvertWindow(new ConvertViewModel(new FakeDialogService(), [])),
             ];
             foreach (var window in windows)
             {

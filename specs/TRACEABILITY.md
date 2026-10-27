@@ -3,7 +3,7 @@
 Las pruebas llevan `[Trait("Req", "<Id>")]` (y `[Trait("Acc", "<Id>")]` para escenarios de aceptación).
 Filtrar, p. ej.: `dotnet exec <Tests.dll> -trait "Req=APP-04"`.
 
-Estado: ✅ cubierto y probado · 🟡 parcial (se completa en el incremento indicado) · 🖐 comprobación manual
+Estado: ✅ cubierto y probado · 🟡 parcial (se completa en el incremento indicado) · 🖐 comprobación manual · ⏳ especificado, sin implementar
 
 ## Incremento 1 — Esqueleto ejecutable (2026-10-24)
 
@@ -255,3 +255,38 @@ en el menú y en «Acerca de», provisionalmente a https://www.mendikat.net (`Ch
 | REV-01 | ✅ | `Domain/Processing/TrackReverser`, `ReverseOrderCommand<T>` | `Segments_and_points_are_reversed_and_times_mirrored`, `Empty_and_single_point_tracks_are_handled` |
 | REV-02 | ✅ | `TrackReverser` (horas reflejadas con `SetTimesCommand`) | `Segments_and_points_are_reversed_and_times_mirrored`, `Points_without_time_keep_having_none` |
 | REV-03 | ✅ 🖐 | `MainViewModel.Reverse`, `ReverseCommand`, menú Herramientas | `Undo_restores_order_and_times`, `Reverse_applies_one_undoable_step_to_the_selected_track_only`, `Tools_are_only_available_for_tracks_and_routes` |
+
+## Especificados, sin implementar (2026-10-26, a petición del responsable)
+
+Requisitos nuevos aún sin código ni pruebas. Decisiones abiertas D7–D11 en PROJECT.md.
+
+| Req | Estado | Incremento |
+|-----|--------|------------|
+| LMAP-01..10 | ⏳ pendiente | 9 — Cartografía local georreferenciada (OziExplorer `.map`, GeoTIFF, `.imp`, `.rmap`, ECW) |
+| LDEM-01..07 | ⏳ pendiente | 9 — DEM locales (HGT, GeoTIFF, ASCII Grid) |
+
+## Incremento 10 — Importar KML, KMZ y TCX y convertir a GPX (2026-10-26, a petición del responsable)
+
+353 pruebas, todas en verde (40 nuevas). Archivos de referencia propios en `tests/.../Fixtures/convert` (KML con
+carpetas anidadas, `MultiGeometry`, `gx:Track`, `gx:MultiTrack`, polígono y superposición; TCX con dos vueltas, punto
+sin posición, `TPX` y un `Course`); los KMZ se generan en la prueba (incluido uno de 50 MB de ceros comprimidos).
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| CONV-01 | ✅ | `Gpx/TrailFileReader` (detección por firma ZIP o raíz XML), `Strings.FilterOpen`, `DocumentLoadError.UnsupportedFormat` | `The_format_is_detected_from_the_content_not_the_extension`, `Other_xml_files_are_unsupported_and_named_by_their_root`, `Files_that_are_not_xml_are_reported_by_the_reader_of_their_extension`, `Gpx_files_are_read_as_before`, `An_unsupported_file_shows_a_clear_error_and_opens_nothing` |
+| CONV-02 | ✅ | `FileDocumentStore.Read`, `TrailDocument.CreateImported/ImportedFrom/IsOpenedFrom/SuggestedSavePath`, `LoadWarningKind.ConvertedFrom` | `A_kml_opens_as_a_new_unsaved_gpx_named_after_it`, `Saving_a_converted_document_asks_where_and_never_touches_the_source`, `Opening_the_same_source_again_activates_the_converted_document` |
+| CONV-03 | ✅ | `Gpx/KmlReader`, `ConvertedData` (metadatos con nombre y descripción del documento) | `Kml_points_become_waypoints…`, `Kml_lines_of_every_folder_become_tracks…`, `Google_earth_tracks_keep_their_times`, `Kml_conversion_reports_its_source_and_what_was_ignored`, `Invalid_kml_coordinates_are_rejected_with_their_line`, `Converted_kml_is_written_as_valid_gpx_with_its_metadata` |
+| CONV-04 | ✅ | `Gpx/KmzReader` (límites de tamaño, entradas y compresión; copia limitada en memoria) | `Kmz_reads_doc_kml_like_its_kml_and_ignores_images`, `Kmz_without_doc_kml_uses_the_first_kml`, `Invalid_kmz_files_are_rejected` (3), `A_corrupt_kml_inside_a_kmz_is_reported_as_invalid_xml` |
+| CONV-05 | ✅ | `Gpx/TcxReader` (pulso y cadencia en `gpxtpx:TrackPointExtension`) | `Tcx_activity_becomes_a_track_with_one_segment_per_lap`, `Tcx_heart_rate_and_cadence_go_to_the_garmin_trackpoint_extension`, `Tcx_reports_skipped_points_and_data_without_gpx_equivalent`, `Tcx_courses_become_tracks…`, `Converted_tcx_is_written_as_valid_gpx_and_keeps_heart_rate` (XSD) |
+| CONV-06 | ✅ 🖐 | `ConvertViewModel`, `Views/ConvertWindow`, `MainViewModel.ConvertToGpx`, `Gpx/GpxConversion` (escritura verificada y `FreePath`), `IDialogService.AskConvertFilePaths/AskFolder` | `Convert_writes_one_valid_gpx_per_file_and_reports_errors_without_stopping`, `Existing_gpx_files_are_renamed_skipped_or_replaced` (3), `Gpx_can_go_to_another_folder…`, `Another_folder_must_be_chosen_before_converting`, `Stopping_leaves_only_complete_gpx_files`, `Files_can_be_added_and_removed_but_not_twice`, `The_tool_shows_the_dialog…`, `Free_paths_get_a_number`, `Every_input_control_has_an_accessible_name`, `Secondary_windows_can_be_created…` |
+| CONV-07 | ✅ | Misma lectura (`TrailFileReader.ReadFile`) y escritura en las dos vías; avisos `IgnoredFeatures`, `PointsWithoutPosition`, `DataNotConverted` | `Convert_writes_one_valid_gpx_per_file…` (mismos bytes que abrir y guardar), `Kml_conversion_reports…`, `Tcx_reports_skipped_points…` |
+
+Comprobación con datos reales: 303 KML de mendikat.net (uno de cada cien del almacén, más los dos que fallaban al probar
+la aplicación). 301 se convierten y su GPX pasa la verificación (367 022 puntos); 2 tienen XML mal formado (`&deg;` en
+la descripción) y se rechazan con «XML no válido, línea 3». La prueba encontró dos casos que se corrigieron: espacios
+tras las comas en las coordenadas («-6.36669,  38.04557,1063») y puntos con una segunda tupla cortada (se usa la primera,
+como Google Earth): `Kml_from_mendikat_net_with_spaces_after_commas_and_latin1_is_read`,
+`A_kml_point_uses_its_first_tuple_like_google_earth`.
+
+Pendiente (🖐): uso del diálogo con ratón y con KML/KMZ/TCX reales de Google Earth, Garmin Connect y Strava; D11
+(confirmar y corregir el lector KML de mendikat.net).

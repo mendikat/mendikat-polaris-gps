@@ -21,6 +21,8 @@ actualizados · dependencias nuevas registradas con licencia.
 | 6 | Procesamiento | 3, 4 | SIMP-01..05, TIME-01..06 | Douglas–Peucker iterativo; regeneración de tiempos; diálogos con vista previa; deshacer. **Estado: terminado (2026-10-25).** |
 | 7 | DEM (IGN WCS) | 3 | DEM-01..06 | Fuente(s) DEM según ADR-0007; vista previa; cancelación; pruebas con doble de red. **Estado: terminado (2026-10-25).** |
 | 8 | Robustez | 1–7 | NFR-02, NFR-08 + regresión | Archivos grandes, cancelación, errores de red, accesibilidad, documentación final, lista de errores conocidos. **Estado: terminado, pendiente de aprobación** (ver TRACEABILITY.md). |
+| 9 | Cartografía y DEM locales | 2, 7, D7–D10 | LMAP-01..10, LDEM-01..07 | Investigación de bibliotecas y licencias (ADR-0010) antes de programar; formatos realmente soportados, dependencias y limitaciones documentados en README; pruebas con archivos de referencia que comprueban posición y elevaciones. **Estado: especificado, pendiente de empezar (2026-10-26).** |
+| 10 | Importar KML, KMZ y TCX y convertir a GPX | 4, D11 | CONV-01..07 | Archivos de referencia propios por formato (sin red); conversión idéntica al abrir y con la herramienta; GPX resultante válido contra el XSD; ZIP malicioso rechazado. **Estado: terminado (2026-10-26), pendiente de aprobación.** |
 
 ## Dependencias críticas
 
@@ -44,9 +46,14 @@ Hechas, con pruebas y documentadas en TRACEABILITY.md:
 | Menú Ayuda: guía HTML (F1), ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones, Acerca de (versión 0.0.1) | APP-09 |
 | Géoportail muestra el SCAN 25 (clave pública `ign_scan_ws`) | ADR-0004 |
 | Herramientas › Invertir track: puntos y segmentos en orden inverso, horas reflejadas, deshacible | REV-01..03 |
+| Incremento 10: abrir KML, KMZ y TCX como GPX nuevo sin guardar y *Herramientas › Convertir a GPX…* por lotes | CONV-01..07 |
 | Tarea `watch (Hot Reload)` y configuración de depuración en `.vscode/` | — |
 
 Pendiente:
+
+- D11: confirmar con archivos reales los defectos del lector KML de mendikat.net y corregirlos en el PHP (TrailLab ya lee correctamente).
+
+- **Incremento 9 — Cartografía y DEM locales** (LMAP, LDEM): OziExplorer `.map`, GeoTIFF, CompeGPS/TwoNav `.imp`/`.rmap`, ECW y DEM HGT, GeoTIFF y ASCII Grid. Antes, resolver D7–D10 (PROJECT.md).
 
 - Comprobaciones manuales de TRACEABILITY.md (NFR-09 fluidez con 100 000 puntos, NFR-02, NFR-08 con el Narrador, sin red, arrastre, perfil).
 - Licencias antes de distribuir: SCAN 25 del IGN francés, Esri y OSM (ADR-0004, README).

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes" ?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+<Document>
+<name>doc</name>
+<Placemark id="wpt0001">
+<name>Tentudía</name>
+<Point>
+<altitudeMode>clampToGround</altitudeMode>
+<coordinates>
+  -6.366690,  38.045570,1063.1424
+</coordinates>
+</Point>
+</Placemark>
+<Placemark>
+<name>Ruta</name>
+<LineString>
+<coordinates>
+  -6.366690,  38.045570,1063.1  -6.366700, 38.045580 , 1064.2
+ -6.366710,38.045590,1065.3
+</coordinates>
+</LineString>
+</Placemark>
+</Document>
+</kml>

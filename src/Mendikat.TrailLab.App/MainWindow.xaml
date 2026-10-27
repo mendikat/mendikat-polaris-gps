@@ -60,6 +60,8 @@
                 <MenuItem Header="{x:Static res:Strings.MenuReverse}" Command="{Binding ReverseCommand}" />
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuAdjustElevations}" Command="{Binding AdjustElevationsCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuConvertToGpx}" Command="{Binding ConvertToGpxCommand}" />
             </MenuItem>
             <MenuItem Header="{x:Static res:Strings.MenuView}">
                 <MenuItem Header="{x:Static res:Strings.MenuZoomIn}" Command="{Binding ZoomInCommand}" InputGestureText="Ctrl++" />

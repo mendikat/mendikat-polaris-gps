@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2"
+    xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
+  <Activities>
+    <Activity Sport="Running">
+      <Id>2026-05-01T07:00:00Z</Id>
+      <Lap StartTime="2026-05-01T07:00:00Z">
+        <TotalTimeSeconds>20</TotalTimeSeconds>
+        <Track>
+          <Trackpoint>
+            <Time>2026-05-01T07:00:00Z</Time>
+            <Position><LatitudeDegrees>42.8</LatitudeDegrees><LongitudeDegrees>-1.6</LongitudeDegrees></Position>
+            <AltitudeMeters>450.5</AltitudeMeters>
+            <DistanceMeters>0</DistanceMeters>
+            <HeartRateBpm><Value>120</Value></HeartRateBpm>
+            <Cadence>80</Cadence>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2026-05-01T07:00:05Z</Time>
+            <HeartRateBpm><Value>121</Value></HeartRateBpm>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2026-05-01T07:00:10Z</Time>
+            <Position><LatitudeDegrees>42.8001</LatitudeDegrees><LongitudeDegrees>-1.6001</LongitudeDegrees></Position>
+            <AltitudeMeters>451</AltitudeMeters>
+          </Trackpoint>
+        </Track>
+      </Lap>
+      <Lap StartTime="2026-05-01T07:10:00Z">
+        <Track>
+          <Trackpoint>
+            <Time>2026-05-01T07:10:00Z</Time>
+            <Position><LatitudeDegrees>42.801</LatitudeDegrees><LongitudeDegrees>-1.601</LongitudeDegrees></Position>
+            <Extensions><ns3:TPX><ns3:Speed>3.2</ns3:Speed><ns3:RunCadence>85</ns3:RunCadence></ns3:TPX></Extensions>
+          </Trackpoint>
+        </Track>
+        <Track>
+          <Trackpoint>
+            <Time>2026-05-01T07:12:00Z</Time>
+            <Position><LatitudeDegrees>42.802</LatitudeDegrees><LongitudeDegrees>-1.602</LongitudeDegrees></Position>
+          </Trackpoint>
+        </Track>
+      </Lap>
+    </Activity>
+  </Activities>
+  <Courses>
+    <Course>
+      <Name>Ruta del pantano</Name>
+      <Track>
+        <Trackpoint>
+          <Time>2026-05-02T08:00:00Z</Time>
+          <Position><LatitudeDegrees>43.0</LatitudeDegrees><LongitudeDegrees>-2.0</LongitudeDegrees></Position>
+          <AltitudeMeters>100</AltitudeMeters>
+        </Trackpoint>
+        <Trackpoint>
+          <Time>2026-05-02T08:01:00Z</Time>
+          <Position><LatitudeDegrees>43.001</LatitudeDegrees><LongitudeDegrees>-2.001</LongitudeDegrees></Position>
+        </Trackpoint>
+      </Track>
+      <CoursePoint>
+        <Name>Fuente</Name>
+        <Time>2026-05-02T08:00:30Z</Time>
+        <Position><LatitudeDegrees>43.0005</LatitudeDegrees><LongitudeDegrees>-2.0005</LongitudeDegrees></Position>
+        <AltitudeMeters>101</AltitudeMeters>
+        <PointType>Water</PointType>
+        <Notes>Agua potable</Notes>
+      </CoursePoint>
+    </Course>
+  </Courses>
+</TrainingCenterDatabase>

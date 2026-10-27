@@ -18,6 +18,8 @@ public sealed partial class MainViewModel
 
     public RelayCommand ReverseCommand { get; private set; } = null!;
 
+    public RelayCommand ConvertToGpxCommand { get; private set; } = null!;
+
     /// <summary>Elevation models by resolution (DEM-01). Set at startup; without it the DEM tool is disabled.</summary>
     public Func<IgnDemResolution, IElevationSource>? ElevationSources { get; init; }
 
@@ -107,8 +109,28 @@ public sealed partial class MainViewModel
         _logger.LogInformation("Reversed a {Kind} in {FileName}: {Count} points", layer.Kind, doc.FileName, layer.PointCount);
     }
 
+    /// <summary>Asks for KML, KMZ or TCX files and converts them to GPX files in a dialog with a report (CONV-06).</summary>
+    public void ConvertToGpx()
+    {
+        if (_dialogs.AskConvertFilePaths() is not { Count: > 0 } files)
+        {
+            return;
+        }
+
+        var dialog = new ConvertViewModel(_dialogs, files);
+        _dialogs.ShowToolDialog(dialog);
+        if (dialog.Converted + dialog.Skipped + dialog.Failed > 0)
+        {
+            StatusMessage = dialog.StatusSummary;
+            _logger.LogInformation(
+                "Converted to GPX: {Converted} converted, {Skipped} skipped, {Failed} failed",
+                dialog.Converted, dialog.Skipped, dialog.Failed);
+        }
+    }
+
     private void InitializeToolCommands()
     {
+        ConvertToGpxCommand = new RelayCommand(ConvertToGpx, () => !IsBusy);
         ReverseCommand = new RelayCommand(Reverse, CanUseTools);
         SimplifyCommand = new RelayCommand(Simplify, CanUseTools);
         RegenerateTimesCommand = new RelayCommand(RegenerateTimes, CanUseTools);
@@ -123,5 +145,6 @@ public sealed partial class MainViewModel
         RegenerateTimesCommand.RaiseCanExecuteChanged();
         AdjustElevationsCommand.RaiseCanExecuteChanged();
         ReverseCommand.RaiseCanExecuteChanged();
+        ConvertToGpxCommand.RaiseCanExecuteChanged();
     }
 }

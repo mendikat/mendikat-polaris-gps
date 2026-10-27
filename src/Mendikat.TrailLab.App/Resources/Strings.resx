@@ -239,4 +239,46 @@
   <data name="StatGroupRoute" xml:space="preserve"><value>Recorrido</value></data>
   <data name="StatGroupTime" xml:space="preserve"><value>Tiempo</value></data>
   <data name="ProfileStatsHint" xml:space="preserve"><value>Desnivel calculado sobre el perfil suavizado con una media gaussiana de 100 m, como en mendikat.net, para no sumar el ruido del GPS. En un circuito el desnivel negativo se iguala al positivo. Detenido: tramos a menos de 1 km/h y pausas entre segmentos. Velocidad media: distancia en movimiento ÷ tiempo en movimiento. Velocidad máxima: la mayor mantenida al menos 30 s, para no contar los saltos del GPS.</value></data>
+  <data name="FilterOpen" xml:space="preserve"><value>Archivos admitidos (*.gpx;*.kml;*.kmz;*.tcx)&#124;*.gpx;*.kml;*.kmz;*.tcx&#124;GPX (*.gpx)&#124;*.gpx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Todos los archivos (*.*)&#124;*.*</value></data>
+  <data name="FilterConvert" xml:space="preserve"><value>KML, KMZ y TCX (*.kml;*.kmz;*.tcx)&#124;*.kml;*.kmz;*.tcx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Todos los archivos (*.*)&#124;*.*</value></data>
+  <data name="ErrorUnsupportedFormat" xml:space="preserve"><value>El archivo «{0}» no es GPX, KML, KMZ ni TCX (su elemento raíz es «{2}»).</value></data>
+  <data name="ErrorInvalidArchive" xml:space="preserve"><value>El archivo «{0}» no es un KMZ válido: no es un ZIP correcto, no contiene ningún KML o es demasiado grande al descomprimirlo.</value></data>
+  <data name="WarningConvertedFrom" xml:space="preserve"><value>Convertido desde {0} a GPX. El archivo original no se modifica; al guardar se pide dónde guardar el GPX.</value></data>
+  <data name="WarningIgnoredFeatures" xml:space="preserve"><value>Elementos de KML sin equivalente en GPX que no se han convertido (polígonos, superposiciones, modelos…): {0}.</value></data>
+  <data name="WarningPointsWithoutPosition" xml:space="preserve"><value>Puntos sin posición (actividades en interior o pausas) que se han omitido: {0}.</value></data>
+  <data name="WarningDataNotConverted" xml:space="preserve"><value>Puntos con datos de TCX sin equivalente en GPX (distancia, velocidad o potencia) que no se han convertido: {0}. El pulso y la cadencia sí se conservan.</value></data>
+  <data name="FormatConverted" xml:space="preserve"><value>{0} (convertido a GPX)</value></data>
+  <data name="StatusConverted" xml:space="preserve"><value>«{0}» convertido a GPX como «{1}» (sin guardar).</value></data>
+  <data name="MenuConvertToGpx" xml:space="preserve"><value>_Convertir a GPX...</value></data>
+  <data name="DialogConvertFilesTitle" xml:space="preserve"><value>Archivos que convertir a GPX</value></data>
+  <data name="DialogConvertFolderTitle" xml:space="preserve"><value>Carpeta de destino de los GPX</value></data>
+  <data name="ConvertTitle" xml:space="preserve"><value>Convertir a GPX</value></data>
+  <data name="ConvertFiles" xml:space="preserve"><value>Archivos KML, KMZ y TCX:</value></data>
+  <data name="ConvertAddFiles" xml:space="preserve"><value>Añadir...</value></data>
+  <data name="ConvertRemove" xml:space="preserve"><value>Quitar</value></data>
+  <data name="ConvertDestination" xml:space="preserve"><value>Guardar los GPX en:</value></data>
+  <data name="ConvertSameFolder" xml:space="preserve"><value>La carpeta de cada archivo</value></data>
+  <data name="ConvertOtherFolder" xml:space="preserve"><value>Otra carpeta:</value></data>
+  <data name="ConvertBrowse" xml:space="preserve"><value>Examinar...</value></data>
+  <data name="ConvertExisting" xml:space="preserve"><value>Si el GPX ya existe:</value></data>
+  <data name="ConvertExistingRename" xml:space="preserve"><value>Guardarlo con otro nombre («nombre (2).gpx»)</value></data>
+  <data name="ConvertExistingOverwrite" xml:space="preserve"><value>Reemplazarlo</value></data>
+  <data name="ConvertExistingSkip" xml:space="preserve"><value>No convertir ese archivo</value></data>
+  <data name="ConvertStart" xml:space="preserve"><value>Convertir</value></data>
+  <data name="ConvertStop" xml:space="preserve"><value>Detener</value></data>
+  <data name="ConvertNote" xml:space="preserve"><value>Los archivos originales no se modifican. Cada GPX se comprueba antes de escribirlo y nunca queda a medias.</value></data>
+  <data name="ConvertReportOk" xml:space="preserve"><value>✓ {0} → {1}: tracks {2}, puntos {3}, waypoints {4}.</value></data>
+  <data name="ConvertReportSkipped" xml:space="preserve"><value>– {0}: no se convierte porque «{1}» ya existe.</value></data>
+  <data name="ConvertReportAlreadyGpx" xml:space="preserve"><value>– {0}: ya es un archivo GPX; no se convierte.</value></data>
+  <data name="ConvertReportError" xml:space="preserve"><value>✗ {0}</value></data>
+  <data name="ConvertReportWriteError" xml:space="preserve"><value>✗ {0}: no se pudo escribir «{1}»; ese archivo no se ha modificado.</value></data>
+  <data name="ConvertReportWarning" xml:space="preserve"><value>    · {0}</value></data>
+  <data name="ConvertSummary" xml:space="preserve"><value>Convertidos: {0} · Omitidos: {1} · Con error: {2}.</value></data>
+  <data name="ConvertCancelled" xml:space="preserve"><value>Conversión detenida. Los GPX ya escritos están completos; los demás no se han creado.</value></data>
+  <data name="ConvertNoFolder" xml:space="preserve"><value>Elija la carpeta de destino.</value></data>
+  <data name="StatusConvertedFiles" xml:space="preserve"><value>Convertir a GPX: {0} convertidos, {1} omitidos, {2} con error.</value></data>
+  <data name="A11yConvertFiles" xml:space="preserve"><value>Archivos que se van a convertir</value></data>
+  <data name="A11yConvertFolder" xml:space="preserve"><value>Carpeta de destino</value></data>
+  <data name="A11yConvertExisting" xml:space="preserve"><value>Qué hacer si el GPX ya existe</value></data>
+  <data name="A11yConvertReport" xml:space="preserve"><value>Resultado de la conversión</value></data>
 </root>

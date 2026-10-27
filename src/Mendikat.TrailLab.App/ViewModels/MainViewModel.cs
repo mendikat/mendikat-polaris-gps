@@ -261,7 +261,7 @@ public sealed partial class MainViewModel : ObservableObject
     public async Task OpenPathAsync(string path, DocumentFormat format)
     {
         var fileName = Path.GetFileName(path);
-        var existing = Documents.FirstOrDefault(d => d.Document.IsSameFile(path));
+        var existing = Documents.FirstOrDefault(d => d.Document.IsOpenedFrom(path));
         if (existing is not null)
         {
             ActiveDocument = existing;
@@ -290,10 +290,12 @@ public sealed partial class MainViewModel : ObservableObject
             Documents.Add(viewModel);
             OnPropertyChanged(nameof(HasDocuments));
             ActiveDocument = viewModel;
-            StatusMessage = string.Format(Strings.StatusOpened, fileName);
+            StatusMessage = document.ImportedFrom is null
+                ? string.Format(Strings.StatusOpened, fileName)
+                : string.Format(Strings.StatusConverted, fileName, document.FileName);
             _logger.LogInformation(
-                "Opened {Format} document {FileName}: {Tracks} tracks, {Routes} routes, {Waypoints} waypoints, warnings: {Warnings}",
-                format, fileName, document.Data.Tracks.Count, document.Data.Routes.Count, document.Data.Waypoints.Count,
+                "Opened {Source} document {FileName}: {Tracks} tracks, {Routes} routes, {Waypoints} waypoints, warnings: {Warnings}",
+                UserMessages.SourceFormat(format, document.Data), fileName, document.Data.Tracks.Count, document.Data.Routes.Count, document.Data.Waypoints.Count,
                 string.Join(",", document.Warnings.Select(w => w.Kind)));
             if (document.Data.GetBounds() is { } bounds)
             {
@@ -349,7 +351,7 @@ public sealed partial class MainViewModel : ObservableObject
         }
 
         var format = document.Document.Format;
-        var path = _dialogs.AskSaveFilePath(format, document.FilePath ?? document.FileName);
+        var path = _dialogs.AskSaveFilePath(format, document.Document.SuggestedSavePath);
         if (path is null)
         {
             return false;

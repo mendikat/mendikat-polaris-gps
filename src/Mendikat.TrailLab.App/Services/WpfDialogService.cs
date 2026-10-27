@@ -17,11 +17,29 @@ public sealed class WpfDialogService : IDialogService
         var dialog = new OpenFileDialog
         {
             Title = Strings.DialogOpenGpxTitle,
-            Filter = FilterFor(format),
+            Filter = format == DocumentFormat.Gpx ? Strings.FilterOpen : FilterFor(format),
             CheckFileExists = true,
             Multiselect = false,
         };
         return dialog.ShowDialog(Owner) == true ? dialog.FileName : null;
+    }
+
+    public IReadOnlyList<string>? AskConvertFilePaths()
+    {
+        var dialog = new OpenFileDialog
+        {
+            Title = Strings.DialogConvertFilesTitle,
+            Filter = Strings.FilterConvert,
+            CheckFileExists = true,
+            Multiselect = true,
+        };
+        return dialog.ShowDialog(Owner) == true ? dialog.FileNames : null;
+    }
+
+    public string? AskFolder(string? initialFolder)
+    {
+        var dialog = new OpenFolderDialog { Title = Strings.DialogConvertFolderTitle, InitialDirectory = initialFolder ?? string.Empty };
+        return dialog.ShowDialog(Owner) == true ? dialog.FolderName : null;
     }
 
     public string? AskSaveFilePath(DocumentFormat format, string suggestedPath)
@@ -63,6 +81,7 @@ public sealed class WpfDialogService : IDialogService
             SimplifyViewModel simplify => new SimplifyWindow(simplify),
             TimesViewModel times => new TimesWindow(times),
             DemViewModel dem => new DemWindow(dem),
+            ConvertViewModel convert => new ConvertWindow(convert),
             _ => throw new ArgumentException($"No dialog for {viewModel.GetType().Name}.", nameof(viewModel)),
         };
         dialog.Owner = Owner;

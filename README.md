@@ -5,7 +5,7 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 
 > **Estado: versión 0.0.1. Los 8 incrementos del plan están terminados; después se han añadido mejoras pedidas por el responsable
 > (ver «Después del plan» en [specs/ROADMAP.md](specs/ROADMAP.md)).**
-> Se abren archivos GPX (sólo GPX: WPT se retiró el 2026-10-26), se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
+> Se abren archivos GPX, y KML, KMZ y TCX convertidos a GPX (WPT se retiró el 2026-10-26), se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
 > Los archivos grandes se abren con porcentaje de progreso y se pueden cancelar. Ver [specs/ROADMAP.md](specs/ROADMAP.md).
@@ -26,6 +26,8 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Regenerar tiempos | *Herramientas › Regenerar tiempos…*: fecha, hora y zona horaria de inicio, y velocidad (km/h, m/s, min/km) o intervalo fijo; vista previa en hora local y UTC |
 | Invertir el sentido | *Herramientas › Invertir track*: invierte puntos y segmentos del track o ruta seleccionado; las horas se reflejan (mismo inicio y fin, mismos intervalos). Se deshace con Ctrl+Z |
 | Ajustar altitudes con el MDT | *Herramientas › Ajustar altitudes con el MDT del IGN…* › **Consultar** (5 m o 25 m; requiere Internet) › revisar cuántos puntos cambian y cuántos no tienen dato › **Aplicar**. Sólo España; el origen de cada elevación se ve en el detalle del punto |
+| Abrir KML, KMZ o TCX | *Archivo › Abrir archivo…* (Ctrl+O): se abre como un GPX nuevo «nombre.gpx» sin guardar; **Guardar** pide dónde guardarlo |
+| Convertir varios archivos a GPX | *Herramientas › Convertir a GPX…*: elegir los KML, KMZ o TCX, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
 | Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |
 | Ayuda | **F1** o *Ayuda › Ayuda de Mendikat TrailLab* (guía HTML en el navegador). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones y Acerca de (versión, autor) |
@@ -96,6 +98,15 @@ WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido
 - **GPX 1.1** y **1.0**: lectura y escritura. Se guarda siempre GPX 1.1 válido (un GPX 1.0 se convierte, con aviso)
   conservando metadatos, campos desconocidos y extensiones con sus prefijos. Horas sin zona → UTC con aviso.
 - Los waypoints (`wpt`) del GPX se dibujan como triángulos del color del documento, con su nombre al acercarse.
+- **KML** y **KMZ** (Google Earth) y **TCX** (Garmin): sólo lectura. Se abren como un GPX nuevo sin guardar
+  («ruta.kml» → «ruta.gpx»; el original no se modifica) o se convierten por lotes con *Herramientas › Convertir a GPX…*.
+  El formato se reconoce por el contenido, no por la extensión.
+  - KML: cada punto → waypoint (nombre, descripción, altitud si la tiene); las líneas (`LineString`, `gx:Track` con horas)
+    de cada marca → un track con un segmento por línea; se recorren todas las carpetas. Polígonos, superposiciones y
+    modelos no tienen equivalente en GPX: se cuentan en un aviso.
+  - KMZ: se lee `doc.kml` (o el primer `.kml`); las imágenes se ignoran. Máximo 256 MB descomprimido.
+  - TCX: cada actividad → un track con un segmento por vuelta; pulso y cadencia → extensión `gpxtpx` de Garmin
+    (la que leen Strava, Garmin y la mayoría de programas). Distancia, velocidad y potencia no se convierten (aviso).
 - Los archivos **WPT** (OziExplorer, CompeGPS) ya no se admiten (ADR-0006, retirada el 2026-10-26).
 
 ## Cartografía

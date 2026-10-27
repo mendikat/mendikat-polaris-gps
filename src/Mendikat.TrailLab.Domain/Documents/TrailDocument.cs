@@ -30,13 +30,14 @@ public sealed class TrailDocument
         Warnings = warnings ?? [];
     }
 
-    private TrailDocument(DocumentFormat format, string title, TrailData data)
+    private TrailDocument(DocumentFormat format, string title, TrailData data, IReadOnlyList<LoadWarning>? warnings, string? importedFrom)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(title);
         _fileName = title;
         Format = format;
         Data = data;
-        Warnings = [];
+        Warnings = warnings ?? [];
+        ImportedFrom = importedFrom is null ? null : Path.GetFullPath(importedFrom);
     }
 
     /// <summary>Raised once per operation (EDIT-07): edit, undo, redo or save.</summary>
@@ -55,6 +56,16 @@ public sealed class TrailDocument
 
     public TrailData Data { get; }
 
+    /// <summary>
+    /// Full path of the file this document was converted from (KML, KMZ, TCX: CONV-02), or null. That file is never
+    /// written: the document has no file until it is saved as GPX.
+    /// </summary>
+    public string? ImportedFrom { get; }
+
+    /// <summary>Where "Save as" starts: the document's file, or for a new document its title in the folder it was converted from.</summary>
+    public string SuggestedSavePath =>
+        FilePath ?? (ImportedFrom is { } source ? Path.Combine(Path.GetDirectoryName(source) ?? string.Empty, _fileName) : _fileName);
+
     /// <summary>Non-fatal issues found when the file was loaded.</summary>
     public IReadOnlyList<LoadWarning> Warnings { get; }
 
@@ -69,7 +80,14 @@ public sealed class TrailDocument
     public bool CanRedo => _redo.Count > 0;
 
     /// <summary>Creates an unsaved document with no file (File › New, APP-08). It starts without changes.</summary>
-    public static TrailDocument CreateNew(DocumentFormat format, string title, TrailData data) => new(format, title, data);
+    public static TrailDocument CreateNew(DocumentFormat format, string title, TrailData data) => new(format, title, data, null, null);
+
+    /// <summary>
+    /// Creates an unsaved document converted from another format (CONV-02): it has no file, starts without changes,
+    /// and remembers its source so that opening the same file again activates it.
+    /// </summary>
+    public static TrailDocument CreateImported(DocumentFormat format, string title, TrailData data, IReadOnlyList<LoadWarning> warnings, string importedFrom) =>
+        new(format, title, data, warnings, importedFrom);
 
     /// <summary>Applies a change and records it for undo. Clears the redo history.</summary>
     public void Execute(IEditCommand command)
@@ -130,6 +148,14 @@ public sealed class TrailDocument
     /// <summary>True when <paramref name="path"/> refers to this document's file (Windows paths are case-insensitive).</summary>
     public bool IsSameFile(string path) =>
         FilePath is not null && string.Equals(FilePath, Path.GetFullPath(path), StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// True when opening <paramref name="path"/> should activate this document instead of loading it again (APP-07):
+    /// it is its file, or the file it was converted from while it has not been saved yet.
+    /// </summary>
+    public bool IsOpenedFrom(string path) =>
+        IsSameFile(path)
+        || (IsNew && ImportedFrom is not null && string.Equals(ImportedFrom, Path.GetFullPath(path), StringComparison.OrdinalIgnoreCase));
 
     private sealed record HistoryEntry(IEditCommand Command, long Before, long After);
 }

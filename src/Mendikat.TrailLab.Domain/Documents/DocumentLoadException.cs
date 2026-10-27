@@ -22,6 +22,12 @@ public enum DocumentLoadError
 
     /// <summary>A date/time field that cannot be parsed.</summary>
     InvalidDate,
+
+    /// <summary>Neither GPX, KML, KMZ nor TCX (CONV-01). <see cref="DocumentLoadException.Detail"/> is the XML root, if any.</summary>
+    UnsupportedFormat,
+
+    /// <summary>A KMZ that is not a valid ZIP, has no KML inside, or is too large once uncompressed (CONV-04).</summary>
+    InvalidArchive,
 }
 
 /// <summary>Expected failure while loading a document; carries a typed reason instead of a UI text.</summary>

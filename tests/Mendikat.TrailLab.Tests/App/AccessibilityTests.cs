@@ -107,6 +107,7 @@ public sealed class AccessibilityTests
         yield return new DemWindow(new DemViewModel(layer, _ => new WindowSmokeTests.NoDataSource()));
         yield return new ProfileWindow(new ProfileViewModel(document, layer));
         yield return new AboutWindow(new AboutViewModel(), _ => { });
+        yield return new ConvertWindow(new ConvertViewModel(new FakeDialogService(), ["ruta.kml"]));
     }
 
     private static IEnumerable<DependencyObject> LogicalDescendants(DependencyObject root)

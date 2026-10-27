@@ -21,7 +21,22 @@ internal sealed class FakeDialogService : IDialogService
 
     public string? AskOpenFilePath(DocumentFormat format) => OpenPaths.Count > 0 ? OpenPaths.Dequeue() : null;
 
-    public string? AskSaveFilePath(DocumentFormat format, string suggestedPath) => SavePath;
+    /// <summary>Answers to "files to convert", in order; null when empty (the user cancelled).</summary>
+    public Queue<IReadOnlyList<string>?> ConvertPaths { get; } = new();
+
+    public IReadOnlyList<string>? AskConvertFilePaths() => ConvertPaths.Count > 0 ? ConvertPaths.Dequeue() : null;
+
+    public string? Folder { get; set; }
+
+    public string? AskFolder(string? initialFolder) => Folder;
+
+    public string? SuggestedSavePath { get; private set; }
+
+    public string? AskSaveFilePath(DocumentFormat format, string suggestedPath)
+    {
+        SuggestedSavePath = suggestedPath;
+        return SavePath;
+    }
 
     public SaveChangesChoice AskSaveChanges(string documentName)
     {

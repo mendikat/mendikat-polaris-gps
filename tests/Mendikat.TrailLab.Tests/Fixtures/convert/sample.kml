@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <Document>
+    <name>Excursión de prueba</name>
+    <description>Archivo de referencia de TrailLab</description>
+    <Style id="linea"><LineStyle><color>ff0000ff</color></LineStyle></Style>
+    <Folder>
+      <name>Puntos</name>
+      <Placemark>
+        <name>Cima</name>
+        <description>Buzón</description>
+        <Point><coordinates>-1.645,42.812,1234.5</coordinates></Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Rutas</name>
+      <Folder>
+        <name>Anidada</name>
+        <Placemark>
+          <name>Línea sin altitud</name>
+          <LineString>
+            <tessellate>1</tessellate>
+            <coordinates>
+              -1.60,42.80 -1.61,42.81
+              -1.62,42.82
+            </coordinates>
+          </LineString>
+        </Placemark>
+      </Folder>
+      <Placemark>
+        <name>Dos tramos</name>
+        <MultiGeometry>
+          <LineString><coordinates>-1.70,42.70,500 -1.71,42.71,510</coordinates></LineString>
+          <LineString><coordinates>-1.72,42.72,520 -1.73,42.73,530 -1.74,42.74,540</coordinates></LineString>
+          <Point><coordinates>-1.75,42.75</coordinates></Point>
+        </MultiGeometry>
+      </Placemark>
+      <Placemark>
+        <name>Grabado</name>
+        <gx:Track>
+          <when>2026-05-01T07:00:00Z</when>
+          <when>2026-05-01T07:00:10Z</when>
+          <gx:coord>-1.80 42.80 600</gx:coord>
+          <gx:coord>-1.81 42.81 610</gx:coord>
+        </gx:Track>
+      </Placemark>
+      <Placemark>
+        <name>Varias grabaciones</name>
+        <gx:MultiTrack>
+          <gx:Track><gx:coord>-1.90 42.90 700</gx:coord><gx:coord>-1.91 42.91 701</gx:coord></gx:Track>
+          <gx:Track><gx:coord>-1.92 42.92 702</gx:coord></gx:Track>
+        </gx:MultiTrack>
+      </Placemark>
+      <Placemark>
+        <name>Zona</name>
+        <Polygon><outerBoundaryIs><LinearRing><coordinates>-1,42 -1.1,42 -1.1,42.1 -1,42</coordinates></LinearRing></outerBoundaryIs></Polygon>
+      </Placemark>
+    </Folder>
+    <GroundOverlay><name>Foto</name><Icon><href>foto.jpg</href></Icon></GroundOverlay>
+  </Document>
+</kml>

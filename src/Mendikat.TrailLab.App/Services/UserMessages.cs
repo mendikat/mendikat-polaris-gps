@@ -20,6 +20,8 @@ public static class UserMessages
             DocumentLoadError.InvalidCoordinate => Strings.ErrorInvalidCoordinate,
             DocumentLoadError.InvalidNumber => Strings.ErrorInvalidNumber,
             DocumentLoadError.InvalidDate => Strings.ErrorInvalidDate,
+            DocumentLoadError.UnsupportedFormat => Strings.ErrorUnsupportedFormat,
+            DocumentLoadError.InvalidArchive => Strings.ErrorInvalidArchive,
             _ => Strings.ErrorReadFailed,
         };
         var location = exception.Line is { } line ? string.Format(Strings.AtLine, line) : string.Empty;
@@ -32,6 +34,10 @@ public static class UserMessages
         LoadWarningKind.Gpx10 => Strings.WarningGpx10,
         LoadWarningKind.GpxWithoutNamespace => Strings.WarningGpxWithoutNamespace,
         LoadWarningKind.NoData => Strings.WarningNoData,
+        LoadWarningKind.ConvertedFrom => string.Format(Strings.WarningConvertedFrom, warning.Detail),
+        LoadWarningKind.IgnoredFeatures => string.Format(Strings.WarningIgnoredFeatures, warning.Count),
+        LoadWarningKind.PointsWithoutPosition => string.Format(Strings.WarningPointsWithoutPosition, warning.Count),
+        LoadWarningKind.DataNotConverted => string.Format(Strings.WarningDataNotConverted, warning.Count),
         _ => warning.Kind.ToString(),
     };
 
@@ -50,6 +56,7 @@ public static class UserMessages
     /// <summary>Format as read, e.g. "GPX 1.1".</summary>
     public static string SourceFormat(DocumentFormat format, TrailData data) => data.FormatState switch
     {
+        GpxFormatState { ConvertedFrom: { } source } => string.Format(Strings.FormatConverted, source),
         GpxFormatState gpx => string.Format(Strings.FormatGpx, gpx.SourceVersion),
         _ => FormatName(format),
     };
