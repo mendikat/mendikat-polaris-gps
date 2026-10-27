@@ -34,6 +34,11 @@ public sealed class IgnWcsElevationSource : IElevationSource
 
     private const int MaxParallelRequests = 4;
 
+    /// <summary>Downloaded tiles kept in memory (about 50 KB each at 5 m); the cache is emptied when it is full.</summary>
+    public const int MaxCachedTiles = 256;
+
+    private readonly System.Collections.Concurrent.ConcurrentDictionary<(int Lat, int Lon), ArcGrid?> _tiles = new();
+
     private readonly HttpClient _http;
     private readonly IgnDemResolution _resolution;
 
@@ -72,7 +77,7 @@ public sealed class IgnWcsElevationSource : IElevationSource
             await throttle.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                var grid = await FetchTileAsync(tile.Key.Lat, tile.Key.Lon, cancellationToken).ConfigureAwait(false);
+                var grid = await GetTileAsync(tile.Key.Lat, tile.Key.Lon, cancellationToken).ConfigureAwait(false);
                 foreach (var (_, index) in tile)
                 {
                     results[index] = grid?.Interpolate(positions[index].Latitude, positions[index].Longitude, IsNoData);
@@ -101,6 +106,27 @@ public sealed class IgnWcsElevationSource : IElevationSource
         return new Uri(string.Create(CultureInfo.InvariantCulture,
             $"{Endpoint}?SERVICE=WCS&VERSION=2.0.1&REQUEST=GetCoverage&COVERAGEID={CoverageId}" +
             $"&SUBSET=Lat({south:0.######},{north:0.######})&SUBSET=Long({west:0.######},{east:0.######})&FORMAT=application/asc"));
+    }
+
+    /// <summary>
+    /// A tile from the cache or the service. Tiles already downloaded by this source are reused, so the status bar
+    /// (pointer elevation) and repeated adjustments of the same area do not download them again. Failures are not cached.
+    /// </summary>
+    private async Task<ArcGrid?> GetTileAsync(int latIndex, int lonIndex, CancellationToken cancellationToken)
+    {
+        if (_tiles.TryGetValue((latIndex, lonIndex), out var cached))
+        {
+            return cached;
+        }
+
+        var grid = await FetchTileAsync(latIndex, lonIndex, cancellationToken).ConfigureAwait(false);
+        if (_tiles.Count >= MaxCachedTiles)
+        {
+            _tiles.Clear();
+        }
+
+        _tiles[(latIndex, lonIndex)] = grid;
+        return grid;
     }
 
     /// <returns>The grid, or null if the tile is outside the coverage.</returns>

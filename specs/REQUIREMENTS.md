@@ -49,6 +49,8 @@ Convenciones:
 | COORD-04 | 1 | 2 | Fuera de cobertura UTM (lat > 84° N o < 80° S) se muestra «UPS» con sus coordenadas, o «Fuera de UTM» si UPS no aplica. | Prueba en 85° N. |
 | COORD-05 | 1 | 2 | Conversiones con GeographicLib.NET (Karney) sobre WGS84 (ADR-0003). Ninguna etiqueta «WGS84» sobre valores de otro datum. | Prueba con valores de referencia de GeoConvert. |
 | COORD-06 | 1 | 2 | La actualización de coordenadas es fluida (limitada a la frecuencia de refresco) y no bloquea el mapa. | El cálculo por evento de ratón < 1 ms (prueba de rendimiento orientativa). |
+| COORD-07 | 1 | — | La barra de estado muestra el datum de las coordenadas del archivo activo (WGS84 en GPX, KML y TCX; WGS84 sin archivos, para el mapa). Las coordenadas mostradas están siempre en ese datum (COORD-05). | «WGS84» visible con y sin documentos. |
+| COORD-08 | 1 | — | Al detener el puntero (~0,25 s) se muestra la altitud bajo él: la del punto del archivo si hay uno visible con elevación bajo el puntero («Alt. 1.234 m (archivo)»); si no, la del terreno según el MDT del IGN 5 m («Alt. 846 m (MDT IGN 5 m)»), sólo España y con conexión. Sin dato, fuera del mapa o sin conexión: «—», sin errores ni bloqueos; tras un fallo del servicio no se vuelve a consultar durante 1 min. Las teselas del MDT descargadas se reutilizan (caché en memoria de la sesión, compartida con *Ajustar altitudes*). La información sobre herramientas indica el origen y su referencia vertical (DEM-05). | Punto del archivo → su elevación sin consultar el MDT; fuera de puntos → MDT; mover el puntero cancela la consulta pendiente; sin red → «—». |
 
 ## GPX — Lectura y escritura GPX
 

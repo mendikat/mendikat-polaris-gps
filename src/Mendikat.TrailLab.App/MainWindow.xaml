@@ -107,12 +107,21 @@
                     <DockPanel LastChildFill="True" />
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
-            <StatusBarItem DockPanel.Dock="Right" Width="260" ToolTip="{x:Static res:Strings.A11yDmsToolTip}">
+            <StatusBarItem DockPanel.Dock="Right" MinWidth="190" ToolTip="{x:Static res:Strings.A11yDmsToolTip}">
                 <TextBlock Text="{Binding PointerDms}" AutomationProperties.Name="{x:Static res:Strings.A11yDmsName}" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
-            <StatusBarItem DockPanel.Dock="Right" Width="190" ToolTip="{x:Static res:Strings.A11yUtmToolTip}">
+            <StatusBarItem DockPanel.Dock="Right" MinWidth="118" ToolTip="{x:Static res:Strings.A11yUtmToolTip}">
                 <TextBlock Text="{Binding PointerUtm}" AutomationProperties.Name="{x:Static res:Strings.A11yUtmName}" />
+            </StatusBarItem>
+            <Separator DockPanel.Dock="Right" />
+            <!-- Datum of the active file and elevation under the pointer (COORD-07, COORD-08) -->
+            <StatusBarItem DockPanel.Dock="Right" ToolTip="{x:Static res:Strings.A11yDatumToolTip}">
+                <TextBlock Text="{Binding PointerDatum}" AutomationProperties.Name="{x:Static res:Strings.A11yDatumName}" />
+            </StatusBarItem>
+            <Separator DockPanel.Dock="Right" />
+            <StatusBarItem DockPanel.Dock="Right" MinWidth="150" ToolTip="{Binding PointerElevationToolTip, TargetNullValue={x:Static res:Strings.A11yElevationToolTip}}">
+                <TextBlock Text="{Binding PointerElevation}" AutomationProperties.Name="{x:Static res:Strings.A11yElevationName}" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <!-- Long operations: progress and Cancel (NFR-02) -->

@@ -11,6 +11,15 @@ public sealed class TrailData
 
     public List<Track> Tracks { get; } = [];
 
+    /// <summary>Datum of every supported format (GPX, KML, TCX define their coordinates in it).</summary>
+    public const string Wgs84 = "WGS84";
+
+    /// <summary>
+    /// Horizontal datum of the file's positions, shown in the status bar (COORD-07). GPX, KML and TCX are always
+    /// WGS84. The status bar coordinates are computed in this datum, so it must never name another one (COORD-05).
+    /// </summary>
+    public string Datum { get; init; } = Wgs84;
+
     /// <summary>Opaque document-level data owned by the file format (GPX header, namespaces…).</summary>
     public object? FormatState { get; set; }
 

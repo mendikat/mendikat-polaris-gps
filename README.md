@@ -121,6 +121,9 @@ La elegida se recuerda entre sesiones. Detalles, atribuciones y condiciones en
 Barra de estado: UTM WGS84 `30T 575700 4760048` (zona y banda, Este, Norte en metros) y WGS84 en grados,
 minutos y segundos `42º 59' 21,60'' N 2º 04' 17,11'' W`. Cálculo con GeographicLib (Karney), con las zonas
 especiales de Noruega y Svalbard; fuera de UTM se muestra UPS ([ADR-0003](specs/DECISIONS/ADR-0003-coordinates-geodesy.md)).
+También muestra el datum del archivo activo (WGS84 en GPX, KML y TCX) y, al detener el puntero, la altitud bajo él:
+la del punto del archivo si hay uno con elevación (`Alt. 1.234 m (archivo)`) o, si no, la del terreno según el MDT
+del IGN (`Alt. 846 m (MDT IGN 5 m)`, sólo España y con conexión; sin dato, «—»).
 
 ## Dependencias y licencias
 

@@ -47,6 +47,7 @@ Hechas, con pruebas y documentadas en TRACEABILITY.md:
 | Géoportail muestra el SCAN 25 (clave pública `ign_scan_ws`) | ADR-0004 |
 | Herramientas › Invertir track: puntos y segmentos en orden inverso, horas reflejadas, deshacible | REV-01..03 |
 | Incremento 10: abrir KML, KMZ y TCX como GPX nuevo sin guardar y *Herramientas › Convertir a GPX…* por lotes | CONV-01..07 |
+| Barra de estado: datum del archivo y altitud bajo el puntero (punto del archivo o MDT del IGN) | COORD-07, COORD-08 |
 | Tarea `watch (Hot Reload)` y configuración de depuración en `.vscode/` | — |
 
 Pendiente:

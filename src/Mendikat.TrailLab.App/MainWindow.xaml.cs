@@ -42,6 +42,11 @@ public partial class MainWindow : Window
         _map = createMapController(MapView.Map);
         _map.SetProvider(viewModel.SelectedMapProvider);
         _map.TileStatusChanged += (_, failed) => Dispatcher.BeginInvoke(() => _viewModel.ReportMapTiles(failed));
+        viewModel.PointAt = position =>
+        {
+            var (x, y) = WebMercator.ToWorld(position);
+            return _map.HitTest(new MPoint(x, y))?.Point;
+        };
 
         viewModel.ExitRequested += (_, _) => Close();
         viewModel.MapRequested += (_, request) => _map.Handle(request);

@@ -43,12 +43,15 @@ public partial class App : Application
         _tileHttpClient = TileHttpClientFactory.Create(version);
         // DEM tiles are larger and slower than map tiles: longer timeout (DEM-01).
         _demHttpClient = TileHttpClientFactory.Create(version, timeout: TimeSpan.FromSeconds(30));
-        var demHttp = _demHttpClient;
+        // One source per resolution for the whole session, so their tile caches are shared by the "Adjust elevations"
+        // tool and the pointer elevation in the status bar (COORD-08).
+        var dem5 = new IgnWcsElevationSource(_demHttpClient, IgnDemResolution.FiveMeters);
+        var dem25 = new IgnWcsElevationSource(_demHttpClient, IgnDemResolution.TwentyFiveMeters);
         var settings = new JsonSettingsStore(JsonSettingsStore.DefaultPath, _loggerFactory.CreateLogger<JsonSettingsStore>());
         var viewModel = new MainViewModel(
             new WpfDialogService(), new FileDocumentStore(), settings, _loggerFactory.CreateLogger<MainViewModel>())
         {
-            ElevationSources = resolution => new IgnWcsElevationSource(demHttp, resolution),
+            ElevationSources = resolution => resolution == IgnDemResolution.FiveMeters ? dem5 : dem25,
         };
         var window = new MainWindow(
             viewModel, map => new MapController(map, _tileHttpClient, _loggerFactory.CreateLogger<MapController>()));

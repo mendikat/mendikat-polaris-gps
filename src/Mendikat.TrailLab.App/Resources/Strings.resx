@@ -281,4 +281,11 @@
   <data name="A11yConvertFolder" xml:space="preserve"><value>Carpeta de destino</value></data>
   <data name="A11yConvertExisting" xml:space="preserve"><value>Qué hacer si el GPX ya existe</value></data>
   <data name="A11yConvertReport" xml:space="preserve"><value>Resultado de la conversión</value></data>
+  <data name="StatusElevation" xml:space="preserve"><value>Alt. {0} m ({1})</value></data>
+  <data name="ElevationSourceFile" xml:space="preserve"><value>archivo</value></data>
+  <data name="ElevationFileToolTip" xml:space="preserve"><value>Elevación del punto del archivo que está bajo el puntero, tal como está guardada.</value></data>
+  <data name="A11yElevationName" xml:space="preserve"><value>Altitud bajo el puntero</value></data>
+  <data name="A11yElevationToolTip" xml:space="preserve"><value>Altitud bajo el puntero: la del punto del archivo si lo hay; si no, la del terreno según el MDT del IGN (sólo España, necesita Internet).</value></data>
+  <data name="A11yDatumName" xml:space="preserve"><value>Datum de las coordenadas</value></data>
+  <data name="A11yDatumToolTip" xml:space="preserve"><value>Datum de las coordenadas del archivo activo. GPX, KML y TCX usan siempre WGS84.</value></data>
 </root>

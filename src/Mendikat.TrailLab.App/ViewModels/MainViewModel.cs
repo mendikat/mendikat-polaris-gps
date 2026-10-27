@@ -90,6 +90,7 @@ public sealed partial class MainViewModel : ObservableObject
                 }
 
                 OnPropertyChanged(nameof(Title));
+                OnPropertyChanged(nameof(PointerDatum));
                 RefreshCommands();
             }
         }
@@ -215,6 +216,8 @@ public sealed partial class MainViewModel : ObservableObject
             PointerUtm = Strings.StatusPointerOutside;
             PointerDms = Strings.StatusPointerOutside;
         }
+
+        ScheduleElevationLookup(position);
     }
 
     /// <summary>Called by the map view when tiles of the active provider fail or succeed (MAP-07).</summary>

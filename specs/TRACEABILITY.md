@@ -290,3 +290,15 @@ como Google Earth): `Kml_from_mendikat_net_with_spaces_after_commas_and_latin1_i
 
 Pendiente (🖐): uso del diálogo con ratón y con KML/KMZ/TCX reales de Google Earth, Garmin Connect y Strava; D11
 (confirmar y corregir el lector KML de mendikat.net).
+
+## Datum y altitud bajo el puntero (2026-10-27, a petición del responsable)
+
+360 pruebas, todas en verde. Barra de estado comprobada renderizando la ventana fuera de pantalla («Alt. 1.234 m
+(archivo) │ WGS84 │ 30T 610926 4740868 │ 42º 48' 44,42'' N 1º 38' 35,56'' W»).
+
+| Req | Estado | Código | Pruebas |
+|-----|--------|--------|---------|
+| COORD-07 | ✅ | `TrailData.Datum`, `MainViewModel.PointerDatum`, barra de estado | `The_datum_of_the_file_is_shown_and_is_wgs84_without_files` |
+| COORD-08 | ✅ 🖐 | `MainViewModel.Pointer` (espera, `PointAt` con el hit test del mapa, MDT IGN 5 m), caché de teselas de `IgnWcsElevationSource`, fuentes únicas por resolución en `App` | `Over_a_point_of_the_file_its_elevation_is_shown…`, `Elsewhere_the_terrain_elevation_of_the_dem_is_shown`, `Without_dem_data_or_outside_the_map_nothing_is_shown`, `Moving_the_pointer_cancels_the_pending_lookup`, `Without_connection_the_terrain_is_not_queried_again_for_a_while`, `Downloaded_tiles_are_reused` |
+
+Pendiente (🖐): altitud del terreno con el servicio real del IGN moviendo el puntero por el mapa.

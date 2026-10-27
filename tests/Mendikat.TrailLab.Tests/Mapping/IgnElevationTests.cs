@@ -126,6 +126,22 @@ public sealed partial class IgnElevationTests
     }
 
     [Fact]
+    [Trait("Req", "COORD-08")]
+    public async Task Downloaded_tiles_are_reused()
+    {
+        var server = new FakeWcs();
+        using var http = new HttpClient(server);
+        var source = new IgnWcsElevationSource(http);
+
+        var first = await source.GetElevationsAsync([new(42.98531, -2.07862)], null, TestContext.Current.CancellationToken);
+        var second = await source.GetElevationsAsync([new(42.98601, -2.07701)], null, TestContext.Current.CancellationToken);
+
+        Assert.Equal(1, server.Requests); // same 0.005° tile
+        Assert.Equal(Terrain(42.98601, -2.07701), second[0]!.Value, 6);
+        Assert.NotNull(first[0]);
+    }
+
+    [Fact]
     [Trait("Req", "DEM-04")]
     public async Task Sea_and_outside_the_coverage_give_no_data()
     {
