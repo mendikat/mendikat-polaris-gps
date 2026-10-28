@@ -48,7 +48,7 @@ public static class LocalMapLoader
     /// <summary>Images with more pixels are decoded at a reduced size (4 bytes per pixel: about 200 MB).</summary>
     public const long MaxDecodedPixels = 50_000_000;
 
-    public static IReadOnlyList<string> Extensions { get; } = [".map", ".imp", ".asc", ".hgt", .. GdalLoader.Extensions, .. LocalFiles.WorldFiles.Keys];
+    public static IReadOnlyList<string> Extensions { get; } = [".map", ".imp", ".asc", ".hgt", .. GdalLoader.Extensions];
 
     /// <summary>True for an ECWP stream address (ecwp:// or ecwps://).</summary>
     public static bool IsEcwpUrl(string source) =>
@@ -67,13 +67,6 @@ public static class LocalMapLoader
         if (!info.Exists)
         {
             throw new LocalMapException(LocalMapError.FileNotFound, info.Name);
-        }
-
-        // A world file chosen instead of its image (mapa.tfw → mapa.tif).
-        if (LocalFiles.WorldFiles.ContainsKey(info.Extension))
-        {
-            var image = LocalFiles.ImageOfWorldFile(path) ?? throw new LocalMapException(LocalMapError.ImageMissing, Path.GetFileNameWithoutExtension(path) + string.Join(" / ", LocalFiles.WorldFiles[info.Extension]));
-            return GdalLoader.Load(image, cancellationToken);
         }
 
         if (info.Length == 0)

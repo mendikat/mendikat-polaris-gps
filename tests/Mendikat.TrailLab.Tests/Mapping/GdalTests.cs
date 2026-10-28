@@ -255,14 +255,15 @@ public sealed class GdalTests : IDisposable
     }
 
     [Fact]
-    public void Choosing_the_world_file_opens_its_image()
+    public void A_world_file_is_not_opened_on_its_own()
     {
         WorldFileImage("hoja.tif", "hoja.tfw", "GTiff");
         File.WriteAllText(Path.Combine(_folder, "hoja.prj"), ArcInfoPrj);
 
-        using var content = Assert.IsType<LocalGdalMap>(Load(Path.Combine(_folder, "hoja.tfw")));
+        var ex = Assert.Throws<LocalMapException>(() => Load(Path.Combine(_folder, "hoja.tfw")));
 
-        Assert.EndsWith("hoja.tif", content.Map.Raster.Source, StringComparison.Ordinal);
+        Assert.Equal(LocalMapError.UnsupportedFormat, ex.Error);
+        Assert.DoesNotContain(".tfw", LocalMapLoader.Extensions);
     }
 
     [Fact]

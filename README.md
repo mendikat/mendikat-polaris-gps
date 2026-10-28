@@ -3,7 +3,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.0.4.**
+> **Estado: versión 0.0.5.**
 > Se abren archivos GPX, y KML, KMZ y TCX convertidos a GPX (WPT se retiró el 2026-10-26), se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -112,7 +112,7 @@ recuerdan al cerrar la aplicación.
 | ESRI ASCII Grid `.asc` | `xllcorner`/`xllcenter`, `NODATA_value`; sistema del `.prj` (WKT, formato de ArcInfo o `EPSG:n`) o, en los MDT del IGN, del nombre (`MDT05-0112-H30-LIDAR`, `PNOA_MDT05_ETRS89_HU30_…`) | Sin `.prj` ni nombre del IGN no se abre; un MDT05 del IGN (170 MB) tarda unos 3 s y ocupa unos 90 MB |
 | GeoTIFF `.tif`, `.tiff` y COG (`.cog`) (con GDAL) | Mapas (RGB, paleta o gris; transparencia por NoData o banda alfa) y MDT (una banda numérica, con NoData); cualquier sistema de coordenadas que conozca PROJ; los georreferenciados sólo con puntos de control se reproyectan al vuelo | Un TIFF sin georreferencia (p. ej. la imagen de un `.map`) se rechaza. Sin pirámides internas, alejarse mucho en un GeoTIFF enorme es lento; los COG las tienen siempre |
 | ECW `.ecw` y ECWP (`ecwp://`, `ecwps://`) (con GDAL y el SDK ERDAS ECW/JP2) | Mapas de cualquier tamaño: se lee sólo la zona visible y a la resolución necesaria (un MTN25 de 13 000 × 9 000 píxeles se abre en 0,3 s) | La primera vez hay que aceptar la licencia de uso de ECW; sin ella, los ECW no se abren. ECWP no se ha probado con un servidor real |
-| Imagen con archivo de georreferencia: `.tfw` (TIFF), `.jgw` (JPEG), `.pgw` (PNG), `.gfw`, `.bpw`, `.wld` | Posición y tamaño de píxel del archivo de georreferencia (lo lee GDAL) y sistema de coordenadas del `.prj` con el mismo nombre (WKT, formato de ArcInfo o `EPSG:n`). Se puede elegir la imagen o el propio `.tfw` | Sin `.prj` no se abre: el archivo de georreferencia no dice el sistema de coordenadas |
+| Imagen con archivo de georreferencia: `.tfw` (TIFF), `.jgw` (JPEG), `.pgw` (PNG), `.gfw`, `.bpw`, `.wld` | Posición y tamaño de píxel del archivo de georreferencia (lo lee GDAL) y sistema de coordenadas del `.prj` con el mismo nombre (WKT, formato de ArcInfo o `EPSG:n`). Se abre la imagen, no el `.tfw`; un GeoTIFF o COG ya lleva la georreferencia dentro y no lo necesita | Sin `.prj` no se abre: el archivo de georreferencia no dice el sistema de coordenadas |
 
 - Datums: WGS84, ETRS89 (igual a WGS84 a escala de mapa) y ED50 en los husos 29, 30 y 31, con la misma transformación
   de Helmert que mendikat.net. Proyecciones: geográficas, UTM y Transverse Mercator. Cualquier otro sistema se rechaza

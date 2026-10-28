@@ -6,21 +6,6 @@ public static class LocalFiles
     /// <summary>Image formats that Windows decodes without extra software (D7). OZF, ECW, MrSID… are not among them.</summary>
     public static IReadOnlyList<string> ImageExtensions { get; } = [".jpg", ".jpeg", ".png", ".bmp", ".gif", ".tif", ".tiff"];
 
-    /// <summary>World files (position and pixel size of an image) and the image extensions each one may go with.</summary>
-    public static IReadOnlyDictionary<string, string[]> WorldFiles { get; } = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
-    {
-        [".tfw"] = [".tif", ".tiff"],
-        [".tifw"] = [".tif", ".tiff"],
-        [".tfwx"] = [".tif", ".tiff"],
-        [".jgw"] = [".jpg", ".jpeg"],
-        [".jpgw"] = [".jpg", ".jpeg"],
-        [".pgw"] = [".png"],
-        [".pngw"] = [".png"],
-        [".gfw"] = [".gif"],
-        [".bpw"] = [".bmp"],
-        [".wld"] = [".tif", ".tiff", ".jpg", ".jpeg", ".png", ".gif", ".bmp"],
-    };
-
     /// <summary>
     /// A file next to <paramref name="path"/> with the same name and another extension ("mapa.prj" for "mapa.tif"), or
     /// with the whole name plus the extension ("mapa.tif.prj"); in any mix of upper and lower case and ignoring spaces
@@ -37,10 +22,6 @@ public static class LocalFiles
             .Where(f => !string.Equals(f, full, StringComparison.OrdinalIgnoreCase))
             .FirstOrDefault(f => wanted.Contains(Path.GetFileNameWithoutExtension(f).Trim(), StringComparer.OrdinalIgnoreCase));
     }
-
-    /// <summary>The image a world file belongs to (".tfw" → ".tif" or ".tiff"…), or null.</summary>
-    public static string? ImageOfWorldFile(string worldFile) =>
-        WorldFiles.TryGetValue(Path.GetExtension(worldFile), out var images) ? FindSidecar(worldFile, images) : null;
 
     /// <summary>
     /// The image path as written (absolute, or relative to the calibration file), or else a file with the same name
