@@ -22,7 +22,6 @@ public sealed class ProfileStatisticsTests
         elevations.Select((e, i) => new TrailPoint(new GeoPosition(42 + (i * spacing / 111_000.0), -1.6)) { Elevation = e }).ToList();
 
     [Fact]
-    [Trait("Req", "PROF-06")]
     public void A_climb_between_flat_stretches_is_counted_in_full()
     {
         // 200 m flat at 500 m, climb to 600 m in 200 m, 200 m flat; points every 10 m (a 10-point window).
@@ -37,7 +36,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-06")]
     public void Gps_noise_is_smoothed_out()
     {
         // ±1.5 m oscillation every 10 m along 1 km: summing point to point would give ~150 m each way.
@@ -53,7 +51,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Theory]
-    [Trait("Req", "PROF-06")]
     [InlineData(10, 50, 10)]   // 100 m / 10 m
     [InlineData(3, 200, 33)]   // 100 m / 3 m, rounded
     [InlineData(200, 50, 1)]   // points further apart than the window: no smoothing
@@ -67,7 +64,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-06")]
     public void Stops_do_not_shrink_the_mean_spacing()
     {
         // 10 m steps with the device left still for 30 points in the middle: the window stays at 10 points.
@@ -82,7 +78,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-06")]
     public void In_a_circuit_the_descent_equals_the_ascent()
     {
         // There and back along the same line: start and end coincide.
@@ -100,7 +95,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-06")]
     public void Gives_the_same_result_as_mendikat_net()
     {
         // Values computed by GaussianElevationAnalyzer.php (mendikat.net, commit d259429a). The same comparison on
@@ -119,7 +113,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-06")]
     public void Segments_are_measured_separately_and_missing_elevations_are_skipped()
     {
         var track = new Track();
@@ -136,7 +129,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-07")]
     public void Slow_intervals_count_as_stopped_time()
     {
         // 100 m in 60 s (6 km/h, moving), then the same place for 10 min (stopped), then 100 m in 60 s.
@@ -152,7 +144,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-07")]
     public void The_pause_between_segments_is_stopped_time()
     {
         var track = new Track();
@@ -174,7 +165,6 @@ public sealed class ProfileStatisticsTests
         steps.Select(s => new TrailPoint(new GeoPosition(42 + (s.Meters / 111_050.0), -1.6)) { Time = Start.AddSeconds(s.Seconds) }).ToList();
 
     [Fact]
-    [Trait("Req", "PROF-08")]
     public void Average_speed_counts_only_the_time_in_movement()
     {
         // 100 m in 60 s, a 10-minute stop, 100 m in 60 s: 200 m in 2 moving minutes = 6 km/h.
@@ -185,7 +175,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-08")]
     public void Maximum_speed_is_the_fastest_stretch_of_at_least_30_seconds()
     {
         // Every 10 s: 2 minutes at 1 m/s, then 1 minute at 3 m/s.
@@ -198,7 +187,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-08")]
     public void A_gps_jump_does_not_set_the_maximum_speed()
     {
         // 1 m/s every 5 s for 2 minutes, but one point jumps 45 m ahead and back: 9 m/s point to point.
@@ -213,7 +201,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-08")]
     public void Without_30_seconds_of_data_there_is_no_maximum_speed()
     {
         var times = ElevationProfile.Build([Walk([(0, 0), (20, 10), (40, 20)])]).Times!;
@@ -223,8 +210,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-07")]
-    [Trait("Req", "PROF-05")]
     public void Missing_or_single_times_give_no_time_statistics()
     {
         Assert.Null(ElevationProfile.Build([Points([500, 510])]).Times);
@@ -233,7 +218,6 @@ public sealed class ProfileStatisticsTests
     }
 
     [Theory]
-    [Trait("Req", "PROF-07")]
     [InlineData(7500, "2 h 05 min")]
     [InlineData(750, "12 min 30 s")]
     [InlineData(0, "0 min 00 s")]

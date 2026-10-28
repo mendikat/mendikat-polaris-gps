@@ -15,7 +15,6 @@ public sealed class GpxReaderTests
         Assert.Throws<DocumentLoadException>(() => Read(fixture));
 
     [Fact]
-    [Trait("Req", "GPX-01")]
     public void Valid_gpx_11_loads_tracks_segments_routes_and_waypoints()
     {
         var result = Read("valid-11.gpx");
@@ -33,7 +32,6 @@ public sealed class GpxReaderTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-01")]
     public void Standard_point_fields_are_typed()
     {
         var waypoint = Read("valid-11.gpx").Data.Waypoints[0];
@@ -48,7 +46,6 @@ public sealed class GpxReaderTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-03")]
     public void Unknown_fields_and_extensions_are_kept_verbatim_with_their_namespaces()
     {
         var data = Read("valid-11.gpx").Data;
@@ -71,7 +68,6 @@ public sealed class GpxReaderTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-06")]
     public void Times_are_read_as_utc_instants_including_offsets()
     {
         var points = Read("valid-11.gpx").Data.Tracks[0].Segments[0].Points;
@@ -82,7 +78,6 @@ public sealed class GpxReaderTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-06")]
     public void Times_without_zone_are_read_as_utc_with_a_warning()
     {
         var result = Read("no-zone-time.gpx");
@@ -92,8 +87,6 @@ public sealed class GpxReaderTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-05")]
-    [Trait("Acc", "ACC-GPX-02")]
     public void Missing_elevation_and_time_are_null_not_zero()
     {
         var points = Read("missing-data.gpx").Data.Tracks[0].Segments[0].Points;
@@ -104,7 +97,6 @@ public sealed class GpxReaderTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-01")]
     public void Gpx_10_is_read_with_a_warning_and_keeps_its_extra_fields()
     {
         var result = Read("gpx10.gpx");
@@ -117,7 +109,6 @@ public sealed class GpxReaderTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-01")]
     public void Gpx_without_namespace_is_read_with_a_warning()
     {
         var result = Read("no-namespace.gpx");
@@ -127,15 +118,12 @@ public sealed class GpxReaderTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-02")]
     public void Gpx_without_points_loads_with_a_warning()
     {
         Assert.Contains(new LoadWarning(LoadWarningKind.NoData), Read("no-points.gpx").Warnings);
     }
 
     [Fact]
-    [Trait("Req", "GPX-02")]
-    [Trait("Acc", "ACC-APP-03")]
     public void Malformed_xml_reports_invalid_xml_with_line()
     {
         var ex = ReadFails("malformed.gpx");
@@ -145,15 +133,12 @@ public sealed class GpxReaderTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-02")]
     public void Blank_file_reports_empty()
     {
         Assert.Equal(DocumentLoadError.EmptyFile, ReadFails("blank.gpx").Error);
     }
 
     [Fact]
-    [Trait("Req", "GPX-02")]
-    [Trait("Acc", "ACC-GPX-03")]
     public void Latitude_out_of_range_is_rejected_with_line_and_value()
     {
         var ex = ReadFails("out-of-range.gpx");
@@ -164,7 +149,6 @@ public sealed class GpxReaderTests
     }
 
     [Theory]
-    [Trait("Req", "GPX-02")]
     [InlineData("not-gpx.gpx", DocumentLoadError.NotGpx)]
     [InlineData("other-namespace.gpx", DocumentLoadError.NotGpx)]
     [InlineData("bad-elevation.gpx", DocumentLoadError.InvalidNumber)]
@@ -174,7 +158,6 @@ public sealed class GpxReaderTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-02")]
     public void Dtd_is_not_processed()
     {
         const string xml = """
@@ -190,7 +173,6 @@ public sealed class GpxReaderTests
     }
 
     [Fact]
-    [Trait("Req", "NFR-09")]
     public void Large_track_of_100000_points_is_read_quickly()
     {
         var builder = new System.Text.StringBuilder("<gpx version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\"><trk><trkseg>");

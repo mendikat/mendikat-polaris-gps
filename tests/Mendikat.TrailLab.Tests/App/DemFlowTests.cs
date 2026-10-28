@@ -53,10 +53,6 @@ public sealed class DemFlowTests
         };
 
     [Fact]
-    [Trait("Req", "DEM-02")]
-    [Trait("Req", "DEM-03")]
-    [Trait("Req", "DEM-04")]
-    [Trait("Acc", "ACC-DEM-01")]
     public void Preview_shows_counts_and_applying_changes_only_points_with_data()
     {
         _source.Values = [200, null, 102, 300];
@@ -76,7 +72,6 @@ public sealed class DemFlowTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-03")]
     public void Without_applying_nothing_changes()
     {
         _source.Values = [200, 201, 202, 203];
@@ -89,8 +84,6 @@ public sealed class DemFlowTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-01")]
-    [Trait("Req", "APP-05")]
     public void A_service_failure_is_shown_in_the_dialog_and_changes_nothing()
     {
         _source.Failure = new ElevationSourceException("offline");
@@ -105,7 +98,6 @@ public sealed class DemFlowTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-03")]
     public void Cancelling_the_download_changes_nothing()
     {
         _source.Failure = new OperationCanceledException();
@@ -119,7 +111,6 @@ public sealed class DemFlowTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-05")]
     public async Task The_dialog_shows_the_vertical_datum_and_the_chosen_resolution_is_used()
     {
         _source.Values = [100, 101, 102, 103];
@@ -139,7 +130,6 @@ public sealed class DemFlowTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-01")]
     public void Without_an_elevation_source_or_for_waypoints_the_tool_is_disabled()
     {
         Assert.True(_vm.AdjustElevationsCommand.CanExecute(null));

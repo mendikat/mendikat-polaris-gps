@@ -22,7 +22,6 @@ public sealed class SafeSaveTests : IDisposable
     private string PathOf(string name) => Path.Combine(_directory, name);
 
     [Fact]
-    [Trait("Req", "SAVE-03")]
     public void Writing_creates_or_replaces_the_file_and_leaves_no_temporary_files()
     {
         var path = PathOf("a.gpx");
@@ -35,7 +34,6 @@ public sealed class SafeSaveTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "SAVE-03")]
     public void A_failed_replace_keeps_the_original_intact_and_removes_the_temporary_file()
     {
         var path = PathOf("locked.gpx");
@@ -49,7 +47,6 @@ public sealed class SafeSaveTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "SAVE-03")]
     public void Verification_rejects_output_that_does_not_match_the_document()
     {
         var data = new Mendikat.TrailLab.Domain.Model.TrailData();
@@ -64,8 +61,6 @@ public sealed class SafeSaveTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "SAVE-01")]
-    [Trait("Req", "GPX-03")]
     [InlineData("gpx/valid-11.gpx", DocumentFormat.Gpx)]
     public async Task Store_saves_in_the_same_format_and_the_file_reopens_identically(string fixture, DocumentFormat format)
     {

@@ -159,20 +159,8 @@ public static class AscReader
             $"{vertical}; celdas de {cell.ToString(CultureInfo.InvariantCulture)} {unit}, {crs}.{(note is null ? string.Empty : " " + note)}");
     }
 
-    /// <summary>
-    /// "name.prj" or "name.asc.prj", in any mix of upper and lower case and ignoring spaces around the name
-    /// ("MDT05-0112-H30-LIDAR .PRJ" next to "MDT05-0112-H30-LIDAR.asc"). The folder is listed and compared here
-    /// instead of using a search pattern, because a folder can be case-sensitive (extracted by some tools or WSL).
-    /// </summary>
-    internal static string? FindPrj(string path)
-    {
-        var full = Path.GetFullPath(path);
-        var folder = Path.GetDirectoryName(full) ?? string.Empty;
-        string[] wanted = [Path.GetFileNameWithoutExtension(full).Trim(), Path.GetFileName(full).Trim()];
-        return Directory.EnumerateFiles(folder)
-            .Where(f => Path.GetExtension(f).Trim().Equals(".prj", StringComparison.OrdinalIgnoreCase))
-            .FirstOrDefault(f => wanted.Contains(Path.GetFileNameWithoutExtension(f).Trim(), StringComparer.OrdinalIgnoreCase));
-    }
+    /// <summary>"name.prj" or "name.asc.prj", whatever the case and the spaces around the name (<see cref="LocalFiles.FindSidecar"/>).</summary>
+    internal static string? FindPrj(string path) => LocalFiles.FindSidecar(path, ".prj");
 
     private static double Required(Dictionary<string, double> header, string key, int line) =>
         header.TryGetValue(key, out var value) ? value : throw new LocalMapException(LocalMapError.InvalidDem, $"falta «{key}»", line);

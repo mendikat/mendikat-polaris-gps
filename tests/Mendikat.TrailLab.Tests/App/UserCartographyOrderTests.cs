@@ -25,7 +25,6 @@ public sealed class UserCartographyOrderTests
     }
 
     [Fact]
-    [Trait("Req", "LMAP-11")]
     public void Moving_reorders_the_list_and_announces_it()
     {
         _vm.LocalMaps.Add(Raster("a.map"));
@@ -43,7 +42,6 @@ public sealed class UserCartographyOrderTests
     }
 
     [Fact]
-    [Trait("Req", "LMAP-11")]
     public void Opacity_is_clamped_shown_as_percent_and_announced()
     {
         var item = Raster("a.map");
@@ -61,7 +59,6 @@ public sealed class UserCartographyOrderTests
     }
 
     [Fact]
-    [Trait("Req", "LMAP-11")]
     public void On_the_map_user_cartographies_stay_above_the_online_one_in_list_order()
     {
         WindowSmokeTests.OnStaThread(() =>

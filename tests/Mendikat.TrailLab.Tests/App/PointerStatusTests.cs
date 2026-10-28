@@ -33,7 +33,6 @@ public sealed class PointerStatusTests
     }
 
     [Fact]
-    [Trait("Req", "COORD-07")]
     public async Task The_datum_of_the_file_is_shown_and_is_wgs84_without_files()
     {
         Assert.Equal("WGS84", _vm.PointerDatum);
@@ -46,7 +45,6 @@ public sealed class PointerStatusTests
     }
 
     [Fact]
-    [Trait("Req", "COORD-08")]
     public async Task Over_a_point_of_the_file_its_elevation_is_shown_without_querying_the_terrain()
     {
         _vm.PointAt = _ => new TrailPoint(Here) { Elevation = 1234.4 };
@@ -58,7 +56,6 @@ public sealed class PointerStatusTests
     }
 
     [Fact]
-    [Trait("Req", "COORD-08")]
     public async Task Elsewhere_the_terrain_elevation_of_the_dem_is_shown()
     {
         _vm.PointAt = _ => new TrailPoint(Here); // a point without elevation does not count
@@ -72,7 +69,6 @@ public sealed class PointerStatusTests
     }
 
     [Fact]
-    [Trait("Req", "COORD-08")]
     public async Task Without_dem_data_or_outside_the_map_nothing_is_shown()
     {
         _terrain.Value = null;
@@ -87,7 +83,6 @@ public sealed class PointerStatusTests
     }
 
     [Fact]
-    [Trait("Req", "COORD-08")]
     public async Task Moving_the_pointer_cancels_the_pending_lookup()
     {
         var vm = new MainViewModel(_dialogs, new FakeDocumentStore(), new FakeSettingsStore(), NullLogger<MainViewModel>.Instance)
@@ -106,8 +101,6 @@ public sealed class PointerStatusTests
     }
 
     [Fact]
-    [Trait("Req", "COORD-08")]
-    [Trait("Req", "NFR-05")]
     public async Task Without_connection_the_terrain_is_not_queried_again_for_a_while()
     {
         _terrain.Fail = true;

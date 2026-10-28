@@ -20,7 +20,6 @@ public sealed class LoadProgressTests
     }
 
     [Fact]
-    [Trait("Req", "NFR-02")]
     public void Reading_reports_increasing_progress_from_0_to_1()
     {
         var reports = new List<double>();
@@ -36,7 +35,6 @@ public sealed class LoadProgressTests
     }
 
     [Fact]
-    [Trait("Req", "NFR-02")]
     public void Reading_can_be_cancelled_while_converting_points()
     {
         using var cancellation = new CancellationTokenSource();
@@ -53,7 +51,6 @@ public sealed class LoadProgressTests
     }
 
     [Fact]
-    [Trait("Req", "NFR-02")]
     public void Reading_can_be_cancelled_while_parsing_the_xml()
     {
         using var cancellation = new CancellationTokenSource();

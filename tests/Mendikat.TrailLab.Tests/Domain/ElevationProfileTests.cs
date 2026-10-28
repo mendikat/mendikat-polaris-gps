@@ -11,8 +11,6 @@ public sealed class ElevationProfileTests
     private static TrailPoint P(double lon, double? elevation = 100) => new(new GeoPosition(0, lon)) { Elevation = elevation };
 
     [Fact]
-    [Trait("Req", "PROF-02")]
-    [Trait("Acc", "ACC-PROF-01")]
     public void Distance_is_cumulative_geodesic_and_horizontal()
     {
         var profile = ElevationProfile.Build([[P(0, 100), P(1, 2000), P(2, 100)]]);
@@ -23,7 +21,6 @@ public sealed class ElevationProfileTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-02")]
     public void The_gap_between_segments_is_not_counted_unless_asked()
     {
         var track = new Track();
@@ -40,7 +37,6 @@ public sealed class ElevationProfileTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-03")]
     public void Missing_elevations_are_counted_and_split_the_curve()
     {
         var track = new Track();
@@ -55,8 +51,6 @@ public sealed class ElevationProfileTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-03")]
-    [Trait("Req", "PROF-05")]
     public void A_track_without_elevations_has_no_curve()
     {
         var profile = ElevationProfile.Build([[P(0, null), P(1, null)]]);
@@ -68,7 +62,6 @@ public sealed class ElevationProfileTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-05")]
     public void Empty_single_and_duplicated_points_do_not_fail()
     {
         var empty = ElevationProfile.Build([]);
@@ -86,7 +79,6 @@ public sealed class ElevationProfileTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-04")]
     public void Nearest_and_find_map_between_distances_and_points()
     {
         var points = new[] { P(0), P(1), P(2), P(3) };
@@ -101,8 +93,6 @@ public sealed class ElevationProfileTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-01")]
-    [Trait("Req", "NFR-09")]
     public void Profile_of_100000_points_builds_quickly()
     {
         var points = Enumerable.Range(0, 100_000).Select(i => new TrailPoint(new GeoPosition(42 + i * 1e-5, -1.6)) { Elevation = i % 300 }).ToList();

@@ -6,6 +6,12 @@ namespace Mendikat.TrailLab.App.Settings;
 public sealed record UserSettings
 {
     public MapSettings Map { get; init; } = new();
+
+    /// <summary>
+    /// The user accepted the ERDAS ECW/JP2 end-user licence; until then ECW files and ECWP streams are not opened, as
+    /// the SDK licence requires.
+    /// </summary>
+    public bool EcwLicenseAccepted { get; init; }
 }
 
 public sealed record MapSettings

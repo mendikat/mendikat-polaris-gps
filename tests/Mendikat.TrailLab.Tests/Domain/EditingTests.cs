@@ -15,16 +15,12 @@ public sealed class EditingTests
         }).ToList();
 
     [Fact]
-    [Trait("Req", "PROF-02")]
-    [Trait("Acc", "ACC-PROF-01")]
     public void Geodesic_distance_of_one_degree_on_the_equator()
     {
         Assert.Equal(111_319.491, Geodesy.Distance(new GeoPosition(0, 0), new GeoPosition(0, 1)), 0.001);
     }
 
     [Fact]
-    [Trait("Req", "EDIT-03")]
-    [Trait("Acc", "ACC-EDIT-02")]
     public void Midpoint_is_halfway_along_the_geodesic_within_a_centimeter()
     {
         var a = new GeoPosition(42.9921, -2.0610);
@@ -38,7 +34,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-03")]
     public void Midpoint_across_the_antimeridian_has_a_valid_longitude()
     {
         var m = Geodesy.Midpoint(new GeoPosition(0, 179.9), new GeoPosition(0, -179.9));
@@ -47,7 +42,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-03")]
     public void Insert_after_a_middle_point_interpolates_elevation_and_time()
     {
         var points = Points(3);
@@ -64,7 +58,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-03")]
     public void Insert_on_the_last_point_goes_between_the_previous_one_and_it()
     {
         var points = Points(3);
@@ -78,7 +71,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-03")]
     public void Insert_without_data_on_both_sides_leaves_elevation_and_time_empty()
     {
         var points = Points(2);
@@ -92,7 +84,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-03")]
     public void Insert_needs_two_points()
     {
         var points = Points(1);
@@ -101,8 +92,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-01")]
-    [Trait("Req", "EDIT-05")]
     public void Removing_points_and_undoing_restores_the_same_objects_in_order()
     {
         var points = Points(6);
@@ -117,7 +106,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-05")]
     public void Editing_a_point_and_undoing_restores_every_value()
     {
         var point = Points(1)[0];
@@ -134,7 +122,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-05")]
     public void Removing_a_track_and_undoing_puts_it_back_in_place()
     {
         var tracks = new List<Track> { new() { Name = "1" }, new() { Name = "2" }, new() { Name = "3" } };
@@ -149,8 +136,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "SAVE-04")]
-    [Trait("Req", "EDIT-05")]
     public void Undoing_back_to_the_saved_state_clears_the_unsaved_indicator()
     {
         var data = new TrailData();
@@ -175,7 +160,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-05")]
     public void A_new_edit_after_undo_discards_the_redo_history()
     {
         var data = new TrailData();
@@ -191,7 +175,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-07")]
     public void Every_operation_raises_exactly_one_change_event()
     {
         var data = new TrailData();
@@ -213,7 +196,6 @@ public sealed class EditingTests
     }
 
     [Fact]
-    [Trait("Req", "LAY-03")]
     public void Locate_finds_the_list_and_item_of_a_point()
     {
         var data = new TrailData();

@@ -44,7 +44,6 @@ public sealed partial class IgnElevationTests
     private static double Terrain(double lat, double lon) => 1000 * (lat - 42) + 500 * (lon + 2);
 
     [Fact]
-    [Trait("Req", "DEM-01")]
     public void ArcGrid_is_read_from_the_multipart_response()
     {
         var grid = ArcGrid.Parse(RealResponse);
@@ -57,7 +56,6 @@ public sealed partial class IgnElevationTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-01")]
     public void Declared_nodata_and_invalid_grids_are_handled()
     {
         var grid = ArcGrid.Parse("ncols 2\nnrows 2\nxllcorner 0\nyllcorner 0\ncellsize 1\nNODATA_value -9999\n1 2\n-9999 4\n");
@@ -69,7 +67,6 @@ public sealed partial class IgnElevationTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-01")]
     public void Bilinear_interpolation_uses_cell_centres()
     {
         // 2 x 2 grid, cells of 1°: centres at (lat 1.5, lon 0.5)=10, (1.5, 1.5)=20, (0.5, 0.5)=30, (0.5, 1.5)=40.
@@ -82,7 +79,6 @@ public sealed partial class IgnElevationTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-04")]
     public void Exact_zeros_mean_no_data_because_the_service_has_no_nodata_value()
     {
         var grid = ArcGrid.Parse("ncols 2\nnrows 2\nxllcorner 0\nyllcorner 0\ncellsize 1\n0 20\n30 40\n");
@@ -93,7 +89,6 @@ public sealed partial class IgnElevationTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-01")]
     public void Request_url_asks_for_an_ascii_grid_of_a_small_tile_with_margin()
     {
         var source = new IgnWcsElevationSource(new HttpClient(), IgnDemResolution.FiveMeters);
@@ -105,7 +100,6 @@ public sealed partial class IgnElevationTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-01")]
     public async Task Elevations_are_interpolated_with_one_request_per_tile()
     {
         var server = new FakeWcs();
@@ -126,7 +120,6 @@ public sealed partial class IgnElevationTests
     }
 
     [Fact]
-    [Trait("Req", "COORD-08")]
     public async Task Downloaded_tiles_are_reused()
     {
         var server = new FakeWcs();
@@ -142,7 +135,6 @@ public sealed partial class IgnElevationTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-04")]
     public async Task Sea_and_outside_the_coverage_give_no_data()
     {
         using var http = new HttpClient(new FakeWcs { ZeroArea = lat => lat > 43.5, OutsideExtent = lat => lat > 45 });
@@ -157,7 +149,6 @@ public sealed partial class IgnElevationTests
     }
 
     [Theory]
-    [Trait("Req", "DEM-01")]
     [InlineData(HttpStatusCode.InternalServerError)]
     [InlineData(HttpStatusCode.ServiceUnavailable)]
     public async Task Service_errors_raise_an_elevation_source_exception(HttpStatusCode status)
@@ -169,7 +160,6 @@ public sealed partial class IgnElevationTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-03")]
     public async Task Network_failures_and_cancellation_are_reported()
     {
         using var offline = new HttpClient(new FakeWcs { Fail = true });

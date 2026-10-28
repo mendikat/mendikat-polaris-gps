@@ -51,8 +51,6 @@ public sealed class LocalMapsFlowTests : IDisposable
     private static readonly GeoPosition InsideDem = Crs.Utm(30, true, MapDatum.Etrs89).ToWgs84(600025, 4750075); // 155 m
 
     [Fact]
-    [Trait("Req", "LMAP-01")]
-    [Trait("Req", "LDEM-01")]
     public async Task A_dem_is_listed_and_used_for_the_pointer_elevation()
     {
         _dialogs.LocalMapPaths.Enqueue([Dem()]);
@@ -72,7 +70,6 @@ public sealed class LocalMapsFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LDEM-01")]
     public async Task An_unchecked_dem_is_not_used()
     {
         await _vm.OpenLocalMapAsync(Dem());
@@ -86,7 +83,6 @@ public sealed class LocalMapsFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LDEM-01")]
     public async Task Adjust_elevations_offers_the_local_dems_after_the_ign_ones()
     {
         await _vm.OpenLocalMapAsync(Dem());
@@ -100,7 +96,6 @@ public sealed class LocalMapsFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-02")]
     public async Task A_failure_explains_why_and_adds_nothing()
     {
         await _vm.OpenLocalMapAsync(MapWithoutImage());
@@ -114,7 +109,6 @@ public sealed class LocalMapsFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-01")]
     public async Task A_map_can_be_removed_and_is_not_opened_twice()
     {
         var path = Dem();
@@ -131,7 +125,6 @@ public sealed class LocalMapsFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-01")]
     public async Task Maps_and_dems_chosen_with_open_file_are_opened_as_cartography()
     {
         _dialogs.OpenPaths.Enqueue(Dem());
@@ -146,7 +139,6 @@ public sealed class LocalMapsFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-01")]
     public async Task Opening_cartography_does_not_touch_the_documents()
     {
         _dialogs.OpenPaths.Enqueue(@"C:\data\a.gpx");

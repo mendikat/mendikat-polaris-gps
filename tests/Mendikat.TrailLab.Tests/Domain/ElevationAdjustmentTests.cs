@@ -11,9 +11,6 @@ public sealed class ElevationAdjustmentTests
         elevations.Select((e, i) => new TrailPoint(new GeoPosition(42 + i * 0.001, -1.6)) { Elevation = e }).ToList();
 
     [Fact]
-    [Trait("Req", "DEM-02")]
-    [Trait("Req", "DEM-04")]
-    [Trait("Acc", "ACC-DEM-01")]
     public void Plan_counts_changes_equal_values_and_points_without_data()
     {
         var points = Points(100, 200, 300, null, 500);
@@ -27,9 +24,6 @@ public sealed class ElevationAdjustmentTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-03")]
-    [Trait("Req", "DEM-04")]
-    [Trait("Req", "DEM-06")]
     public void Applying_marks_dem_points_keeps_points_without_data_and_undo_restores_everything()
     {
         var points = Points(100, null, 300);
@@ -45,7 +39,6 @@ public sealed class ElevationAdjustmentTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-02")]
     public void Nothing_to_change_gives_no_command()
     {
         var plan = ElevationAdjustment.Plan(Points(100, 200), [null, 200]);
@@ -55,7 +48,6 @@ public sealed class ElevationAdjustmentTests
     }
 
     [Fact]
-    [Trait("Req", "DEM-06")]
     public void Editing_or_inserting_records_the_elevation_origin()
     {
         var points = Points(100, 200);

@@ -31,6 +31,21 @@ internal sealed class FakeDialogService : IDialogService
 
     public IReadOnlyList<string>? AskLocalMapPaths() => LocalMapPaths.Count > 0 ? LocalMapPaths.Dequeue() : null;
 
+    public string? EcwpUrl { get; set; }
+
+    public string? AskEcwpUrl() => EcwpUrl;
+
+    /// <summary>The user's answer to the ECW licence; counts how often it was shown.</summary>
+    public bool EcwLicenseAnswer { get; set; }
+
+    public int EcwLicenseShown { get; private set; }
+
+    public bool AskEcwLicense()
+    {
+        EcwLicenseShown++;
+        return EcwLicenseAnswer;
+    }
+
     public string? Folder { get; set; }
 
     public string? AskFolder(string? initialFolder) => Folder;

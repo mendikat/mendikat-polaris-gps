@@ -21,7 +21,6 @@ namespace Mendikat.TrailLab.Tests.App;
 public sealed class AccessibilityTests
 {
     [Fact]
-    [Trait("Req", "NFR-08")]
     public void Every_input_control_has_an_accessible_name()
     {
         WindowSmokeTests.OnStaThread(() =>
@@ -48,7 +47,6 @@ public sealed class AccessibilityTests
     }
 
     [Fact]
-    [Trait("Req", "NFR-08")]
     public void Every_menu_item_has_an_access_key_unique_within_its_menu()
     {
         WindowSmokeTests.OnStaThread(() =>
@@ -108,6 +106,8 @@ public sealed class AccessibilityTests
         yield return new ProfileWindow(new ProfileViewModel(document, layer));
         yield return new AboutWindow(new AboutViewModel(), _ => { });
         yield return new ConvertWindow(new ConvertViewModel(new FakeDialogService(), ["ruta.kml"]));
+        yield return new EcwpWindow();
+        yield return new EcwLicenseWindow();
     }
 
     private static IEnumerable<DependencyObject> LogicalDescendants(DependencyObject root)

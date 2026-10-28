@@ -44,8 +44,6 @@ public sealed class ProfileTests
     }
 
     [Fact]
-    [Trait("Req", "APP-06")]
-    [Trait("Req", "PROF-01")]
     public void Profile_button_is_enabled_only_for_tracks_and_routes()
     {
         Assert.True(_vm.ElevationProfileCommand.CanExecute(null));
@@ -55,7 +53,6 @@ public sealed class ProfileTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-01")]
     public void Profile_window_is_titled_with_the_track_and_shows_a_summary()
     {
         var profile = OpenProfile();
@@ -73,7 +70,6 @@ public sealed class ProfileTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-04")]
     public void Hovering_the_profile_reports_the_point_and_clicking_selects_it()
     {
         var profile = OpenProfile();
@@ -95,7 +91,6 @@ public sealed class ProfileTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-04")]
     public void Selecting_a_point_in_the_list_or_map_moves_the_profile_cursor()
     {
         var profile = OpenProfile();
@@ -109,7 +104,6 @@ public sealed class ProfileTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-04")]
     public void Arrow_keys_step_through_the_points()
     {
         var profile = OpenProfile();
@@ -124,8 +118,6 @@ public sealed class ProfileTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-07")]
-    [Trait("Req", "PROF-03")]
     public void Edits_update_the_profile_and_deleting_the_track_closes_it()
     {
         var profile = OpenProfile();
@@ -144,7 +136,6 @@ public sealed class ProfileTests
     }
 
     [Theory]
-    [Trait("Req", "PROF-01")]
     [InlineData(4420, 5, 1000)]
     [InlineData(4420, 10, 500)]
     [InlineData(134, 5, 50)]
@@ -155,7 +146,6 @@ public sealed class ProfileTests
     }
 
     [Fact]
-    [Trait("Req", "PROF-01")]
     public void Axis_ticks_cover_the_range_with_round_values()
     {
         Assert.Equal([600, 650, 700], AxisTicks.Ticks(576, 724, 4));

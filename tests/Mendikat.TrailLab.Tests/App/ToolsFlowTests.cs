@@ -39,7 +39,6 @@ public sealed class ToolsFlowTests
     private List<TrailPoint> TrackPoints => _data.Tracks[0].Segments[0].Points;
 
     [Fact]
-    [Trait("Req", "SIMP-04")]
     public void Simplify_shows_a_preview_and_applies_one_undoable_step()
     {
         SimplifyViewModel? shown = null;
@@ -61,7 +60,6 @@ public sealed class ToolsFlowTests
     }
 
     [Fact]
-    [Trait("Req", "NFR-02")]
     public async Task Large_tracks_are_previewed_in_the_background_and_only_the_last_tolerance_counts()
     {
         var layer = _vm.ActiveDocument!.SelectedLayer!;
@@ -88,7 +86,6 @@ public sealed class ToolsFlowTests
     }
 
     [Fact]
-    [Trait("Req", "SIMP-04")]
     public void Cancelling_or_an_invalid_tolerance_changes_nothing()
     {
         _dialogs.ToolDialog = vm =>
@@ -109,9 +106,6 @@ public sealed class ToolsFlowTests
     }
 
     [Fact]
-    [Trait("Req", "TIME-01")]
-    [Trait("Req", "TIME-05")]
-    [Trait("Req", "TIME-06")]
     public void Regenerate_times_previews_and_changes_only_the_selected_track()
     {
         TimesViewModel? shown = null;
@@ -140,7 +134,6 @@ public sealed class ToolsFlowTests
     }
 
     [Fact]
-    [Trait("Req", "TIME-01")]
     public void Times_dialog_starts_from_the_current_first_time_and_validates_input()
     {
         var times = new TimesViewModel(_vm.ActiveDocument!.SelectedLayer!) { TimeZone = TimeZoneInfo.Utc };
@@ -163,7 +156,6 @@ public sealed class ToolsFlowTests
     }
 
     [Fact]
-    [Trait("Req", "TIME-05")]
     public void A_start_time_that_does_not_exist_is_rejected()
     {
         var times = new TimesViewModel(_vm.ActiveDocument!.SelectedLayer!)
@@ -178,8 +170,6 @@ public sealed class ToolsFlowTests
     }
 
     [Fact]
-    [Trait("Req", "TIME-06")]
-    [Trait("Req", "SIMP-04")]
     public void Tools_are_only_available_for_tracks_and_routes()
     {
         Assert.True(_vm.SimplifyCommand.CanExecute(null));
@@ -191,7 +181,6 @@ public sealed class ToolsFlowTests
     }
 
     [Fact]
-    [Trait("Req", "REV-03")]
     public void Reverse_applies_one_undoable_step_to_the_selected_track_only()
     {
         var (first, last) = (TrackPoints[0], TrackPoints[^1]);

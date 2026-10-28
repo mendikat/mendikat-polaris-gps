@@ -8,7 +8,6 @@ namespace Mendikat.TrailLab.Tests.App;
 public sealed class PointInputTests
 {
     [Theory]
-    [Trait("Req", "WPE-03")]
     [InlineData("42,5", 42.5)]
     [InlineData("42.5", 42.5)]
     [InlineData(" -1,6458 ", -1.6458)]
@@ -19,7 +18,6 @@ public sealed class PointInputTests
     }
 
     [Theory]
-    [Trait("Req", "WPE-03")]
     [InlineData("1.234,5")] // thousands separators are rejected, never read as 1234.5 or 1.2345
     [InlineData("abc")]
     [InlineData("")]
@@ -30,8 +28,6 @@ public sealed class PointInputTests
     }
 
     [Theory]
-    [Trait("Req", "WPE-03")]
-    [Trait("Req", "EDIT-04")]
     [InlineData("90", true)]
     [InlineData("-90", true)]
     [InlineData("90,0001", false)]
@@ -42,7 +38,6 @@ public sealed class PointInputTests
     }
 
     [Theory]
-    [Trait("Req", "WPE-03")]
     [InlineData("180", true)]
     [InlineData("-180", true)]
     [InlineData("180,5", false)]
@@ -52,7 +47,6 @@ public sealed class PointInputTests
     }
 
     [Theory]
-    [Trait("Req", "WPE-03")]
     [InlineData("", true, null)]
     [InlineData("1431,5", true, 1431.5)]
     [InlineData("-500", true, -500.0)]
@@ -65,7 +59,6 @@ public sealed class PointInputTests
     }
 
     [Fact]
-    [Trait("Req", "WPE-03")]
     public void Utc_time_is_parsed_without_time_zone_conversion()
     {
         Assert.True(PointInput.TryParseUtc("2026-05-01 07:30:15", out var time));
@@ -76,7 +69,6 @@ public sealed class PointInputTests
     }
 
     [Fact]
-    [Trait("Req", "LAY-04")]
     public void Detail_shows_values_and_missing_ones_as_empty_or_dash()
     {
         var point = new TrailPoint(new GeoPosition(42.98530001234, -2.0786)) { Name = "Txindoki" };
@@ -91,8 +83,6 @@ public sealed class PointInputTests
     }
 
     [Fact]
-    [Trait("Req", "WPE-02")]
-    [Trait("Req", "EDIT-04")]
     public void Untouched_fields_keep_their_exact_original_values()
     {
         var point = new TrailPoint(new GeoPosition(42.98530001234, -2.07860009876)) { Elevation = 1431.123456, Name = "A" };
@@ -106,7 +96,6 @@ public sealed class PointInputTests
     }
 
     [Fact]
-    [Trait("Req", "WPE-03")]
     public void Invalid_values_are_not_built_and_an_error_is_shown()
     {
         var detail = new PointDetailViewModel(new TrailPoint(new GeoPosition(42, -1))) { Latitude = "95" };
@@ -121,7 +110,6 @@ public sealed class PointInputTests
     }
 
     [Fact]
-    [Trait("Req", "WPE-02")]
     public void Clearing_a_text_removes_the_value()
     {
         var detail = new PointDetailViewModel(new TrailPoint(new GeoPosition(42, -1)) { Description = "x", Elevation = 10 })

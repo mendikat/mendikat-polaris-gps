@@ -26,6 +26,8 @@ public sealed partial class MainViewModel
 
     public RelayCommand OpenLocalMapCommand { get; private set; } = null!;
 
+    public RelayCommand OpenEcwpCommand { get; private set; } = null!;
+
     public RelayCommand RemoveLocalMapCommand { get; private set; } = null!;
 
     public RelayCommand ZoomToLocalMapCommand { get; private set; } = null!;
@@ -37,7 +39,7 @@ public sealed partial class MainViewModel
     public event EventHandler<LocalMapItemViewModel>? LocalMapRemoved;
 
     /// <summary>The DEMs in use, in the order they were opened (status bar and "Adjust elevations").</summary>
-    public IReadOnlyList<ElevationGrid> LocalDems => LocalMaps.Where(m => m.IsDem && m.IsVisible).Select(m => m.Dem!).ToList();
+    public IReadOnlyList<ILocalDem> LocalDems => LocalMaps.Where(m => m.IsDem && m.IsVisible).Select(m => m.Dem!).ToList();
 
     /// <summary>Asks for files and opens them one after another.</summary>
     public async Task OpenLocalMapsAsync()
@@ -51,10 +53,16 @@ public sealed partial class MainViewModel
     /// <summary>Loads a map or DEM (LMAP-02): on failure a message explains why and nothing is added.</summary>
     public async Task OpenLocalMapAsync(string path)
     {
-        var fileName = Path.GetFileName(path);
-        if (LocalMaps.Any(m => string.Equals(Path.GetFullPath(m.Content.Path), Path.GetFullPath(path), StringComparison.OrdinalIgnoreCase)))
+        var fileName = GdalRaster.DisplayName(path);
+        if (LocalMaps.Any(m => SameSource(m.Content.Path, path)))
         {
             StatusMessage = string.Format(Strings.StatusAlreadyOpen, fileName);
+            return;
+        }
+
+        if (GdalRaster.IsEcw(path) && !EnsureEcwLicense())
+        {
+            StatusMessage = Strings.StatusEcwLicenseDeclined;
             return;
         }
 
@@ -111,6 +119,48 @@ public sealed partial class MainViewModel
         _logger.LogInformation("Moved local map {FileName} from {From} to {To}", LocalMaps[to].Name, from, to);
     }
 
+    /// <summary>
+    /// File › Open online cartography (ECWP): asks for an ecwp:// or ecwps:// address and opens it like an ECW file.
+    /// The ECW SDK licence requires ECWP streams to be as easy to open as other sources.
+    /// </summary>
+    public async Task OpenEcwpAsync()
+    {
+        if (_dialogs.AskEcwpUrl() is { } url)
+        {
+            await OpenLocalMapAsync(url.Trim());
+        }
+    }
+
+    /// <summary>
+    /// ECW files and ECWP streams are opened only after the user accepts the ERDAS ECW/JP2 end-user licence, once; the
+    /// acceptance is remembered. Declining leaves ECW disabled until it is accepted on a later attempt.
+    /// </summary>
+    /// <returns>True if accepted (now or before).</returns>
+    public bool EnsureEcwLicense()
+    {
+        var settings = _settings.Load();
+        if (settings.EcwLicenseAccepted)
+        {
+            return true;
+        }
+
+        if (!_dialogs.AskEcwLicense())
+        {
+            _logger.LogInformation("ECW licence declined");
+            return false;
+        }
+
+        _settings.Save(settings with { EcwLicenseAccepted = true });
+        _logger.LogInformation("ECW licence accepted");
+        return true;
+    }
+
+    /// <summary>Same file (full path, any case) or same ECWP address.</summary>
+    private static bool SameSource(string a, string b) =>
+        Mapping.Local.LocalMapLoader.IsEcwpUrl(a) || Mapping.Local.LocalMapLoader.IsEcwpUrl(b)
+            ? string.Equals(a.Trim(), b.Trim(), StringComparison.OrdinalIgnoreCase)
+            : string.Equals(Path.GetFullPath(a), Path.GetFullPath(b), StringComparison.OrdinalIgnoreCase);
+
     public void RemoveLocalMap(LocalMapItemViewModel? item)
     {
         if (item is null || !LocalMaps.Remove(item))
@@ -120,6 +170,7 @@ public sealed partial class MainViewModel
 
         OnLocalMapsChanged();
         LocalMapRemoved?.Invoke(this, item);
+        item.Content.Dispose(); // closes GDAL datasets; tiles still being made see it and stop
         StatusMessage = string.Format(Strings.StatusLocalMapRemoved, item.Name);
         _logger.LogInformation("Removed local map {FileName}", item.Name);
     }
@@ -127,6 +178,7 @@ public sealed partial class MainViewModel
     private void InitializeLocalMapCommands()
     {
         OpenLocalMapCommand = new RelayCommand(_ => OpenLocalMapsAsync(), _ => !IsBusy && LocalMapLoader is not null);
+        OpenEcwpCommand = new RelayCommand(_ => OpenEcwpAsync(), _ => !IsBusy && LocalMapLoader is not null);
         RemoveLocalMapCommand = new RelayCommand(
             p =>
             {
@@ -147,7 +199,11 @@ public sealed partial class MainViewModel
             p => p is LocalMapItemViewModel);
     }
 
-    private void RefreshLocalMapCommands() => OpenLocalMapCommand?.RaiseCanExecuteChanged();
+    private void RefreshLocalMapCommands()
+    {
+        OpenLocalMapCommand?.RaiseCanExecuteChanged();
+        OpenEcwpCommand?.RaiseCanExecuteChanged();
+    }
 
     private void OnLocalMapsChanged()
     {

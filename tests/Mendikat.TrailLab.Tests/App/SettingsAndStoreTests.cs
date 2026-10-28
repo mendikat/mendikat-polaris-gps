@@ -16,16 +16,12 @@ public sealed class SettingsAndStoreTests : IDisposable
         new(Path.Combine(_directory, name), NullLogger<JsonSettingsStore>.Instance);
 
     [Fact]
-    [Trait("Req", "MAP-03")]
-    [Trait("Acc", "ACC-MAP-01")]
     public void Without_a_settings_file_the_default_map_is_ign()
     {
         Assert.Equal("ign-es", Settings().Load().Map.Provider);
     }
 
     [Fact]
-    [Trait("Req", "MAP-04")]
-    [Trait("Acc", "ACC-MAP-01")]
     public void Settings_survive_a_restart_as_json()
     {
         Assert.True(Settings().Save(new UserSettings { Map = new MapSettings { Provider = "opentopomap" } }));
@@ -35,7 +31,6 @@ public sealed class SettingsAndStoreTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "MAP-04")]
     public void Corrupt_settings_fall_back_to_defaults()
     {
         File.WriteAllText(Path.Combine(_directory, "settings.json"), "{ not json");
@@ -44,7 +39,6 @@ public sealed class SettingsAndStoreTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "GPX-01")]
     public async Task File_store_loads_gpx_with_content_and_warnings()
     {
         var document = await new FileDocumentStore().LoadAsync(
@@ -57,7 +51,6 @@ public sealed class SettingsAndStoreTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "APP-05")]
     [InlineData("missing.gpx", DocumentLoadError.FileNotFound)]
     [InlineData("gpx/blank.gpx", DocumentLoadError.EmptyFile)]
     [InlineData("gpx/malformed.gpx", DocumentLoadError.InvalidXml)]
@@ -70,7 +63,6 @@ public sealed class SettingsAndStoreTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "APP-05")]
     public async Task Zero_byte_file_is_reported_as_empty()
     {
         var path = Path.Combine(_directory, "empty.gpx");
@@ -83,8 +75,6 @@ public sealed class SettingsAndStoreTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "APP-05")]
-    [Trait("Req", "GPX-02")]
     [InlineData(DocumentLoadError.InvalidXml, 12, null, "El archivo «r.gpx» no es un XML válido, línea 12.")]
     [InlineData(DocumentLoadError.InvalidCoordinate, 2, "lat=\"95\"", "Coordenadas no válidas en «r.gpx», línea 2: lat=\"95\".\nLa latitud debe estar entre −90 y 90 y la longitud entre −180 y 180.")]
     public void Load_errors_have_spanish_messages(DocumentLoadError error, int? line, string? detail, string expected)
@@ -95,7 +85,6 @@ public sealed class SettingsAndStoreTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "GPX-06")]
     public void Warnings_have_spanish_messages()
     {
         Assert.Equal(

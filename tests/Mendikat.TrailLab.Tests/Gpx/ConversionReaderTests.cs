@@ -41,7 +41,6 @@ public sealed class ConversionReaderTests
     private static byte[] SampleKmlBytes() => File.ReadAllBytes(Fixture.PathOf("convert/sample.kml"));
 
     [Fact]
-    [Trait("Req", "CONV-03")]
     public void Kml_points_become_waypoints_with_name_description_and_optional_elevation()
     {
         var data = ReadKml().Data;
@@ -58,7 +57,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-03")]
     public void Kml_lines_of_every_folder_become_tracks_with_one_segment_per_line()
     {
         var tracks = ReadKml().Data.Tracks;
@@ -73,7 +71,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-03")]
     public void Google_earth_tracks_keep_their_times()
     {
         var recorded = ReadKml().Data.Tracks[2].Segments[0].Points;
@@ -86,8 +83,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-03")]
-    [Trait("Req", "CONV-07")]
     public void Kml_conversion_reports_its_source_and_what_was_ignored()
     {
         var result = ReadKml();
@@ -103,7 +98,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-03")]
     public void Kml_from_mendikat_net_with_spaces_after_commas_and_latin1_is_read()
     {
         var data = ReadFixture("mendikat-net.kml").Result.Data;
@@ -117,7 +111,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-03")]
     public void A_kml_point_uses_its_first_tuple_like_google_earth()
     {
         // Found in mendikat.net's files: a point followed by a truncated second tuple.
@@ -130,7 +123,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-03")]
     public void Invalid_kml_coordinates_are_rejected_with_their_line()
     {
         var ex = Assert.Throws<DocumentLoadException>(() => ReadFixture("bad-coordinate.kml"));
@@ -140,7 +132,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-04")]
     public void Kmz_reads_doc_kml_like_its_kml_and_ignores_images()
     {
         using var kmz = Kmz(("images/icono.png", [1, 2, 3]), ("otro.kml", "<kml/>"u8.ToArray()), ("doc.kml", SampleKmlBytes()));
@@ -155,7 +146,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-04")]
     public void Kmz_without_doc_kml_uses_the_first_kml()
     {
         using var kmz = Kmz(("files/ruta.kml", SampleKmlBytes()));
@@ -164,7 +154,6 @@ public sealed class ConversionReaderTests
     }
 
     [Theory]
-    [Trait("Req", "CONV-04")]
     [InlineData("no-kml")]
     [InlineData("broken-zip")]
     [InlineData("bomb")]
@@ -183,7 +172,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-04")]
     public void A_corrupt_kml_inside_a_kmz_is_reported_as_invalid_xml()
     {
         using var kmz = Kmz(("doc.kml", "<kml><Placemark>"u8.ToArray()));
@@ -192,7 +180,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-05")]
     public void Tcx_activity_becomes_a_track_with_one_segment_per_lap()
     {
         var (format, result) = ReadFixture("sample.tcx");
@@ -210,7 +197,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-05")]
     public void Tcx_heart_rate_and_cadence_go_to_the_garmin_trackpoint_extension()
     {
         var points = ReadFixture("sample.tcx").Result.Data.Tracks[0].AllPoints.ToList();
@@ -226,8 +212,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-05")]
-    [Trait("Req", "CONV-07")]
     public void Tcx_reports_skipped_points_and_data_without_gpx_equivalent()
     {
         Assert.Equal(
@@ -240,7 +224,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-05")]
     public void Tcx_courses_become_tracks_and_their_course_points_waypoints()
     {
         var data = ReadFixture("sample.tcx").Result.Data;
@@ -253,8 +236,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-05")]
-    [Trait("Req", "CONV-07")]
     public void Converted_tcx_is_written_as_valid_gpx_and_keeps_heart_rate()
     {
         var data = ReadFixture("sample.tcx").Result.Data;
@@ -270,7 +251,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-03")]
     public void Converted_kml_is_written_as_valid_gpx_with_its_metadata()
     {
         var bytes = new GpxWriter().Write(ReadKml().Data);
@@ -280,7 +260,6 @@ public sealed class ConversionReaderTests
     }
 
     [Theory]
-    [Trait("Req", "CONV-01")]
     [InlineData("sample.kml", "ruta.xml", SourceFormat.Kml)]
     [InlineData("sample.tcx", "ruta.gpx", SourceFormat.Tcx)]
     public void The_format_is_detected_from_the_content_not_the_extension(string fixture, string fileName, SourceFormat expected)
@@ -292,7 +271,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-01")]
     public void Other_xml_files_are_unsupported_and_named_by_their_root()
     {
         var ex = Assert.Throws<DocumentLoadException>(() => ReadFixture("other.xml"));
@@ -301,7 +279,6 @@ public sealed class ConversionReaderTests
     }
 
     [Theory]
-    [Trait("Req", "CONV-01")]
     [InlineData("x.kml", DocumentLoadError.InvalidXml)]
     [InlineData("x.tcx", DocumentLoadError.InvalidXml)]
     [InlineData("x.gpx", DocumentLoadError.InvalidXml)]
@@ -313,7 +290,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-01")]
     public void Gpx_files_are_read_as_before()
     {
         using var stream = new MemoryStream(
@@ -327,7 +303,6 @@ public sealed class ConversionReaderTests
     }
 
     [Fact]
-    [Trait("Req", "CONV-06")]
     public void Free_paths_get_a_number()
     {
         var taken = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { @"C:\d\ruta.gpx", @"C:\d\ruta (2).gpx" };

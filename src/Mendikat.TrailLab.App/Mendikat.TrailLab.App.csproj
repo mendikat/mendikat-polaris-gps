@@ -12,6 +12,20 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.13" />
     <PackageReference Include="Mapsui.Wpf" Version="5.1.0" />
+    <!-- GDAL native libraries (GISInternals build, x64) and the ECW plugin. Their own build targets copy x86 and every
+         plugin (~190 MB); they are excluded and only what is used is copied below. -->
+    <PackageReference Include="GDAL.Native" Version="3.12.1" ExcludeAssets="build" GeneratePathProperty="true" />
+    <PackageReference Include="GDAL.Plugins" Version="3.12.1" ExcludeAssets="build" GeneratePathProperty="true" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(PkgGDAL_Native)\build\gdal\x64\*.dll" Link="gdal\x64\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <Content Include="$(PkgGDAL_Native)\build\gdal\data\**" Link="gdal\data\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <Content Include="$(PkgGDAL_Native)\build\gdal\share\**" Link="gdal\share\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <Content Include="$(PkgGDAL_Native)\build\gdal\*.rtf;$(PkgGDAL_Native)\build\gdal\license.txt;$(PkgGDAL_Native)\build\gdal\curl-ca-bundle.crt" Link="gdal\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <!-- ECW: ERDAS ECW/JP2 Desktop Read-Only Redistributable SDK; its licence obliges ECWP support, an end-user licence
+         and the Intergraph notice in "About" (see EcwLicense). -->
+    <Content Include="$(PkgGDAL_Plugins)\build\gdal\x64\plugins\gdal_ECW_JP2ECW.dll;$(PkgGDAL_Plugins)\build\gdal\x64\plugins\NCSEcw.dll" Link="gdal\x64\plugins\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <Content Include="$(PkgGDAL_Plugins)\gdal\ECW5License.rtf" Link="gdal\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mendikat.TrailLab.Domain\Mendikat.TrailLab.Domain.csproj" />

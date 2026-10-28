@@ -20,8 +20,6 @@ public sealed class ReverseTests
     }
 
     [Fact]
-    [Trait("Req", "REV-01")]
-    [Trait("Req", "REV-02")]
     public void Segments_and_points_are_reversed_and_times_mirrored()
     {
         var track = new Track();
@@ -40,7 +38,6 @@ public sealed class ReverseTests
     }
 
     [Fact]
-    [Trait("Req", "REV-03")]
     public void Undo_restores_order_and_times()
     {
         var track = new Track();
@@ -58,7 +55,6 @@ public sealed class ReverseTests
     }
 
     [Fact]
-    [Trait("Req", "REV-02")]
     public void Points_without_time_keep_having_none()
     {
         var route = new Route();
@@ -70,7 +66,6 @@ public sealed class ReverseTests
     }
 
     [Fact]
-    [Trait("Req", "REV-01")]
     public void Empty_and_single_point_tracks_are_handled()
     {
         var track = new Track();

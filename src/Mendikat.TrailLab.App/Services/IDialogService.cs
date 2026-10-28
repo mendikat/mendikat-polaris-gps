@@ -23,6 +23,14 @@ public interface IDialogService
     /// <returns>Selected paths, or null if the user cancelled.</returns>
     IReadOnlyList<string>? AskLocalMapPaths();
 
+    /// <summary>Address of an ECWP stream (ecwp:// or ecwps://).</summary>
+    /// <returns>The address, or null if the user cancelled.</returns>
+    string? AskEcwpUrl();
+
+    /// <summary>Shows the ERDAS ECW/JP2 end-user licence; ECW is used only if the user accepts it.</summary>
+    /// <returns>True if accepted.</returns>
+    bool AskEcwLicense();
+
     /// <returns>Selected folder, or null if the user cancelled.</returns>
     string? AskFolder(string? initialFolder);
 

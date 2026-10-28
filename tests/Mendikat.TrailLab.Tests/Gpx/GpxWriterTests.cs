@@ -68,8 +68,6 @@ public sealed class GpxWriterTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-03")]
-    [Trait("Acc", "ACC-GPX-01")]
     public void Round_trip_keeps_points_standard_fields_and_extensions()
     {
         var original = Read("valid-11.gpx");
@@ -88,7 +86,6 @@ public sealed class GpxWriterTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-03")]
     public void Round_trip_keeps_metadata_root_attributes_and_root_extensions()
     {
         var original = Read("valid-11.gpx");
@@ -107,7 +104,6 @@ public sealed class GpxWriterTests
     }
 
     [Theory]
-    [Trait("Req", "GPX-04")]
     [InlineData("valid-11.gpx")]
     [InlineData("missing-data.gpx")]
     [InlineData("no-points.gpx")]
@@ -122,7 +118,6 @@ public sealed class GpxWriterTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-04")]
     public void Gpx_10_is_upgraded_keeping_fields_without_equivalent_in_extensions()
     {
         var original = Read("gpx10.gpx");
@@ -141,8 +136,6 @@ public sealed class GpxWriterTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-05")]
-    [Trait("Acc", "ACC-GPX-02")]
     public void Missing_values_are_not_invented()
     {
         var text = Encoding.UTF8.GetString(new GpxWriter().Write(Read("missing-data.gpx")));
@@ -152,7 +145,6 @@ public sealed class GpxWriterTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-03")]
     public void Coordinates_elevations_and_times_are_written_without_rounding()
     {
         var data = new TrailData();
@@ -169,7 +161,6 @@ public sealed class GpxWriterTests
     }
 
     [Fact]
-    [Trait("Req", "GPX-03")]
     public void Edits_are_written_and_untouched_points_keep_their_extensions()
     {
         var data = Read("valid-11.gpx");

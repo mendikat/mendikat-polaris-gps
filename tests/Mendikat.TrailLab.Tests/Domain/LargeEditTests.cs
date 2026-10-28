@@ -11,7 +11,6 @@ public sealed class LargeEditTests
         Enumerable.Range(0, count).Select(i => new TrailPoint(new GeoPosition(42 + i * 1e-6, -1.6))).ToList();
 
     [Theory]
-    [Trait("Req", "EDIT-05")]
     [InlineData(1, 0.5)]
     [InlineData(10, 0.0)]
     [InlineData(10, 1.0)]
@@ -37,7 +36,6 @@ public sealed class LargeEditTests
     }
 
     [Fact]
-    [Trait("Req", "NFR-02")]
     public void Removing_half_of_500000_points_and_undoing_takes_well_under_a_second()
     {
         var owner = Points(500_000);

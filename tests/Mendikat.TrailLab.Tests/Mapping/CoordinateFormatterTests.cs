@@ -19,17 +19,12 @@ public sealed class CoordinateFormatterTests
     }
 
     [Fact]
-    [Trait("Req", "COORD-01")]
-    [Trait("Acc", "ACC-COORD-01")]
     public void Equator_at_greenwich_is_31N_166021_0()
     {
         Assert.Equal("31N 166021 0", CoordinateFormatter.FormatUtm(new GeoPosition(0, 0)));
     }
 
     [Fact]
-    [Trait("Req", "COORD-01")]
-    [Trait("Req", "COORD-05")]
-    [Trait("Acc", "ACC-COORD-01")]
     public void Cn_tower_matches_the_published_utm_within_one_meter()
     {
         var position = new GeoPosition(43 + 38 / 60.0 + 33.24 / 3600, -(79 + 23 / 60.0 + 13.7 / 3600));
@@ -42,10 +37,6 @@ public sealed class CoordinateFormatterTests
     }
 
     [Theory]
-    [Trait("Req", "COORD-01")]
-    [Trait("Req", "COORD-03")]
-    [Trait("Acc", "ACC-COORD-01")]
-    [Trait("Acc", "ACC-COORD-02")]
     [InlineData(42.8125, -1.6458, "30T")]   // Pamplona
     [InlineData(43.3183, -1.9812, "30T")]   // Donostia
     [InlineData(41.3851, 2.1734, "31T")]    // Barcelona
@@ -61,7 +52,6 @@ public sealed class CoordinateFormatterTests
     }
 
     [Fact]
-    [Trait("Req", "COORD-01")]
     public void Southern_hemisphere_uses_false_northing()
     {
         var (_, _, northing) = ParseUtm(CoordinateFormatter.FormatUtm(new GeoPosition(-33.8688, 151.2093)));
@@ -70,8 +60,6 @@ public sealed class CoordinateFormatterTests
     }
 
     [Theory]
-    [Trait("Req", "COORD-04")]
-    [Trait("Acc", "ACC-COORD-03")]
     [InlineData(85, 0, "UPS Z ")]
     [InlineData(85, -10, "UPS Y ")]
     [InlineData(-85, -10, "UPS A ")]
@@ -82,7 +70,6 @@ public sealed class CoordinateFormatterTests
     }
 
     [Theory]
-    [Trait("Req", "COORD-01")]
     [InlineData(-80, 'C')]
     [InlineData(-0.0001, 'M')]
     [InlineData(0, 'N')]
@@ -95,9 +82,6 @@ public sealed class CoordinateFormatterTests
     }
 
     [Theory]
-    [Trait("Req", "COORD-02")]
-    [Trait("Acc", "ACC-COORD-01")]
-    [Trait("Acc", "ACC-COORD-04")]
     [InlineData(43.373086111, -1.752777778, "43º 22' 23,11'' N 1º 45' 10,00'' W")]
     [InlineData(42.8125, -1.6458, "42º 48' 45,00'' N 1º 38' 44,88'' W")]
     [InlineData(-33.8688, 151.2093, "33º 52' 07,68'' S 151º 12' 33,48'' E")]
@@ -109,7 +93,6 @@ public sealed class CoordinateFormatterTests
     }
 
     [Fact]
-    [Trait("Req", "COORD-06")]
     public void Formatting_takes_well_under_a_millisecond()
     {
         var watch = Stopwatch.StartNew();

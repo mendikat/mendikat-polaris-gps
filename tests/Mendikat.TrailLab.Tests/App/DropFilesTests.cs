@@ -34,7 +34,6 @@ public sealed class DropFilesTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "APP-10")]
     public async Task Dropped_tracks_and_cartography_each_go_to_their_place()
     {
         await _vm.OpenFilesAsync([@"C:\data\ruta.gpx", Dem(), @"C:\data\vuelta.KML"]);
@@ -44,21 +43,19 @@ public sealed class DropFilesTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "APP-10")]
     public async Task Other_files_and_folders_are_skipped_and_counted()
     {
-        await _vm.OpenFilesAsync([Path.Combine(_folder, "foto.jpg"), _folder, @"C:\data\ruta.gpx"]);
+        await _vm.OpenFilesAsync([Path.Combine(_folder, "notas.docx"), _folder, @"C:\data\ruta.gpx"]);
 
         Assert.Single(_vm.Documents);
-        Assert.Equal("2 archivos soltados no se han abierto: no son GPX, KML, KMZ, TCX, .map, .imp, .asc ni .hgt.", _vm.StatusMessage);
+        Assert.Equal("2 archivos soltados no se han abierto: no son tracks (GPX, KML, KMZ, TCX) ni cartografía admitida.", _vm.StatusMessage);
         Assert.Empty(_dialogs.Errors);
     }
 
     [Theory]
-    [Trait("Req", "APP-10")]
     [InlineData(new[] { @"C:\a.gpx" }, true)]
     [InlineData(new[] { @"C:\a.txt", @"C:\b.HGT" }, true)]
-    [InlineData(new[] { @"C:\a.txt", @"C:\b.jpg" }, false)]
+    [InlineData(new[] { @"C:\a.txt", @"C:\b.docx" }, false)]
     public void The_drop_cursor_accepts_only_supported_files(string[] paths, bool expected)
     {
         Assert.Equal(expected, MainViewModel.CanOpenAny(paths));

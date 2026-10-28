@@ -33,7 +33,6 @@ public sealed class ConvertFlowTests : IDisposable
     private string[] GpxFiles() => Directory.GetFiles(_folder, "*.gpx").Select(Path.GetFileName).Order().ToArray()!;
 
     [Fact]
-    [Trait("Req", "CONV-02")]
     public async Task A_kml_opens_as_a_new_unsaved_gpx_named_after_it()
     {
         var kml = Copy("sample.kml", "excursion.kml");
@@ -51,7 +50,6 @@ public sealed class ConvertFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "CONV-02")]
     public async Task Saving_a_converted_document_asks_where_and_never_touches_the_source()
     {
         var tcx = Copy("sample.tcx", "carrera.tcx");
@@ -70,7 +68,6 @@ public sealed class ConvertFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "CONV-02")]
     public async Task Opening_the_same_source_again_activates_the_converted_document()
     {
         var kml = Copy("sample.kml");
@@ -83,7 +80,6 @@ public sealed class ConvertFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "CONV-01")]
     public async Task An_unsupported_file_shows_a_clear_error_and_opens_nothing()
     {
         await _vm.OpenPathAsync(Copy("other.xml"), DocumentFormat.Gpx);
@@ -93,8 +89,6 @@ public sealed class ConvertFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "CONV-06")]
-    [Trait("Req", "CONV-07")]
     public async Task Convert_writes_one_valid_gpx_per_file_and_reports_errors_without_stopping()
     {
         var files = new[] { Copy("sample.kml", "a.kml"), Copy("broken.kmz", "b.kmz"), Copy("sample.tcx", "c.tcx") };
@@ -119,7 +113,6 @@ public sealed class ConvertFlowTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "CONV-06")]
     [InlineData(ExistingFileAction.Rename, new[] { "ruta (2).gpx", "ruta.gpx" }, "viejo")]
     [InlineData(ExistingFileAction.Skip, new[] { "ruta.gpx" }, "viejo")]
     [InlineData(ExistingFileAction.Overwrite, new[] { "ruta.gpx" }, "nuevo")]
@@ -138,7 +131,6 @@ public sealed class ConvertFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "CONV-06")]
     public async Task Gpx_can_go_to_another_folder_and_gpx_sources_are_not_converted()
     {
         var target = Directory.CreateDirectory(Path.Combine(_folder, "salida")).FullName;
@@ -157,7 +149,6 @@ public sealed class ConvertFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "CONV-06")]
     public void Another_folder_must_be_chosen_before_converting()
     {
         var dialog = new ConvertViewModel(_dialogs, [Copy("sample.kml")]) { UseOtherFolder = true };
@@ -168,7 +159,6 @@ public sealed class ConvertFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "CONV-06")]
     public async Task Stopping_leaves_only_complete_gpx_files()
     {
         var files = Enumerable.Range(1, 20).Select(i => Copy("sample.tcx", $"r{i:00}.tcx")).ToList();
@@ -186,7 +176,6 @@ public sealed class ConvertFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "CONV-06")]
     public void Files_can_be_added_and_removed_but_not_twice()
     {
         var kml = Copy("sample.kml");
@@ -203,7 +192,6 @@ public sealed class ConvertFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "CONV-06")]
     public void The_tool_shows_the_dialog_with_the_chosen_files_and_reports_in_the_status_bar()
     {
         var kml = Copy("sample.kml");

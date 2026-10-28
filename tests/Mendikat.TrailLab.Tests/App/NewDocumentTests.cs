@@ -29,7 +29,6 @@ public sealed class NewDocumentTests
     private TrailData Data => _vm.ActiveDocument!.Document.Data;
 
     [Fact]
-    [Trait("Req", "APP-08")]
     public void New_gpx_opens_an_untitled_document_with_an_empty_selected_track()
     {
         _vm.NewGpx();
@@ -48,8 +47,6 @@ public sealed class NewDocumentTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
-    [Trait("Req", "APP-03")]
     public void Each_new_document_gets_its_own_number_and_tab()
     {
         _vm.NewGpx();
@@ -60,8 +57,6 @@ public sealed class NewDocumentTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
-    [Trait("Req", "SAVE-04")]
     public void Ctrl_click_appends_points_to_the_track_selecting_each_new_one()
     {
         _vm.NewGpx();
@@ -79,7 +74,6 @@ public sealed class NewDocumentTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
     public void Ctrl_click_with_a_point_selected_inserts_right_after_it()
     {
         _vm.NewGpx();
@@ -94,8 +88,6 @@ public sealed class NewDocumentTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
-    [Trait("Req", "EDIT-05")]
     public void Adding_a_point_is_undoable_back_to_the_clean_state()
     {
         _vm.NewGpx();
@@ -108,7 +100,6 @@ public sealed class NewDocumentTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
     public void Ctrl_click_with_no_layer_creates_a_track()
     {
         _vm.NewGpx();
@@ -123,8 +114,6 @@ public sealed class NewDocumentTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
-    [Trait("Req", "SAVE-02")]
     public async Task Saving_a_new_document_asks_for_a_path_and_then_uses_it()
     {
         _vm.NewGpx();
@@ -147,8 +136,6 @@ public sealed class NewDocumentTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
-    [Trait("Req", "APP-04")]
     public async Task Cancelling_the_path_when_closing_keeps_the_new_document_open()
     {
         _vm.NewGpx();
@@ -164,7 +151,6 @@ public sealed class NewDocumentTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
     public async Task An_untouched_new_document_closes_without_asking()
     {
         _vm.NewGpx();
@@ -176,8 +162,6 @@ public sealed class NewDocumentTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
-    [Trait("Req", "GPX-04")]
     public void A_drawn_document_is_written_as_valid_gpx_1_1()
     {
         _vm.NewGpx();

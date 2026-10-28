@@ -45,6 +45,10 @@ public static class UserMessages
             LocalMapError.MissingProjection => Strings.ErrorLocalMissingProjection,
             LocalMapError.InvalidDem => Strings.ErrorLocalInvalidDem,
             LocalMapError.TooLarge => Strings.ErrorLocalTooLarge,
+            LocalMapError.GdalUnavailable => Strings.ErrorLocalGdalUnavailable,
+            LocalMapError.EcwUnavailable => Strings.ErrorLocalEcwUnavailable,
+            LocalMapError.EcwLicenseNotAccepted => Strings.ErrorLocalEcwLicense,
+            LocalMapError.NotGeoreferenced => Strings.ErrorLocalNotGeoreferenced,
             _ => Strings.ErrorReadFailed,
         };
         var location = exception.Line is { } line ? string.Format(Strings.AtLine, line) : string.Empty;

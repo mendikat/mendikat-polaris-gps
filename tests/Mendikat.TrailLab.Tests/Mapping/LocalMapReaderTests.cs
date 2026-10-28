@@ -82,8 +82,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-03")]
-    [Trait("Req", "LMAP-04")]
     public void Ozi_utm_calibration_points_land_where_they_say()
     {
         Image();
@@ -104,7 +102,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-04")]
     public void Ozi_ed50_map_is_placed_with_the_mendikat_net_transformation()
     {
         Image();
@@ -121,7 +118,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-03")]
     public void Ozi_latitude_longitude_points_in_degrees_and_minutes()
     {
         Image();
@@ -136,7 +132,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-03")]
     public void Without_points_the_wgs84_corners_are_used()
     {
         Image();
@@ -166,7 +161,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-03")]
     public void An_image_path_from_another_computer_is_found_next_to_the_map()
     {
         Image("hoja.png");
@@ -177,8 +171,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "LMAP-02")]
-    [Trait("Req", "LMAP-03")]
     [InlineData("falta.png", LocalMapError.ImageMissing, "falta.png")]
     [InlineData("mapa.ozf2", LocalMapError.UnsupportedImage, "mapa.ozf2")]
     [InlineData("mapa.ecw", LocalMapError.UnsupportedImage, "mapa.ecw")]
@@ -192,8 +184,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "LMAP-02")]
-    [Trait("Req", "LMAP-04")]
     [InlineData("Tokyo", "UTM Grid", LocalMapError.UnsupportedCrs)]
     [InlineData("WGS 84", "Lambert Conformal Conic", LocalMapError.UnsupportedCrs)]
     [InlineData("European 1950", "UTM Grid", LocalMapError.UnsupportedCrs)] // zone 33: no ED50 parameters
@@ -206,7 +196,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-02")]
     public void Truncated_or_incomplete_calibrations_are_rejected()
     {
         Image();
@@ -220,21 +209,22 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "LMAP-02")]
     [InlineData("no-existe.map", LocalMapError.FileNotFound)]
     [InlineData("vacio.map", LocalMapError.EmptyFile)]
-    [InlineData("mapa.ecw", LocalMapError.UnsupportedFormat)]
+    [InlineData("mapa.sid", LocalMapError.UnsupportedFormat)]
+    [InlineData("roto.ecw", LocalMapError.ReadFailed)]
+    [InlineData("roto.tif", LocalMapError.ReadFailed)]
     public void Missing_empty_and_unknown_files_give_clear_errors(string name, LocalMapError error)
     {
         File.WriteAllBytes(Path.Combine(_folder, "vacio.map"), []);
-        File.WriteAllBytes(Path.Combine(_folder, "mapa.ecw"), [1, 2, 3]);
+        File.WriteAllBytes(Path.Combine(_folder, "mapa.sid"), [1, 2, 3]);
+        File.WriteAllBytes(Path.Combine(_folder, "roto.ecw"), [1, 2, 3]);
+        File.WriteAllBytes(Path.Combine(_folder, "roto.tif"), [1, 2, 3]);
 
         Assert.Equal(error, Assert.Throws<LocalMapException>(() => Load(Path.Combine(_folder, name))).Error);
     }
 
     [Fact]
-    [Trait("Req", "LMAP-06")]
-    [Trait("Req", "LMAP-04")]
     public void Compegps_imp_utm_ed50_gives_the_same_placement_as_ozi()
     {
         Image();
@@ -270,7 +260,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-06")]
     public void Compegps_imp_with_longitude_latitude_points()
     {
         Image();
@@ -293,7 +282,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-06")]
     public void An_imp_without_bitmap_or_with_a_missing_image_is_rejected()
     {
         var noBitmap = Write("sin.imp", "CompeGPS MAP File\n<Calibration>\nP0=0,0,A,-2,43\n</Calibration>\n");
@@ -305,8 +293,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-03")]
-    [Trait("Req", "LMAP-09")]
     public void Tiles_show_the_image_where_it_is_calibrated_and_nothing_outside()
     {
         Image(); // red west half, blue east half
@@ -339,7 +325,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-09")]
     public void Large_images_are_decoded_at_a_reduced_size()
     {
         var path = Image("grande.png", 400, 200);
@@ -352,7 +337,6 @@ public sealed class LocalMapReaderTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LMAP-03")]
     public void A_calibration_with_two_points_in_the_same_row_is_rejected()
     {
         Image();

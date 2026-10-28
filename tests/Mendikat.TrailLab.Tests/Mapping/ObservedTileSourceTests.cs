@@ -11,7 +11,6 @@ public sealed class ObservedTileSourceTests
     private static readonly TileInfo Tile = new() { Index = new TileIndex(505, 376, 10) };
 
     [Theory]
-    [Trait("Req", "MAP-02")]
     [InlineData("ign-es", "https://www.ign.es/wmts/mapa-raster?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MTN&STYLE=default&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX=10&TILEROW=376&TILECOL=505&FORMAT=image/jpeg")]
     [InlineData("esri-imagery", "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/10/376/505")]
     [InlineData("osm", "https://tile.openstreetmap.org/10/505/376.png")]
@@ -23,7 +22,6 @@ public sealed class ObservedTileSourceTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-02")]
     public void Server_nodes_replace_the_s_placeholder()
     {
         var source = new ObservedTileSource(MapProviderCatalog.Find("opentopomap")!);
@@ -32,7 +30,6 @@ public sealed class ObservedTileSourceTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-10")]
     public async Task Requests_send_an_identifying_user_agent_and_report_success()
     {
         var handler = new FakeHandler(_ => new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent([1, 2, 3]) });
@@ -49,7 +46,6 @@ public sealed class ObservedTileSourceTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-07")]
     public async Task Http_errors_are_reported_as_failures()
     {
         var handler = new FakeHandler(_ => new HttpResponseMessage(HttpStatusCode.ServiceUnavailable));
@@ -64,7 +60,6 @@ public sealed class ObservedTileSourceTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-07")]
     public async Task Network_errors_and_timeouts_are_reported_as_failures()
     {
         var failures = 0;
@@ -81,7 +76,6 @@ public sealed class ObservedTileSourceTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-07")]
     public async Task Cancellation_by_the_map_is_not_a_failure()
     {
         var failures = 0;

@@ -46,7 +46,6 @@ public sealed class EditingFlowTests
     private void Select(params PointRowViewModel[] rows) => Doc.SetSelectedRows(rows);
 
     [Fact]
-    [Trait("Req", "LAY-01")]
     public void Layers_list_tracks_routes_and_waypoints_with_statistics()
     {
         Assert.Equal([LayerKind.Track, LayerKind.Route, LayerKind.Waypoints], Doc.Layers.Select(l => l.Kind));
@@ -57,7 +56,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "LAY-01")]
     public void Hiding_a_layer_notifies_the_map_and_is_not_a_document_change()
     {
         LayerItemViewModel? hidden = null;
@@ -70,7 +68,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "LAY-03")]
     public void Rows_number_points_by_segment_when_there_are_several()
     {
         Assert.Equal(13, Doc.Rows.Count);
@@ -79,8 +76,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "LAY-03")]
-    [Trait("Req", "WPE-01")]
     public void Selecting_a_point_from_the_map_shows_its_layer_and_detail()
     {
         var waypoint = _data.Waypoints[1];
@@ -100,9 +95,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-01")]
-    [Trait("Req", "EDIT-05")]
-    [Trait("Acc", "ACC-EDIT-01")]
     public void Delete_removes_the_point_selects_the_next_and_undo_restores_it()
     {
         var fifth = FirstSegment[4];
@@ -126,8 +118,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-01")]
-    [Trait("Req", "EDIT-05")]
     public void Deleting_points_of_several_segments_is_one_undo_step()
     {
         Select(Doc.Rows[0], Doc.Rows[11]);
@@ -142,7 +132,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-02")]
     public void Deleting_more_than_50_points_asks_and_cancelling_keeps_them()
     {
         var segment = new TrackSegment();
@@ -161,8 +150,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-01")]
-    [Trait("Req", "EDIT-02")]
     public void With_no_point_selected_delete_removes_the_whole_track_after_confirmation()
     {
         _dialogs.ConfirmAnswer = false;
@@ -181,8 +168,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-06")]
-    [Trait("Acc", "ACC-EDIT-03")]
     public void Without_a_usable_selection_delete_and_insert_only_show_a_hint()
     {
         Doc.SelectedLayer = Doc.Layers[2]; // waypoints, nothing selected
@@ -200,8 +185,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-03")]
-    [Trait("Acc", "ACC-EDIT-02")]
     public void Insert_adds_a_marked_midpoint_after_the_selected_point_and_selects_it()
     {
         var third = FirstSegment[2];
@@ -221,7 +204,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-04")]
     public void Moving_a_point_can_be_undone()
     {
         var point = FirstSegment[0];
@@ -236,9 +218,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "WPE-02")]
-    [Trait("Req", "WPE-03")]
-    [Trait("Acc", "ACC-WPE-02")]
     public void Point_detail_changes_apply_only_when_valid()
     {
         var waypoint = _data.Waypoints[0];
@@ -262,7 +241,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-05")]
     public void Undo_and_redo_commands_follow_the_history()
     {
         Assert.False(_vm.UndoCommand.CanExecute(null));
@@ -278,7 +256,6 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
-    [Trait("Req", "EDIT-07")]
     public void Edits_refresh_counts_layers_and_notify_the_map_once()
     {
         var mapUpdates = 0;

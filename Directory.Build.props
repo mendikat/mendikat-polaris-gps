@@ -6,7 +6,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Company>Mendikat</Company>
     <Product>Mendikat TrailLab</Product>
-    <Version>0.0.3</Version>
+    <Version>0.0.4</Version>
     <NeutralLanguage>es-ES</NeutralLanguage>
   </PropertyGroup>
 </Project>

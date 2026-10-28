@@ -32,12 +32,12 @@ public sealed class LocalMapItemViewModel : ObservableObject
 
     public bool IsDem => Content is LocalDem;
 
-    public ElevationGrid? Dem => (Content as LocalDem)?.Grid;
+    public ILocalDem? Dem => (Content as LocalDem)?.Dem;
 
     public GeoBounds Bounds => Content switch
     {
-        LocalRasterMap raster => raster.Map.Bounds,
-        LocalDem dem => dem.Grid.Bounds,
+        ILocalMap map => map.Bounds,
+        LocalDem dem => dem.Dem.Bounds,
         _ => throw new InvalidOperationException(),
     };
 
@@ -98,10 +98,18 @@ public sealed class LocalMapItemViewModel : ObservableObject
         LocalDem dem => string.Format(
             Spanish,
             Strings.LocalDemDetails,
-            dem.Grid.Columns.ToString("N0", Spanish),
-            dem.Grid.Rows.ToString("N0", Spanish),
-            dem.Grid.Crs,
-            dem.Grid.VerticalDatum),
+            dem.Dem.Columns.ToString("N0", Spanish),
+            dem.Dem.Rows.ToString("N0", Spanish),
+            dem.Dem.CrsDescription,
+            dem.Dem.VerticalDatum),
+        LocalGdalMap gdal => string.Format(
+            Spanish,
+            Strings.LocalGdalMapDetails,
+            gdal.Map.Raster.Driver,
+            gdal.Map.Raster.CrsDescription,
+            gdal.Map.Raster.Width.ToString("N0", Spanish),
+            gdal.Map.Raster.Height.ToString("N0", Spanish),
+            gdal.Map.BandCount),
         _ => string.Empty,
     };
 }

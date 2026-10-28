@@ -10,7 +10,6 @@ public sealed class LoggingTests : IDisposable
     public void Dispose() => Directory.Delete(_directory, recursive: true);
 
     [Theory]
-    [Trait("Req", "NFR-06")]
     [InlineData(@"Could not find file 'C:\Users\ana\Documents\ruta.gpx'.", @"Could not find file '%USERPROFILE%\Documents\ruta.gpx'.")]
     [InlineData(@"c:\users\ANA\x.gpx", @"%USERPROFILE%\x.gpx")]
     [InlineData(@"D:\tracks\x.gpx", @"D:\tracks\x.gpx")]
@@ -22,7 +21,6 @@ public sealed class LoggingTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "NFR-06")]
     public void File_logger_writes_redacted_lines_to_a_daily_file()
     {
         var clock = new DateTimeOffset(2026, 10, 24, 18, 30, 0, TimeSpan.FromHours(2));
@@ -39,7 +37,6 @@ public sealed class LoggingTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "NFR-06")]
     public void Only_the_most_recent_log_files_are_kept()
     {
         for (var day = 1; day <= 15; day++)

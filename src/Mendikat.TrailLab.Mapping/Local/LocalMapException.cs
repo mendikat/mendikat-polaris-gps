@@ -33,6 +33,18 @@ public enum LocalMapError
 
     /// <summary>Dimensions too large to hold in memory. Detail: the dimensions.</summary>
     TooLarge,
+
+    /// <summary>GDAL (GeoTIFF, ECW) could not be loaded. Detail: why.</summary>
+    GdalUnavailable,
+
+    /// <summary>An ECW file or stream, but the ECW plugin is not available. Detail: the file name.</summary>
+    EcwUnavailable,
+
+    /// <summary>The user has not accepted the ECW licence (ECW/ECWP are disabled until then).</summary>
+    EcwLicenseNotAccepted,
+
+    /// <summary>A raster without georeferencing (no coordinate system or transformation). Detail: the file name.</summary>
+    NotGeoreferenced,
 }
 
 /// <summary>Expected failure while loading a local map or DEM; carries a typed reason instead of a UI text.</summary>

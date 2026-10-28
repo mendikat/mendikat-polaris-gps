@@ -3,12 +3,11 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.0.3. Los 8 incrementos del plan están terminados; después se han añadido mejoras pedidas por el responsable
-> (ver «Después del plan» en [specs/ROADMAP.md](specs/ROADMAP.md)).**
+> **Estado: versión 0.0.4.**
 > Se abren archivos GPX, y KML, KMZ y TCX convertidos a GPX (WPT se retiró el 2026-10-26), se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
-> Los archivos grandes se abren con porcentaje de progreso y se pueden cancelar. Ver [specs/ROADMAP.md](specs/ROADMAP.md).
+> Los archivos grandes se abren con porcentaje de progreso y se pueden cancelar.
 
 ## Uso rápido
 
@@ -29,25 +28,14 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Abrir arrastrando | Soltar sobre la ventana uno o varios archivos GPX, KML, KMZ, TCX (se abren como documentos) o `.map`, `.imp`, `.asc`, `.hgt` (como cartografía de usuario) |
 | Abrir KML, KMZ o TCX | *Archivo › Abrir archivo…* (Ctrl+O): se abre como un GPX nuevo «nombre.gpx» sin guardar; **Guardar** pide dónde guardarlo |
 | Convertir varios archivos a GPX | *Archivo › Convertir a GPX…*: elegir los KML, KMZ o TCX, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
-| Ver un mapa escaneado o un MDT propio | *Archivo › Abrir cartografía…*: mapas `.map` (OziExplorer) e `.imp` (CompeGPS/TwoNav) con su imagen JPG, PNG, BMP, GIF o TIFF, y MDT `.asc` (con su `.prj`) y `.hgt`. Se listan en **Cartografías Usuario (n)** de la barra de herramientas: arrastrar ≡ (o Ctrl+↑/↓) para decidir cuál queda encima (la de arriba de la lista; la cartografía en línea siempre al fondo), deslizador de opacidad para ver la de debajo, casilla para mostrar u ocultar (en un MDT, para usarlo), ⤢ para ir a ella y ✕ para quitarla |
+| Ver un mapa escaneado o un MDT propio | *Archivo › Abrir cartografía…* (o soltarlos sobre la ventana): mapas `.map` (OziExplorer) e `.imp` (CompeGPS/TwoNav) con su imagen JPG, PNG, BMP, GIF o TIFF, GeoTIFF, ECW e imágenes con `.tfw`/`.jgw`/`.pgw` y `.prj`, y MDT `.asc` (con su `.prj`), `.hgt` y GeoTIFF. ECW servidos por internet: *Archivo › Abrir cartografía en línea (ECWP)…*. Se listan en **Cartografías Usuario (n)** de la barra de herramientas: arrastrar ≡ (o Ctrl+↑/↓) para decidir cuál queda encima (la de arriba de la lista; la cartografía en línea siempre al fondo), deslizador de opacidad para ver la de debajo, casilla para mostrar u ocultar (en un MDT, para usarlo), ⤢ para ir a ella y ✕ para quitarla |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
 | Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |
 | Ayuda | **F1** o *Ayuda › Ayuda de Mendikat TrailLab* (guía HTML en el navegador). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones y Acerca de (versión, autor) |
 
-## Documentación (Spec-Driven Development)
-
-| Documento | Contenido |
-|-----------|-----------|
-| [specs/PROJECT.md](specs/PROJECT.md) | Visión, objetivos, alcance, glosario y decisiones |
-| [specs/REQUIREMENTS.md](specs/REQUIREMENTS.md) | Requisitos con identificador y criterios de aceptación |
-| [specs/ACCEPTANCE.md](specs/ACCEPTANCE.md) | Escenarios Given/When/Then |
-| [specs/ROADMAP.md](specs/ROADMAP.md) | Incrementos, dependencias y definición de terminado |
-| [specs/TRACEABILITY.md](specs/TRACEABILITY.md) | Requisito → código → prueba |
-| [specs/DECISIONS/](specs/DECISIONS/) | ADR: plataforma, UI, coordenadas, cartografía, GPX, DEM, algoritmos, estructura (WPT retirado) |
-
 ## Requisitos
 
-- Windows 10 versión 2004 o posterior / Windows 11, x64 (exigido por SkiaSharp, usado por el mapa; ADR-0009).
+- Windows 10 versión 2004 o posterior / Windows 11, x64 (exigido por SkiaSharp, usado por el mapa).
 - Desarrollo: SDK de .NET 10 (`global.json` fija 10.0.402).
 - Ejecución: [runtime de escritorio .NET 10](https://dotnet.microsoft.com/download/dotnet/10.0) (x64), instalado una vez.
 - Internet sólo para la cartografía: abrir y ver archivos funciona sin conexión.
@@ -73,8 +61,8 @@ Archivos de usuario:
 
 ## Distribuir
 
-La aplicación se distribuye dependiente del runtime (ADR-0001): cada usuario instala una vez el runtime de escritorio
-.NET 10 (x64) y recibe una carpeta de unos 48 MB.
+La aplicación se distribuye dependiente del runtime: cada usuario instala una vez el runtime de escritorio
+.NET 10 (x64) y recibe una carpeta de unos 140 MB (unos 90 MB son GDAL, para GeoTIFF y ECW).
 
 ```powershell
 dotnet publish src\Mendikat.TrailLab.App -p:PublishProfile=win-x64   # genera artifacts\publish\win-x64\
@@ -85,7 +73,7 @@ enlace de descarga.
 
 ## Arquitectura
 
-WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido (ADR-0002, ADR-0009).
+WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido.
 
 | Proyecto | Contenido |
 |----------|-----------|
@@ -109,11 +97,11 @@ WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido
   - KMZ: se lee `doc.kml` (o el primer `.kml`); las imágenes se ignoran. Máximo 256 MB descomprimido.
   - TCX: cada actividad → un track con un segmento por vuelta; pulso y cadencia → extensión `gpxtpx` de Garmin
     (la que leen Strava, Garmin y la mayoría de programas). Distancia, velocidad y potencia no se convierten (aviso).
-- Los archivos **WPT** (OziExplorer, CompeGPS) ya no se admiten (ADR-0006, retirada el 2026-10-26).
+- Los archivos **WPT** (OziExplorer, CompeGPS) ya no se admiten (retirados el 2026-10-26).
 
 ### Cartografía y MDT locales (*Archivo › Abrir cartografía…*)
 
-Sólo lectura, con lectores propios y sin dependencias nuevas (decisión D7). No son documentos: no se guardan ni se
+Sólo lectura, con lectores propios y sin dependencias nuevas. No son documentos: no se guardan ni se
 recuerdan al cerrar la aplicación.
 
 | Formato | Qué se lee | Limitaciones |
@@ -122,6 +110,9 @@ recuerdan al cerrar la aplicación.
 | CompeGPS/TwoNav `.imp` | Imagen (`Bitmap=`), datum y puntos `Pn` en UTM o longitud/latitud (`A`) | Probado con archivos de referencia propios; faltan muestras reales |
 | SRTM `.hgt` | 1″ (3601²) y 3″ (1201²), esquina por el nombre (`N42W001`), huecos −32768 = sin dato | Alturas sobre el geoide EGM96, sin convertir |
 | ESRI ASCII Grid `.asc` | `xllcorner`/`xllcenter`, `NODATA_value`; sistema del `.prj` (WKT, formato de ArcInfo o `EPSG:n`) o, en los MDT del IGN, del nombre (`MDT05-0112-H30-LIDAR`, `PNOA_MDT05_ETRS89_HU30_…`) | Sin `.prj` ni nombre del IGN no se abre; un MDT05 del IGN (170 MB) tarda unos 3 s y ocupa unos 90 MB |
+| GeoTIFF `.tif`, `.tiff` y COG (`.cog`) (con GDAL) | Mapas (RGB, paleta o gris; transparencia por NoData o banda alfa) y MDT (una banda numérica, con NoData); cualquier sistema de coordenadas que conozca PROJ; los georreferenciados sólo con puntos de control se reproyectan al vuelo | Un TIFF sin georreferencia (p. ej. la imagen de un `.map`) se rechaza. Sin pirámides internas, alejarse mucho en un GeoTIFF enorme es lento; los COG las tienen siempre |
+| ECW `.ecw` y ECWP (`ecwp://`, `ecwps://`) (con GDAL y el SDK ERDAS ECW/JP2) | Mapas de cualquier tamaño: se lee sólo la zona visible y a la resolución necesaria (un MTN25 de 13 000 × 9 000 píxeles se abre en 0,3 s) | La primera vez hay que aceptar la licencia de uso de ECW; sin ella, los ECW no se abren. ECWP no se ha probado con un servidor real |
+| Imagen con archivo de georreferencia: `.tfw` (TIFF), `.jgw` (JPEG), `.pgw` (PNG), `.gfw`, `.bpw`, `.wld` | Posición y tamaño de píxel del archivo de georreferencia (lo lee GDAL) y sistema de coordenadas del `.prj` con el mismo nombre (WKT, formato de ArcInfo o `EPSG:n`). Se puede elegir la imagen o el propio `.tfw` | Sin `.prj` no se abre: el archivo de georreferencia no dice el sistema de coordenadas |
 
 - Datums: WGS84, ETRS89 (igual a WGS84 a escala de mapa) y ED50 en los husos 29, 30 y 31, con la misma transformación
   de Helmert que mendikat.net. Proyecciones: geográficas, UTM y Transverse Mercator. Cualquier otro sistema se rechaza
@@ -130,20 +121,20 @@ recuerdan al cerrar la aplicación.
   más de 50 megapíxeles se cargan a tamaño reducido (se pierde detalle al acercarse mucho).
 - Los MDT no se dibujan: dan la altitud bajo el puntero (antes que el MDT del IGN, sin conexión) y aparecen en
   *Ajustar altitudes* después de las resoluciones del IGN.
-- Aplazados: GeoTIFF, ECW y RMAP de TwoNav (D7, D8, D9).
+- Aún no se admite: RMAP de TwoNav.
+- GeoTIFF y ECW pasan de su datum a WGS84 con PROJ (incluido en GDAL). En ED50 da lo mismo que la transformación de mendikat.net con 2–7 cm de diferencia en los husos 29 y 30 y 0,9 m en el 31.
 
 ## Cartografía
 
 Predeterminada: Mapa IGN (España). Disponibles: Mapa IGN (España), CyclOSM, OpenTopoMap, OpenStreetMap,
 Mapa satélite (ESRI), Mapa Topográfico (ESRI), Géoportail IGN (France, SCAN 25) y MtbMap. Ninguna requiere clave personal (Géoportail usa la clave pública del IGN).
-La elegida se recuerda entre sesiones. Detalles, atribuciones y condiciones en
-[ADR-0004](specs/DECISIONS/ADR-0004-map-providers.md).
+La elegida se recuerda entre sesiones; cada una muestra su atribución sobre el mapa.
 
 ## Coordenadas
 
 Barra de estado: UTM WGS84 `30T 575700 4760048` (zona y banda, Este, Norte en metros) y WGS84 en grados,
 minutos y segundos `42º 59' 21,60'' N 2º 04' 17,11'' W`. Cálculo con GeographicLib (Karney), con las zonas
-especiales de Noruega y Svalbard; fuera de UTM se muestra UPS ([ADR-0003](specs/DECISIONS/ADR-0003-coordinates-geodesy.md)).
+especiales de Noruega y Svalbard; fuera de UTM se muestra UPS.
 También muestra el datum del archivo activo (WGS84 en GPX, KML y TCX) y, al detener el puntero, la altitud bajo él:
 la del punto del archivo si hay uno con elevación (`Alt. 1.234 m (archivo)`) o, si no, la del terreno según el MDT
 del IGN (`Alt. 846 m (MDT IGN 5 m)`, sólo España y con conexión; sin dato, «—»).
@@ -156,15 +147,17 @@ del IGN (`Alt. 846 m (MDT IGN 5 m)`, sólo España y con conexión; sin dato, «
 | GeographicLib.NET 2.3.2 | MIT |
 | Mapsui, Mapsui.Tiling, Mapsui.Nts, Mapsui.Wpf 5.1.0 | MIT |
 | ↳ BruTile 6.0 · NetTopologySuite 2.6 · SkiaSharp 3.119 · HarfBuzzSharp · Svg.Skia · Topten.RichTextKit | Apache-2.0 · BSD-3 · MIT · MIT · MIT · Apache-2.0 |
+| GDAL 3.12.1 (bindings de C#) · GDAL.Native 3.12.1 (compilación GISInternals: GDAL, PROJ, GEOS, libtiff…) | MIT · licencias de cada biblioteca en `gdal*.rtf` y `gdalicense.txt` |
+| SDK ERDAS ECW/JP2 Desktop Read-Only Redistributable 5 (paquete GDAL.Plugins: `gdal_ECW_JP2ECW.dll`, `NCSEcw.dll`) | Licencia propietaria de Intergraph/Hexagon, gratuita para aplicaciones de escritorio que sólo leen (`gdalCW5License.rtf`). Obliga a admitir ECWP, a que el usuario acepte una licencia de uso y a mostrar su aviso de copyright en «Acerca de»: los tres están hechos |
 | xunit.v3 4.0.2 (sólo pruebas) | Apache-2.0 |
 
 Datos: mosaicos y MDT del IGN España bajo CC BY 4.0 (scne.es); datos OSM bajo ODbL. Servicio de elevaciones: WCS «Modelos Digitales del Terreno de España» (servicios.idee.es/wcs-inspire/mdt).
 
 ## Limitaciones conocidas
 
-- Cartografía local: imágenes OZF, ECW, GeoTIFF georreferenciados y RMAP no se admiten (D7). Una imagen enorme se
+- Cartografía local: imágenes OZF y RMAP no se admiten. Este producto contiene tecnología propiedad de Intergraph Corporation (ECW). En un `.map` o `.imp`, una imagen enorme se
   carga reducida a 50 megapíxeles. ED50 sólo en los husos 29 a 31; su latitud difiere unos 0,3 m de la que da
-  mendikat.net, que corta antes un cálculo iterativo (D12).
+  mendikat.net, que corta antes un cálculo iterativo (conviene corregirlo en el PHP).
 
 - Guardar escribe primero un archivo temporal, lo verifica y sólo entonces sustituye el original. Al guardar se avisa
   si algo cambiará en el archivo (GPX 1.0 → 1.1). Los números se escriben con su valor exacto, pero su texto puede cambiar (-2.0610 → -2.061).
@@ -172,12 +165,13 @@ Datos: mosaicos y MDT del IGN España bajo CC BY 4.0 (scne.es); datos OSM bajo O
 - Tras cada edición se redibuja el documento completo en el mapa: unos 0,2 s con 100 000 puntos y casi 1 s con 500 000.
   Evitarlo exige actualizar el mapa por partes (rediseño de las capas); queda fuera de este plan.
 - Con muchos waypoints juntos, sus nombres se solapan en el mapa al acercarse.
-- MDT del IGN: sólo España. El servicio no marca «sin dato» (devuelve 0 en el mar y fuera de España), así que las celdas a 0,000 m se tratan como sin dato y esos puntos no cambian. No se aplica ninguna corrección geoidal (ADR-0007).
+- MDT del IGN: sólo España. El servicio no marca «sin dato» (devuelve 0 en el mar y fuera de España), así que las celdas a 0,000 m se tratan como sin dato y esos puntos no cambian. No se aplica ninguna corrección geoidal.
 - Un GPX de 50 MB (500 000 puntos) tarda unos 5 s en abrirse y ocupa unos 190 MB de memoria. Guardarlo prepara el
   archivo en la ventana principal (~2 s sin respuesta); la verificación y la escritura van en segundo plano. Guardar no se puede cancelar.
 - El lector de pantalla no anuncia por sí solo los cambios de la barra de estado: hay que ir a ella para leerlos.
-- El comportamiento sin conexión (MAP-07) está probado con red simulada; falta la comprobación manual sin red.
+- El comportamiento sin conexión está probado con red simulada; falta la comprobación manual sin red.
 - Las pruebas de interfaz crean las ventanas reales sin mostrarlas (enlaces, nombres accesibles, cierre); el uso con ratón
   y el dibujo del mapa se comprueban a mano.
 - Condiciones de uso de Esri, OSM y del SCAN 25 del IGN francés a revisar antes de distribuir públicamente.
 - MtbMap y CyclOSM son servidores comunitarios sin garantía de disponibilidad.
+- «Buscar actualizaciones» abre de momento https://www.mendikat.net (falta la dirección definitiva).

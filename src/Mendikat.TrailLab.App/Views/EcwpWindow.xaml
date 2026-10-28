@@ -1,0 +1,16 @@
+<Window x:Class="Mendikat.TrailLab.App.Views.EcwpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:res="clr-namespace:Mendikat.TrailLab.App.Resources"
+        Title="{x:Static res:Strings.EcwpTitle}" Width="560" SizeToContent="Height" ResizeMode="NoResize"
+        ShowInTaskbar="False" WindowStartupLocation="CenterOwner" FocusManager.FocusedElement="{Binding ElementName=UrlBox}">
+    <StackPanel Margin="14">
+        <TextBlock Text="{x:Static res:Strings.EcwpPrompt}" TextWrapping="Wrap" Margin="0,0,0,6" />
+        <TextBox x:Name="UrlBox" TextChanged="OnUrlChanged" AutomationProperties.Name="{x:Static res:Strings.EcwpPrompt}" />
+        <TextBlock x:Name="Hint" Text="{x:Static res:Strings.EcwpExample}" Foreground="DimGray" TextWrapping="Wrap" Margin="0,6,0,0" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+            <Button x:Name="OpenButton" Content="{x:Static res:Strings.EcwpOpen}" IsDefault="True" IsEnabled="False" Padding="14,3" Margin="0,0,8,0" Click="OnOpen" />
+            <Button Content="{x:Static res:Strings.DialogCancel}" IsCancel="True" Padding="14,3" />
+        </StackPanel>
+    </StackPanel>
+</Window>

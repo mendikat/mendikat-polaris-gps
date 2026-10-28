@@ -26,9 +26,6 @@ public sealed class ProcessingTests
     }
 
     [Fact]
-    [Trait("Req", "SIMP-01")]
-    [Trait("Req", "SIMP-02")]
-    [Trait("Acc", "ACC-SIMP-01")]
     public void Nearly_straight_segments_keep_only_their_ends_and_stay_separate()
     {
         var first = NoisyLine(100, noise: 1);
@@ -44,7 +41,6 @@ public sealed class ProcessingTests
     }
 
     [Fact]
-    [Trait("Req", "SIMP-01")]
     public void Deviations_larger_than_the_tolerance_are_kept()
     {
         // An "L": 50 points east, then 50 points north. The corner deviates ~350 m from the chord.
@@ -59,8 +55,6 @@ public sealed class ProcessingTests
     }
 
     [Fact]
-    [Trait("Req", "SIMP-03")]
-    [Trait("Req", "EDIT-05")]
     public void Kept_points_are_unchanged_and_the_simplification_can_be_undone()
     {
         var points = NoisyLine(30, noise: 1);
@@ -77,8 +71,6 @@ public sealed class ProcessingTests
     }
 
     [Fact]
-    [Trait("Req", "SIMP-02")]
-    [Trait("Req", "SIMP-05")]
     public void Short_degenerate_and_duplicated_segments_are_handled()
     {
         Assert.Empty(TrackSimplifier.KeptIndices([], 5));
@@ -96,7 +88,6 @@ public sealed class ProcessingTests
     }
 
     [Fact]
-    [Trait("Req", "SIMP-05")]
     public void One_million_points_do_not_overflow_the_stack()
     {
         var random = new Random(1);
@@ -111,14 +102,12 @@ public sealed class ProcessingTests
     }
 
     [Fact]
-    [Trait("Req", "SIMP-01")]
     public void Tolerance_must_be_positive()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => TrackSimplifier.Plan([NoisyLine(5, 0)], 0));
     }
 
     [Theory]
-    [Trait("Req", "TIME-01")]
     [InlineData(6, SpeedUnit.KilometersPerHour, 6 / 3.6)]
     [InlineData(1.5, SpeedUnit.MetersPerSecond, 1.5)]
     [InlineData(10, SpeedUnit.MinutesPerKilometer, 1000 / 600.0)]
@@ -128,9 +117,6 @@ public sealed class ProcessingTests
     }
 
     [Fact]
-    [Trait("Req", "TIME-02")]
-    [Trait("Req", "TIME-05")]
-    [Trait("Acc", "ACC-TIME-01")]
     public void Times_follow_distance_and_speed_across_a_daylight_saving_change()
     {
         var p0 = new GeoPosition(42.8, -1.6);
@@ -150,7 +136,6 @@ public sealed class ProcessingTests
     }
 
     [Fact]
-    [Trait("Req", "TIME-03")]
     public void Uniform_mode_ignores_distance()
     {
         var points = NoisyLine(4, 0);
@@ -162,7 +147,6 @@ public sealed class ProcessingTests
     }
 
     [Fact]
-    [Trait("Req", "TIME-04")]
     public void Segment_gaps_are_travelled_by_default_and_can_be_skipped()
     {
         var a = new GeoPosition(42.8, -1.6);
@@ -178,7 +162,6 @@ public sealed class ProcessingTests
     }
 
     [Fact]
-    [Trait("Req", "TIME-05")]
     public void Nonexistent_and_ambiguous_local_start_times_are_detected()
     {
         Assert.Equal(TimeStartIssue.Invalid, TimeRegenerator.CheckStart(new DateTime(2026, 3, 29, 2, 30, 0), Madrid));
@@ -192,8 +175,6 @@ public sealed class ProcessingTests
     }
 
     [Fact]
-    [Trait("Req", "TIME-01")]
-    [Trait("Req", "TIME-06")]
     public void Invalid_speed_gives_no_plan_and_undo_restores_previous_times()
     {
         var points = NoisyLine(3, 0);

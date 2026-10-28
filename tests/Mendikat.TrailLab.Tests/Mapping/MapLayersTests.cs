@@ -15,7 +15,6 @@ public sealed class MapLayersTests
     private const double HalfWorld = 20037508.342789244;
 
     [Theory]
-    [Trait("Req", "MAP-08")]
     [InlineData(0, 0, 0, 0)]
     [InlineData(0, 180, HalfWorld, 0)]
     [InlineData(0, -90, -HalfWorld / 2, 0)]
@@ -28,7 +27,6 @@ public sealed class MapLayersTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-08")]
     public void Web_mercator_round_trip_is_below_a_centimeter()
     {
         var original = new GeoPosition(42.9853, -2.0786);
@@ -42,7 +40,6 @@ public sealed class MapLayersTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-08")]
     public void Pointer_beyond_the_antimeridian_wraps_longitude()
     {
         var position = WebMercator.ToGeo(HalfWorld * 1.5, 0);
@@ -51,9 +48,6 @@ public sealed class MapLayersTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-01")]
-    [Trait("Req", "LAY-01")]
-    [Trait("Req", "LAY-02")]
     public void Each_item_gets_its_own_layers_so_it_can_be_hidden_alone()
     {
         TrailData data;
@@ -77,7 +71,6 @@ public sealed class MapLayersTests
     }
 
     [Fact]
-    [Trait("Req", "WPE-01")]
     public void A_gpx_with_only_waypoints_shows_each_one_with_its_symbol_and_name()
     {
         // Like the 890 summits of mendikat.net's waypoints.gpx: no tracks or routes.
@@ -102,7 +95,6 @@ public sealed class MapLayersTests
     }
 
     [Fact]
-    [Trait("Req", "LAY-02")]
     public void Added_points_use_their_own_symbol()
     {
         var data = new TrailData();
@@ -120,7 +112,6 @@ public sealed class MapLayersTests
     }
 
     [Fact]
-    [Trait("Req", "LAY-03")]
     public void Hit_test_finds_the_nearest_visible_point_within_the_tolerance()
     {
         var data = new TrailData();
@@ -143,7 +134,6 @@ public sealed class MapLayersTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-09")]
     public void World_extent_covers_the_data_bounds()
     {
         var extent = TrailLayerFactory.WorldExtent(new GeoBounds(42.98, -2.08, 42.99, -2.06))!;

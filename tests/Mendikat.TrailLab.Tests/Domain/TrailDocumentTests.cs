@@ -5,7 +5,6 @@ namespace Mendikat.TrailLab.Tests.Domain;
 public sealed class TrailDocumentTests
 {
     [Fact]
-    [Trait("Req", "SAVE-04")]
     public void New_document_has_no_unsaved_changes()
     {
         var document = new TrailDocument(@"C:\data\route.gpx", DocumentFormat.Gpx);
@@ -15,7 +14,6 @@ public sealed class TrailDocumentTests
     }
 
     [Fact]
-    [Trait("Req", "SAVE-04")]
     public void Change_marks_dirty_and_save_clears_it()
     {
         var document = new TrailDocument(@"C:\data\route.gpx", DocumentFormat.Gpx);
@@ -32,7 +30,6 @@ public sealed class TrailDocumentTests
     }
 
     [Theory]
-    [Trait("Req", "APP-07")]
     [InlineData(@"C:\data\route.gpx", true)]
     [InlineData(@"c:\DATA\Route.GPX", true)]
     [InlineData(@"C:\data\..\data\route.gpx", true)]

@@ -20,7 +20,6 @@ public sealed class LocalCrsTests
     /// PHP 8.5, 2026-10-27): UTM ED50 → geographic ED50 → geographic WGS84.
     /// </summary>
     [Theory]
-    [Trait("Req", "LMAP-04")]
     [InlineData(30, 430000, 4780000, 43.168743769, -3.861126318, 43.167638726, -3.862461647)]
     [InlineData(30, 600000, 4700000, 42.445125873, -1.784080252, 42.444010244, -1.785351872)]
     [InlineData(30, 350000, 4100000, 37.033632266, -4.686447190, 37.032359154, -4.687750423)]
@@ -41,7 +40,6 @@ public sealed class LocalCrsTests
     }
 
     [Theory]
-    [Trait("Req", "LMAP-04")]
     [InlineData(MapDatum.Ed50)]
     [InlineData(MapDatum.Wgs84)]
     [InlineData(MapDatum.Etrs89)]
@@ -59,7 +57,6 @@ public sealed class LocalCrsTests
     }
 
     [Fact]
-    [Trait("Req", "LMAP-04")]
     public void Utm_wgs84_matches_the_status_bar_formatter()
     {
         // 30T 610926 4740868 is what the status bar shows for this point (COORD-01).
@@ -70,7 +67,6 @@ public sealed class LocalCrsTests
     }
 
     [Fact]
-    [Trait("Req", "LMAP-04")]
     public void Ed50_outside_zones_29_to_31_is_not_supported()
     {
         var ex = Assert.Throws<UnsupportedCrsException>(() => Crs.Utm(32, north: true, MapDatum.Ed50).ToWgs84(500000, 5000000));
@@ -79,7 +75,6 @@ public sealed class LocalCrsTests
     }
 
     [Fact]
-    [Trait("Req", "LMAP-04")]
     public void A_transverse_mercator_with_latitude_of_origin_is_offset_from_it()
     {
         var tm = Crs.TransverseMercator(MapDatum.Wgs84, latitudeOfOrigin: 40, centralMeridian: -3, scale: 1, falseEasting: 100000, falseNorthing: 200000);

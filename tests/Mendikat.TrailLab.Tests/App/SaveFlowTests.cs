@@ -25,8 +25,6 @@ public sealed class SaveFlowTests : IDisposable
     public void Dispose() => Directory.Delete(_directory, recursive: true);
 
     [Fact]
-    [Trait("Req", "SAVE-01")]
-    [Trait("Req", "SAVE-04")]
     public async Task Save_writes_to_the_origin_and_clears_the_indicator()
     {
         Assert.True(await _vm.SaveActiveAsync());
@@ -37,7 +35,6 @@ public sealed class SaveFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "SAVE-02")]
     public async Task Save_as_forces_the_extension_of_the_format()
     {
         _dialogs.SavePath = Path.Combine(_directory, "copia.txt");
@@ -49,7 +46,6 @@ public sealed class SaveFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "SAVE-02")]
     public async Task Save_as_asks_before_overwriting_a_file_whose_name_was_completed()
     {
         File.WriteAllText(Path.Combine(_directory, "existe.gpx"), "x");
@@ -63,8 +59,6 @@ public sealed class SaveFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "GPX-04")]
-    [Trait("Req", "WPE-04")]
     public async Task Save_issues_are_confirmed_and_cancelling_keeps_the_changes()
     {
         _store.Issues.Add(new SaveIssue(SaveIssueKind.GpxVersionUpgrade));
@@ -78,7 +72,6 @@ public sealed class SaveFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "GPX-04")]
     public async Task The_gpx_10_upgrade_is_asked_only_once_per_document()
     {
         _store.Issues.Add(new SaveIssue(SaveIssueKind.GpxVersionUpgrade));
@@ -92,8 +85,6 @@ public sealed class SaveFlowTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "SAVE-03")]
-    [Trait("Req", "APP-05")]
     [InlineData("verification", "no superó la verificación")]
     [InlineData("access", "No hay permiso para escribir")]
     [InlineData("io", "No se pudo guardar el archivo")]
@@ -116,7 +107,6 @@ public sealed class SaveFlowTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "APP-04")]
     public async Task Choosing_save_when_closing_saves_and_closes()
     {
         _dialogs.SaveChangesAnswer = Mendikat.TrailLab.App.Services.SaveChangesChoice.Save;

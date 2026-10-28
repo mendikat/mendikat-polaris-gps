@@ -8,7 +8,6 @@ public sealed class ArchitectureTests
         ["PresentationFramework", "PresentationCore", "WindowsBase", "System.Xaml", "System.Windows.Forms"];
 
     [Fact]
-    [Trait("Req", "SAVE-06")]
     public void Domain_does_not_reference_any_ui_framework()
     {
         var references = typeof(TrailDocument).Assembly.GetReferencedAssemblies().Select(a => a.Name);

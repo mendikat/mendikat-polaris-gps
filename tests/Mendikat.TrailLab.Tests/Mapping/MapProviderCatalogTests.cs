@@ -6,7 +6,6 @@ namespace Mendikat.TrailLab.Tests.Mapping;
 public sealed partial class MapProviderCatalogTests
 {
     [Fact]
-    [Trait("Req", "MAP-03")]
     public void Default_provider_is_ign_spain()
     {
         Assert.Equal("Mapa IGN (España)", MapProviderCatalog.Default.DisplayName);
@@ -14,7 +13,6 @@ public sealed partial class MapProviderCatalogTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-02")]
     public void Catalog_contains_the_eight_agreed_providers_with_unique_ids()
     {
         string[] expected =
@@ -28,7 +26,6 @@ public sealed partial class MapProviderCatalogTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-06")]
     public void Every_provider_has_attribution_https_and_tile_placeholders()
     {
         Assert.All(MapProviderCatalog.All, p =>
@@ -46,7 +43,6 @@ public sealed partial class MapProviderCatalogTests
     }
 
     [Theory]
-    [Trait("Req", "MAP-04")]
     [InlineData("opentopomap", "opentopomap")]
     [InlineData("thunderforest", "ign-es")] // removed provider falls back to the default
     [InlineData(null, "ign-es")]
@@ -56,7 +52,6 @@ public sealed partial class MapProviderCatalogTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-02")]
     public void No_tile_url_template_exists_outside_the_catalog()
     {
         var root = Path.Combine(Fixture.RepositoryRoot(), "src");

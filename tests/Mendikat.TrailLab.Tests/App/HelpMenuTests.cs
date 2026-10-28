@@ -18,7 +18,6 @@ public sealed partial class HelpMenuTests
     }
 
     [Fact]
-    [Trait("Req", "APP-09")]
     public void Help_opens_the_local_user_guide()
     {
         _vm.HelpCommand.Execute(null);
@@ -30,7 +29,6 @@ public sealed partial class HelpMenuTests
     }
 
     [Fact]
-    [Trait("Req", "APP-09")]
     public void Donate_opens_the_paypal_button_of_mendikat()
     {
         _vm.DonateCommand.Execute(null);
@@ -39,7 +37,6 @@ public sealed partial class HelpMenuTests
     }
 
     [Fact]
-    [Trait("Req", "APP-09")]
     public void Web_opens_mendikat_net()
     {
         _vm.WebCommand.Execute(null);
@@ -48,7 +45,6 @@ public sealed partial class HelpMenuTests
     }
 
     [Fact]
-    [Trait("Req", "APP-09")]
     public void Check_for_updates_opens_mendikat_net_for_now()
     {
         _vm.CheckUpdatesCommand.Execute(null);
@@ -57,20 +53,18 @@ public sealed partial class HelpMenuTests
     }
 
     [Fact]
-    [Trait("Req", "APP-09")]
     public void About_shows_version_author_and_links()
     {
         _vm.AboutCommand.Execute(null);
 
         var about = _dialogs.AboutShown!;
-        Assert.Equal("Versión 0.0.3", about.VersionText);
+        Assert.Equal("Versión 0.0.4", about.VersionText);
         Assert.Equal("Autor: Javier Urrutia", about.AuthorText);
         Assert.Equal("mailto:javi@mendikat.net", about.AuthorEmailUri);
         Assert.Equal("https://www.mendikat.net", about.Web);
     }
 
     [Fact]
-    [Trait("Req", "APP-09")]
     public void The_user_guide_has_the_donation_form_and_working_internal_links()
     {
         var html = File.ReadAllText(MainViewModel.HelpFilePath);

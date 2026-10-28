@@ -48,6 +48,14 @@ public sealed class WpfDialogService : IDialogService
         return dialog.ShowDialog(Owner) == true ? dialog.FileNames : null;
     }
 
+    public string? AskEcwpUrl()
+    {
+        var dialog = new EcwpWindow { Owner = Owner };
+        return dialog.ShowDialog() == true ? dialog.Url : null;
+    }
+
+    public bool AskEcwLicense() => new EcwLicenseWindow { Owner = Owner }.ShowDialog() == true;
+
     public string? AskFolder(string? initialFolder)
     {
         var dialog = new OpenFolderDialog { Title = Strings.DialogConvertFolderTitle, InitialDirectory = initialFolder ?? string.Empty };

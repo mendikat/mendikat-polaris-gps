@@ -55,11 +55,6 @@ public sealed class WindowSmokeTests
     }
 
     [Fact]
-    [Trait("Req", "SIMP-04")]
-    [Trait("Req", "TIME-01")]
-    [Trait("Req", "DEM-02")]
-    [Trait("Req", "CONV-06")]
-    [Trait("Req", "PROF-01")]
     public void Secondary_windows_can_be_created_with_their_view_models()
     {
         OnStaThread(() =>
@@ -82,7 +77,6 @@ public sealed class WindowSmokeTests
     }
 
     [Fact]
-    [Trait("Req", "APP-01")]
     public void Window_icon_is_an_embedded_resource_that_wpf_can_decode()
     {
         // MainWindow uses Icon="Assets/icon.ico": WPF looks it up in the assembly's "g" resources at run time.
@@ -101,7 +95,6 @@ public sealed class WindowSmokeTests
     }
 
     [Fact]
-    [Trait("Req", "APP-04")]
     public void Main_window_without_changes_closes_at_the_first_attempt()
     {
         // Regression: Close() was called again while the window was closing, which throws (log of 2026-10-25).
@@ -118,7 +111,6 @@ public sealed class WindowSmokeTests
     }
 
     [Fact]
-    [Trait("Req", "APP-04")]
     public void Main_window_with_changes_stays_open_when_the_user_cancels()
     {
         OnStaThread(() =>

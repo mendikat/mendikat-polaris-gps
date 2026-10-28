@@ -22,8 +22,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-02")]
-    [Trait("Acc", "ACC-APP-04")]
     public void Without_documents_only_open_and_exit_are_enabled()
     {
         Assert.True(_vm.OpenGpxCommand.CanExecute(null));
@@ -35,7 +33,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-02")]
     public void Save_is_enabled_only_when_the_active_document_has_changes()
     {
         Open(PathA);
@@ -48,8 +45,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-03")]
-    [Trait("Acc", "ACC-APP-01")]
     public void Opening_a_second_file_keeps_the_first_one()
     {
         Open(PathA);
@@ -63,7 +58,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-07")]
     public void Opening_an_already_open_file_activates_it_instead_of_duplicating()
     {
         Open(PathA);
@@ -77,8 +71,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-05")]
-    [Trait("Acc", "ACC-APP-03")]
     public void Load_error_shows_a_spanish_message_and_adds_no_document()
     {
         Open(PathA);
@@ -94,8 +86,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-01")]
-    [Trait("Req", "SAVE-04")]
     public void Title_and_tab_header_show_an_asterisk_for_unsaved_changes()
     {
         Open(PathA);
@@ -108,7 +98,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-04")]
     public async Task Closing_an_unmodified_document_does_not_ask()
     {
         Open(PathA);
@@ -121,8 +110,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-04")]
-    [Trait("Acc", "ACC-APP-02")]
     public async Task Cancelling_close_keeps_the_document_and_its_changes()
     {
         Open(PathA);
@@ -138,7 +125,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-04")]
     public async Task Discarding_closes_without_saving()
     {
         Open(PathA);
@@ -152,7 +138,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-04")]
     public async Task Choosing_save_when_saving_is_unavailable_keeps_the_document_open()
     {
         Open(PathA);
@@ -167,7 +152,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-04")]
     public async Task Choosing_save_saves_then_closes_but_a_failed_save_keeps_it_open()
     {
         _store.SavingSupported = true;
@@ -187,7 +171,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-04")]
     public async Task Exit_is_cancelled_if_any_modified_document_is_cancelled()
     {
         Open(PathA);
@@ -203,7 +186,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-03")]
     public async Task Closing_the_active_document_activates_a_neighbour()
     {
         Open(PathA);
@@ -217,7 +199,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "SAVE-04")]
     public async Task Save_as_saves_to_the_chosen_path_and_clears_the_indicator()
     {
         _store.SavingSupported = true;
@@ -233,8 +214,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-03")]
-    [Trait("Acc", "ACC-MAP-01")]
     public void First_run_uses_ign_spain()
     {
         Assert.Equal("ign-es", _vm.SelectedMapProvider.Id);
@@ -242,8 +221,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-04")]
-    [Trait("Acc", "ACC-MAP-01")]
     public void Chosen_map_is_saved_and_restored_on_next_start()
     {
         _vm.SelectedMapProvider = _vm.MapProviders.Single(p => p.Id == "opentopomap");
@@ -253,7 +230,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-04")]
     public void Unknown_saved_map_falls_back_to_ign()
     {
         _settings.Current = new() { Map = new() { Provider = "thunderforest" } };
@@ -262,7 +238,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "NFR-02")]
     public async Task Opening_can_be_cancelled_and_adds_no_document()
     {
         Open(PathA);
@@ -287,7 +262,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-07")]
     public void Tile_failures_show_a_status_that_clears_when_tiles_load()
     {
         _vm.ReportMapTiles(failed: true);
@@ -298,8 +272,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "COORD-01")]
-    [Trait("Req", "COORD-02")]
     public void Pointer_position_updates_both_coordinate_texts()
     {
         _vm.UpdatePointer(new Mendikat.TrailLab.Domain.Geo.GeoPosition(43.373086111, -1.752777778));
@@ -312,8 +284,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "MAP-09")]
-    [Trait("Acc", "ACC-MAP-02")]
     public void Opening_a_file_asks_the_map_to_fit_its_data_without_closing_others()
     {
         var requests = new List<MapRequest>();
@@ -328,7 +298,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "APP-06")]
     public void Zoom_to_data_is_enabled_only_with_points_and_profile_is_not_available_yet()
     {
         Assert.False(_vm.ZoomToDataCommand.CanExecute(null));
@@ -341,7 +310,6 @@ public sealed class MainViewModelTests
     }
 
     [Fact]
-    [Trait("Req", "LAY-02")]
     public void Each_document_gets_its_own_color()
     {
         Open(PathA);

@@ -11,7 +11,6 @@ public sealed class PointAdditionTests
     private static readonly GeoPosition P = new(43.0, -2.0);
 
     [Fact]
-    [Trait("Req", "APP-08")]
     public void New_document_has_a_title_but_no_file()
     {
         var document = TrailDocument.CreateNew(DocumentFormat.Gpx, "Sin título 1.gpx", new TrailData());
@@ -30,7 +29,6 @@ public sealed class PointAdditionTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
     public void Addition_to_a_route_appends_at_the_end()
     {
         var data = new TrailData();
@@ -48,7 +46,6 @@ public sealed class PointAdditionTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
     public void Addition_to_the_waypoints_adds_a_waypoint()
     {
         var data = new TrailData();
@@ -60,7 +57,6 @@ public sealed class PointAdditionTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
     public void Addition_to_a_track_without_segments_creates_one()
     {
         var data = new TrailData();
@@ -76,7 +72,6 @@ public sealed class PointAdditionTests
     }
 
     [Fact]
-    [Trait("Req", "APP-08")]
     public void Addition_after_a_point_goes_into_that_points_segment()
     {
         var data = new TrailData();

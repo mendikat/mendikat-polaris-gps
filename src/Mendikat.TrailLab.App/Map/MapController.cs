@@ -185,12 +185,12 @@ public sealed class MapController : IDisposable
     /// <summary>Draws a local map above the base cartography and below the tracks (LMAP-01). DEMs are not drawn.</summary>
     public void AddLocalMap(LocalMapItemViewModel item)
     {
-        if (item.Content is not LocalRasterMap raster || _localLayers.ContainsKey(item))
+        if (item.Content is not ILocalMap map || _localLayers.ContainsKey(item))
         {
             return;
         }
 
-        var layer = new TileLayer(new LocalMapTileSource(raster.Map, raster.Image, item.Name)) { Name = $"local:{item.Name}", Enabled = item.IsVisible };
+        var layer = new TileLayer(map.CreateTileSource(item.Name)) { Name = $"local:{item.Name}", Enabled = item.IsVisible };
         _localLayers[item] = layer;
         _map.Layers.Add(layer, LocalMapLayerGroup);
     }

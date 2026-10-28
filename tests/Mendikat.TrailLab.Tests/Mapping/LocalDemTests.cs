@@ -23,7 +23,7 @@ public sealed class LocalDemTests : IDisposable
 
     private static LocalMapContent Load(string path) => LocalMapLoader.Load(path, new WpfRasterImageDecoder(), TestContext.Current.CancellationToken);
 
-    private static ElevationGrid LoadGrid(string path) => Assert.IsType<LocalDem>(Load(path)).Grid;
+    private static ElevationGrid LoadGrid(string path) => Assert.IsType<ElevationGrid>(Assert.IsType<LocalDem>(Load(path)).Dem);
 
     /// <summary>A 3″ HGT whose value at row r, column c is r + c, with a void at row 10, column 10.</summary>
     private string Hgt(string name = "N42W002.hgt", int size = 1201)
@@ -59,7 +59,6 @@ public sealed class LocalDemTests : IDisposable
     private const string Values = "100 110 120\n200 210 220\n300 310 -9999\n";
 
     [Fact]
-    [Trait("Req", "LDEM-02")]
     public void Hgt_nodes_and_interpolation_from_the_file_name_corner()
     {
         var grid = LoadGrid(Hgt());
@@ -73,8 +72,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LDEM-02")]
-    [Trait("Req", "LDEM-06")]
     public void Hgt_voids_and_positions_outside_the_tile_have_no_data()
     {
         var grid = LoadGrid(Hgt());
@@ -86,7 +83,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "LDEM-02")]
     [InlineData("N42W002.hgt", 1000, LocalMapError.InvalidDem)]  // truncated
     [InlineData("mapa.hgt", 1201, LocalMapError.InvalidDem)]     // no corner in the name
     public void Invalid_hgt_files_are_rejected(string name, int size, LocalMapError error)
@@ -97,7 +93,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LDEM-04")]
     public void Ascii_grid_with_corner_and_with_center_gives_the_same_values()
     {
         var corner = LoadGrid(Asc("esquina.asc", "ncols 3\nnrows 3\nxllcorner 599975\nyllcorner 4749975\ncellsize 50\nNODATA_value -9999\n", Values));
@@ -115,8 +110,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LDEM-04")]
-    [Trait("Req", "LDEM-05")]
     public void Ascii_grid_reports_its_system_and_an_unknown_vertical_reference()
     {
         var grid = LoadGrid(Asc("mdt.asc", "ncols 3\nnrows 3\nxllcorner 599975\nyllcorner 4749975\ncellsize 50\n", Values));
@@ -127,7 +120,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LDEM-04")]
     public void Ascii_grid_without_prj_is_rejected_instead_of_guessed()
     {
         var path = Asc("sin.asc", "ncols 3\nnrows 3\nxllcorner 0\nyllcorner 0\ncellsize 1\n", Values, prj: null);
@@ -138,7 +130,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "LDEM-04")]
     [InlineData("MDT05-0112-H30-LIDAR.asc", "MDT05-0112-H30-LIDAR.PRJ")]
     [InlineData("MDT05-0112-H30-LIDAR.ASC", "mdt05-0112-h30-lidar.prj")]
     [InlineData("mdt.asc", "mdt.asc.prj")]
@@ -154,7 +145,6 @@ public sealed class LocalDemTests : IDisposable
     private const string ArcInfoPrj = "Projection    UTM\r\nZone          30\r\nDatum         WGS 84\r\nZunits        METERS\r\nUnits         METERS\r\n";
 
     [Theory]
-    [Trait("Req", "LDEM-04")]
     [InlineData(ArcInfoPrj, "UTM 30N WGS84")]
     [InlineData("Projection    UTM\nZone          28\nDatum         REGCAN95\nUnits         METERS\n", "UTM 28N REGCAN95")]
     [InlineData("Projection    UTM\nZone          -23\nDatum         WGS84\nUnits         METERS\n", "UTM 23S WGS84")]
@@ -165,7 +155,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "LDEM-04")]
     [InlineData("MDT05-0112-H30-LIDAR", "UTM 30N ETRS89")]
     [InlineData("MDT05-0091B-0117-H30 ", "UTM 30N ETRS89")]
     [InlineData("MDT25-0023-H29", "UTM 29N ETRS89")]
@@ -180,7 +169,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LDEM-04")]
     public void An_ign_grid_ending_with_ctrl_z_and_a_prj_named_with_a_space_is_read()
     {
         // As found in IGN downloads: "MDT05-0112-H30-LIDAR.asc" next to "MDT05-0112-H30-LIDAR .PRJ", file ending in ^Z.
@@ -196,7 +184,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LDEM-04")]
     public void An_ign_name_wins_over_a_prj_with_another_zone_and_says_so()
     {
         // Real case: MDT05-0028-H29-LIDAR.asc (x from 727000, zone 29) shipped with a .prj saying zone 30.
@@ -209,7 +196,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LDEM-04")]
     public void An_ign_grid_without_prj_uses_its_name()
     {
         var path = Asc("MDT05-0023-H30-LIDAR.asc", "ncols 3\nnrows 3\nxllcenter 600000\nyllcenter 4750000\ncellsize 50\n", Values, prj: null);
@@ -221,8 +207,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "LDEM-04")]
-    [Trait("Req", "LDEM-06")]
     [InlineData("100 110 120\n200 210 220\n300 310\n")]       // one value missing
     [InlineData("100 110 120\n200 210 220\n300 310 320 330\n")] // one too many
     [InlineData("100 110 120\n200 x 220\n300 310 320\n")]       // not a number
@@ -234,7 +218,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "LDEM-04")]
     [InlineData(EtrsUtm30Prj, "UTM 30N ETRS89")]
     [InlineData("EPSG:23030", "UTM 30N ED50")]
     [InlineData("EPSG:4326", "WGS84 geográficas")]
@@ -245,7 +228,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Theory]
-    [Trait("Req", "LDEM-04")]
     [InlineData("EPSG:2154")]
     [InlineData("PROJCS[\"RGF93_Lambert_93\",GEOGCS[\"GCS_RGF_1993\",DATUM[\"D_RGF_1993\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]]],PROJECTION[\"Lambert_Conformal_Conic\"],UNIT[\"Meter\",1.0]]")]
     public void Unsupported_systems_are_rejected(string prj)
@@ -254,7 +236,6 @@ public sealed class LocalDemTests : IDisposable
     }
 
     [Fact]
-    [Trait("Req", "LDEM-01")]
     public async Task A_dem_answers_elevation_queries_like_any_elevation_source()
     {
         Mendikat.TrailLab.Domain.Elevation.IElevationSource source = LoadGrid(Hgt());

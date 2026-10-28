@@ -9,7 +9,7 @@ namespace Mendikat.TrailLab.Mapping.Local;
 /// no data (never 0 m; LDEM-06). It is an <see cref="IElevationSource"/>, so the status bar and "Adjust elevations"
 /// can use it.
 /// </summary>
-public sealed class ElevationGrid : IElevationSource
+public sealed class ElevationGrid : ILocalDem
 {
     private readonly float[] _values;
 
@@ -43,6 +43,8 @@ public sealed class ElevationGrid : IElevationSource
     public string Attribution => $"MDT local «{Name}»";
 
     public Crs Crs { get; }
+
+    public string CrsDescription => Crs.Description;
 
     public int Columns { get; }
 
@@ -124,10 +126,10 @@ public sealed class ElevationGrid : IElevationSource
             (_values[((r + 1) * Columns) + c], (1 - fx) * fy),
             (_values[((r + 1) * Columns) + c + 1], fx * fy),
         ];
-        var sum = 0.0;
+        double sum = 0, total = 0;
         foreach (var (value, weight) in corners)
         {
-            if (weight < 1e-9)
+            if (weight < 1e-4)
             {
                 continue;
             }
@@ -138,9 +140,10 @@ public sealed class ElevationGrid : IElevationSource
             }
 
             sum += value * weight;
+            total += weight;
         }
 
-        return sum;
+        return total > 0 ? sum / total : null;
     }
 
     private GeoBounds ComputeBounds()
