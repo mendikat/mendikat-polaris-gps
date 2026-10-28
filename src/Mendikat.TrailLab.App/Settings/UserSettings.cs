@@ -7,6 +7,9 @@ public sealed record UserSettings
 {
     public MapSettings Map { get; init; } = new();
 
+    /// <summary>Language of the user interface (<see cref="AppLanguage.Code"/>); applied when the application starts.</summary>
+    public string Language { get; init; } = AppLanguage.DefaultCode;
+
     /// <summary>
     /// The user accepted the ERDAS ECW/JP2 end-user licence; until then ECW files and ECWP streams are not opened, as
     /// the SDK licence requires.

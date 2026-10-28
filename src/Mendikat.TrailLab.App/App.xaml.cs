@@ -26,7 +26,6 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
-        ApplySpanishCulture();
 
         var logDirectory = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Mendikat", "TrailLab", "logs");
@@ -48,6 +47,7 @@ public partial class App : Application
         var dem5 = new IgnWcsElevationSource(_demHttpClient, IgnDemResolution.FiveMeters);
         var dem25 = new IgnWcsElevationSource(_demHttpClient, IgnDemResolution.TwentyFiveMeters);
         var settings = new JsonSettingsStore(JsonSettingsStore.DefaultPath, _loggerFactory.CreateLogger<JsonSettingsStore>());
+        ApplyCulture(AppLanguage.FromCode(settings.Load().Language));
         var viewModel = new MainViewModel(
             new WpfDialogService(), new FileDocumentStore(), settings, _loggerFactory.CreateLogger<MainViewModel>())
         {
@@ -91,14 +91,18 @@ public partial class App : Application
         base.OnExit(e);
     }
 
-    /// <summary>UI is Spanish with decimal comma regardless of the Windows regional settings (NFR-07).</summary>
-    private static void ApplySpanishCulture()
+    /// <summary>
+    /// Texts in the language chosen in File › Settings (Spanish by default). Numbers and dates keep the Spanish format
+    /// (decimal comma) whatever the language and the Windows regional settings: coordinates typed by the user and
+    /// exported values do not change with the language.
+    /// </summary>
+    private static void ApplyCulture(AppLanguage language)
     {
         var culture = CultureInfo.GetCultureInfo("es-ES");
         CultureInfo.DefaultThreadCurrentCulture = culture;
-        CultureInfo.DefaultThreadCurrentUICulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = language.Culture;
         CultureInfo.CurrentCulture = culture;
-        CultureInfo.CurrentUICulture = culture;
+        CultureInfo.CurrentUICulture = language.Culture;
         FrameworkElement.LanguageProperty.OverrideMetadata(
             typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(culture.IetfLanguageTag)));
     }

@@ -58,6 +58,7 @@ public sealed partial class MainViewModel : ObservableObject
         InitializeEditingCommands();
         InitializeToolCommands();
         InitializeHelpCommands();
+        InitializeSettingsCommands();
         InitializeLocalMapCommands();
     }
 

@@ -12,6 +12,14 @@
   <data name="MenuSaveAs" xml:space="preserve"><value>Guardar co_mo...</value></data>
   <data name="MenuCloseDocument" xml:space="preserve"><value>_Cerrar archivo</value></data>
   <data name="MenuExit" xml:space="preserve"><value>_Salir</value></data>
+  <data name="MenuSettings" xml:space="preserve"><value>Con_figuración...</value></data>
+  <data name="SettingsTitle" xml:space="preserve"><value>Configuración</value></data>
+  <data name="SettingsGeneral" xml:space="preserve"><value>General</value></data>
+  <data name="SettingsLanguage" xml:space="preserve"><value>_Idioma de la aplicación:</value></data>
+  <data name="SettingsLanguageName" xml:space="preserve"><value>Idioma de la aplicación</value></data>
+  <data name="SettingsLanguageRestart" xml:space="preserve"><value>El cambio de idioma se aplica al volver a abrir la aplicación.</value></data>
+  <data name="SettingsAccept" xml:space="preserve"><value>Aceptar</value></data>
+  <data name="SettingsLanguageChanged" xml:space="preserve"><value>Idioma cambiado a español. Cierre y vuelva a abrir Mendikat TrailLab para verlo.</value></data>
   <data name="MenuView" xml:space="preserve"><value>_Ver</value></data>
   <data name="MenuZoomIn" xml:space="preserve"><value>_Acercar</value></data>
   <data name="MenuZoomOut" xml:space="preserve"><value>A_lejar</value></data>

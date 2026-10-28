@@ -1,6 +1,6 @@
 # Mendikat TrailLab
 
-WPF desktop GPX editor (.NET 10, MVVM without framework, Mapsui). UI in Spanish; code and comments in English; UI texts in `src/Mendikat.TrailLab.App/Resources/Strings.resx`.
+WPF desktop GPX editor (.NET 10, MVVM without framework, Mapsui). UI in Spanish; code and comments in English; UI texts in `src/Mendikat.TrailLab.App/Resources/Strings.resx` (Spanish, the default) with translations in `Strings.ca/eu/fr/pt.resx`: a new or changed text goes into all five (tests check keys and `{n}` placeholders).
 
 - Projects: `Domain` (model, no WPF), `Gpx` (reader/writer), `Mapping` (map providers, layers, DEM), `App` (WPF), `tests/` (xUnit v3, no network).
 - No specs: the spec documents (requirements, traceability, roadmap, ADRs) were removed on 2026-10-28. When something visible to users changes, update `README.md` and the help guide `src/Mendikat.TrailLab.App/Help/ayuda.html`; nothing else. Tests carry no requirement traits.

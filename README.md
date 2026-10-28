@@ -3,7 +3,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.0.5.**
+> **Estado: versión 0.0.6.**
 > Se abren archivos GPX, y KML, KMZ y TCX convertidos a GPX (WPT se retiró el 2026-10-26), se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -29,6 +29,7 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Abrir KML, KMZ o TCX | *Archivo › Abrir archivo…* (Ctrl+O): se abre como un GPX nuevo «nombre.gpx» sin guardar; **Guardar** pide dónde guardarlo |
 | Convertir varios archivos a GPX | *Archivo › Convertir a GPX…*: elegir los KML, KMZ o TCX, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
 | Ver un mapa escaneado o un MDT propio | *Archivo › Abrir cartografía…* (o soltarlos sobre la ventana): mapas `.map` (OziExplorer) e `.imp` (CompeGPS/TwoNav) con su imagen JPG, PNG, BMP, GIF o TIFF, GeoTIFF, ECW e imágenes con `.tfw`/`.jgw`/`.pgw` y `.prj`, y MDT `.asc` (con su `.prj`), `.hgt` y GeoTIFF. ECW servidos por internet: *Archivo › Abrir cartografía en línea (ECWP)…*. Se listan en **Cartografías Usuario (n)** de la barra de herramientas: arrastrar ≡ (o Ctrl+↑/↓) para decidir cuál queda encima (la de arriba de la lista; la cartografía en línea siempre al fondo), deslizador de opacidad para ver la de debajo, casilla para mostrar u ocultar (en un MDT, para usarlo), ⤢ para ir a ella y ✕ para quitarla |
+| Cambiar el idioma | *Archivo › Configuración…* › **Idioma de la aplicación**: español (por defecto), català, euskara, français o português, con su bandera. Se aplica al volver a abrir la aplicación. La guía de ayuda y algunos detalles técnicos de los errores de cartografía siguen en español; los números mantienen la coma decimal |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
 | Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |
 | Ayuda | **F1** o *Ayuda › Ayuda de Mendikat TrailLab* (guía HTML en el navegador). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones y Acerca de (versión, autor) |
@@ -80,7 +81,7 @@ WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido
 | `src/Mendikat.TrailLab.Domain` | Modelo: documentos, tracks, segmentos, puntos, waypoints. Sin dependencias de UI |
 | `src/Mendikat.TrailLab.Gpx` | Lector y escritor GPX 1.0/1.1 |
 | `src/Mendikat.TrailLab.Mapping` | Catálogo de cartografías, descarga de mosaicos, capas del mapa, formato UTM/DMS |
-| `src/Mendikat.TrailLab.App` | WPF: ventana, ViewModels, `MapController`, diálogos, configuración, logging, textos en `Resources/Strings.resx` |
+| `src/Mendikat.TrailLab.App` | WPF: ventana, ViewModels, `MapController`, diálogos, configuración, logging, textos en `Resources/Strings.resx` (español) y `Strings.ca/eu/fr/pt.resx` |
 | `tests/Mendikat.TrailLab.Tests` | xUnit v3 con fixtures propios en `Fixtures/`; sin acceso a la red |
 
 ## Formatos admitidos

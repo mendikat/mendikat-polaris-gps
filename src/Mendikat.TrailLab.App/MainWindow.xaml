@@ -48,6 +48,8 @@
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuCloseDocument}" Command="{Binding CloseDocumentCommand}" InputGestureText="Ctrl+F4" />
                 <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuSettings}" Command="{Binding SettingsCommand}" />
+                <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuExit}" Command="{Binding ExitCommand}" InputGestureText="Alt+F4" />
             </MenuItem>
             <MenuItem Header="{x:Static res:Strings.MenuEdit}">

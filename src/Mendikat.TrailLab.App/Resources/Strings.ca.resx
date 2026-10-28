@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="MenuFile" xml:space="preserve"><value>_Fitxer</value></data>
+  <data name="MenuNewGpx" xml:space="preserve"><value>_Nou fitxer</value></data>
+  <data name="MenuOpenGpx" xml:space="preserve"><value>_Obre un fitxer...</value></data>
+  <data name="MenuSave" xml:space="preserve"><value>_Desa</value></data>
+  <data name="MenuSaveAs" xml:space="preserve"><value>Desa _com a...</value></data>
+  <data name="MenuCloseDocument" xml:space="preserve"><value>_Tanca el fitxer</value></data>
+  <data name="MenuExit" xml:space="preserve"><value>_Surt</value></data>
+  <data name="MenuSettings" xml:space="preserve"><value>Con_figuració...</value></data>
+  <data name="SettingsTitle" xml:space="preserve"><value>Configuració</value></data>
+  <data name="SettingsGeneral" xml:space="preserve"><value>General</value></data>
+  <data name="SettingsLanguage" xml:space="preserve"><value>_Idioma de l'aplicació:</value></data>
+  <data name="SettingsLanguageName" xml:space="preserve"><value>Idioma de l'aplicació</value></data>
+  <data name="SettingsLanguageRestart" xml:space="preserve"><value>El canvi d'idioma s'aplica en tornar a obrir l'aplicació.</value></data>
+  <data name="SettingsAccept" xml:space="preserve"><value>D'acord</value></data>
+  <data name="SettingsLanguageChanged" xml:space="preserve"><value>Idioma canviat a català. Tanqueu i torneu a obrir Mendikat TrailLab per veure'l.</value></data>
+  <data name="MenuView" xml:space="preserve"><value>_Visualitza</value></data>
+  <data name="MenuZoomIn" xml:space="preserve"><value>_Apropa</value></data>
+  <data name="MenuZoomOut" xml:space="preserve"><value>A_llunya</value></data>
+  <data name="MenuZoomToData" xml:space="preserve"><value>Ajusta a les _dades</value></data>
+  <data name="MenuElevationProfile" xml:space="preserve"><value>_Perfil d'elevació</value></data>
+  <data name="ToolZoomIn" xml:space="preserve"><value>Apropa (Ctrl++)</value></data>
+  <data name="ToolZoomOut" xml:space="preserve"><value>Allunya (Ctrl+-)</value></data>
+  <data name="ToolZoomToData" xml:space="preserve"><value>Ajusta el mapa a les dades obertes</value></data>
+  <data name="ToolMapProvider" xml:space="preserve"><value>Cartografia</value></data>
+  <data name="ToolElevationProfile" xml:space="preserve"><value>Perfil d'elevació del track o ruta seleccionat a «Capes»</value></data>
+  <data name="ToolProfileButton" xml:space="preserve"><value>Perfil</value></data>
+  <data name="CloseTabToolTip" xml:space="preserve"><value>Tanca el document</value></data>
+  <data name="StatusReady" xml:space="preserve"><value>A punt</value></data>
+  <data name="StatusOpening" xml:space="preserve"><value>S'està obrint {0}...</value></data>
+  <data name="StatusOpened" xml:space="preserve"><value>Obert: {0}</value></data>
+  <data name="StatusAlreadyOpen" xml:space="preserve"><value>«{0}» ja està obert.</value></data>
+  <data name="StatusClosed" xml:space="preserve"><value>Tancat: {0}</value></data>
+  <data name="StatusOpenFailed" xml:space="preserve"><value>No s'ha pogut obrir {0}.</value></data>
+  <data name="StatusOpenCancelled" xml:space="preserve"><value>S'ha cancel·lat l'obertura de {0}.</value></data>
+  <data name="CancelOperation" xml:space="preserve"><value>Cancel·la</value></data>
+  <data name="CancelOperationToolTip" xml:space="preserve"><value>Cancel·la l'obertura en curs (Esc)</value></data>
+  <data name="ProgressName" xml:space="preserve"><value>Progrés</value></data>
+  <data name="A11yDmsToolTip" xml:space="preserve"><value>WGS84, graus minuts segons</value></data>
+  <data name="A11yDmsName" xml:space="preserve"><value>Coordenades geogràfiques WGS84</value></data>
+  <data name="A11yUtmToolTip" xml:space="preserve"><value>UTM WGS84: fus i banda, Est, Nord (m)</value></data>
+  <data name="A11yUtmName" xml:space="preserve"><value>Coordenades UTM</value></data>
+  <data name="A11yMapStatusName" xml:space="preserve"><value>Estat de la cartografia</value></data>
+  <data name="A11yStatusName" xml:space="preserve"><value>Estat</value></data>
+  <data name="A11yMapName" xml:space="preserve"><value>Mapa</value></data>
+  <data name="A11ySpeedUnitName" xml:space="preserve"><value>Unitat de velocitat</value></data>
+  <data name="StatusMapLoadFailed" xml:space="preserve"><value>No s'ha pogut carregar la cartografia «{0}»: sense connexió o el servidor no respon.</value></data>
+  <data name="StatusMapSaveSettingsFailed" xml:space="preserve"><value>No s'ha pogut desar la configuració.</value></data>
+  <data name="NoDocumentsHint" xml:space="preserve"><value>No hi ha documents oberts. Utilitzeu Fitxer › Nou fitxer o Obre un fitxer...</value></data>
+  <data name="NewDocumentTitle" xml:space="preserve"><value>Sense títol {0}.gpx</value></data>
+  <data name="NewTrackName" xml:space="preserve"><value>Track 1</value></data>
+  <data name="StatusNewDocument" xml:space="preserve"><value>Document nou «{0}». Control + clic al mapa per afegir punts al track seleccionat.</value></data>
+  <data name="StatusPointAdded" xml:space="preserve"><value>Punt afegit. Control + clic per afegir el següent.</value></data>
+  <data name="SummaryCounts" xml:space="preserve"><value>Tracks: {0} · Rutes: {1} · Waypoints: {2} · Punts: {3}</value></data>
+  <data name="SummaryTrack" xml:space="preserve"><value>Track «{0}»: {1} segment(s), {2} punts</value></data>
+  <data name="SummaryRoute" xml:space="preserve"><value>Ruta «{0}»: {1} punts</value></data>
+  <data name="SummaryWaypoints" xml:space="preserve"><value>{0} waypoints</value></data>
+  <data name="UnnamedItem" xml:space="preserve"><value>(sense nom)</value></data>
+  <data name="WarningTimesWithoutZone" xml:space="preserve"><value>Marques de temps sense fus horari: {0}. S'han interpretat com a UTC.</value></data>
+  <data name="WarningGpx10" xml:space="preserve"><value>Fitxer GPX 1.0: en desar-lo es convertirà a GPX 1.1.</value></data>
+  <data name="WarningGpxWithoutNamespace" xml:space="preserve"><value>El fitxer no declara l'espai de noms GPX estàndard; s'ha interpretat com a GPX.</value></data>
+  <data name="WarningNoData" xml:space="preserve"><value>El fitxer no conté punts.</value></data>
+  <data name="FilterGpx" xml:space="preserve"><value>Fitxers GPX (*.gpx)&#124;*.gpx&#124;Tots els fitxers (*.*)&#124;*.*</value></data>
+  <data name="DialogOpenGpxTitle" xml:space="preserve"><value>Obre un fitxer</value></data>
+  <data name="DialogSaveAsTitle" xml:space="preserve"><value>Desa com a</value></data>
+  <data name="DialogErrorTitle" xml:space="preserve"><value>Error</value></data>
+  <data name="DialogInfoTitle" xml:space="preserve"><value>Informació</value></data>
+  <data name="SaveChangesQuestion" xml:space="preserve"><value>El document «{0}» té canvis sense desar.&#10;&#10;Voleu desar-los abans de tancar-lo?</value></data>
+  <data name="AtLine" xml:space="preserve"><value>, línia {0}</value></data>
+  <data name="ErrorFileNotFound" xml:space="preserve"><value>No es troba el fitxer «{0}».</value></data>
+  <data name="ErrorAccessDenied" xml:space="preserve"><value>No teniu permís per llegir el fitxer «{0}».</value></data>
+  <data name="ErrorEmptyFile" xml:space="preserve"><value>El fitxer «{0}» és buit.</value></data>
+  <data name="ErrorReadFailed" xml:space="preserve"><value>No s'ha pogut llegir el fitxer «{0}».</value></data>
+  <data name="ErrorInvalidXml" xml:space="preserve"><value>El fitxer «{0}» no és un XML vàlid{1}.</value></data>
+  <data name="ErrorNotGpx" xml:space="preserve"><value>El fitxer «{0}» no és un GPX: el seu element arrel o el seu espai de noms no correspon a GPX 1.0 ni 1.1.</value></data>
+  <data name="ErrorInvalidCoordinate" xml:space="preserve"><value>Coordenades no vàlides a «{0}»{1}: {2}.&#10;La latitud ha d'estar entre −90 i 90 i la longitud entre −180 i 180.</value></data>
+  <data name="ErrorInvalidNumber" xml:space="preserve"><value>Valor numèric no vàlid a «{0}»{1}: {2}.</value></data>
+  <data name="ErrorInvalidDate" xml:space="preserve"><value>Data o hora no vàlida a «{0}»{1}: {2}.</value></data>
+  <data name="ErrorUnexpected" xml:space="preserve"><value>S'ha produït un error inesperat. L'aplicació continua funcionant i els detalls tècnics s'han desat al registre.&#10;&#10;{0}</value></data>
+  <data name="ErrorSaveFailed" xml:space="preserve"><value>No s'ha pogut desar el fitxer «{0}». El fitxer original no s'ha modificat.</value></data>
+  <data name="MenuEdit" xml:space="preserve"><value>_Edició</value></data>
+  <data name="MenuUndo" xml:space="preserve"><value>_Desfés</value></data>
+  <data name="MenuRedo" xml:space="preserve"><value>_Refés</value></data>
+  <data name="MenuDelete" xml:space="preserve"><value>_Elimina</value></data>
+  <data name="MenuInsertPoint" xml:space="preserve"><value>_Insereix un punt</value></data>
+  <data name="PanelLayers" xml:space="preserve"><value>Capes</value></data>
+  <data name="PanelPoints" xml:space="preserve"><value>Punts</value></data>
+  <data name="PanelPoint" xml:space="preserve"><value>Punt seleccionat</value></data>
+  <data name="LayerVisibleToolTip" xml:space="preserve"><value>Mostra o amaga al mapa</value></data>
+  <data name="LayerDetailsLine" xml:space="preserve"><value>{0} punts · {1} km</value></data>
+  <data name="LayerDetailsPoints" xml:space="preserve"><value>{0} punts</value></data>
+  <data name="ColName" xml:space="preserve"><value>Nom</value></data>
+  <data name="ColLatitude" xml:space="preserve"><value>Latitud</value></data>
+  <data name="ColLongitude" xml:space="preserve"><value>Longitud</value></data>
+  <data name="ColElevation" xml:space="preserve"><value>Elev. (m)</value></data>
+  <data name="ColTime" xml:space="preserve"><value>Hora local</value></data>
+  <data name="FieldName" xml:space="preserve"><value>Nom</value></data>
+  <data name="FieldComment" xml:space="preserve"><value>Comentari</value></data>
+  <data name="FieldDescription" xml:space="preserve"><value>Descripció</value></data>
+  <data name="FieldLatitude" xml:space="preserve"><value>Latitud (°)</value></data>
+  <data name="FieldLongitude" xml:space="preserve"><value>Longitud (°)</value></data>
+  <data name="FieldElevation" xml:space="preserve"><value>Elevació (m)</value></data>
+  <data name="FieldTimeUtc" xml:space="preserve"><value>Hora UTC</value></data>
+  <data name="FieldTimeLocal" xml:space="preserve"><value>Hora local</value></data>
+  <data name="FieldOther" xml:space="preserve"><value>Altres camps</value></data>
+  <data name="FieldAdded" xml:space="preserve"><value>Punt afegit en aquesta sessió</value></data>
+  <data name="FieldTimeUtcHint" xml:space="preserve"><value>AAAA-MM-DD HH:MM:SS; buit = sense hora</value></data>
+  <data name="ApplyButton" xml:space="preserve"><value>Aplica</value></data>
+  <data name="RevertButton" xml:space="preserve"><value>Descarta</value></data>
+  <data name="NoPointSelected" xml:space="preserve"><value>Seleccioneu un punt a la llista o al mapa.</value></data>
+  <data name="SeveralPointsSelected" xml:space="preserve"><value>{0} punts seleccionats.</value></data>
+  <data name="StatusSelectSomething" xml:space="preserve"><value>Seleccioneu un punt o un track.</value></data>
+  <data name="StatusInsertNeedsPoint" xml:space="preserve"><value>Per inserir, seleccioneu un sol punt d'un track o d'una ruta. Per afegir punts nous, utilitzeu Control + clic al mapa.</value></data>
+  <data name="StatusInsertTooFewPoints" xml:space="preserve"><value>Calen almenys dos punts per inserir-ne un d'intermedi. Utilitzeu Control + clic al mapa per afegir punts.</value></data>
+  <data name="StatusDeletedPoints" xml:space="preserve"><value>S'han eliminat {0} punts.</value></data>
+  <data name="StatusDeletedItem" xml:space="preserve"><value>S'ha eliminat «{0}».</value></data>
+  <data name="StatusInserted" xml:space="preserve"><value>Punt inserit.</value></data>
+  <data name="StatusMoved" xml:space="preserve"><value>Punt mogut.</value></data>
+  <data name="StatusPointUpdated" xml:space="preserve"><value>Punt actualitzat.</value></data>
+  <data name="StatusUndone" xml:space="preserve"><value>Desfet.</value></data>
+  <data name="StatusRedone" xml:space="preserve"><value>Refet.</value></data>
+  <data name="DialogConfirmTitle" xml:space="preserve"><value>Confirmació</value></data>
+  <data name="ConfirmDeleteTrack" xml:space="preserve"><value>Voleu eliminar el track «{0}» amb {1} punts?&#10;&#10;Es pot desfer amb Ctrl+Z.</value></data>
+  <data name="ConfirmDeleteRoute" xml:space="preserve"><value>Voleu eliminar la ruta «{0}» amb {1} punts?&#10;&#10;Es pot desfer amb Ctrl+Z.</value></data>
+  <data name="ConfirmDeletePoints" xml:space="preserve"><value>Voleu eliminar {0} punts?&#10;&#10;Es pot desfer amb Ctrl+Z.</value></data>
+  <data name="ValidationLatitude" xml:space="preserve"><value>La latitud ha de ser un nombre entre −90 i 90.</value></data>
+  <data name="ValidationLongitude" xml:space="preserve"><value>La longitud ha de ser un nombre entre −180 i 180.</value></data>
+  <data name="ValidationElevation" xml:space="preserve"><value>L'elevació ha de ser un nombre entre −500 i 9000 m, o quedar buida.</value></data>
+  <data name="ValidationTime" xml:space="preserve"><value>L'hora ha de tenir el format AAAA-MM-DD HH:MM:SS (UTC), o quedar buida.</value></data>
+  <data name="SaveNotAvailable" xml:space="preserve"><value>No es poden desar fitxers {0}.</value></data>
+  <data name="StatusSaving" xml:space="preserve"><value>S'està desant {0}...</value></data>
+  <data name="StatusSaved" xml:space="preserve"><value>Desat: {0}</value></data>
+  <data name="StatusSaveFailed" xml:space="preserve"><value>No s'ha pogut desar {0}.</value></data>
+  <data name="ConfirmSaveWithIssues" xml:space="preserve"><value>En desar «{0}»:&#10;&#10;{1}&#10;&#10;Voleu desar-lo igualment?</value></data>
+  <data name="SaveIssueGpxUpgrade" xml:space="preserve"><value>• El fitxer és GPX 1.0 i es desarà com a GPX 1.1. Els camps sense equivalent a GPX 1.1 es conserven dins d'«extensions».</value></data>
+  <data name="ConfirmOverwrite" xml:space="preserve"><value>El fitxer «{0}» ja existeix.&#10;&#10;Voleu reemplaçar-lo?</value></data>
+  <data name="ErrorSaveAccessDenied" xml:space="preserve"><value>No teniu permís per escriure el fitxer «{0}». El fitxer original no s'ha modificat.</value></data>
+  <data name="ErrorSaveVerification" xml:space="preserve"><value>El fitxer generat per a «{0}» no ha superat la verificació i no s'ha desat. El fitxer original no s'ha modificat.</value></data>
+  <data name="ProfileWindowTitle" xml:space="preserve"><value>Perfil d'elevació — {0} ({1})</value></data>
+  <data name="ProfileAxisDistance" xml:space="preserve"><value>Distància (km)</value></data>
+  <data name="ProfileAxisElevation" xml:space="preserve"><value>Elevació (m)</value></data>
+  <data name="ProfileMissing" xml:space="preserve"><value>⚠ {0} de {1} punts no tenen elevació; la corba s'interromp en aquests punts.</value></data>
+  <data name="ProfileNoElevation" xml:space="preserve"><value>Aquest track o ruta no té elevacions.</value></data>
+  <data name="ProfileNoPoints" xml:space="preserve"><value>No hi ha punts.</value></data>
+  <data name="ProfileIncludeGaps" xml:space="preserve"><value>Compta la distància entre segments</value></data>
+  <data name="ProfileHover" xml:space="preserve"><value>km {0} · {1} · punt {2}</value></data>
+  <data name="ProfileElevationMissingValue" xml:space="preserve"><value>sense elevació</value></data>
+  <data name="ProfileHint" xml:space="preserve"><value>Moveu el punter sobre el perfil per veure el punt al mapa; clic per seleccionar-lo. Fletxes ← → : punt anterior / següent.</value></data>
+  <data name="MenuTools" xml:space="preserve"><value>_Eines</value></data>
+  <data name="MenuSimplify" xml:space="preserve"><value>_Simplifica el track...</value></data>
+  <data name="MenuRegenerateTimes" xml:space="preserve"><value>_Regenera els temps...</value></data>
+  <data name="DialogCancel" xml:space="preserve"><value>Cancel·la</value></data>
+  <data name="DialogApply" xml:space="preserve"><value>Aplica</value></data>
+  <data name="SimplifyTitle" xml:space="preserve"><value>Simplifica «{0}»</value></data>
+  <data name="SimplifyTolerance" xml:space="preserve"><value>Tolerància (m):</value></data>
+  <data name="SimplifyPreview" xml:space="preserve"><value>{0} → {1} punts (se n'eliminen {2}) amb tolerància de {3} m.</value></data>
+  <data name="SimplifyNote" xml:space="preserve"><value>Douglas–Peucker per segment: es conserven el primer i l'últim punt de cada segment i els segments no s'uneixen. Els punts conservats no canvien; els eliminats perden els seus camps i extensions. Es pot desfer amb Ctrl+Z.</value></data>
+  <data name="SimplifyInvalidTolerance" xml:space="preserve"><value>La tolerància ha de ser un nombre de metres més gran que 0.</value></data>
+  <data name="SimplifyComputing" xml:space="preserve"><value>S'està calculant...</value></data>
+  <data name="StatusSimplified" xml:space="preserve"><value>«{0}» simplificat: {1} → {2} punts.</value></data>
+  <data name="TimesTitle" xml:space="preserve"><value>Regenera els temps de «{0}»</value></data>
+  <data name="TimesStartDate" xml:space="preserve"><value>Data d'inici:</value></data>
+  <data name="TimesStartTime" xml:space="preserve"><value>Hora d'inici (HH:MM:SS):</value></data>
+  <data name="TimesTimeZone" xml:space="preserve"><value>Fus horari:</value></data>
+  <data name="TimesModeDistance" xml:space="preserve"><value>Segons la distància recorreguda i una velocitat</value></data>
+  <data name="TimesModeUniform" xml:space="preserve"><value>Interval fix entre punts (no té en compte la distància)</value></data>
+  <data name="TimesSpeed" xml:space="preserve"><value>Velocitat:</value></data>
+  <data name="TimesInterval" xml:space="preserve"><value>Segons entre punts:</value></data>
+  <data name="TimesIncludeGaps" xml:space="preserve"><value>Recorre el buit entre segments a la mateixa velocitat</value></data>
+  <data name="TimesNote" xml:space="preserve"><value>Se substitueixen les hores de tots els punts d'aquest track o ruta; els waypoints i els altres documents no canvien. Es desen en UTC. Es pot desfer amb Ctrl+Z.</value></data>
+  <data name="TimesPreviewStart" xml:space="preserve"><value>Inici: {0} (hora local) = {1}</value></data>
+  <data name="TimesPreviewEnd" xml:space="preserve"><value>Final: {0} (hora local) = {1}</value></data>
+  <data name="TimesPreviewDuration" xml:space="preserve"><value>Durada: {0} · {1} punts</value></data>
+  <data name="TimesPreviewReplaced" xml:space="preserve"><value>Se substituiran les hores que ja tenien {0} punts.</value></data>
+  <data name="TimesAmbiguousStart" xml:space="preserve"><value>⚠ L'hora d'inici es repeteix pel canvi d'horari; s'ha pres l'hora estàndard (hivern).</value></data>
+  <data name="TimesInvalidStart" xml:space="preserve"><value>Indiqueu la data i l'hora d'inici (HH:MM o HH:MM:SS).</value></data>
+  <data name="TimesInvalidDaylightStart" xml:space="preserve"><value>Aquesta hora no existeix al fus triat pel canvi a l'horari d'estiu.</value></data>
+  <data name="TimesInvalidSpeed" xml:space="preserve"><value>La velocitat ha de ser un nombre més gran que 0.</value></data>
+  <data name="TimesInvalidInterval" xml:space="preserve"><value>L'interval ha de ser un nombre de segons més gran que 0.</value></data>
+  <data name="StatusTimesRegenerated" xml:space="preserve"><value>Temps regenerats a «{0}»: {1} punts.</value></data>
+  <data name="UnitMinKm" xml:space="preserve"><value>min/km (ritme)</value></data>
+  <data name="MenuAdjustElevations" xml:space="preserve"><value>_Ajusta les altituds amb el MDT de l'IGN...</value></data>
+  <data name="MenuHelp" xml:space="preserve"><value>Aj_uda</value></data>
+  <data name="MenuHelpContents" xml:space="preserve"><value>_Ajuda de Mendikat TrailLab</value></data>
+  <data name="MenuWeb" xml:space="preserve"><value>Web de _Mendikat (www.mendikat.net)</value></data>
+  <data name="MenuCheckUpdates" xml:space="preserve"><value>_Cerca actualitzacions...</value></data>
+  <data name="AboutCheckUpdates" xml:space="preserve"><value>Cerca actualitzacions</value></data>
+  <data name="MenuDonate" xml:space="preserve"><value>_Feu un donatiu!</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>_Quant a Mendikat TrailLab...</value></data>
+  <data name="ErrorHelpNotFound" xml:space="preserve"><value>No es troba el fitxer d'ajuda. Torneu a instal·lar l'aplicació o consulteu https://www.mendikat.net.</value></data>
+  <data name="ErrorOpenExternal" xml:space="preserve"><value>Windows no té cap programa per obrir «{0}». Obriu-lo manualment.</value></data>
+  <data name="AboutTitle" xml:space="preserve"><value>Quant a Mendikat TrailLab</value></data>
+  <data name="AboutVersion" xml:space="preserve"><value>Versió {0}</value></data>
+  <data name="AboutAuthor" xml:space="preserve"><value>Autor: {0}</value></data>
+  <data name="AboutDescription" xml:space="preserve"><value>Gestiona, visualitza i perfecciona els teus tracks GPS. Edita recorreguts, analitza perfils d'elevació i ajusta altituds sobre cartografia especialitzada. Tot el que necessites per portar les teves rutes més lluny.</value></data>
+  <data name="AboutEmailLabel" xml:space="preserve"><value>Correu:</value></data>
+  <data name="AboutWebLabel" xml:space="preserve"><value>Web:</value></data>
+  <data name="AboutDonateHint" xml:space="preserve"><value>Si l'aplicació et resulta útil, pots donar suport a Mendikat amb un donatiu.</value></data>
+  <data name="AboutDonateButton" xml:space="preserve"><value>Feu un donatiu!</value></data>
+  <data name="AboutDonateToolTip" xml:space="preserve"><value>PayPal. La manera ràpida i segura de pagar a Internet.</value></data>
+  <data name="DialogClose" xml:space="preserve"><value>Tanca</value></data>
+  <data name="DemTitle" xml:space="preserve"><value>Ajusta les altituds de «{0}» amb el MDT</value></data>
+  <data name="DemResolution" xml:space="preserve"><value>Model:</value></data>
+  <data name="DemResolution5" xml:space="preserve"><value>MDT IGN 5 m (més detall)</value></data>
+  <data name="DemResolution25" xml:space="preserve"><value>MDT IGN 25 m (més ràpid)</value></data>
+  <data name="DemQuery" xml:space="preserve"><value>Consulta</value></data>
+  <data name="DemStop" xml:space="preserve"><value>Atura</value></data>
+  <data name="DemDatum" xml:space="preserve"><value>Referència vertical:</value></data>
+  <data name="DemPreviewCounts" xml:space="preserve"><value>{0} punts: en canviaran {1} · iguals {2} · sense dada del MDT {3} (conserven la seva elevació).</value></data>
+  <data name="DemPreviewMissing" xml:space="preserve"><value>Dels que canvien, {0} no tenien elevació.</value></data>
+  <data name="DemPreviewDifferences" xml:space="preserve"><value>Diferència MDT − original: mínima {0} m · màxima {1} m · mitjana {2} m.</value></data>
+  <data name="DemPreviewNothing" xml:space="preserve"><value>No hi ha res a canviar.</value></data>
+  <data name="DemCancelled" xml:space="preserve"><value>Consulta aturada. No s'ha canviat res.</value></data>
+  <data name="DemServiceError" xml:space="preserve"><value>No s'ha pogut consultar el servei d'elevacions de l'IGN (sense connexió o el servei no respon). No s'ha canviat res.</value></data>
+  <data name="DemNote" xml:space="preserve"><value>Només hi ha dades per a Espanya; al mar i fora d'Espanya els punts conserven la seva elevació. L'elevació original del GPS pot estar referida a una altra superfície (l'el·lipsoide o EGM96); no s'aplica cap correcció. No canvia res fins que premeu «Aplica», que es pot desfer amb Ctrl+Z; el fitxer original no es modifica fins que el deseu.</value></data>
+  <data name="MenuReverse" xml:space="preserve"><value>_Inverteix el track</value></data>
+  <data name="StatusReversed" xml:space="preserve"><value>«{0}» invertit: {1} punts.</value></data>
+  <data name="StatusElevationsAdjusted" xml:space="preserve"><value>Altituds ajustades amb el MDT a «{0}»: {1} punts.</value></data>
+  <data name="FieldElevationSource" xml:space="preserve"><value>Origen de l'elevació</value></data>
+  <data name="ElevationSourceOriginal" xml:space="preserve"><value>del fitxer</value></data>
+  <data name="ElevationSourceInterpolated" xml:space="preserve"><value>interpolada en inserir</value></data>
+  <data name="ElevationSourceDem" xml:space="preserve"><value>MDT de l'IGN</value></data>
+  <data name="ElevationSourceEdited" xml:space="preserve"><value>editada a mà</value></data>
+  <data name="ProfileNoTimes" xml:space="preserve"><value>Els punts no tenen hora.</value></data>
+  <data name="StatDistance" xml:space="preserve"><value>Distància</value></data>
+  <data name="StatAscent" xml:space="preserve"><value>Desnivell positiu</value></data>
+  <data name="StatDescent" xml:space="preserve"><value>Desnivell negatiu</value></data>
+  <data name="StatMinElevation" xml:space="preserve"><value>Elevació mínima</value></data>
+  <data name="StatMaxElevation" xml:space="preserve"><value>Elevació màxima</value></data>
+  <data name="StatTotalTime" xml:space="preserve"><value>Temps total</value></data>
+  <data name="StatMovingTime" xml:space="preserve"><value>En moviment</value></data>
+  <data name="StatStoppedTime" xml:space="preserve"><value>Aturat</value></data>
+  <data name="StatAverageSpeed" xml:space="preserve"><value>Velocitat mitjana</value></data>
+  <data name="StatMaxSpeed" xml:space="preserve"><value>Velocitat màxima</value></data>
+  <data name="StatGroupRoute" xml:space="preserve"><value>Recorregut</value></data>
+  <data name="StatGroupTime" xml:space="preserve"><value>Temps</value></data>
+  <data name="ProfileStatsHint" xml:space="preserve"><value>Desnivell calculat sobre el perfil suavitzat amb una mitjana gaussiana de 100 m, com a mendikat.net, per no sumar el soroll del GPS. En un circuit el desnivell negatiu s'iguala al positiu. Aturat: trams a menys d'1 km/h i pauses entre segments. Velocitat mitjana: distància en moviment ÷ temps en moviment. Velocitat màxima: la més alta mantinguda almenys 30 s, per no comptar els salts del GPS.</value></data>
+  <data name="FilterOpen" xml:space="preserve"><value>Fitxers admesos (*.gpx;*.kml;*.kmz;*.tcx;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.gpx;*.kml;*.kmz;*.tcx;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;GPX (*.gpx)&#124;*.gpx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Cartografia: mapes i MDT (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Tots els fitxers (*.*)&#124;*.*</value></data>
+  <data name="FilterConvert" xml:space="preserve"><value>KML, KMZ i TCX (*.kml;*.kmz;*.tcx)&#124;*.kml;*.kmz;*.tcx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Cartografia: mapes i MDT (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Tots els fitxers (*.*)&#124;*.*</value></data>
+  <data name="ErrorUnsupportedFormat" xml:space="preserve"><value>El fitxer «{0}» no és GPX, KML, KMZ ni TCX (el seu element arrel és «{2}»).</value></data>
+  <data name="ErrorInvalidArchive" xml:space="preserve"><value>El fitxer «{0}» no és un KMZ vàlid: no és un ZIP correcte, no conté cap KML o és massa gran en descomprimir-lo.</value></data>
+  <data name="WarningConvertedFrom" xml:space="preserve"><value>Convertit des de {0} a GPX. El fitxer original no es modifica; en desar es demana on desar el GPX.</value></data>
+  <data name="WarningIgnoredFeatures" xml:space="preserve"><value>Elements de KML sense equivalent a GPX que no s'han convertit (polígons, superposicions, models…): {0}.</value></data>
+  <data name="WarningPointsWithoutPosition" xml:space="preserve"><value>Punts sense posició (activitats a l'interior o pauses) que s'han omès: {0}.</value></data>
+  <data name="WarningDataNotConverted" xml:space="preserve"><value>Punts amb dades de TCX sense equivalent a GPX (distància, velocitat o potència) que no s'han convertit: {0}. El pols i la cadència sí que es conserven.</value></data>
+  <data name="FormatConverted" xml:space="preserve"><value>{0} (convertit a GPX)</value></data>
+  <data name="StatusConverted" xml:space="preserve"><value>«{0}» convertit a GPX com a «{1}» (sense desar).</value></data>
+  <data name="MenuConvertToGpx" xml:space="preserve"><value>Con_verteix a GPX...</value></data>
+  <data name="DialogConvertFilesTitle" xml:space="preserve"><value>Fitxers per convertir a GPX</value></data>
+  <data name="DialogConvertFolderTitle" xml:space="preserve"><value>Carpeta de destinació dels GPX</value></data>
+  <data name="ConvertTitle" xml:space="preserve"><value>Converteix a GPX</value></data>
+  <data name="ConvertFiles" xml:space="preserve"><value>Fitxers KML, KMZ i TCX:</value></data>
+  <data name="ConvertAddFiles" xml:space="preserve"><value>Afegeix...</value></data>
+  <data name="ConvertRemove" xml:space="preserve"><value>Treu</value></data>
+  <data name="ConvertDestination" xml:space="preserve"><value>Desa els GPX a:</value></data>
+  <data name="ConvertSameFolder" xml:space="preserve"><value>La carpeta de cada fitxer</value></data>
+  <data name="ConvertOtherFolder" xml:space="preserve"><value>Una altra carpeta:</value></data>
+  <data name="ConvertBrowse" xml:space="preserve"><value>Navega...</value></data>
+  <data name="ConvertExisting" xml:space="preserve"><value>Si el GPX ja existeix:</value></data>
+  <data name="ConvertExistingRename" xml:space="preserve"><value>Desa'l amb un altre nom («nom (2).gpx»)</value></data>
+  <data name="ConvertExistingOverwrite" xml:space="preserve"><value>Reemplaça'l</value></data>
+  <data name="ConvertExistingSkip" xml:space="preserve"><value>No converteixis aquest fitxer</value></data>
+  <data name="ConvertStart" xml:space="preserve"><value>Converteix</value></data>
+  <data name="ConvertStop" xml:space="preserve"><value>Atura</value></data>
+  <data name="ConvertNote" xml:space="preserve"><value>Els fitxers originals no es modifiquen. Cada GPX es comprova abans d'escriure'l i mai no queda a mitges.</value></data>
+  <data name="ConvertReportOk" xml:space="preserve"><value>✓ {0} → {1}: tracks {2}, punts {3}, waypoints {4}.</value></data>
+  <data name="ConvertReportSkipped" xml:space="preserve"><value>– {0}: no es converteix perquè «{1}» ja existeix.</value></data>
+  <data name="ConvertReportAlreadyGpx" xml:space="preserve"><value>– {0}: ja és un fitxer GPX; no es converteix.</value></data>
+  <data name="ConvertReportWriteError" xml:space="preserve"><value>✗ {0}: no s'ha pogut escriure «{1}»; aquest fitxer no s'ha modificat.</value></data>
+  <data name="ConvertSummary" xml:space="preserve"><value>Convertits: {0} · Omesos: {1} · Amb error: {2}.</value></data>
+  <data name="ConvertCancelled" xml:space="preserve"><value>Conversió aturada. Els GPX ja escrits són complets; la resta no s'han creat.</value></data>
+  <data name="ConvertNoFolder" xml:space="preserve"><value>Trieu la carpeta de destinació.</value></data>
+  <data name="StatusConvertedFiles" xml:space="preserve"><value>Converteix a GPX: {0} convertits, {1} omesos, {2} amb error.</value></data>
+  <data name="A11yConvertFiles" xml:space="preserve"><value>Fitxers que es convertiran</value></data>
+  <data name="A11yConvertFolder" xml:space="preserve"><value>Carpeta de destinació</value></data>
+  <data name="A11yConvertExisting" xml:space="preserve"><value>Què cal fer si el GPX ja existeix</value></data>
+  <data name="A11yConvertReport" xml:space="preserve"><value>Resultat de la conversió</value></data>
+  <data name="StatusElevation" xml:space="preserve"><value>Alt. {0} m ({1})</value></data>
+  <data name="ElevationSourceFile" xml:space="preserve"><value>fitxer</value></data>
+  <data name="ElevationFileToolTip" xml:space="preserve"><value>Elevació del punt del fitxer que és sota el punter, tal com està desada.</value></data>
+  <data name="A11yElevationName" xml:space="preserve"><value>Altitud sota el punter</value></data>
+  <data name="A11yElevationToolTip" xml:space="preserve"><value>Altitud sota el punter: la del punt del fitxer si n'hi ha; si no, la del terreny segons el MDT de l'IGN (només Espanya, cal Internet).</value></data>
+  <data name="A11yDatumName" xml:space="preserve"><value>Datum de les coordenades</value></data>
+  <data name="A11yDatumToolTip" xml:space="preserve"><value>Datum de les coordenades del fitxer actiu. GPX, KML i TCX sempre fan servir WGS84.</value></data>
+  <data name="MenuOpenLocalMap" xml:space="preserve"><value>Obre car_tografia...</value></data>
+  <data name="DialogOpenLocalMapTitle" xml:space="preserve"><value>Obre cartografia local</value></data>
+  <data name="FilterLocalMaps" xml:space="preserve"><value>Mapes i MDT (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt;*.jpg;*.png)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt;*.jpg;*.jpeg;*.png;*.gif;*.bmp&#124;GeoTIFF i COG (*.tif;*.tiff;*.cog)&#124;*.tif;*.tiff;*.cog&#124;ECW (*.ecw)&#124;*.ecw&#124;Imatges amb .tfw, .jgw, .pgw… (*.tif;*.jpg;*.png;*.gif;*.bmp)&#124;*.tif;*.tiff;*.jpg;*.jpeg;*.png;*.gif;*.bmp&#124;Mapes d'OziExplorer (*.map)&#124;*.map&#124;Mapes de CompeGPS/TwoNav (*.imp)&#124;*.imp&#124;MDT ESRI ASCII Grid (*.asc)&#124;*.asc&#124;MDT SRTM (*.hgt)&#124;*.hgt&#124;Tots els fitxers (*.*)&#124;*.*</value></data>
+  <data name="LocalMapsHeader" xml:space="preserve"><value>Cartografies d'usuari ({0})</value></data>
+  <data name="LocalMapsToolTip" xml:space="preserve"><value>Cartografies de l'usuari (mapes i models digitals del terreny) obertes amb Fitxer › Obre cartografia. Arrossegueu ≡ per canviar quina queda a sobre; la cartografia en línia sempre queda al fons.</value></data>
+  <data name="LocalKindMap" xml:space="preserve"><value>Mapa</value></data>
+  <data name="LocalKindDem" xml:space="preserve"><value>MDT</value></data>
+  <data name="LocalMapShowToolTip" xml:space="preserve"><value>Mostra o amaga el mapa</value></data>
+  <data name="LocalDemUseToolTip" xml:space="preserve"><value>Utilitza aquest MDT per a l'altitud sota el punter i a «Ajusta les altituds»</value></data>
+  <data name="LocalZoomTo" xml:space="preserve"><value>Ajusta el mapa a la seva extensió</value></data>
+  <data name="LocalRemove" xml:space="preserve"><value>Treu</value></data>
+  <data name="LocalMapsEmpty" xml:space="preserve"><value>No hi ha cartografies d'usuari. Utilitzeu Fitxer › Obre cartografia (.map, .imp, GeoTIFF, ECW, .asc, .hgt) o deixeu anar els fitxers sobre la finestra.</value></data>
+  <data name="LocalMapDetails" xml:space="preserve"><value>{0} · {1} · {2} × {3} píxels · {4} punts de calibratge, error màxim {5} píxels{6}</value></data>
+  <data name="LocalMapReduced" xml:space="preserve"><value> · imatge reduïda al {0} % perquè càpiga a la memòria</value></data>
+  <data name="LocalDemDetails" xml:space="preserve"><value>MDT de {0} × {1} nodes · {2} · {3}</value></data>
+  <data name="StatusLocalMapOpened" xml:space="preserve"><value>Mapa «{0}» obert.</value></data>
+  <data name="StatusLocalDemOpened" xml:space="preserve"><value>MDT «{0}» obert: s'utilitza per a l'altitud sota el punter i a «Ajusta les altituds».</value></data>
+  <data name="StatusLocalMapRemoved" xml:space="preserve"><value>S'ha tret «{0}».</value></data>
+  <data name="ErrorLocalUnsupportedFormat" xml:space="preserve"><value>El fitxer «{0}» no és un format de cartografia admès ({2}). S'admeten mapes .map (OziExplorer), .imp (CompeGPS/TwoNav), GeoTIFF, ECW i imatges amb .tfw/.jgw/.pgw i .prj, i MDT .asc, .hgt i GeoTIFF.</value></data>
+  <data name="ErrorLocalInvalidCalibration" xml:space="preserve"><value>El calibratge de «{0}» no és vàlid{1}: {2}.</value></data>
+  <data name="ErrorLocalImageMissing" xml:space="preserve"><value>No es troba la imatge del mapa «{0}»: «{2}». Ha de ser en aquesta ruta o a la mateixa carpeta que el fitxer de calibratge.</value></data>
+  <data name="ErrorLocalUnsupportedImage" xml:space="preserve"><value>La imatge «{2}» del mapa «{0}» té un format que no s'admet. S'admeten JPG, PNG, BMP, GIF i TIFF; OZF (OziExplorer) no. Si la imatge és un ECW o un GeoTIFF georeferenciat, obriu-la directament.</value></data>
+  <data name="ErrorLocalInvalidImage" xml:space="preserve"><value>No s'ha pogut llegir la imatge «{2}» del mapa «{0}»: està malmesa o no és una imatge.</value></data>
+  <data name="ErrorLocalUnsupportedCrs" xml:space="preserve"><value>«{0}» fa servir un sistema de coordenades que no s'admet{1}: {2}. S'admeten WGS84, ETRS89 i ED50 (fusos 29 a 31), en geogràfiques, UTM o Transversa de Mercator.</value></data>
+  <data name="ErrorLocalMissingProjection" xml:space="preserve"><value>Falta el fitxer «{2}» amb el sistema de coordenades de «{0}». Sense ell no es pot saber on col·locar-lo.</value></data>
+  <data name="ErrorLocalInvalidDem" xml:space="preserve"><value>El MDT «{0}» no és vàlid{1}: {2}.</value></data>
+  <data name="ErrorLocalTooLarge" xml:space="preserve"><value>«{0}» és massa gran per obrir-lo ({2}).</value></data>
+  <data name="LocalOpacityName" xml:space="preserve"><value>Opacitat de {0}</value></data>
+  <data name="LocalOpacityToolTip" xml:space="preserve"><value>Opacitat: a l'esquerra es veu el que hi ha a sota</value></data>
+  <data name="LocalDragHandle" xml:space="preserve"><value>Arrossegueu per canviar l'ordre (o Ctrl+↑ / Ctrl+↓). La de dalt es dibuixa a sobre.</value></data>
+  <data name="A11yLocalMapsList" xml:space="preserve"><value>Cartografies d'usuari, de la de sobre a la de sota</value></data>
+  <data name="StatusDropSkipped" xml:space="preserve"><value>{0} fitxers deixats anar no s'han obert: no són tracks (GPX, KML, KMZ, TCX) ni cartografia admesa.</value></data>
+  <data name="MenuOpenEcwp" xml:space="preserve"><value>Obre cartografia en _línia (ECWP)...</value></data>
+  <data name="EcwpTitle" xml:space="preserve"><value>Obre cartografia en línia (ECWP)</value></data>
+  <data name="EcwpPrompt" xml:space="preserve"><value>Adreça del mapa ECW servit per ECWP:</value></data>
+  <data name="EcwpExample" xml:space="preserve"><value>Exemple: ecwp://servidor.exemple.org/imatges/ortofoto.ecw (o ecwps:// per a connexió segura).</value></data>
+  <data name="EcwpOpen" xml:space="preserve"><value>Obre</value></data>
+  <data name="EcwLicenseTitle" xml:space="preserve"><value>Llicència d'ús d'ECW (ERDAS ECW/JP2)</value></data>
+  <data name="EcwLicenseIntro" xml:space="preserve"><value>Per obrir mapes ECW i ECWP, Mendikat TrailLab fa servir tecnologia propietat d'Intergraph Corporation (Hexagon). La seva llicència exigeix que n'acceptis aquestes condicions, en anglès, abans d'utilitzar-la. Si no les acceptes, tota la resta funciona igual i només els ECW queden desactivats; podràs acceptar-les quan intentis obrir-ne un altre.</value></data>
+  <data name="EcwLicenseAccept" xml:space="preserve"><value>Accepto</value></data>
+  <data name="EcwLicenseDecline" xml:space="preserve"><value>No accepto</value></data>
+  <data name="StatusEcwLicenseDeclined" xml:space="preserve"><value>ECW desactivat: no se n'ha acceptat la llicència d'ús.</value></data>
+  <data name="LocalGdalMapDetails" xml:space="preserve"><value>{0} · {1} · {2} × {3} píxels · {4} bandes</value></data>
+  <data name="ErrorLocalGdalUnavailable" xml:space="preserve"><value>No es pot obrir «{0}»: falta la biblioteca GDAL de l'aplicació ({2}). Torneu a instal·lar Mendikat TrailLab.</value></data>
+  <data name="ErrorLocalEcwUnavailable" xml:space="preserve"><value>No es pot obrir «{0}»: falta el complement ECW de GDAL (gdal_ECW_JP2ECW.dll i NCSEcw.dll a la carpeta gdal\x64\plugins de l'aplicació).</value></data>
+  <data name="ErrorLocalEcwLicense" xml:space="preserve"><value>No es pot obrir «{0}»: cal acceptar la llicència d'ús d'ECW.</value></data>
+  <data name="ErrorLocalNotGeoreferenced" xml:space="preserve"><value>«{0}» no està georeferenciat: no indica on és. Si és la imatge d'un mapa calibrat, obriu-ne el .map o l'.imp; si té fitxer de georeferència (.tfw, .jgw, .pgw…), poseu-lo al costat de la imatge amb el mateix nom.</value></data>
+</root>

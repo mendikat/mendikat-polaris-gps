@@ -102,6 +102,7 @@ public sealed class WpfDialogService : IDialogService
             TimesViewModel times => new TimesWindow(times),
             DemViewModel dem => new DemWindow(dem),
             ConvertViewModel convert => new ConvertWindow(convert),
+            SettingsViewModel settings => new SettingsWindow(settings),
             _ => throw new ArgumentException($"No dialog for {viewModel.GetType().Name}.", nameof(viewModel)),
         };
         dialog.Owner = Owner;
