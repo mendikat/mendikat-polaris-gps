@@ -109,7 +109,7 @@ public sealed partial class MainViewModel
         _logger.LogInformation("Reversed a {Kind} in {FileName}: {Count} points", layer.Kind, doc.FileName, layer.PointCount);
     }
 
-    /// <summary>Asks for KML, KMZ or TCX files and converts them to GPX files in a dialog with a report (CONV-06).</summary>
+    /// <summary>Asks for KML, KMZ, TCX, OziExplorer or CompeGPS/TwoNav files and converts them to GPX files in a dialog with a report (CONV-06).</summary>
     public void ConvertToGpx()
     {
         if (_dialogs.AskConvertFilePaths() is not { Count: > 0 } files)

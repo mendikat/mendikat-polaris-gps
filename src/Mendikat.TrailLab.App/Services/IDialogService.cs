@@ -15,7 +15,7 @@ public interface IDialogService
     /// <returns>Selected path, or null if the user cancelled.</returns>
     string? AskOpenFilePath(DocumentFormat format);
 
-    /// <summary>Files to convert to GPX (KML, KMZ, TCX; several can be chosen, CONV-06).</summary>
+    /// <summary>Files to convert to GPX (KML, KMZ, TCX, OziExplorer, CompeGPS/TwoNav; several can be chosen, CONV-06).</summary>
     /// <returns>Selected paths, or null if the user cancelled.</returns>
     IReadOnlyList<string>? AskConvertFilePaths();
 

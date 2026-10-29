@@ -9,7 +9,12 @@ internal static class ConvertedData
 {
     private static readonly XNamespace Gpx = GpxReader.Gpx11Namespace;
 
-    public static string Name(SourceFormat source) => source.ToString().ToUpperInvariant();
+    public static string Name(SourceFormat source) => source switch
+    {
+        SourceFormat.OziExplorer => "OziExplorer",
+        SourceFormat.CompeGps => "CompeGPS/TwoNav",
+        _ => source.ToString().ToUpperInvariant(),
+    };
 
     /// <summary>Empty GPX 1.1 data with the source name and description as metadata.</summary>
     public static TrailData Create(SourceFormat source, string? name, string? description, params (string Prefix, string Uri)[] namespaces)

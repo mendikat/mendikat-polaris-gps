@@ -7,4 +7,10 @@ public enum SourceFormat
     Kml,
     Kmz,
     Tcx,
+
+    /// <summary>OziExplorer track (.plt) or waypoint (.wpt) file.</summary>
+    OziExplorer,
+
+    /// <summary>CompeGPS/TwoNav track (.trk) or waypoint (.wpt) file.</summary>
+    CompeGps,
 }

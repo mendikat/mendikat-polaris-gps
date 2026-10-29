@@ -253,9 +253,10 @@
   <data name="StatGroupRoute" xml:space="preserve"><value>Ibilbidea</value></data>
   <data name="StatGroupTime" xml:space="preserve"><value>Denbora</value></data>
   <data name="ProfileStatsHint" xml:space="preserve"><value>Desnibela 100 m-ko batez besteko gaussiar batekin leundutako profilaren gainean kalkulatzen da, mendikat.net-en bezala, GPSaren zarata ez batzeko. Zirkuitu batean desnibel negatiboa positiboaren berdina da. Geldirik: 1 km/h-tik beherako zatiak eta segmentuen arteko etenaldiak. Batez besteko abiadura: mugimenduko distantzia ÷ mugimenduko denbora. Gehieneko abiadura: gutxienez 30 s mantendutako handiena, GPSaren jauziak ez kontatzeko.</value></data>
-  <data name="FilterOpen" xml:space="preserve"><value>Onartutako fitxategiak (*.gpx;*.kml;*.kmz;*.tcx;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.gpx;*.kml;*.kmz;*.tcx;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;GPX (*.gpx)&#124;*.gpx&#124;Google Earth KML (*.kml)&#124;*.kml&#124;Google Earth KMZ (*.kmz)&#124;*.kmz&#124;Garmin TCX (*.tcx)&#124;*.tcx&#124;Kartografia: mapak eta LEMak (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Fitxategi guztiak (*.*)&#124;*.*</value></data>
-  <data name="FilterConvert" xml:space="preserve"><value>KML, KMZ eta TCX (*.kml;*.kmz;*.tcx)&#124;*.kml;*.kmz;*.tcx&#124;Google Earth KML (*.kml)&#124;*.kml&#124;Google Earth KMZ (*.kmz)&#124;*.kmz&#124;Garmin TCX (*.tcx)&#124;*.tcx&#124;Kartografia: mapak eta LEMak (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Fitxategi guztiak (*.*)&#124;*.*</value></data>
-  <data name="ErrorUnsupportedFormat" xml:space="preserve"><value>«{0}» fitxategia ez da GPX, KML, KMZ edo TCX (bere erro-elementua «{2}» da).</value></data>
+  <data name="FilterOpen" xml:space="preserve"><value>Onartutako fitxategiak (*.gpx;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.gpx;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;GPX (*.gpx)&#124;*.gpx&#124;Google Earth KML (*.kml)&#124;*.kml&#124;Google Earth KMZ (*.kmz)&#124;*.kmz&#124;Garmin TCX (*.tcx)&#124;*.tcx&#124;OziExplorer (*.plt;*.wpt)&#124;*.plt;*.wpt&#124;CompeGPS/TwoNav (*.trk;*.wpt)&#124;*.trk;*.wpt&#124;Kartografia: mapak eta LEMak (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Fitxategi guztiak (*.*)&#124;*.*</value></data>
+  <data name="FilterConvert" xml:space="preserve"><value>KML, KMZ, TCX, OziExplorer eta CompeGPS/TwoNav (*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk)&#124;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk&#124;Google Earth KML (*.kml)&#124;*.kml&#124;Google Earth KMZ (*.kmz)&#124;*.kmz&#124;Garmin TCX (*.tcx)&#124;*.tcx&#124;OziExplorer (*.plt;*.wpt)&#124;*.plt;*.wpt&#124;CompeGPS/TwoNav (*.trk;*.wpt)&#124;*.trk;*.wpt&#124;Kartografia: mapak eta LEMak (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Fitxategi guztiak (*.*)&#124;*.*</value></data>
+  <data name="ErrorUnsupportedFormat" xml:space="preserve"><value>«{0}» fitxategiaren formatua ez da onartzen (GPX, KML, KMZ, TCX, OziExplorer edo CompeGPS/TwoNav): «{2}».</value></data>
+  <data name="ErrorUnsupportedDatum" xml:space="preserve"><value>«{0}» fitxategiak bihurtu ezin den datum edo koordenatu-sistema bat erabiltzen du{1}: {2}. WGS84 eta ED50 (Espainia eta Portugal) onartzen dira, koordenatu geografikoetan.</value></data>
   <data name="ErrorInvalidArchive" xml:space="preserve"><value>«{0}» fitxategia ez da baliozko KMZ bat: ez da ZIP zuzena, ez du KMLrik edo handiegia da deskonprimatzean.</value></data>
   <data name="WarningConvertedFrom" xml:space="preserve"><value>{0}-tik GPXra bihurtua. Jatorrizko fitxategia ez da aldatzen; gordetzean GPXa non gorde galdetzen da.</value></data>
   <data name="WarningIgnoredFeatures" xml:space="preserve"><value>GPXn baliokiderik ez duten eta bihurtu ez diren KML elementuak (poligonoak, gainjartzeak, ereduak…): {0}.</value></data>
@@ -267,7 +268,7 @@
   <data name="DialogConvertFilesTitle" xml:space="preserve"><value>GPXra bihurtzeko fitxategiak</value></data>
   <data name="DialogConvertFolderTitle" xml:space="preserve"><value>GPXen helmuga-karpeta</value></data>
   <data name="ConvertTitle" xml:space="preserve"><value>Bihurtu GPXra</value></data>
-  <data name="ConvertFiles" xml:space="preserve"><value>KML, KMZ eta TCX fitxategiak:</value></data>
+  <data name="ConvertFiles" xml:space="preserve"><value>KML, KMZ, TCX, OziExplorer eta CompeGPS/TwoNav fitxategiak:</value></data>
   <data name="ConvertAddFiles" xml:space="preserve"><value>Gehitu...</value></data>
   <data name="ConvertRemove" xml:space="preserve"><value>Kendu</value></data>
   <data name="ConvertDestination" xml:space="preserve"><value>Gorde GPXak hemen:</value></data>
@@ -331,7 +332,7 @@
   <data name="LocalOpacityToolTip" xml:space="preserve"><value>Opakutasuna: ezkerrerantz azpian dagoena ikusten da</value></data>
   <data name="LocalDragHandle" xml:space="preserve"><value>Arrastatu ordena aldatzeko (edo Ktrl+↑ / Ktrl+↓). Goikoa marrazten da gainean.</value></data>
   <data name="A11yLocalMapsList" xml:space="preserve"><value>Erabiltzailearen kartografiak, gainekotik azpikora</value></data>
-  <data name="StatusDropSkipped" xml:space="preserve"><value>Jaregindako {0} fitxategi ez dira ireki: ez dira track-ak (GPX, KML, KMZ, TCX) ezta onartutako kartografia ere.</value></data>
+  <data name="StatusDropSkipped" xml:space="preserve"><value>Jaregindako {0} fitxategi ez dira ireki: ez dira track-ak (GPX, KML, KMZ, TCX, OziExplorer, CompeGPS/TwoNav) ezta onartutako kartografia ere.</value></data>
   <data name="MenuOpenEcwp" xml:space="preserve"><value>Ireki _lineako kartografia (ECWP)...</value></data>
   <data name="EcwpTitle" xml:space="preserve"><value>Ireki lineako kartografia (ECWP)</value></data>
   <data name="EcwpPrompt" xml:space="preserve"><value>ECWP bidez zerbitzatutako ECW maparen helbidea:</value></data>

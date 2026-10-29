@@ -262,7 +262,7 @@ public sealed partial class MainViewModel : ObservableObject
         await OpenPathAsync(path, format);
     }
 
-    /// <summary>Extensions that can be dropped on the window: tracks (GPX, KML, KMZ, TCX) and cartography (APP-10).</summary>
+    /// <summary>Extensions that can be dropped on the window: tracks (GPX, KML, KMZ, TCX, PLT, WPT, TRK) and cartography (APP-10).</summary>
     public static IReadOnlyList<string> DroppableExtensions { get; } =
         [.. TrailFileReader.Extensions, .. Mapping.Local.LocalMapLoader.Extensions];
 

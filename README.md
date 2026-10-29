@@ -3,8 +3,8 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.0.7.**
-> Se abren archivos GPX, y KML, KMZ y TCX convertidos a GPX (WPT se retiró el 2026-10-26), se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
+> **Estado: versión 0.0.8.**
+> Se abren archivos GPX, y KML, KMZ, TCX, OziExplorer (PLT, WPT) y CompeGPS/TwoNav (TRK, WPT) convertidos a GPX, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
 > Los archivos grandes se abren con porcentaje de progreso y se pueden cancelar.
@@ -27,9 +27,9 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Regenerar tiempos | *Herramientas › Regenerar tiempos…*: fecha, hora y zona horaria de inicio, y velocidad (km/h, m/s, min/km) o intervalo fijo; vista previa en hora local y UTC |
 | Invertir el sentido | *Herramientas › Invertir track*: invierte puntos y segmentos del track o ruta seleccionado; las horas se reflejan (mismo inicio y fin, mismos intervalos). Se deshace con Ctrl+Z |
 | Ajustar altitudes con el MDT | *Herramientas › Ajustar altitudes con el MDT del IGN…* › **Consultar** (5 m o 25 m; requiere Internet) › revisar cuántos puntos cambian y cuántos no tienen dato › **Aplicar**. Sólo España; el origen de cada elevación se ve en el detalle del punto |
-| Abrir arrastrando | Soltar sobre la ventana uno o varios archivos GPX, KML, KMZ, TCX (se abren como documentos) o `.map`, `.imp`, `.asc`, `.hgt` (como cartografía de usuario) |
-| Abrir KML, KMZ o TCX | *Archivo › Abrir archivo…* (Ctrl+O): se abre como un GPX nuevo «nombre.gpx» sin guardar; **Guardar** pide dónde guardarlo |
-| Convertir varios archivos a GPX | *Archivo › Convertir a GPX…*: elegir los KML, KMZ o TCX, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
+| Abrir arrastrando | Soltar sobre la ventana uno o varios archivos GPX, KML, KMZ, TCX, PLT, WPT, TRK (se abren como documentos) o `.map`, `.imp`, `.asc`, `.hgt` (como cartografía de usuario) |
+| Abrir KML, KMZ, TCX, PLT, WPT o TRK | *Archivo › Abrir archivo…* (Ctrl+O): se abre como un GPX nuevo «nombre.gpx» sin guardar; **Guardar** pide dónde guardarlo |
+| Convertir varios archivos a GPX | *Archivo › Convertir a GPX…*: elegir los KML, KMZ, TCX, PLT, WPT o TRK, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
 | Ver un mapa escaneado o un MDT propio | *Archivo › Abrir cartografía…* (o soltarlos sobre la ventana): mapas `.map` (OziExplorer) e `.imp` (CompeGPS/TwoNav) con su imagen JPG, PNG, BMP, GIF o TIFF, GeoTIFF, ECW e imágenes con `.tfw`/`.jgw`/`.pgw` y `.prj`, y MDT `.asc` (con su `.prj`), `.hgt` y GeoTIFF. ECW servidos por internet: *Archivo › Abrir cartografía en línea (ECWP)…*. Se listan en **Cartografías Usuario (n)** de la barra de herramientas: arrastrar ≡ (o Ctrl+↑/↓) para decidir cuál queda encima (la de arriba de la lista; la cartografía en línea siempre al fondo), deslizador de opacidad para ver la de debajo, casilla para mostrar u ocultar (en un MDT, para usarlo), ⤢ para ir a ella y ✕ para quitarla |
 | Cambiar el idioma | *Archivo › Configuración…* › **Idioma de la aplicación**: español (por defecto), català, euskara, français o português, con su bandera. Se aplica al volver a abrir la aplicación. La guía de ayuda y algunos detalles técnicos de los errores de cartografía siguen en español; los números mantienen la coma decimal |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
@@ -100,7 +100,13 @@ WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido
   - KMZ: se lee `doc.kml` (o el primer `.kml`); las imágenes se ignoran. Máximo 256 MB descomprimido.
   - TCX: cada actividad → un track con un segmento por vuelta; pulso y cadencia → extensión `gpxtpx` de Garmin
     (la que leen Strava, Garmin y la mayoría de programas). Distancia, velocidad y potencia no se convierten (aviso).
-- Los archivos **WPT** (OziExplorer, CompeGPS) ya no se admiten (retirados el 2026-10-26).
+- **OziExplorer** (`.plt` tracks, `.wpt` waypoints) y **CompeGPS/TwoNav** (`.trk` tracks, `.wpt` waypoints): sólo lectura,
+  convertidos a GPX como los KML. Los dos `.wpt` se distinguen por el contenido. Se leen como mendikat.net:
+  - Datum WGS84 o ED50 (se convierte a WGS84, sólo España y Portugal); otro datum o coordenadas UTM dan un error claro.
+  - OziExplorer: un track con un segmento; altitudes en pies → metros (−777 = sin altitud); hora en UTC (aviso).
+    Waypoints con nombre, descripción, altitud y hora.
+  - CompeGPS/TwoNav: un track con un segmento y su nombre (línea `N`); waypoints con nombre, descripción y símbolo.
+    Las horas se pasan a UTC con la zona del archivo (línea `L`); sin ella se toman como UTC (aviso).
 
 ### Cartografía y MDT locales (*Archivo › Abrir cartografía…*)
 

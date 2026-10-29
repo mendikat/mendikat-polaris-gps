@@ -48,7 +48,7 @@ public sealed class DropFilesTests : IDisposable
         await _vm.OpenFilesAsync([Path.Combine(_folder, "notas.docx"), _folder, @"C:\data\ruta.gpx"]);
 
         Assert.Single(_vm.Documents);
-        Assert.Equal("2 archivos soltados no se han abierto: no son tracks (GPX, KML, KMZ, TCX) ni cartografía admitida.", _vm.StatusMessage);
+        Assert.Equal("2 archivos soltados no se han abierto: no son tracks (GPX, KML, KMZ, TCX, OziExplorer, CompeGPS/TwoNav) ni cartografía admitida.", _vm.StatusMessage);
         Assert.Empty(_dialogs.Errors);
     }
 

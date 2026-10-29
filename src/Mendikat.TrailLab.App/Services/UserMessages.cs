@@ -23,6 +23,7 @@ public static class UserMessages
             DocumentLoadError.InvalidDate => Strings.ErrorInvalidDate,
             DocumentLoadError.UnsupportedFormat => Strings.ErrorUnsupportedFormat,
             DocumentLoadError.InvalidArchive => Strings.ErrorInvalidArchive,
+            DocumentLoadError.UnsupportedDatum => Strings.ErrorUnsupportedDatum,
             _ => Strings.ErrorReadFailed,
         };
         var location = exception.Line is { } line ? string.Format(Strings.AtLine, line) : string.Empty;

@@ -260,9 +260,10 @@
   <data name="StatGroupRoute" xml:space="preserve"><value>Recorrido</value></data>
   <data name="StatGroupTime" xml:space="preserve"><value>Tiempo</value></data>
   <data name="ProfileStatsHint" xml:space="preserve"><value>Desnivel calculado sobre el perfil suavizado con una media gaussiana de 100 m, como en mendikat.net, para no sumar el ruido del GPS. En un circuito el desnivel negativo se iguala al positivo. Detenido: tramos a menos de 1 km/h y pausas entre segmentos. Velocidad media: distancia en movimiento ÷ tiempo en movimiento. Velocidad máxima: la mayor mantenida al menos 30 s, para no contar los saltos del GPS.</value></data>
-  <data name="FilterOpen" xml:space="preserve"><value>Archivos admitidos (*.gpx;*.kml;*.kmz;*.tcx;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.gpx;*.kml;*.kmz;*.tcx;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;GPX (*.gpx)&#124;*.gpx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Cartografía: mapas y MDT (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Todos los archivos (*.*)&#124;*.*</value></data>
-  <data name="FilterConvert" xml:space="preserve"><value>KML, KMZ y TCX (*.kml;*.kmz;*.tcx)&#124;*.kml;*.kmz;*.tcx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Cartografía: mapas y MDT (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Todos los archivos (*.*)&#124;*.*</value></data>
-  <data name="ErrorUnsupportedFormat" xml:space="preserve"><value>El archivo «{0}» no es GPX, KML, KMZ ni TCX (su elemento raíz es «{2}»).</value></data>
+  <data name="FilterOpen" xml:space="preserve"><value>Archivos admitidos (*.gpx;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.gpx;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;GPX (*.gpx)&#124;*.gpx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;OziExplorer (*.plt;*.wpt)&#124;*.plt;*.wpt&#124;CompeGPS/TwoNav (*.trk;*.wpt)&#124;*.trk;*.wpt&#124;Cartografía: mapas y MDT (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Todos los archivos (*.*)&#124;*.*</value></data>
+  <data name="FilterConvert" xml:space="preserve"><value>KML, KMZ, TCX, OziExplorer y CompeGPS/TwoNav (*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk)&#124;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;OziExplorer (*.plt;*.wpt)&#124;*.plt;*.wpt&#124;CompeGPS/TwoNav (*.trk;*.wpt)&#124;*.trk;*.wpt&#124;Cartografía: mapas y MDT (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Todos los archivos (*.*)&#124;*.*</value></data>
+  <data name="ErrorUnsupportedFormat" xml:space="preserve"><value>El archivo «{0}» no es de un formato admitido (GPX, KML, KMZ, TCX, OziExplorer o CompeGPS/TwoNav): «{2}».</value></data>
+  <data name="ErrorUnsupportedDatum" xml:space="preserve"><value>«{0}» usa un datum o sistema de coordenadas que no se puede convertir{1}: {2}. Se admiten WGS84 y ED50 (España y Portugal) en coordenadas geográficas.</value></data>
   <data name="ErrorInvalidArchive" xml:space="preserve"><value>El archivo «{0}» no es un KMZ válido: no es un ZIP correcto, no contiene ningún KML o es demasiado grande al descomprimirlo.</value></data>
   <data name="WarningConvertedFrom" xml:space="preserve"><value>Convertido desde {0} a GPX. El archivo original no se modifica; al guardar se pide dónde guardar el GPX.</value></data>
   <data name="WarningIgnoredFeatures" xml:space="preserve"><value>Elementos de KML sin equivalente en GPX que no se han convertido (polígonos, superposiciones, modelos…): {0}.</value></data>
@@ -274,7 +275,7 @@
   <data name="DialogConvertFilesTitle" xml:space="preserve"><value>Archivos que convertir a GPX</value></data>
   <data name="DialogConvertFolderTitle" xml:space="preserve"><value>Carpeta de destino de los GPX</value></data>
   <data name="ConvertTitle" xml:space="preserve"><value>Convertir a GPX</value></data>
-  <data name="ConvertFiles" xml:space="preserve"><value>Archivos KML, KMZ y TCX:</value></data>
+  <data name="ConvertFiles" xml:space="preserve"><value>Archivos KML, KMZ, TCX, OziExplorer y CompeGPS/TwoNav:</value></data>
   <data name="ConvertAddFiles" xml:space="preserve"><value>Añadir...</value></data>
   <data name="ConvertRemove" xml:space="preserve"><value>Quitar</value></data>
   <data name="ConvertDestination" xml:space="preserve"><value>Guardar los GPX en:</value></data>
@@ -340,7 +341,7 @@
   <data name="LocalOpacityToolTip" xml:space="preserve"><value>Opacidad: a la izquierda se ve lo que hay debajo</value></data>
   <data name="LocalDragHandle" xml:space="preserve"><value>Arrastre para cambiar el orden (o Ctrl+↑ / Ctrl+↓). La de arriba se dibuja encima.</value></data>
   <data name="A11yLocalMapsList" xml:space="preserve"><value>Cartografías de usuario, de la de encima a la de debajo</value></data>
-  <data name="StatusDropSkipped" xml:space="preserve"><value>{0} archivos soltados no se han abierto: no son tracks (GPX, KML, KMZ, TCX) ni cartografía admitida.</value></data>
+  <data name="StatusDropSkipped" xml:space="preserve"><value>{0} archivos soltados no se han abierto: no son tracks (GPX, KML, KMZ, TCX, OziExplorer, CompeGPS/TwoNav) ni cartografía admitida.</value></data>
   <data name="MenuOpenEcwp" xml:space="preserve"><value>Abrir cartografía en _línea (ECWP)...</value></data>
   <data name="EcwpTitle" xml:space="preserve"><value>Abrir cartografía en línea (ECWP)</value></data>
   <data name="EcwpPrompt" xml:space="preserve"><value>Dirección del mapa ECW servido por ECWP:</value></data>

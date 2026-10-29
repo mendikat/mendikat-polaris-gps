@@ -28,6 +28,12 @@ public enum DocumentLoadError
 
     /// <summary>A KMZ that is not a valid ZIP, has no KML inside, or is too large once uncompressed (CONV-04).</summary>
     InvalidArchive,
+
+    /// <summary>
+    /// OziExplorer or CompeGPS/TwoNav file in a datum or coordinate system that cannot be converted to WGS84 (only WGS84
+    /// and ED50 in Spain and Portugal, in geographic coordinates). <see cref="DocumentLoadException.Detail"/> names it.
+    /// </summary>
+    UnsupportedDatum,
 }
 
 /// <summary>Expected failure while loading a document; carries a typed reason instead of a UI text.</summary>

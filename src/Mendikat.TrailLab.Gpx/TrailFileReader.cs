@@ -6,14 +6,15 @@ namespace Mendikat.TrailLab.Gpx;
 public sealed record SourceFileResult(SourceFormat Format, TrailFileResult Result);
 
 /// <summary>
-/// Opens GPX, KML, KMZ and TCX (CONV-01). The format is detected from the content (ZIP signature or XML root), so a
+/// Opens GPX, KML, KMZ, TCX, OziExplorer (.plt, .wpt) and CompeGPS/TwoNav (.trk, .wpt) (CONV-01). The format is
+/// detected from the content (ZIP signature, first text line or XML root), so a
 /// renamed file is still recognised; the extension only decides which reader reports the error of a file that is
 /// neither (empty, not well-formed).
 /// </summary>
 public static class TrailFileReader
 {
     /// <summary>Extensions of the formats that can be opened.</summary>
-    public static IReadOnlyList<string> Extensions { get; } = [".gpx", ".kml", ".kmz", ".tcx"];
+    public static IReadOnlyList<string> Extensions { get; } = [".gpx", ".kml", ".kmz", ".tcx", ".plt", ".wpt", ".trk"];
 
     /// <summary>Reads a file from disk. Call it off the UI thread (NFR-01).</summary>
     /// <exception cref="DocumentLoadException">Missing, empty, unreadable, unsupported or invalid file.</exception>
@@ -58,6 +59,8 @@ public static class TrailFileReader
             SourceFormat.Kml => new KmlReader().Read(stream, progress, cancellationToken),
             SourceFormat.Kmz => new KmzReader().Read(stream, progress, cancellationToken),
             SourceFormat.Tcx => new TcxReader().Read(stream, progress, cancellationToken),
+            SourceFormat.OziExplorer => new OziExplorerReader().Read(stream, progress, cancellationToken),
+            SourceFormat.CompeGps => new CompeGpsReader().Read(stream, progress, cancellationToken),
             _ => throw new ArgumentOutOfRangeException(nameof(fileName), format, null),
         };
         return new SourceFileResult(format, result);
@@ -83,6 +86,17 @@ public static class TrailFileReader
             }
 
             stream.Position = start;
+            var head = LegacyText.Head(stream);
+            if (OziExplorerReader.IsOziExplorer(head))
+            {
+                return SourceFormat.OziExplorer;
+            }
+
+            if (CompeGpsReader.IsCompeGps(head))
+            {
+                return SourceFormat.CompeGps;
+            }
+
             return XmlInput.RootName(stream) switch
             {
                 "gpx" => SourceFormat.Gpx,
@@ -103,6 +117,8 @@ public static class TrailFileReader
         ".kml" => SourceFormat.Kml,
         ".kmz" => SourceFormat.Kmz,
         ".tcx" => SourceFormat.Tcx,
+        ".plt" or ".wpt" => SourceFormat.OziExplorer,
+        ".trk" => SourceFormat.CompeGps,
         _ => SourceFormat.Gpx,
     };
 }

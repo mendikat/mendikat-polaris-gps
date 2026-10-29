@@ -85,7 +85,7 @@ public sealed class ConvertFlowTests : IDisposable
         await _vm.OpenPathAsync(Copy("other.xml"), DocumentFormat.Gpx);
 
         Assert.Empty(_vm.Documents);
-        Assert.Equal("El archivo «other.xml» no es GPX, KML, KMZ ni TCX (su elemento raíz es «html»).", Assert.Single(_dialogs.Errors));
+        Assert.Equal("El archivo «other.xml» no es de un formato admitido (GPX, KML, KMZ, TCX, OziExplorer o CompeGPS/TwoNav): «html».", Assert.Single(_dialogs.Errors));
     }
 
     [Fact]

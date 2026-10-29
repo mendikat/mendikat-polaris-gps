@@ -253,9 +253,10 @@
   <data name="StatGroupRoute" xml:space="preserve"><value>Recorregut</value></data>
   <data name="StatGroupTime" xml:space="preserve"><value>Temps</value></data>
   <data name="ProfileStatsHint" xml:space="preserve"><value>Desnivell calculat sobre el perfil suavitzat amb una mitjana gaussiana de 100 m, com a mendikat.net, per no sumar el soroll del GPS. En un circuit el desnivell negatiu s'iguala al positiu. Aturat: trams a menys d'1 km/h i pauses entre segments. Velocitat mitjana: distància en moviment ÷ temps en moviment. Velocitat màxima: la més alta mantinguda almenys 30 s, per no comptar els salts del GPS.</value></data>
-  <data name="FilterOpen" xml:space="preserve"><value>Fitxers admesos (*.gpx;*.kml;*.kmz;*.tcx;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.gpx;*.kml;*.kmz;*.tcx;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;GPX (*.gpx)&#124;*.gpx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Cartografia: mapes i MDT (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Tots els fitxers (*.*)&#124;*.*</value></data>
-  <data name="FilterConvert" xml:space="preserve"><value>KML, KMZ i TCX (*.kml;*.kmz;*.tcx)&#124;*.kml;*.kmz;*.tcx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;Cartografia: mapes i MDT (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Tots els fitxers (*.*)&#124;*.*</value></data>
-  <data name="ErrorUnsupportedFormat" xml:space="preserve"><value>El fitxer «{0}» no és GPX, KML, KMZ ni TCX (el seu element arrel és «{2}»).</value></data>
+  <data name="FilterOpen" xml:space="preserve"><value>Fitxers admesos (*.gpx;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.gpx;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;GPX (*.gpx)&#124;*.gpx&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;OziExplorer (*.plt;*.wpt)&#124;*.plt;*.wpt&#124;CompeGPS/TwoNav (*.trk;*.wpt)&#124;*.trk;*.wpt&#124;Cartografia: mapes i MDT (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Tots els fitxers (*.*)&#124;*.*</value></data>
+  <data name="FilterConvert" xml:space="preserve"><value>KML, KMZ, TCX, OziExplorer i CompeGPS/TwoNav (*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk)&#124;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk&#124;KML de Google Earth (*.kml)&#124;*.kml&#124;KMZ de Google Earth (*.kmz)&#124;*.kmz&#124;TCX de Garmin (*.tcx)&#124;*.tcx&#124;OziExplorer (*.plt;*.wpt)&#124;*.plt;*.wpt&#124;CompeGPS/TwoNav (*.trk;*.wpt)&#124;*.trk;*.wpt&#124;Cartografia: mapes i MDT (*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Tots els fitxers (*.*)&#124;*.*</value></data>
+  <data name="ErrorUnsupportedFormat" xml:space="preserve"><value>El fitxer «{0}» no té un format admès (GPX, KML, KMZ, TCX, OziExplorer o CompeGPS/TwoNav): «{2}».</value></data>
+  <data name="ErrorUnsupportedDatum" xml:space="preserve"><value>«{0}» fa servir un datum o sistema de coordenades que no es pot convertir{1}: {2}. S'admeten WGS84 i ED50 (Espanya i Portugal) en coordenades geogràfiques.</value></data>
   <data name="ErrorInvalidArchive" xml:space="preserve"><value>El fitxer «{0}» no és un KMZ vàlid: no és un ZIP correcte, no conté cap KML o és massa gran en descomprimir-lo.</value></data>
   <data name="WarningConvertedFrom" xml:space="preserve"><value>Convertit des de {0} a GPX. El fitxer original no es modifica; en desar es demana on desar el GPX.</value></data>
   <data name="WarningIgnoredFeatures" xml:space="preserve"><value>Elements de KML sense equivalent a GPX que no s'han convertit (polígons, superposicions, models…): {0}.</value></data>
@@ -267,7 +268,7 @@
   <data name="DialogConvertFilesTitle" xml:space="preserve"><value>Fitxers per convertir a GPX</value></data>
   <data name="DialogConvertFolderTitle" xml:space="preserve"><value>Carpeta de destinació dels GPX</value></data>
   <data name="ConvertTitle" xml:space="preserve"><value>Converteix a GPX</value></data>
-  <data name="ConvertFiles" xml:space="preserve"><value>Fitxers KML, KMZ i TCX:</value></data>
+  <data name="ConvertFiles" xml:space="preserve"><value>Fitxers KML, KMZ, TCX, OziExplorer i CompeGPS/TwoNav:</value></data>
   <data name="ConvertAddFiles" xml:space="preserve"><value>Afegeix...</value></data>
   <data name="ConvertRemove" xml:space="preserve"><value>Treu</value></data>
   <data name="ConvertDestination" xml:space="preserve"><value>Desa els GPX a:</value></data>
@@ -331,7 +332,7 @@
   <data name="LocalOpacityToolTip" xml:space="preserve"><value>Opacitat: a l'esquerra es veu el que hi ha a sota</value></data>
   <data name="LocalDragHandle" xml:space="preserve"><value>Arrossegueu per canviar l'ordre (o Ctrl+↑ / Ctrl+↓). La de dalt es dibuixa a sobre.</value></data>
   <data name="A11yLocalMapsList" xml:space="preserve"><value>Cartografies d'usuari, de la de sobre a la de sota</value></data>
-  <data name="StatusDropSkipped" xml:space="preserve"><value>{0} fitxers deixats anar no s'han obert: no són tracks (GPX, KML, KMZ, TCX) ni cartografia admesa.</value></data>
+  <data name="StatusDropSkipped" xml:space="preserve"><value>{0} fitxers deixats anar no s'han obert: no són tracks (GPX, KML, KMZ, TCX, OziExplorer, CompeGPS/TwoNav) ni cartografia admesa.</value></data>
   <data name="MenuOpenEcwp" xml:space="preserve"><value>Obre cartografia en _línia (ECWP)...</value></data>
   <data name="EcwpTitle" xml:space="preserve"><value>Obre cartografia en línia (ECWP)</value></data>
   <data name="EcwpPrompt" xml:space="preserve"><value>Adreça del mapa ECW servit per ECWP:</value></data>

@@ -23,7 +23,7 @@ public sealed record ExistingFileOption(ExistingFileAction Action, string Displa
 }
 
 /// <summary>
-/// "Convert to GPX" dialog (CONV-06): converts KML, KMZ and TCX files to GPX files, one per source, in the source
+/// "Convert to GPX" dialog (CONV-06): converts KML, KMZ, TCX, OziExplorer and CompeGPS/TwoNav files to GPX files, one per source, in the source
 /// folder or another one. Runs in the background with progress and can be stopped between files; a file with an error
 /// does not stop the others. Every GPX is verified and written safely, so none is ever left half-written.
 /// </summary>
