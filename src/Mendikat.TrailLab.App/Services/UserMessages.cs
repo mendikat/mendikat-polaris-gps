@@ -41,6 +41,7 @@ public static class UserMessages
             LocalMapError.InvalidCalibration => Strings.ErrorLocalInvalidCalibration,
             LocalMapError.ImageMissing => Strings.ErrorLocalImageMissing,
             LocalMapError.UnsupportedImage => Strings.ErrorLocalUnsupportedImage,
+            LocalMapError.UnsupportedRmap => Strings.ErrorLocalUnsupportedRmap,
             LocalMapError.InvalidImage => Strings.ErrorLocalInvalidImage,
             LocalMapError.UnsupportedCrs => Strings.ErrorLocalUnsupportedCrs,
             LocalMapError.MissingProjection => Strings.ErrorLocalMissingProjection,

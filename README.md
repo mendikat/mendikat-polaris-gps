@@ -3,7 +3,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.0.9.**
+> **Estado: versión 0.0.10.**
 > Se abren archivos GPX, y KML, KMZ, TCX, OziExplorer (PLT, WPT) y CompeGPS/TwoNav (TRK, WPT) convertidos a GPX, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -27,10 +27,10 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Regenerar tiempos | *Herramientas › Regenerar tiempos…*: fecha, hora y zona horaria de inicio, y velocidad (km/h, m/s, min/km) o intervalo fijo; vista previa en hora local y UTC |
 | Invertir el sentido | *Herramientas › Invertir track*: invierte puntos y segmentos del track o ruta seleccionado; las horas se reflejan (mismo inicio y fin, mismos intervalos). Se deshace con Ctrl+Z |
 | Ajustar altitudes con el MDT | *Herramientas › Ajustar altitudes con el MDT del IGN…* › **Consultar** (5 m o 25 m; requiere Internet) › revisar cuántos puntos cambian y cuántos no tienen dato › **Aplicar**. Sólo España; el origen de cada elevación se ve en el detalle del punto |
-| Abrir arrastrando | Soltar sobre la ventana uno o varios archivos GPX, KML, KMZ, TCX, PLT, WPT, TRK (se abren como documentos) o `.map`, `.imp`, `.asc`, `.hgt` (como cartografía de usuario) |
+| Abrir arrastrando | Soltar sobre la ventana uno o varios archivos GPX, KML, KMZ, TCX, PLT, WPT, TRK (se abren como documentos) o `.map`, `.imp`, `.rmap`, `.asc`, `.hgt` (como cartografía de usuario) |
 | Abrir KML, KMZ, TCX, PLT, WPT o TRK | *Archivo › Abrir archivo…* (Ctrl+O): se abre como un GPX nuevo «nombre.gpx» sin guardar; **Guardar** pide dónde guardarlo |
 | Convertir varios archivos a GPX | *Archivo › Convertir a GPX…*: elegir los KML, KMZ, TCX, PLT, WPT o TRK, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
-| Ver un mapa escaneado o un MDT propio | *Archivo › Abrir cartografía…* (o soltarlos sobre la ventana): mapas `.map` (OziExplorer) e `.imp` (CompeGPS/TwoNav) con su imagen JPG, PNG, BMP, GIF o TIFF, GeoTIFF, ECW e imágenes con `.tfw`/`.jgw`/`.pgw` y `.prj`, y MDT `.asc` (con su `.prj`), `.hgt` y GeoTIFF. ECW servidos por internet: *Archivo › Abrir cartografía en línea (ECWP)…*. Se listan en **Cartografías Usuario (n)** de la barra de herramientas: arrastrar ≡ (o Ctrl+↑/↓) para decidir cuál queda encima (la de arriba de la lista; la cartografía en línea siempre al fondo), deslizador de opacidad para ver la de debajo, casilla para mostrar u ocultar (en un MDT, para usarlo), ⤢ para ir a ella y ✕ para quitarla |
+| Ver un mapa escaneado o un MDT propio | *Archivo › Abrir cartografía…* (o soltarlos sobre la ventana): mapas `.map` (OziExplorer) e `.imp` (CompeGPS/TwoNav) con su imagen JPG, PNG, BMP, GIF o TIFF, RMAP de TwoNav (`.rmap`), GeoTIFF, ECW e imágenes con `.tfw`/`.jgw`/`.pgw` y `.prj`, y MDT `.asc` (con su `.prj`), `.hgt` y GeoTIFF. ECW servidos por internet: *Archivo › Abrir cartografía en línea (ECWP)…*. Se listan en **Cartografías Usuario (n)** de la barra de herramientas: arrastrar ≡ (o Ctrl+↑/↓) para decidir cuál queda encima (la de arriba de la lista; la cartografía en línea siempre al fondo), deslizador de opacidad para ver la de debajo, casilla para mostrar u ocultar (en un MDT, para usarlo), ⤢ para ir a ella y ✕ para quitarla |
 | Cambiar el idioma | *Archivo › Configuración…* › **Idioma de la aplicación**: español (por defecto), català, euskara, français o português, con su bandera. Se aplica al volver a abrir la aplicación, también a la guía de ayuda (F1). Algunos detalles técnicos de los errores de cartografía siguen en español; los números mantienen la coma decimal |
 | Mostrar u ocultar la regla de escala | *Archivo › Configuración…* › **Visualización** › **Mostrar la regla de escala en el mapa** (activada por defecto); el cambio se ve al aceptar |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
@@ -118,6 +118,7 @@ recuerdan al cerrar la aplicación.
 |---------|-----------|--------------|
 | OziExplorer `.map` (2.x) | Imagen, datum, proyección, puntos de calibración (grados y minutos o cuadrícula UTM) o, si faltan, las esquinas `MMPLL` | Imagen JPG, PNG, BMP, GIF o TIFF; **OZF2/OZFX3 no** (formato propietario) |
 | CompeGPS/TwoNav `.imp` | Imagen (`Bitmap=`), datum y puntos `Pn` en UTM o longitud/latitud (`A`) | Probado con archivos de referencia propios; faltan muestras reales |
+| TwoNav `.rmap` | Imagen en teselas JPEG con varios niveles de zoom y la calibración incrustada (las mismas claves que un `.imp`); se carga el nivel más grande que quepa en 50 megapíxeles. Estructura según el lector de QMapShack (no hay especificación pública) | Sólo teselas JPEG (tipo 10.7): los RMAP de paleta, 16 bits o MDT se rechazan con un aviso. Probado con archivos generados por los tests; faltan muestras reales |
 | SRTM `.hgt` | 1″ (3601²) y 3″ (1201²), esquina por el nombre (`N42W001`), huecos −32768 = sin dato | Alturas sobre el geoide EGM96, sin convertir |
 | ESRI ASCII Grid `.asc` | `xllcorner`/`xllcenter`, `NODATA_value`; sistema del `.prj` (WKT, formato de ArcInfo o `EPSG:n`) o, en los MDT del IGN, del nombre (`MDT05-0112-H30-LIDAR`, `PNOA_MDT05_ETRS89_HU30_…`) | Sin `.prj` ni nombre del IGN no se abre; un MDT05 del IGN (170 MB) tarda unos 3 s y ocupa unos 90 MB |
 | GeoTIFF `.tif`, `.tiff` y COG (`.cog`) (con GDAL) | Mapas (RGB, paleta o gris; transparencia por NoData o banda alfa) y MDT (una banda numérica, con NoData); cualquier sistema de coordenadas que conozca PROJ; los georreferenciados sólo con puntos de control se reproyectan al vuelo | Un TIFF sin georreferencia (p. ej. la imagen de un `.map`) se rechaza. Sin pirámides internas, alejarse mucho en un GeoTIFF enorme es lento; los COG las tienen siempre |
@@ -131,7 +132,6 @@ recuerdan al cerrar la aplicación.
   más de 50 megapíxeles se cargan a tamaño reducido (se pierde detalle al acercarse mucho).
 - Los MDT no se dibujan: dan la altitud bajo el puntero (antes que el MDT del IGN, sin conexión) y aparecen en
   *Ajustar altitudes* después de las resoluciones del IGN.
-- Aún no se admite: RMAP de TwoNav.
 - GeoTIFF y ECW pasan de su datum a WGS84 con PROJ (incluido en GDAL). En ED50 da lo mismo que la transformación de mendikat.net con 2–7 cm de diferencia en los husos 29 y 30 y 0,9 m en el 31.
 
 ## Cartografía
@@ -166,7 +166,7 @@ Datos: mosaicos y MDT del IGN España bajo CC BY 4.0 (scne.es); datos OSM bajo O
 
 ## Limitaciones conocidas
 
-- Cartografía local: imágenes OZF y RMAP no se admiten. Este producto contiene tecnología propiedad de Intergraph Corporation (ECW). En un `.map` o `.imp`, una imagen enorme se
+- Cartografía local: imágenes OZF y RMAP que no sean de teselas JPEG no se admiten. Este producto contiene tecnología propiedad de Intergraph Corporation (ECW). En un `.map`, `.imp` o `.rmap`, una imagen enorme se
   carga reducida a 50 megapíxeles. ED50 sólo en los husos 29 a 31; su latitud difiere unos 0,3 m de la que da
   mendikat.net, que corta antes un cálculo iterativo (conviene corregirlo en el PHP).
 

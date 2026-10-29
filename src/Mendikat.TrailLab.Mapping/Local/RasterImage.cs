@@ -42,4 +42,8 @@ public interface IRasterImageDecoder
     /// <exception cref="LocalMapException">Not a decodable image.</exception>
     /// <exception cref="OperationCanceledException">Cancelled.</exception>
     RasterImage Decode(string path, long maxPixels, CancellationToken cancellationToken);
+
+    /// <summary>Decodes a small image held in memory at full size (a JPEG tile of an RMAP).</summary>
+    /// <exception cref="LocalMapException">Not a decodable image; <paramref name="name"/> is the detail.</exception>
+    RasterImage Decode(byte[] data, string name);
 }

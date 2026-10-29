@@ -14,7 +14,7 @@ public abstract record LocalMapContent(string Path) : IDisposable
     }
 }
 
-/// <summary>A calibrated image (.map, .imp) and its decoded pixels.</summary>
+/// <summary>A calibrated image (.map, .imp) or a TwoNav RMAP, and its decoded pixels.</summary>
 public sealed record LocalRasterMap(string Path, GeoreferencedMap Map, RasterImage Image) : LocalMapContent(Path), ILocalMap
 {
     public GeoBounds Bounds => Map.Bounds;
@@ -39,7 +39,7 @@ public sealed record LocalDem(string Path, ILocalDem Dem) : LocalMapContent(Path
 }
 
 /// <summary>
-/// Opens local cartography: OziExplorer .map and CompeGPS .imp calibrations with their image and ASCII grid (.asc)
+/// Opens local cartography: OziExplorer .map and CompeGPS .imp calibrations with their image, TwoNav .rmap, ASCII grid (.asc)
 /// and SRTM (.hgt) DEMs with own readers; GeoTIFF (maps and DEMs), ECW and ECWP streams with GDAL. Format by extension,
 /// then validated by content. Call off the UI thread.
 /// </summary>
@@ -48,7 +48,7 @@ public static class LocalMapLoader
     /// <summary>Images with more pixels are decoded at a reduced size (4 bytes per pixel: about 200 MB).</summary>
     public const long MaxDecodedPixels = 50_000_000;
 
-    public static IReadOnlyList<string> Extensions { get; } = [".map", ".imp", ".asc", ".hgt", .. GdalLoader.Extensions];
+    public static IReadOnlyList<string> Extensions { get; } = [".map", ".imp", ".rmap", ".asc", ".hgt", .. GdalLoader.Extensions];
 
     /// <summary>True for an ECWP stream address (ecwp:// or ecwps://).</summary>
     public static bool IsEcwpUrl(string source) =>
@@ -80,6 +80,7 @@ public static class LocalMapLoader
             {
                 ".map" => LoadRaster(path, OziMapReader.Read(path), decoder, cancellationToken),
                 ".imp" => LoadRaster(path, CompeImpReader.Read(path), decoder, cancellationToken),
+                ".rmap" => RmapReader.Load(path, decoder, MaxDecodedPixels, cancellationToken),
                 ".hgt" => new LocalDem(path, HgtReader.Read(path, cancellationToken)),
                 ".asc" => new LocalDem(path, AscReader.Read(path, cancellationToken)),
                 ".tif" or ".tiff" or ".cog" or ".ecw" or ".jpg" or ".jpeg" or ".png" or ".gif" or ".bmp" => GdalLoader.Load(path, cancellationToken),

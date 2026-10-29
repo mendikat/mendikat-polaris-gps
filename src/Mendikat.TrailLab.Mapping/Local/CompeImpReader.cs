@@ -31,20 +31,43 @@ public static class CompeImpReader
             throw new LocalMapException(LocalMapError.InvalidCalibration, "no es un archivo .imp de CompeGPS", 1);
         }
 
-        var values = lines.Select((text, index) => (Text: text.Trim(), Line: index + 1))
+        var values = KeyValues(lines);
+        var bitmap = values.FirstOrDefault(v => v.Key.Equals("Bitmap", StringComparison.OrdinalIgnoreCase)).Value
+            ?? throw new LocalMapException(LocalMapError.InvalidCalibration, "falta «Bitmap=»");
+        return Parse(values, LocalFiles.ResolveImage(path, bitmap), Path.GetFileNameWithoutExtension(path));
+    }
+
+    /// <summary>
+    /// The calibration of the text block inside a TwoNav RMAP: the same keys as an .imp, without "Bitmap=" (the image
+    /// is the RMAP itself). "Version=", when present, must be 2.
+    /// </summary>
+    /// <exception cref="LocalMapException">Not a valid calibration.</exception>
+    public static MapCalibration ParseEmbedded(IReadOnlyList<string> lines, string rmapPath)
+    {
+        var values = KeyValues(lines);
+        var version = values.FirstOrDefault(v => v.Key.Equals("Version", StringComparison.OrdinalIgnoreCase));
+        if (version.Value is { } text && text != "2")
+        {
+            throw new LocalMapException(LocalMapError.InvalidCalibration, $"versión «{text}» de la calibración", version.Line);
+        }
+
+        return Parse(values, rmapPath, Path.GetFileNameWithoutExtension(rmapPath));
+    }
+
+    private static List<(string Key, string Value, int Line)> KeyValues(IReadOnlyList<string> lines) =>
+        lines.Select((text, index) => (Text: text.Trim(), Line: index + 1))
             .Where(l => l.Text.Contains('=', StringComparison.Ordinal))
             .Select(l => (Key: l.Text[..l.Text.IndexOf('=', StringComparison.Ordinal)].Trim(), Value: l.Text[(l.Text.IndexOf('=', StringComparison.Ordinal) + 1)..].Trim(), l.Line))
             .ToList();
+
+    private static MapCalibration Parse(List<(string Key, string Value, int Line)> values, string image, string title)
+    {
         string? Value(string key) => values.FirstOrDefault(v => v.Key.Equals(key, StringComparison.OrdinalIgnoreCase)).Value;
         int LineOf(string key) => values.FirstOrDefault(v => v.Key.Equals(key, StringComparison.OrdinalIgnoreCase)).Line;
 
-        var bitmap = Value("Bitmap") ?? throw new LocalMapException(LocalMapError.InvalidCalibration, "falta «Bitmap=»");
-        var image = LocalFiles.ResolveImage(path, bitmap);
         var datum = OziMapReader.Datum(Value("Datum") ?? "WGS 84", LineOf("Datum"));
         var projection = Value("Projection") ?? string.Empty;
-        if (projection.Length > 0
-            && !projection.Contains("UTM", StringComparison.OrdinalIgnoreCase)
-            && !projection.Contains("Latitude/Longitude", StringComparison.OrdinalIgnoreCase))
+        if (projection.Length > 0 && !IsSupportedProjection(projection))
         {
             throw new LocalMapException(LocalMapError.UnsupportedCrs, $"proyección «{projection.TrimEnd(',')}»", LineOf("Projection"));
         }
@@ -105,7 +128,20 @@ public static class CompeImpReader
 
         int? width = int.TryParse(Value("BitmapWidth"), NumberStyles.Integer, CultureInfo.InvariantCulture, out var w) ? w : null;
         int? height = int.TryParse(Value("BitmapHeight"), NumberStyles.Integer, CultureInfo.InvariantCulture, out var h) ? h : null;
-        return new MapCalibration("CompeGPS", Path.GetFileNameWithoutExtension(path), image, crs, points, width, height);
+        return new MapCalibration("CompeGPS", title, image, crs, points, width, height);
+    }
+
+    /// <summary>
+    /// UTM ("0,UTM,30,N," in an RMAP, "2,UTM,30,N," in an .imp) or longitude/latitude, written in full
+    /// ("1,Latitude/Longitude,") or short ("1,Lat/Long," in the RMAP of the IGN).
+    /// </summary>
+    private static bool IsSupportedProjection(string projection)
+    {
+        var name = projection.Split(',').Select(f => f.Trim()).FirstOrDefault(f => f.Length > 0 && !f.All(char.IsDigit)) ?? string.Empty;
+        return name.Equals("UTM", StringComparison.OrdinalIgnoreCase)
+            || name.Equals("Latitude/Longitude", StringComparison.OrdinalIgnoreCase)
+            || name.Equals("Lat/Long", StringComparison.OrdinalIgnoreCase)
+            || projection.Trim().TrimEnd(',') == "1";
     }
 
     /// <summary>"30T" → 30, north; latitude bands C–M are south.</summary>

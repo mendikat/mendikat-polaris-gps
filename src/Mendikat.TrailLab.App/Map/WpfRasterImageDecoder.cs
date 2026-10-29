@@ -61,4 +61,22 @@ public sealed class WpfRasterImageDecoder : IRasterImageDecoder
             throw new LocalMapException(LocalMapError.TooLarge, $"{width} × {height}", innerException: ex);
         }
     }
+
+    public RasterImage Decode(byte[] data, string name)
+    {
+        try
+        {
+            using var stream = new MemoryStream(data, writable: false);
+            var frame = BitmapDecoder.Create(stream, BitmapCreateOptions.IgnoreColorProfile, BitmapCacheOption.OnLoad).Frames[0];
+            var bgra = new FormatConvertedBitmap(frame, PixelFormats.Bgra32, null, 0);
+            bgra.Freeze();
+            var pixels = new byte[bgra.PixelWidth * bgra.PixelHeight * 4];
+            bgra.CopyPixels(pixels, bgra.PixelWidth * 4, 0);
+            return new RasterImage(bgra.PixelWidth, bgra.PixelHeight, 1, pixels);
+        }
+        catch (Exception ex) when (ex is IOException or NotSupportedException or FileFormatException or ArgumentException or InvalidOperationException)
+        {
+            throw new LocalMapException(LocalMapError.InvalidImage, name, innerException: ex);
+        }
+    }
 }

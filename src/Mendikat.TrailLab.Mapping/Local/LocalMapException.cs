@@ -7,7 +7,7 @@ public enum LocalMapError
     EmptyFile,
     ReadFailed,
 
-    /// <summary>Not one of the supported formats (.map, .imp, .asc, .hgt). Detail: the extension.</summary>
+    /// <summary>Not one of the supported formats (.map, .imp, .rmap, .asc, .hgt…). Detail: the extension.</summary>
     UnsupportedFormat,
 
     /// <summary>Calibration incomplete or inconsistent. Detail: what is wrong.</summary>
@@ -18,6 +18,9 @@ public enum LocalMapError
 
     /// <summary>The image is in a format Windows cannot decode (OZF, ECW…). Detail: the image file name.</summary>
     UnsupportedImage,
+
+    /// <summary>A TwoNav RMAP whose tiles are not JPEG (8- or 16-bit, elevation…). Detail: its type numbers.</summary>
+    UnsupportedRmap,
 
     /// <summary>The image could not be decoded. Detail: the image file name.</summary>
     InvalidImage,
