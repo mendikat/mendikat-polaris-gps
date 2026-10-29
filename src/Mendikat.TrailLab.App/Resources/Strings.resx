@@ -242,6 +242,26 @@
   <data name="DemNote" xml:space="preserve"><value>Sólo hay datos para España; en el mar y fuera de España los puntos conservan su elevación. La elevación original del GPS puede estar referida a otra superficie (el elipsoide o EGM96); no se aplica ninguna corrección. Nada cambia hasta pulsar «Aplicar», que se puede deshacer con Ctrl+Z; el archivo original no se modifica hasta guardar.</value></data>
   <data name="MenuReverse" xml:space="preserve"><value>_Invertir track</value></data>
   <data name="StatusReversed" xml:space="preserve"><value>«{0}» invertido: {1} puntos.</value></data>
+  <data name="MenuJoinTracks" xml:space="preserve"><value>_Unir tracks...</value></data>
+  <data name="JoinTitle" xml:space="preserve"><value>Unir tracks</value></data>
+  <data name="JoinTracksLabel" xml:space="preserve"><value>Tracks que se unen (de todos los documentos abiertos):</value></data>
+  <data name="JoinTrackItem" xml:space="preserve"><value>{0} — {1} · {2} puntos</value></data>
+  <data name="JoinMaxGap" xml:space="preserve"><value>Hueco máximo dentro de un segmento (m):</value></data>
+  <data name="JoinAllowReverse" xml:space="preserve"><value>Permitir invertir el sentido de un track</value></data>
+  <data name="JoinOrderLabel" xml:space="preserve"><value>Orden por proximidad:</value></data>
+  <data name="JoinStepFirst" xml:space="preserve"><value>{0}. {1}</value></data>
+  <data name="JoinStep" xml:space="preserve"><value>{0}. {1} — hueco {2}</value></data>
+  <data name="JoinStepNewSegment" xml:space="preserve"><value>{0}. {1} — hueco {2}, segmento nuevo</value></data>
+  <data name="JoinReversedName" xml:space="preserve"><value>{0} (invertido)</value></data>
+  <data name="JoinDistanceMeters" xml:space="preserve"><value>{0} m</value></data>
+  <data name="JoinDistanceKilometers" xml:space="preserve"><value>{0} km</value></data>
+  <data name="JoinPreview" xml:space="preserve"><value>{0} tracks → 1 track de {1} puntos. Segmentos: {2}. Huecos: {3} en total.</value></data>
+  <data name="JoinNeedsTwo" xml:space="preserve"><value>Marca al menos dos tracks.</value></data>
+  <data name="JoinInvalidGap" xml:space="preserve"><value>El hueco máximo debe ser un número de metros entre 0 y 100.000.</value></data>
+  <data name="JoinNote" xml:space="preserve"><value>Cada track se pone a continuación del que tenga el extremo más cercano. Si el hueco supera el máximo, empieza un segmento nuevo. Los tracks originales no cambian: el resultado se abre en un GPX nuevo sin guardar, con el nombre del primer track. Las horas de un track invertido se reflejan, como en «Invertir track».</value></data>
+  <data name="JoinApply" xml:space="preserve"><value>Unir</value></data>
+  <data name="StatusJoined" xml:space="preserve"><value>{0} tracks unidos en «{1}»: {2} puntos. Segmentos: {3}.</value></data>
+  <data name="StatusJoinNeedsTracks" xml:space="preserve"><value>Para unir hacen falta al menos dos tracks con puntos en los documentos abiertos.</value></data>
   <data name="StatusElevationsAdjusted" xml:space="preserve"><value>Altitudes ajustadas con el MDT en «{0}»: {1} puntos.</value></data>
   <data name="FieldElevationSource" xml:space="preserve"><value>Origen elevación</value></data>
   <data name="ElevationSourceOriginal" xml:space="preserve"><value>del archivo</value></data>

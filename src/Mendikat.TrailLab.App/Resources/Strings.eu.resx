@@ -235,6 +235,26 @@
   <data name="DemNote" xml:space="preserve"><value>Espainiarako bakarrik dago daturik; itsasoan eta Espainiatik kanpo puntuek beren altuera gordetzen dute. GPSaren jatorrizko altuera beste gainazal bati erreferentziatuta egon daiteke (elipsoidea edo EGM96); ez da zuzenketarik aplikatzen. Ez da ezer aldatzen «Aplikatu» sakatu arte, eta Ktrl+Z erabiliz desegin daiteke; jatorrizko fitxategia ez da aldatzen gorde arte.</value></data>
   <data name="MenuReverse" xml:space="preserve"><value>_Alderantzikatu track-a</value></data>
   <data name="StatusReversed" xml:space="preserve"><value>«{0}» alderantzikatuta: {1} puntu.</value></data>
+  <data name="MenuJoinTracks" xml:space="preserve"><value>_Elkartu track-ak...</value></data>
+  <data name="JoinTitle" xml:space="preserve"><value>Elkartu track-ak</value></data>
+  <data name="JoinTracksLabel" xml:space="preserve"><value>Elkartzen diren track-ak (irekitako dokumentu guztietakoak):</value></data>
+  <data name="JoinTrackItem" xml:space="preserve"><value>{0} — {1} · {2} puntu</value></data>
+  <data name="JoinMaxGap" xml:space="preserve"><value>Segmentu baten barruko gehienezko hutsunea (m):</value></data>
+  <data name="JoinAllowReverse" xml:space="preserve"><value>Track baten noranzkoa alderantzikatzea baimendu</value></data>
+  <data name="JoinOrderLabel" xml:space="preserve"><value>Hurbiltasunaren araberako ordena:</value></data>
+  <data name="JoinStepFirst" xml:space="preserve"><value>{0}. {1}</value></data>
+  <data name="JoinStep" xml:space="preserve"><value>{0}. {1} — hutsunea {2}</value></data>
+  <data name="JoinStepNewSegment" xml:space="preserve"><value>{0}. {1} — hutsunea {2}, segmentu berria</value></data>
+  <data name="JoinReversedName" xml:space="preserve"><value>{0} (alderantzikatuta)</value></data>
+  <data name="JoinDistanceMeters" xml:space="preserve"><value>{0} m</value></data>
+  <data name="JoinDistanceKilometers" xml:space="preserve"><value>{0} km</value></data>
+  <data name="JoinPreview" xml:space="preserve"><value>{0} track → track 1, {1} puntu. Segmentuak: {2}. Hutsuneak: {3} guztira.</value></data>
+  <data name="JoinNeedsTwo" xml:space="preserve"><value>Markatu gutxienez bi track.</value></data>
+  <data name="JoinInvalidGap" xml:space="preserve"><value>Gehienezko hutsuneak 0 eta 100.000 arteko metro kopurua izan behar du.</value></data>
+  <data name="JoinNote" xml:space="preserve"><value>Track bakoitza mutur hurbilena duenaren ondoren jartzen da. Hutsuneak gehienezkoa gainditzen badu, segmentu berri bat hasten da. Jatorrizko track-ak ez dira aldatzen: emaitza gorde gabeko GPX berri batean irekitzen da, lehen track-aren izenarekin. Alderantzikatutako track baten orduak islatu egiten dira, «Alderantzikatu track-a» tresnan bezala.</value></data>
+  <data name="JoinApply" xml:space="preserve"><value>Elkartu</value></data>
+  <data name="StatusJoined" xml:space="preserve"><value>{0} track «{1}» track-ean elkartuta: {2} puntu. Segmentuak: {3}.</value></data>
+  <data name="StatusJoinNeedsTracks" xml:space="preserve"><value>Elkartzeko, puntuak dituzten gutxienez bi track behar dira irekitako dokumentuetan.</value></data>
   <data name="StatusElevationsAdjusted" xml:space="preserve"><value>Altuerak LEMarekin doitu dira «{0}»-n: {1} puntu.</value></data>
   <data name="FieldElevationSource" xml:space="preserve"><value>Altueraren jatorria</value></data>
   <data name="ElevationSourceOriginal" xml:space="preserve"><value>fitxategikoa</value></data>

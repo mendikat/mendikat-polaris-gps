@@ -123,13 +123,15 @@
 
     <section id="herramientas">
       <h2>Eines</h2>
-      <p>S'apliquen al track o a la ruta seleccionats a <strong>Capes</strong> i es desfan amb <kbd>Ctrl</kbd>+<kbd>Z</kbd>. Excepte «Inverteix el track», mostren una previsualització i no canvien res fins que premeu <strong>Aplica</strong>.</p>
+      <p>S'apliquen al track o a la ruta seleccionats a <strong>Capes</strong> i es desfan amb <kbd>Ctrl</kbd>+<kbd>Z</kbd>. Excepte «Inverteix el track», mostren una previsualització i no canvien res fins que premeu <strong>Aplica</strong>. «Uneix tracks» és diferent: treballa amb els tracks de tots els documents oberts i deixa el resultat en un document nou.</p>
       <h3>Simplifica el track</h3>
       <p>Redueix punts amb l'algorisme de Douglas–Peucker. La tolerància en metres indica quant es pot separar la línia simplificada de l'original. Es conserven el primer i l'últim punt de cada segment.</p>
       <h3>Regenera els temps</h3>
       <p>Posa hores noves a partir d'una data, una hora i una zona horària d'inici, amb una velocitat (km/h, m/s o min/km) o un interval fix entre punts.</p>
       <h3>Inverteix el track</h3>
       <p>Canvia el sentit del recorregut: l'últim punt passa a ser el primer (també l'ordre dels segments). Si els punts tenen hora, es reflecteixen perquè continuïn en ordre: el track invertit comença i acaba a les mateixes hores i conserva el temps entre cada parell de punts.</p>
+      <h3>Uneix tracks</h3>
+      <p>Uneix dos o més tracks en un, per proximitat: cada track es posa a continuació del que té l'extrem més proper i, si cal, se n'inverteix el sentit (les hores es reflecteixen com a «Inverteix el track»). La llista inclou els tracks de tots els documents oberts; desmarqueu els que no vulgueu unir. Si el buit entre dos tracks supera el <strong>buit màxim</strong>, el següent comença un segment nou. La vista prèvia mostra l'ordre i cada buit. Els tracks originals no canvien: el resultat s'obre en un GPX nou sense desar, amb el nom del primer track.</p>
       <h3>Ajusta les altituds amb el MDT de l'IGN</h3>
       <p>Consulta el Model Digital del Terreny de l'IGN (5 m o 25 m) i substitueix les elevacions. Només cobreix Espanya i necessita connexió. Els punts sense dada (mar o fora d'Espanya) conserven la seva elevació.</p>
     </section>

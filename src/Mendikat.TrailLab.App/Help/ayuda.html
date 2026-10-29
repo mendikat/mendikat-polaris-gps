@@ -123,13 +123,15 @@
 
     <section id="herramientas">
       <h2>Herramientas</h2>
-      <p>Se aplican al track o ruta seleccionado en <strong>Capas</strong> y se deshacen con <kbd>Ctrl</kbd>+<kbd>Z</kbd>. Salvo «Invertir track», muestran una vista previa y no cambian nada hasta pulsar <strong>Aplicar</strong>.</p>
+      <p>Se aplican al track o ruta seleccionado en <strong>Capas</strong> y se deshacen con <kbd>Ctrl</kbd>+<kbd>Z</kbd>. Salvo «Invertir track», muestran una vista previa y no cambian nada hasta pulsar <strong>Aplicar</strong>. «Unir tracks» es distinta: trabaja con los tracks de todos los documentos abiertos y deja el resultado en un documento nuevo.</p>
       <h3>Simplificar track</h3>
       <p>Reduce puntos con el algoritmo de Douglas–Peucker. La tolerancia en metros indica cuánto puede separarse la línea simplificada de la original. Se conservan el primer y el último punto de cada segmento.</p>
       <h3>Regenerar tiempos</h3>
       <p>Pone horas nuevas a partir de una fecha, hora y zona horaria de inicio, con una velocidad (km/h, m/s o min/km) o un intervalo fijo entre puntos.</p>
       <h3>Invertir track</h3>
       <p>Cambia el sentido del recorrido: el último punto pasa a ser el primero (también el orden de los segmentos). Si los puntos tienen hora, se reflejan para que sigan en orden: el track invertido empieza y termina a las mismas horas y conserva el tiempo entre cada par de puntos.</p>
+      <h3>Unir tracks</h3>
+      <p>Une dos o más tracks en uno, por proximidad: cada track se pone a continuación del que tiene el extremo más cercano y, si hace falta, se invierte su sentido (sus horas se reflejan como en «Invertir track»). La lista incluye los tracks de todos los documentos abiertos; desmarca los que no quieras unir. Si el hueco entre dos tracks supera el <strong>hueco máximo</strong>, el siguiente empieza un segmento nuevo. La vista previa muestra el orden y cada hueco. Los tracks originales no cambian: el resultado se abre en un GPX nuevo sin guardar, con el nombre del primer track.</p>
       <h3>Ajustar altitudes con el MDT del IGN</h3>
       <p>Consulta el Modelo Digital del Terreno del IGN (5 m o 25 m) y sustituye las elevaciones. Sólo cubre España y necesita conexión. Los puntos sin dato (mar o fuera de España) conservan su elevación.</p>
     </section>

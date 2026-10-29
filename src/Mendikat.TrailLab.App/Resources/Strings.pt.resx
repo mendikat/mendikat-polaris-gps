@@ -235,6 +235,26 @@
   <data name="DemNote" xml:space="preserve"><value>Só há dados para Espanha; no mar e fora de Espanha os pontos conservam a sua elevação. A elevação original do GPS pode estar referida a outra superfície (o elipsoide ou EGM96); não se aplica nenhuma correção. Nada muda até premir «Aplicar», que pode ser anulado com Ctrl+Z; o ficheiro original não é alterado até guardar.</value></data>
   <data name="MenuReverse" xml:space="preserve"><value>_Inverter track</value></data>
   <data name="StatusReversed" xml:space="preserve"><value>«{0}» invertido: {1} pontos.</value></data>
+  <data name="MenuJoinTracks" xml:space="preserve"><value>_Unir tracks...</value></data>
+  <data name="JoinTitle" xml:space="preserve"><value>Unir tracks</value></data>
+  <data name="JoinTracksLabel" xml:space="preserve"><value>Tracks a unir (de todos os documentos abertos):</value></data>
+  <data name="JoinTrackItem" xml:space="preserve"><value>{0} — {1} · {2} pontos</value></data>
+  <data name="JoinMaxGap" xml:space="preserve"><value>Intervalo máximo dentro de um segmento (m):</value></data>
+  <data name="JoinAllowReverse" xml:space="preserve"><value>Permitir inverter o sentido de um track</value></data>
+  <data name="JoinOrderLabel" xml:space="preserve"><value>Ordem por proximidade:</value></data>
+  <data name="JoinStepFirst" xml:space="preserve"><value>{0}. {1}</value></data>
+  <data name="JoinStep" xml:space="preserve"><value>{0}. {1} — intervalo {2}</value></data>
+  <data name="JoinStepNewSegment" xml:space="preserve"><value>{0}. {1} — intervalo {2}, segmento novo</value></data>
+  <data name="JoinReversedName" xml:space="preserve"><value>{0} (invertido)</value></data>
+  <data name="JoinDistanceMeters" xml:space="preserve"><value>{0} m</value></data>
+  <data name="JoinDistanceKilometers" xml:space="preserve"><value>{0} km</value></data>
+  <data name="JoinPreview" xml:space="preserve"><value>{0} tracks → 1 track de {1} pontos. Segmentos: {2}. Intervalos: {3} no total.</value></data>
+  <data name="JoinNeedsTwo" xml:space="preserve"><value>Marque pelo menos dois tracks.</value></data>
+  <data name="JoinInvalidGap" xml:space="preserve"><value>O intervalo máximo deve ser um número de metros entre 0 e 100 000.</value></data>
+  <data name="JoinNote" xml:space="preserve"><value>Cada track é colocado a seguir ao que tiver a extremidade mais próxima. Se o intervalo ultrapassar o máximo, começa um segmento novo. Os tracks originais não mudam: o resultado abre-se num GPX novo por guardar, com o nome do primeiro track. As horas de um track invertido são refletidas, como em «Inverter track».</value></data>
+  <data name="JoinApply" xml:space="preserve"><value>Unir</value></data>
+  <data name="StatusJoined" xml:space="preserve"><value>{0} tracks unidos em «{1}»: {2} pontos. Segmentos: {3}.</value></data>
+  <data name="StatusJoinNeedsTracks" xml:space="preserve"><value>Para unir são necessários pelo menos dois tracks com pontos nos documentos abertos.</value></data>
   <data name="StatusElevationsAdjusted" xml:space="preserve"><value>Altitudes ajustadas com o MDT em «{0}»: {1} pontos.</value></data>
   <data name="FieldElevationSource" xml:space="preserve"><value>Origem da elevação</value></data>
   <data name="ElevationSourceOriginal" xml:space="preserve"><value>do ficheiro</value></data>

@@ -123,13 +123,15 @@
 
     <section id="herramientas">
       <h2>Ferramentas</h2>
-      <p>Aplicam-se ao track ou rota selecionado em <strong>Camadas</strong> e anulam-se com <kbd>Ctrl</kbd>+<kbd>Z</kbd>. Exceto «Inverter track», mostram uma pré-visualização e não alteram nada até premir <strong>Aplicar</strong>.</p>
+      <p>Aplicam-se ao track ou rota selecionado em <strong>Camadas</strong> e anulam-se com <kbd>Ctrl</kbd>+<kbd>Z</kbd>. Exceto «Inverter track», mostram uma pré-visualização e não alteram nada até premir <strong>Aplicar</strong>. «Unir tracks» é diferente: trabalha com os tracks de todos os documentos abertos e deixa o resultado num documento novo.</p>
       <h3>Simplificar track</h3>
       <p>Reduz pontos com o algoritmo de Douglas–Peucker. A tolerância em metros indica quanto a linha simplificada se pode afastar da original. Conservam-se o primeiro e o último ponto de cada segmento.</p>
       <h3>Regenerar tempos</h3>
       <p>Atribui horas novas a partir de uma data, hora e fuso horário de início, com uma velocidade (km/h, m/s ou min/km) ou um intervalo fixo entre pontos.</p>
       <h3>Inverter track</h3>
       <p>Muda o sentido do percurso: o último ponto passa a ser o primeiro (também a ordem dos segmentos). Se os pontos tiverem hora, são refletidas para continuarem por ordem: o track invertido começa e acaba às mesmas horas e conserva o tempo entre cada par de pontos.</p>
+      <h3>Unir tracks</h3>
+      <p>Une dois ou mais tracks num só, por proximidade: cada track é colocado a seguir ao que tem a extremidade mais próxima e, se for preciso, o seu sentido é invertido (as horas são refletidas como em «Inverter track»). A lista inclui os tracks de todos os documentos abertos; desmarque os que não quiser unir. Se o intervalo entre dois tracks ultrapassar o <strong>intervalo máximo</strong>, o seguinte começa um segmento novo. A pré-visualização mostra a ordem e cada intervalo. Os tracks originais não mudam: o resultado abre-se num GPX novo por guardar, com o nome do primeiro track.</p>
       <h3>Ajustar altitudes com o MDT do IGN</h3>
       <p>Consulta o Modelo Digital do Terreno do IGN espanhol (5 m ou 25 m) e substitui as elevações. Só cobre Espanha e precisa de ligação. Os pontos sem dados (mar ou fora de Espanha) conservam a sua elevação.</p>
     </section>

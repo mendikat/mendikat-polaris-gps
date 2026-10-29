@@ -245,13 +245,20 @@ public sealed partial class MainViewModel : ObservableObject
         var data = new TrailData { FormatState = new GpxFormatState { SourceVersion = "1.1" } };
         data.Tracks.Add(track);
 
+        var viewModel = AddNewDocument(data);
+        StatusMessage = string.Format(Strings.StatusNewDocument, viewModel.FileName);
+        _logger.LogInformation("Created new GPX document {FileName}", viewModel.FileName);
+    }
+
+    /// <summary>Opens <paramref name="data"/> as an unsaved GPX document "Sin título N.gpx" and makes it the active one.</summary>
+    private DocumentViewModel AddNewDocument(TrailData data)
+    {
         var title = string.Format(Strings.NewDocumentTitle, _nextNewDocumentNumber++);
         var viewModel = new DocumentViewModel(TrailDocument.CreateNew(DocumentFormat.Gpx, title, data), _nextColorIndex++);
         Documents.Add(viewModel);
         OnPropertyChanged(nameof(HasDocuments));
         ActiveDocument = viewModel;
-        StatusMessage = string.Format(Strings.StatusNewDocument, title);
-        _logger.LogInformation("Created new GPX document {FileName}", title);
+        return viewModel;
     }
 
     public async Task OpenAsync(DocumentFormat format)

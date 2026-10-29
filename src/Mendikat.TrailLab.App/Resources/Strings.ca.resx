@@ -235,6 +235,26 @@
   <data name="DemNote" xml:space="preserve"><value>Només hi ha dades per a Espanya; al mar i fora d'Espanya els punts conserven la seva elevació. L'elevació original del GPS pot estar referida a una altra superfície (l'el·lipsoide o EGM96); no s'aplica cap correcció. No canvia res fins que premeu «Aplica», que es pot desfer amb Ctrl+Z; el fitxer original no es modifica fins que el deseu.</value></data>
   <data name="MenuReverse" xml:space="preserve"><value>_Inverteix el track</value></data>
   <data name="StatusReversed" xml:space="preserve"><value>«{0}» invertit: {1} punts.</value></data>
+  <data name="MenuJoinTracks" xml:space="preserve"><value>_Uneix tracks...</value></data>
+  <data name="JoinTitle" xml:space="preserve"><value>Uneix tracks</value></data>
+  <data name="JoinTracksLabel" xml:space="preserve"><value>Tracks que s'uneixen (de tots els documents oberts):</value></data>
+  <data name="JoinTrackItem" xml:space="preserve"><value>{0} — {1} · {2} punts</value></data>
+  <data name="JoinMaxGap" xml:space="preserve"><value>Buit màxim dins d'un segment (m):</value></data>
+  <data name="JoinAllowReverse" xml:space="preserve"><value>Permet invertir el sentit d'un track</value></data>
+  <data name="JoinOrderLabel" xml:space="preserve"><value>Ordre per proximitat:</value></data>
+  <data name="JoinStepFirst" xml:space="preserve"><value>{0}. {1}</value></data>
+  <data name="JoinStep" xml:space="preserve"><value>{0}. {1} — buit {2}</value></data>
+  <data name="JoinStepNewSegment" xml:space="preserve"><value>{0}. {1} — buit {2}, segment nou</value></data>
+  <data name="JoinReversedName" xml:space="preserve"><value>{0} (invertit)</value></data>
+  <data name="JoinDistanceMeters" xml:space="preserve"><value>{0} m</value></data>
+  <data name="JoinDistanceKilometers" xml:space="preserve"><value>{0} km</value></data>
+  <data name="JoinPreview" xml:space="preserve"><value>{0} tracks → 1 track de {1} punts. Segments: {2}. Buits: {3} en total.</value></data>
+  <data name="JoinNeedsTwo" xml:space="preserve"><value>Marqueu almenys dos tracks.</value></data>
+  <data name="JoinInvalidGap" xml:space="preserve"><value>El buit màxim ha de ser un nombre de metres entre 0 i 100.000.</value></data>
+  <data name="JoinNote" xml:space="preserve"><value>Cada track es posa a continuació del que tingui l'extrem més proper. Si el buit supera el màxim, comença un segment nou. Els tracks originals no canvien: el resultat s'obre en un GPX nou sense desar, amb el nom del primer track. Les hores d'un track invertit es reflecteixen, com a «Inverteix el track».</value></data>
+  <data name="JoinApply" xml:space="preserve"><value>Uneix</value></data>
+  <data name="StatusJoined" xml:space="preserve"><value>{0} tracks units a «{1}»: {2} punts. Segments: {3}.</value></data>
+  <data name="StatusJoinNeedsTracks" xml:space="preserve"><value>Per unir calen almenys dos tracks amb punts als documents oberts.</value></data>
   <data name="StatusElevationsAdjusted" xml:space="preserve"><value>Altituds ajustades amb el MDT a «{0}»: {1} punts.</value></data>
   <data name="FieldElevationSource" xml:space="preserve"><value>Origen de l'elevació</value></data>
   <data name="ElevationSourceOriginal" xml:space="preserve"><value>del fitxer</value></data>

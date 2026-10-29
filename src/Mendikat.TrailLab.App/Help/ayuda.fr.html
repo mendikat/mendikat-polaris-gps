@@ -123,13 +123,15 @@
 
     <section id="herramientas">
       <h2>Outils</h2>
-      <p>Ils s'appliquent à la trace ou à l'itinéraire sélectionné dans <strong>Couches</strong> et s'annulent avec <kbd>Ctrl</kbd>+<kbd>Z</kbd>. Sauf « Inverser la trace », ils affichent un aperçu et ne changent rien avant que vous cliquiez sur <strong>Appliquer</strong>.</p>
+      <p>Ils s'appliquent à la trace ou à l'itinéraire sélectionné dans <strong>Couches</strong> et s'annulent avec <kbd>Ctrl</kbd>+<kbd>Z</kbd>. Sauf « Inverser la trace », ils affichent un aperçu et ne changent rien avant que vous cliquiez sur <strong>Appliquer</strong>. « Joindre des traces » est différent : il travaille avec les traces de tous les documents ouverts et place le résultat dans un nouveau document.</p>
       <h3>Simplifier la trace</h3>
       <p>Réduit le nombre de points avec l'algorithme de Douglas–Peucker. La tolérance en mètres indique de combien la ligne simplifiée peut s'écarter de l'originale. Le premier et le dernier point de chaque segment sont conservés.</p>
       <h3>Régénérer les heures</h3>
       <p>Attribue de nouvelles heures à partir d'une date, d'une heure et d'un fuseau horaire de départ, avec une vitesse (km/h, m/s ou min/km) ou un intervalle fixe entre les points.</p>
       <h3>Inverser la trace</h3>
       <p>Change le sens du parcours : le dernier point devient le premier (l'ordre des segments aussi). Si les points ont une heure, elles sont reflétées pour rester dans l'ordre : la trace inversée commence et finit aux mêmes heures et conserve le temps entre chaque paire de points.</p>
+      <h3>Joindre des traces</h3>
+      <p>Joint deux traces ou plus en une seule, par proximité : chaque trace est placée à la suite de celle dont l'extrémité est la plus proche et, si nécessaire, son sens est inversé (ses heures sont reflétées comme dans « Inverser la trace »). La liste contient les traces de tous les documents ouverts ; décochez celles que vous ne voulez pas joindre. Si l'écart entre deux traces dépasse l'<strong>écart maximal</strong>, la suivante commence un nouveau segment. L'aperçu montre l'ordre et chaque écart. Les traces d'origine ne changent pas : le résultat s'ouvre dans un nouveau GPX non enregistré, avec le nom de la première trace.</p>
       <h3>Ajuster les altitudes avec le MNT de l'IGN</h3>
       <p>Interroge le Modèle numérique de terrain de l'IGN espagnol (5 m ou 25 m) et remplace les altitudes. Il ne couvre que l'Espagne et nécessite une connexion. Les points sans donnée (mer ou hors d'Espagne) conservent leur altitude.</p>
     </section>

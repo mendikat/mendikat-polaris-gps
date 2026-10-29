@@ -235,6 +235,26 @@
   <data name="DemNote" xml:space="preserve"><value>Les données ne couvrent que l'Espagne ; en mer et hors d'Espagne, les points gardent leur altitude. L'altitude GPS d'origine peut se référer à une autre surface (l'ellipsoïde ou EGM96) ; aucune correction n'est appliquée. Rien ne change avant d'appuyer sur « Appliquer », ce qui peut être annulé avec Ctrl+Z ; le fichier d'origine n'est modifié qu'à l'enregistrement.</value></data>
   <data name="MenuReverse" xml:space="preserve"><value>_Inverser la trace</value></data>
   <data name="StatusReversed" xml:space="preserve"><value>« {0} » inversé : {1} points.</value></data>
+  <data name="MenuJoinTracks" xml:space="preserve"><value>_Joindre des traces...</value></data>
+  <data name="JoinTitle" xml:space="preserve"><value>Joindre des traces</value></data>
+  <data name="JoinTracksLabel" xml:space="preserve"><value>Traces à joindre (de tous les documents ouverts) :</value></data>
+  <data name="JoinTrackItem" xml:space="preserve"><value>{0} — {1} · {2} points</value></data>
+  <data name="JoinMaxGap" xml:space="preserve"><value>Écart maximal dans un segment (m) :</value></data>
+  <data name="JoinAllowReverse" xml:space="preserve"><value>Autoriser l'inversion du sens d'une trace</value></data>
+  <data name="JoinOrderLabel" xml:space="preserve"><value>Ordre par proximité :</value></data>
+  <data name="JoinStepFirst" xml:space="preserve"><value>{0}. {1}</value></data>
+  <data name="JoinStep" xml:space="preserve"><value>{0}. {1} — écart {2}</value></data>
+  <data name="JoinStepNewSegment" xml:space="preserve"><value>{0}. {1} — écart {2}, nouveau segment</value></data>
+  <data name="JoinReversedName" xml:space="preserve"><value>{0} (inversée)</value></data>
+  <data name="JoinDistanceMeters" xml:space="preserve"><value>{0} m</value></data>
+  <data name="JoinDistanceKilometers" xml:space="preserve"><value>{0} km</value></data>
+  <data name="JoinPreview" xml:space="preserve"><value>{0} traces → 1 trace de {1} points. Segments : {2}. Écarts : {3} au total.</value></data>
+  <data name="JoinNeedsTwo" xml:space="preserve"><value>Cochez au moins deux traces.</value></data>
+  <data name="JoinInvalidGap" xml:space="preserve"><value>L'écart maximal doit être un nombre de mètres entre 0 et 100 000.</value></data>
+  <data name="JoinNote" xml:space="preserve"><value>Chaque trace est placée à la suite de celle dont l'extrémité est la plus proche. Si l'écart dépasse le maximum, un nouveau segment commence. Les traces d'origine ne changent pas : le résultat s'ouvre dans un nouveau GPX non enregistré, avec le nom de la première trace. Les heures d'une trace inversée sont reflétées, comme dans « Inverser la trace ».</value></data>
+  <data name="JoinApply" xml:space="preserve"><value>Joindre</value></data>
+  <data name="StatusJoined" xml:space="preserve"><value>{0} traces jointes dans « {1} » : {2} points. Segments : {3}.</value></data>
+  <data name="StatusJoinNeedsTracks" xml:space="preserve"><value>Pour joindre, il faut au moins deux traces avec des points dans les documents ouverts.</value></data>
   <data name="StatusElevationsAdjusted" xml:space="preserve"><value>Altitudes ajustées avec le MNT dans « {0} » : {1} points.</value></data>
   <data name="FieldElevationSource" xml:space="preserve"><value>Origine de l'altitude</value></data>
   <data name="ElevationSourceOriginal" xml:space="preserve"><value>du fichier</value></data>

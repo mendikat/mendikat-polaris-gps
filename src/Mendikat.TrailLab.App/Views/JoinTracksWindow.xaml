@@ -1,0 +1,37 @@
+<Window x:Class="Mendikat.TrailLab.App.Views.JoinTracksWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:res="clr-namespace:Mendikat.TrailLab.App.Resources"
+        Title="{x:Static res:Strings.JoinTitle}" Width="560" SizeToContent="Height" ResizeMode="NoResize"
+        ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="14">
+        <TextBlock Text="{x:Static res:Strings.JoinTracksLabel}" Margin="0,0,0,4" />
+        <ListBox x:Name="TrackList" ItemsSource="{Binding Items}" MaxHeight="180"
+                 AutomationProperties.Name="{x:Static res:Strings.JoinTracksLabel}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox Content="{Binding Label}" IsChecked="{Binding IsSelected}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <DockPanel Margin="0,10,0,0">
+            <TextBlock Text="{x:Static res:Strings.JoinMaxGap}" VerticalAlignment="Center" Margin="0,0,8,0" />
+            <TextBox x:Name="MaxGapBox" Width="80" HorizontalAlignment="Left"
+                     Text="{Binding MaxGapText, UpdateSourceTrigger=PropertyChanged}"
+                     AutomationProperties.Name="{x:Static res:Strings.JoinMaxGap}" />
+        </DockPanel>
+        <CheckBox Content="{x:Static res:Strings.JoinAllowReverse}" IsChecked="{Binding AllowReverse}" Margin="0,8,0,0" />
+
+        <TextBlock Text="{x:Static res:Strings.JoinOrderLabel}" Margin="0,12,0,4" />
+        <ItemsControl ItemsSource="{Binding Steps}" Margin="8,0,0,0" />
+        <TextBlock Text="{Binding Preview}" FontWeight="SemiBold" Margin="0,8,0,0" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+        <TextBlock Text="{Binding Error}" Foreground="DarkRed" TextWrapping="Wrap" Margin="0,4,0,0" />
+        <TextBlock Text="{x:Static res:Strings.JoinNote}" Foreground="DimGray" TextWrapping="Wrap" Margin="0,8,0,0" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+            <Button Content="{x:Static res:Strings.JoinApply}" IsDefault="True" Padding="14,3" Margin="0,0,8,0"
+                    IsEnabled="{Binding CanApply}" Click="OnApply" />
+            <Button Content="{x:Static res:Strings.DialogCancel}" IsCancel="True" Padding="14,3" />
+        </StackPanel>
+    </StackPanel>
+</Window>

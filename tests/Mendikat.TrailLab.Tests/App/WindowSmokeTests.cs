@@ -22,6 +22,15 @@ namespace Mendikat.TrailLab.Tests.App;
 /// </summary>
 public sealed class WindowSmokeTests
 {
+    internal static Track SampleTrack(double latitude)
+    {
+        var segment = new TrackSegment();
+        segment.Points.AddRange(Enumerable.Range(0, 3).Select(i => new TrailPoint(new GeoPosition(latitude + i * 0.001, -1.6))));
+        var track = new Track { Name = "T" };
+        track.Segments.Add(segment);
+        return track;
+    }
+
     internal static LayerItemViewModel TrackLayer()
     {
         var data = new TrailData();
@@ -64,6 +73,7 @@ public sealed class WindowSmokeTests
             Window[] windows =
             [
                 new SimplifyWindow(new SimplifyViewModel(layer)),
+                new JoinTracksWindow(new JoinTracksViewModel([(SampleTrack(42.8), "a.gpx"), (SampleTrack(42.9), "b.gpx")])),
                 new TimesWindow(new TimesViewModel(layer)),
                 new DemWindow(new DemViewModel(layer, _ => new NoDataSource())),
                 new ProfileWindow(new ProfileViewModel(document, layer)),
