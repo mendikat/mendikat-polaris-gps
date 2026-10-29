@@ -16,6 +16,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Mendikat.TrailLab.App;
 
+/// <summary>
+/// Main application entry point.
+/// </summary>
 public partial class App : Application
 {
     private ILoggerFactory? _loggerFactory;
@@ -23,6 +26,9 @@ public partial class App : Application
     private HttpClient? _tileHttpClient;
     private HttpClient? _demHttpClient;
 
+    /// <summary>
+    /// Handles the application startup event.
+    /// </summary>
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
@@ -82,6 +88,9 @@ public partial class App : Application
         };
     }
 
+    /// <summary>
+    /// Handles the application exit event.
+    /// </summary>
     protected override void OnExit(ExitEventArgs e)
     {
         _logger?.LogInformation("Mendikat TrailLab exiting");
@@ -107,7 +116,9 @@ public partial class App : Application
             typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(culture.IetfLanguageTag)));
     }
 
-    /// <summary>Last-resort handlers (NFR-03): log, inform the user and keep the application alive when possible.</summary>
+    /// <summary>
+    /// Registers global exception handlers for the application.
+    /// </summary>
     private void RegisterGlobalExceptionHandlers()
     {
         DispatcherUnhandledException += OnDispatcherUnhandledException;
@@ -120,6 +131,9 @@ public partial class App : Application
             _logger?.LogCritical(args.ExceptionObject as Exception, "Fatal unhandled exception");
     }
 
+    /// <summary>
+    /// Manages unhandled exceptions that occur on the UI thread.
+    /// </summary>
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
         _logger?.LogError(e.Exception, "Unhandled exception on UI thread");
