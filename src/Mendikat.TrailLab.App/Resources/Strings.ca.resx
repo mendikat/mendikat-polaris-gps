@@ -88,6 +88,8 @@
   <data name="MenuRedo" xml:space="preserve"><value>_Refés</value></data>
   <data name="MenuDelete" xml:space="preserve"><value>_Elimina</value></data>
   <data name="MenuInsertPoint" xml:space="preserve"><value>_Insereix un punt</value></data>
+  <data name="MenuDeletePoint" xml:space="preserve"><value>_Elimina el punt</value></data>
+  <data name="GestureCtrlClick" xml:space="preserve"><value>Ctrl+clic</value></data>
   <data name="PanelLayers" xml:space="preserve"><value>Capes</value></data>
   <data name="PanelPoints" xml:space="preserve"><value>Punts</value></data>
   <data name="PanelPoint" xml:space="preserve"><value>Punt seleccionat</value></data>

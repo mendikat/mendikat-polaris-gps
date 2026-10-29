@@ -3,7 +3,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.0.6.**
+> **Estado: versión 0.0.7.**
 > Se abren archivos GPX, y KML, KMZ y TCX convertidos a GPX (WPT se retiró el 2026-10-26), se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -15,8 +15,9 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 |--------|------|
 | Ver los puntos de un track, ruta o waypoints | Seleccionarlo en **Capas** (panel izquierdo); la casilla lo muestra u oculta en el mapa |
 | Seleccionar un punto | Clic en la lista o en el mapa (cerca del punto); Ctrl/Mayús + clic en la lista para varios |
-| Eliminar | **Supr** o clic derecho › Eliminar. Sin puntos seleccionados, elimina el track o ruta (con confirmación) |
+| Eliminar | **Supr**. Sin puntos seleccionados, elimina el track o ruta (con confirmación) |
 | Insertar un punto intermedio | **Insert**: punto medio entre el seleccionado y el siguiente |
+| Menú contextual | Con un punto de un track seleccionado, clic derecho en el mapa: **Insertar punto** (en el sitio del clic, como Ctrl+clic; sobre un punto, el punto medio tras él), **Eliminar punto** y las herramientas del menú *Herramientas* |
 | Mover un punto | Seleccionarlo y arrastrarlo en el mapa, o cambiar latitud/longitud en el detalle y pulsar **Aplicar** (Intro) |
 | Editar nombre, descripción, elevación, hora | Panel «Punto seleccionado» › **Aplicar**; **Descartar** (Esc) deshace lo escrito |
 | Deshacer / rehacer | **Ctrl+Z** / **Ctrl+Y** (menú Edición) |

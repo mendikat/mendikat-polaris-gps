@@ -76,6 +76,21 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
+    public void Map_context_menu_needs_a_selected_track_point()
+    {
+        Assert.False(_vm.HasTrackPointSelected);
+
+        _vm.SelectFromMap(Doc, FirstSegment[3]);
+        Assert.True(_vm.HasTrackPointSelected);
+
+        _vm.SelectFromMap(Doc, _data.Routes[0].Points[1]);
+        Assert.False(_vm.HasTrackPointSelected);
+
+        _vm.SelectFromMap(Doc, _data.Waypoints[0]);
+        Assert.False(_vm.HasTrackPointSelected);
+    }
+
+    [Fact]
     public void Selecting_a_point_from_the_map_shows_its_layer_and_detail()
     {
         var waypoint = _data.Waypoints[1];

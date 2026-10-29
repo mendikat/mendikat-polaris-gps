@@ -88,6 +88,8 @@
   <data name="MenuRedo" xml:space="preserve"><value>_Berregin</value></data>
   <data name="MenuDelete" xml:space="preserve"><value>E_zabatu</value></data>
   <data name="MenuInsertPoint" xml:space="preserve"><value>_Txertatu puntua</value></data>
+  <data name="MenuDeletePoint" xml:space="preserve"><value>E_zabatu puntua</value></data>
+  <data name="GestureCtrlClick" xml:space="preserve"><value>Ktrl+klik</value></data>
   <data name="PanelLayers" xml:space="preserve"><value>Geruzak</value></data>
   <data name="PanelPoints" xml:space="preserve"><value>Puntuak</value></data>
   <data name="PanelPoint" xml:space="preserve"><value>Hautatutako puntua</value></data>

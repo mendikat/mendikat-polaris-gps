@@ -30,6 +30,8 @@ public partial class MainWindow : Window
     private bool _closeConfirmed;
     private DragState? _drag;
     private System.Windows.Point? _addPointPress;
+    private GeoPosition? _contextPosition;
+    private bool _contextOnPoint;
     private readonly List<ProfileWindow> _profileWindows = [];
 
     public MainWindow(MainViewModel viewModel, Func<Mapsui.Map, MapController> createMapController)
@@ -400,11 +402,48 @@ public partial class MainWindow : Window
         }
     }
 
-    /// <summary>Right click selects the point under the pointer before the context menu opens.</summary>
+    /// <summary>
+    /// Right click selects the point under the pointer before the context menu opens. Over an empty spot it keeps
+    /// the selection, so the menu can insert a point there after the selected one.
+    /// </summary>
     private void OnMapRightButtonDown(object sender, MouseButtonEventArgs e)
     {
         var screen = e.GetPosition(MapView);
-        SelectAt(MapView.Map.Navigator.Viewport.ScreenToWorld(screen.X, screen.Y));
+        var world = MapView.Map.Navigator.Viewport.ScreenToWorld(screen.X, screen.Y);
+        _contextPosition = WebMercator.ToGeo(world.X, world.Y);
+        _contextOnPoint = false;
+        if (_map.HitTest(world) is { } hit)
+        {
+            _viewModel.SelectFromMap(hit.Document, hit.Point);
+            _contextOnPoint = true;
+        }
+    }
+
+    private void OnMapContextMenuOpening(object sender, System.Windows.Controls.ContextMenuEventArgs e)
+    {
+        if (!_viewModel.HasTrackPointSelected)
+        {
+            e.Handled = true;
+            return;
+        }
+
+        MapInsertPointItem.IsEnabled = _viewModel.ActiveDocument?.SelectedRows.Count == 1;
+    }
+
+    /// <summary>
+    /// Inserts like Ctrl+click at the right-clicked spot, after the selected point. Right-clicked on a point,
+    /// it inserts the midpoint after it instead (a point at the same place would be useless).
+    /// </summary>
+    private void OnMapInsertPointClick(object sender, RoutedEventArgs e)
+    {
+        if (_contextOnPoint || _contextPosition is not { } position)
+        {
+            _viewModel.InsertPoint();
+        }
+        else
+        {
+            _viewModel.AddPointAt(position);
+        }
     }
 
     private void SelectAt(MPoint world)

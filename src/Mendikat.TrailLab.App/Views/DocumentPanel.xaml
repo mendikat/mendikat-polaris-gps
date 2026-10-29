@@ -70,8 +70,7 @@
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False"
                   HeadersVisibility="Column" GridLinesVisibility="None" RowHeaderWidth="0"
                   EnableRowVirtualization="True" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
-                  SelectionChanged="OnGridSelectionChanged" ContextMenuOpening="OnContextMenuOpening"
-                  AutomationProperties.Name="{x:Static res:Strings.PanelPoints}">
+                  SelectionChanged="OnGridSelectionChanged"                  AutomationProperties.Name="{x:Static res:Strings.PanelPoints}">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
@@ -89,12 +88,6 @@
                 <DataGridTextColumn Header="{x:Static res:Strings.ColElevation}" Binding="{Binding Elevation}" Width="Auto" />
                 <DataGridTextColumn Header="{x:Static res:Strings.ColTime}" Binding="{Binding Time}" Width="Auto" />
             </DataGrid.Columns>
-            <DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="{x:Static res:Strings.MenuDelete}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />
-                    <MenuItem Header="{x:Static res:Strings.MenuInsertPoint}" Command="{Binding InsertPointCommand}" InputGestureText="Insert" />
-                </ContextMenu>
-            </DataGrid.ContextMenu>
         </DataGrid>
 
         <!-- Detail of the selected point (LAY-04, EDIT-04, WPE-02) -->

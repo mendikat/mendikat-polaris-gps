@@ -87,13 +87,4 @@ public partial class DocumentPanel : UserControl
             _syncing = false;
         }
     }
-
-    /// <summary>The context menu is outside the visual tree: give it the window's view model for its commands.</summary>
-    private void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
-    {
-        if (PointsGrid.ContextMenu is { } menu)
-        {
-            menu.DataContext = Window.GetWindow(this)?.DataContext;
-        }
-    }
 }

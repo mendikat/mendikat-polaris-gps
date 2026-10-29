@@ -24,6 +24,10 @@ public sealed partial class MainViewModel
 
     public RelayCommand RevertPointCommand { get; private set; } = null!;
 
+    /// <summary>The map's context menu only opens when one or more points of a track are selected.</summary>
+    public bool HasTrackPointSelected =>
+        !IsBusy && ActiveDocument is { SelectedRows.Count: > 0, SelectedLayer.Kind: LayerKind.Track };
+
     /// <summary>
     /// Supr: deletes the selected points; with no point selected, the selected track or route (EDIT-01).
     /// Confirms only for a whole track/route or more than <see cref="ConfirmDeleteThreshold"/> points (EDIT-02).
