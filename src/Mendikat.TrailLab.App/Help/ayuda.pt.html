@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajuda do Mendikat TrailLab</title>
+<link rel="stylesheet" href="ayuda.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <svg width="48" height="48" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M6,26 C10,17 15,25 17,16 S25,12 26,6" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="6" cy="26" r="3.5" fill="#2e7d32" stroke="#fff" stroke-width="1.2"/>
+      <circle cx="26" cy="6" r="3.5" fill="#fff" stroke="#8b0000" stroke-width="1.2"/>
+    </svg>
+    <div>
+      <h1>Ajuda do Mendikat TrailLab</h1>
+      <p>Abra, reveja, edite e guarde ficheiros GPX sobre o mapa.</p>
+      <p class="langs"><a href="ayuda.html" hreflang="es">Español</a> · <a href="ayuda.ca.html" hreflang="ca">Català</a> · <a href="ayuda.eu.html" hreflang="eu">Euskara</a> · <a href="ayuda.fr.html" hreflang="fr">Français</a> · Português</p>
+    </div>
+    <a class="web" href="https://www.mendikat.net">www.mendikat.net ↗</a>
+  </div>
+</header>
+
+<div class="layout">
+  <nav aria-label="Conteúdo">
+    <h2>Conteúdo</h2>
+    <a href="#empezar">Primeiros passos</a>
+    <a href="#mapa">Mapa e coordenadas</a>
+    <a href="#capas">Camadas e pontos</a>
+    <a href="#editar">Edição</a>
+    <a href="#perfil">Perfil de elevação</a>
+    <a href="#herramientas">Ferramentas</a>
+    <a href="#teclado">Atalhos de teclado</a>
+    <a href="#archivos">Ficheiros e gravação</a>
+    <a href="#configuracion">Definições</a>
+    <a href="#problemas">Problemas frequentes</a>
+    <a href="#apoya">Apoie o Mendikat</a>
+    <a href="#acerca">Acerca</a>
+  </nav>
+
+  <main>
+    <section id="empezar">
+      <h2>Primeiros passos</h2>
+      <ol>
+        <li>Arraste um ou vários ficheiros a partir do Explorador do Windows e largue-os sobre a janela, ou use <span class="path">Ficheiro › Abrir ficheiro…</span> (<kbd>Ctrl</kbd>+<kbd>O</kbd>) e escolha um ficheiro <strong>.gpx</strong>, <strong>.kml</strong>, <strong>.kmz</strong> (Google Earth), <strong>.tcx</strong> (Garmin), <strong>.plt</strong> ou <strong>.wpt</strong> (OziExplorer), ou <strong>.trk</strong> ou <strong>.wpt</strong> (CompeGPS/TwoNav). Os que não são GPX abrem-se convertidos em GPX (ver <a href="#archivos">Ficheiros e gravação</a>). Pode abrir vários ao mesmo tempo: cada um aparece no seu separador e com a sua cor no mapa.</li>
+        <li>O mapa ajusta-se aos dados. No painel esquerdo, <strong>Camadas</strong> mostra os tracks, rotas e waypoints do ficheiro, e <strong>Pontos</strong> os pontos do elemento selecionado.</li>
+        <li>Para começar um track novo: <span class="path">Ficheiro › Novo ficheiro</span> (<kbd>Ctrl</kbd>+<kbd>N</kbd>) e <kbd>Ctrl</kbd> + clique no mapa para adicionar pontos.</li>
+      </ol>
+      <div class="note">Os ficheiros grandes mostram a percentagem de carregamento na barra de estado. Pode pará-lo com o botão <strong>Cancelar</strong> ou com <kbd>Esc</kbd>.</div>
+    </section>
+
+    <section id="mapa">
+      <h2>Mapa e coordenadas</h2>
+      <p>Arraste para se deslocar e use a roda para aproximar ou afastar. A barra de ferramentas tem <strong>+</strong>, <strong>−</strong> e <strong>⤢</strong> (ajustar aos dados), e o seletor de cartografia:</p>
+      <div class="cards">
+        <div class="card"><strong>Mapa IGN (España)</strong><span>Predefinida. Topográfico oficial espanhol.</span></div>
+        <div class="card"><strong>OpenTopoMap · CyclOSM · OpenStreetMap</strong><span>Mundial, dados OSM.</span></div>
+        <div class="card"><strong>Satélite e Topográfico (ESRI)</strong><span>Imagem aérea e relevo.</span></div>
+        <div class="card"><strong>Géoportail IGN (France)</strong><span>Mapa topográfico SCAN 25 do IGN francês.</span></div>
+        <div class="card"><strong>MtbMap</strong><span>Mapa para BTT.</span></div>
+      </div>
+      <p>A cartografia escolhida é lembrada para a próxima vez. Sem ligação não se vê o fundo, mas os ficheiros abrem-se, editam-se e guardam-se da mesma forma.</p>
+      <h3>Régua de escala</h3>
+      <p>No canto inferior direito do mapa, por cima da atribuição da cartografia, uma régua de blocos brancos e pretos indica a <strong>distância no terreno</strong> que representa: sempre um número redondo (10, 20, 50, 100, 200, 500 m, 1, 2, 5 km…), em metros até 999 m e em quilómetros a partir de 1000 m. Muda de comprimento e de valor ao aproximar ou afastar, e tem em conta a latitude do centro do mapa. Está ativada de início; oculta-se ou volta a mostrar-se em <span class="path">Ficheiro › Definições… › Visualização</span> (ver <a href="#configuracion">Definições</a>).</p>
+      <p>Ao mover o ponteiro, a barra de estado mostra a posição em <strong>UTM WGS84</strong> (por exemplo <code>30T 575700 4760048</code>) e em <strong>graus, minutos e segundos</strong>, junto ao <strong>datum</strong> do ficheiro: sempre WGS84, porque os ficheiros em ED50 (OziExplorer, CompeGPS/TwoNav) são convertidos para WGS84 ao abri-los.</p>
+      <p>Se deixar o ponteiro parado um momento, mostra-se também a <strong>altitude</strong>: a do ponto do ficheiro que estiver por baixo, marcada «(ficheiro)», ou então a do terreno: a de um MDT local aberto, marcada com o seu nome, ou a do MDT do IGN espanhol, marcada «(MDT IGN 5 m)». A do IGN só existe em Espanha e precisa de ligação; sem dados mostra-se «—». Passe o rato por cima para ver de onde vem.</p>
+      <h3>Cartografia e MDT locais</h3>
+      <p><span class="path">Ficheiro › Abrir cartografia…</span> abre mapas digitalizados calibrados e modelos digitais do terreno guardados no seu computador, sem ligação:</p>
+      <ul>
+        <li><strong>Mapas</strong>: calibrações <code>.map</code> do OziExplorer e <code>.imp</code> do CompeGPS/TwoNav. A imagem tem de estar em JPG, PNG, BMP, GIF ou TIFF (os OZF do OziExplorer não são suportados; se a imagem for um ECW ou um GeoTIFF georreferenciado, abra-a diretamente) e é procurada no caminho indicado ou na mesma pasta da calibração. O mapa é desenhado sobre a cartografia escolhida e por baixo dos tracks.</li>
+        <li><strong>GeoTIFF (também COG, <code>.cog</code>) e ECW</strong>: mapas já georreferenciados (ortofotos, mapas do IGN…), em qualquer sistema de coordenadas. Só se lê a zona visível, por isso os ECW enormes abrem-se de imediato. Um GeoTIFF de uma só banda de altitudes abre-se como MDT.</li>
+        <li><strong>Imagens com ficheiro de georreferenciação</strong>: um TIFF, JPEG ou PNG acompanhado do seu <code>.tfw</code>, <code>.jgw</code> ou <code>.pgw</code> (ou <code>.wld</code>) e de um <code>.prj</code> com o mesmo nome. O ficheiro de georreferenciação posiciona a imagem e o <code>.prj</code> diz em que sistema de coordenadas está; sem <code>.prj</code> não é possível posicioná-la. Abre-se a imagem; o seu <code>.tfw</code> e o seu <code>.prj</code> são lidos automaticamente. Um GeoTIFF ou COG já traz a georreferenciação incluída e não precisa deles.</li>
+        <li><strong>ECW na internet</strong>: <span class="path">Ficheiro › Abrir cartografia online (ECWP)…</span> e escreva o endereço <code>ecwp://…</code> ou <code>ecwps://…</code>.</li>
+        <li><strong>Licença ECW</strong>: ECW é um formato propriedade da Intergraph (Hexagon). Da primeira vez que abrir um ECW ser-lhe-á pedido que aceite a sua licença de utilização; se não a aceitar, tudo o resto funciona igual e só os ECW ficam desativados.</li>
+        <li><strong>MDT</strong>: <code>.hgt</code> (SRTM) e <code>.asc</code> (ESRI ASCII Grid, com o seu <code>.prj</code> ao lado). Também <code>.tif</code> de uma banda de altitudes. Não são desenhados: dão a altitude sob o ponteiro e aparecem em <em>Ajustar altitudes</em> depois do MDT do IGN.</li>
+      </ul>
+      <p>O que for aberto aparece no botão <strong>Cartografias do utilizador</strong> da barra de ferramentas. A que está no topo da lista é desenhada por cima das restantes: arraste a pega <strong>≡</strong> (ou use <kbd>Ctrl</kbd>+<kbd>↑</kbd> / <kbd>Ctrl</kbd>+<kbd>↓</kbd>) para mudar a ordem; a cartografia online fica sempre no fundo e os tracks sempre por cima. O controlo deslizante de cada mapa ajusta a sua opacidade para ver o que está por baixo. A caixa de verificação mostra ou oculta cada mapa (num MDT, decide se é usado), <strong>⤢</strong> leva até ele e <strong>✕</strong> remove-o. São suportados os datums WGS84, ETRS89 e ED50 (fusos 29 a 31) em coordenadas geográficas, UTM ou Transverse Mercator; se um ficheiro usar outro sistema, é mostrado um aviso em vez de o posicionar mal. Não são lembrados ao fechar a aplicação.</p>
+    </section>
+
+    <section id="capas">
+      <h2>Camadas e pontos</h2>
+      <ul>
+        <li>A caixa de verificação de cada camada mostra-a ou oculta-a no mapa.</li>
+        <li>Ao selecionar uma camada, a sua lista de pontos aparece por baixo. Um clique na lista ou no mapa seleciona um ponto; <kbd>Ctrl</kbd> ou <kbd>Shift</kbd> + clique na lista seleciona vários.</li>
+        <li>Os <strong>waypoints</strong> do GPX são desenhados como triângulos, com o seu nome ao aproximar.</li>
+        <li>O painel <strong>Ponto selecionado</strong> mostra e permite alterar o nome, o comentário, a descrição, a latitude, a longitude, a elevação e a hora. Também indica de onde vem a elevação: do ficheiro, interpolada, do MDT ou editada à mão.</li>
+      </ul>
+    </section>
+
+    <section id="editar">
+      <h2>Edição</h2>
+      <table>
+        <tr><th>Ação</th><th>Como</th></tr>
+        <tr><td>Eliminar pontos</td><td><kbd>Delete</kbd>. Sem pontos selecionados, elimina o track ou a rota (pede confirmação).</td></tr>
+        <tr><td>Inserir um ponto intermédio</td><td><kbd>Insert</kbd>: adiciona o ponto médio entre o selecionado e o seguinte.</td></tr>
+        <tr><td>Adicionar pontos</td><td><kbd>Ctrl</kbd> + clique no mapa: depois do ponto selecionado ou no fim do elemento.</td></tr>
+        <tr><td>Menu de contexto</td><td>Com um ponto de um track selecionado, clique direito no mapa: <strong>Inserir ponto</strong> (no sítio do clique, depois do selecionado, como <kbd>Ctrl</kbd> + clique; sobre um ponto, o ponto médio a seguir a ele), <strong>Eliminar ponto</strong>, as ferramentas do menu <em>Ferramentas</em> e <strong>Adicionar waypoint</strong>.</td></tr>
+        <tr><td>Adicionar um waypoint</td><td>Clique direito no mapa › <strong>Adicionar waypoint…</strong>: é criado no sítio do clique depois de escrever o nome, o comentário e a descrição.</td></tr>
+        <tr><td>Editar ou eliminar um waypoint</td><td>Clique direito sobre o waypoint › <strong>Editar waypoint…</strong> ou <strong>Eliminar waypoint</strong>. Também <em>Editar › Editar waypoint…</em> ou <kbd>Delete</kbd> com o waypoint selecionado; eliminar pede sempre confirmação.</td></tr>
+        <tr><td>Mover um ponto</td><td>Selecioná-lo e arrastá-lo no mapa, ou alterar a latitude e a longitude no painel e premir <strong>Aplicar</strong> (<kbd>Enter</kbd>).</td></tr>
+        <tr><td>Anular / refazer</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd>. Cada documento tem o seu próprio histórico.</td></tr>
+      </table>
+      <p>Um asterisco <strong>*</strong> no separador e no título indica alterações por guardar.</p>
+    </section>
+
+    <section id="perfil">
+      <h2>Perfil de elevação</h2>
+      <p>Selecione um track ou rota em <strong>Camadas</strong> e prima <strong>Perfil</strong> (ou <span class="path">Ver › Perfil de elevação</span>).</p>
+      <div class="cards">
+        <div class="card"><strong>Percurso</strong><span>Distância, desnível positivo e negativo, elevação mínima e máxima.</span></div>
+        <div class="card"><strong>Tempo</strong><span>Total, em movimento, parado, velocidade média e máxima.</span></div>
+      </div>
+      <ul>
+        <li>O <strong>desnível</strong> é calculado como no mendikat.net: sobre o perfil suavizado com uma média gaussiana de 100 m, para não somar o ruído do GPS. Num circuito, o negativo é igualado ao positivo.</li>
+        <li><strong>Parado</strong>: troços a menos de 1 km/h e pausas entre segmentos. A <strong>velocidade média</strong> só conta o tempo em movimento; a <strong>máxima</strong> é a maior mantida durante pelo menos 30 s.</li>
+        <li>Ao passar o ponteiro pelo perfil, o ponto é marcado no mapa; um clique seleciona-o e <kbd>←</kbd> <kbd>→</kbd> percorrem os pontos.</li>
+      </ul>
+    </section>
+
+    <section id="herramientas">
+      <h2>Ferramentas</h2>
+      <p>Aplicam-se ao track ou rota selecionado em <strong>Camadas</strong> e anulam-se com <kbd>Ctrl</kbd>+<kbd>Z</kbd>. Exceto «Inverter track», mostram uma pré-visualização e não alteram nada até premir <strong>Aplicar</strong>.</p>
+      <h3>Simplificar track</h3>
+      <p>Reduz pontos com o algoritmo de Douglas–Peucker. A tolerância em metros indica quanto a linha simplificada se pode afastar da original. Conservam-se o primeiro e o último ponto de cada segmento.</p>
+      <h3>Regenerar tempos</h3>
+      <p>Atribui horas novas a partir de uma data, hora e fuso horário de início, com uma velocidade (km/h, m/s ou min/km) ou um intervalo fixo entre pontos.</p>
+      <h3>Inverter track</h3>
+      <p>Muda o sentido do percurso: o último ponto passa a ser o primeiro (também a ordem dos segmentos). Se os pontos tiverem hora, são refletidas para continuarem por ordem: o track invertido começa e acaba às mesmas horas e conserva o tempo entre cada par de pontos.</p>
+      <h3>Ajustar altitudes com o MDT do IGN</h3>
+      <p>Consulta o Modelo Digital do Terreno do IGN espanhol (5 m ou 25 m) e substitui as elevações. Só cobre Espanha e precisa de ligação. Os pontos sem dados (mar ou fora de Espanha) conservam a sua elevação.</p>
+    </section>
+
+    <section id="teclado">
+      <h2>Atalhos de teclado</h2>
+      <table>
+        <tr><th>Teclas</th><th>Ação</th></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>N</kbd></td><td>Novo ficheiro</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td>Abrir ficheiro (GPX, KML, KMZ, TCX, OziExplorer, CompeGPS/TwoNav)</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Guardar</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>F4</kbd></td><td>Fechar ficheiro</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Anular / refazer</td></tr>
+        <tr><td><kbd>Delete</kbd> / <kbd>Insert</kbd></td><td>Eliminar / inserir ponto</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>Ctrl</kbd>+<kbd>−</kbd></td><td>Aproximar / afastar o mapa</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Cancelar a abertura de um ficheiro</td></tr>
+        <tr><td><kbd>F1</kbd></td><td>Esta ajuda</td></tr>
+        <tr><td><kbd>Alt</kbd> + letra sublinhada</td><td>Abrir os menus com o teclado</td></tr>
+      </table>
+    </section>
+
+    <section id="archivos">
+      <h2>Ficheiros e gravação</h2>
+      <ul>
+        <li>Abrem-se <strong>GPX 1.1 e 1.0</strong>, e guarda-se sempre GPX 1.1 válido. Se o ficheiro era GPX 1.0, é mostrado um aviso antes de guardar.</li>
+        <li>Os <strong>KML</strong> e <strong>KMZ</strong> do Google Earth e os <strong>TCX</strong> da Garmin abrem-se convertidos em GPX, como um documento novo por guardar com o mesmo nome e extensão <code>.gpx</code>. O ficheiro original nunca é alterado: ao guardar é perguntado onde guardar o GPX. O que não tem equivalente em GPX (polígonos, sobreposições, distância ou potência do TCX…) é indicado nos avisos do documento. A frequência cardíaca e a cadência do TCX são conservadas.</li>
+        <li><span class="path">Ficheiro › Converter para GPX…</span> converte de uma só vez vários ficheiros KML, KMZ, TCX, OziExplorer ou CompeGPS/TwoNav em ficheiros GPX, sem os abrir nem precisar de nenhum ficheiro aberto. Escolha os ficheiros, onde guardar os GPX (por predefinição, junto de cada original) e o que fazer se já existir um GPX com esse nome: guardá-lo com outro nome, substituí-lo ou não converter esse ficheiro. No fim é mostrado um relatório por ficheiro. Um ficheiro com erros não interrompe os outros, e <strong>Parar</strong> nunca deixa um GPX a meio.</li>
+        <li>Os tracks <strong>.plt</strong> e waypoints <strong>.wpt</strong> do <strong>OziExplorer</strong> e os tracks <strong>.trk</strong> e waypoints <strong>.wpt</strong> do <strong>CompeGPS/TwoNav</strong> também se abrem convertidos em GPX (e podem ser convertidos em lote). Os dois tipos de <code>.wpt</code> são reconhecidos pelo conteúdo. As coordenadas em ED50 são convertidas para WGS84; outro datum ou coordenadas UTM não são suportados. As altitudes do OziExplorer, em pés, são convertidas para metros, e as suas horas são consideradas UTC. As horas do CompeGPS são convertidas para UTC com o fuso horário do ficheiro.</li>
+        <li>Conservam-se os metadados, as extensões e os campos que a aplicação não edita.</li>
+        <li>Guardar é seguro: primeiro é escrito um ficheiro temporário, que é verificado, e só então substitui o original.</li>
+      </ul>
+    </section>
+
+    <section id="configuracion">
+      <h2>Definições</h2>
+      <p><span class="path">Ficheiro › Definições…</span> tem dois blocos. As alterações são guardadas ao premir <strong>OK</strong> e lembradas para a próxima vez.</p>
+      <table>
+        <tr><th>Bloco</th><th>Opção</th></tr>
+        <tr><td><strong>Idioma</strong></td><td><strong>Idioma da aplicação</strong>: español (predefinido), català, euskara, français ou português, com a sua bandeira. A alteração aplica-se ao voltar a abrir a aplicação; este guia (<kbd>F1</kbd>) também se abre nesse idioma. Alguns detalhes técnicos dos erros de cartografia continuam em espanhol. Os números escrevem-se sempre com vírgula decimal, seja qual for o idioma.</td></tr>
+        <tr><td><strong>Visualização</strong></td><td><strong>Mostrar a régua de escala no mapa</strong> (ativada por predefinição). A alteração vê-se de imediato, sem reiniciar.</td></tr>
+      </table>
+      <p>As definições são guardadas em <code>%APPDATA%\Mendikat\TrailLab\settings.json</code> (também a cartografia escolhida) e o registo técnico em <code>%LOCALAPPDATA%\Mendikat\TrailLab\logs</code>.</p>
+    </section>
+
+    <section id="problemas">
+      <h2>Problemas frequentes</h2>
+      <h3>Não se vê o mapa de fundo</h3>
+      <p>Sem ligação ou com o servidor em baixo, a barra de estado indica-o a vermelho. Experimente outra cartografia.</p>
+      <h3>Um ficheiro não abre</h3>
+      <p>A mensagem indica o motivo e, se for conhecida, a linha do ficheiro com o problema (por exemplo, uma coordenada fora do intervalo). Os ficheiros do OziExplorer e do CompeGPS/TwoNav só se abrem em WGS84 ou ED50 (Espanha e Portugal) e em coordenadas geográficas; com outro datum ou em UTM, a mensagem di-lo. Volte a exportá-los a partir do seu programa em WGS84 e graus.</p>
+      <h3>O desnível não coincide com o de outro programa</h3>
+      <p>Cada programa filtra o ruído do GPS à sua maneira. O TrailLab usa o mesmo método que o mendikat.net.</p>
+    </section>
+
+    <section id="apoya">
+      <h2>Apoie o Mendikat</h2>
+      <div class="donate">
+        <p>O Mendikat TrailLab é gratuito. Se lhe for útil, pode ajudar a manter o Mendikat com um donativo.</p>
+        <form action="https://www.paypal.com/donate" method="post" target="_top">
+          <input type="hidden" name="hosted_button_id" value="4BNLU9ACSHTFN">
+          <input type="submit" class="btn btn-lg btn-warning" value="Faça um donativo!" title="PayPal. A forma rápida e segura de pagar na internet.">
+        </form>
+      </div>
+    </section>
+
+    <section id="acerca">
+      <h2>Acerca</h2>
+      <p><strong>Mendikat TrailLab</strong>. A versão instalada vê-se em <span class="path">Ajuda › Acerca do Mendikat TrailLab…</span></p>
+      <p>Autor: Javier Urrutia · <a href="mailto:javi@mendikat.net">javi@mendikat.net</a> · <a href="https://www.mendikat.net">www.mendikat.net</a></p>
+      <p>Cartografia e MDT do IGN de Espanha sob CC BY 4.0 (scne.es); dados do OpenStreetMap sob ODbL.</p>
+    </section>
+  </main>
+</div>
+
+<footer>© Mendikat · <a href="https://www.mendikat.net">www.mendikat.net</a></footer>
+
+</body>
+</html>

@@ -27,6 +27,7 @@ public sealed partial class MainViewModel : ObservableObject
     private string _pointerUtm = Strings.StatusPointerOutside;
     private string _pointerDms = Strings.StatusPointerOutside;
     private MapProvider _selectedMapProvider;
+    private bool _showScaleBar;
     private bool _isBusy;
     private double? _progress;
     private CancellationTokenSource? _openCancellation;
@@ -39,7 +40,9 @@ public sealed partial class MainViewModel : ObservableObject
         _store = store;
         _settings = settings;
         _logger = logger;
-        _selectedMapProvider = MapProviderCatalog.FindOrDefault(settings.Load().Map.Provider);
+        var saved = settings.Load();
+        _selectedMapProvider = MapProviderCatalog.FindOrDefault(saved.Map.Provider);
+        _showScaleBar = saved.Map.ShowScaleBar;
 
         NewGpxCommand = new RelayCommand(NewGpx, () => !IsBusy);
         OpenGpxCommand = new RelayCommand(_ => OpenAsync(DocumentFormat.Gpx), _ => !IsBusy);

@@ -3,7 +3,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.0.8.**
+> **Estado: versión 0.0.9.**
 > Se abren archivos GPX, y KML, KMZ, TCX, OziExplorer (PLT, WPT) y CompeGPS/TwoNav (TRK, WPT) convertidos a GPX, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -31,10 +31,11 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Abrir KML, KMZ, TCX, PLT, WPT o TRK | *Archivo › Abrir archivo…* (Ctrl+O): se abre como un GPX nuevo «nombre.gpx» sin guardar; **Guardar** pide dónde guardarlo |
 | Convertir varios archivos a GPX | *Archivo › Convertir a GPX…*: elegir los KML, KMZ, TCX, PLT, WPT o TRK, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
 | Ver un mapa escaneado o un MDT propio | *Archivo › Abrir cartografía…* (o soltarlos sobre la ventana): mapas `.map` (OziExplorer) e `.imp` (CompeGPS/TwoNav) con su imagen JPG, PNG, BMP, GIF o TIFF, GeoTIFF, ECW e imágenes con `.tfw`/`.jgw`/`.pgw` y `.prj`, y MDT `.asc` (con su `.prj`), `.hgt` y GeoTIFF. ECW servidos por internet: *Archivo › Abrir cartografía en línea (ECWP)…*. Se listan en **Cartografías Usuario (n)** de la barra de herramientas: arrastrar ≡ (o Ctrl+↑/↓) para decidir cuál queda encima (la de arriba de la lista; la cartografía en línea siempre al fondo), deslizador de opacidad para ver la de debajo, casilla para mostrar u ocultar (en un MDT, para usarlo), ⤢ para ir a ella y ✕ para quitarla |
-| Cambiar el idioma | *Archivo › Configuración…* › **Idioma de la aplicación**: español (por defecto), català, euskara, français o português, con su bandera. Se aplica al volver a abrir la aplicación. La guía de ayuda y algunos detalles técnicos de los errores de cartografía siguen en español; los números mantienen la coma decimal |
+| Cambiar el idioma | *Archivo › Configuración…* › **Idioma de la aplicación**: español (por defecto), català, euskara, français o português, con su bandera. Se aplica al volver a abrir la aplicación, también a la guía de ayuda (F1). Algunos detalles técnicos de los errores de cartografía siguen en español; los números mantienen la coma decimal |
+| Mostrar u ocultar la regla de escala | *Archivo › Configuración…* › **Visualización** › **Mostrar la regla de escala en el mapa** (activada por defecto); el cambio se ve al aceptar |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
 | Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |
-| Ayuda | **F1** o *Ayuda › Ayuda de Mendikat TrailLab* (guía HTML en el navegador). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones y Acerca de (versión, autor) |
+| Ayuda | **F1** o *Ayuda › Ayuda de Mendikat TrailLab* (guía HTML en el navegador, en el idioma de la aplicación; arriba enlaza a los demás idiomas). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones y Acerca de (versión, autor) |
 
 ## Requisitos
 
@@ -58,7 +59,7 @@ Tras compilar, también se puede abrir directamente
 `src\Mendikat.TrailLab.App\bin\Debug\net10.0-windows10.0.19041.0\Mendikat.TrailLab.exe`.
 
 Archivos de usuario:
-- Configuración: `%APPDATA%\Mendikat\TrailLab\settings.json` (cartografía elegida).
+- Configuración: `%APPDATA%\Mendikat\TrailLab\settings.json` (cartografía elegida, idioma y regla de escala).
 - Registro técnico: `%LOCALAPPDATA%\Mendikat\TrailLab\logs\traillab-AAAAMMDD.log` (se conservan los 10 últimos;
   la carpeta del perfil de usuario se sustituye por `%USERPROFILE%`).
 
@@ -138,6 +139,7 @@ recuerdan al cerrar la aplicación.
 Predeterminada: Mapa IGN (España). Disponibles: Mapa IGN (España), CyclOSM, OpenTopoMap, OpenStreetMap,
 Mapa satélite (ESRI), Mapa Topográfico (ESRI), Géoportail IGN (France, SCAN 25) y MtbMap. Ninguna requiere clave personal (Géoportail usa la clave pública del IGN).
 La elegida se recuerda entre sesiones; cada una muestra su atribución sobre el mapa.
+En la esquina inferior derecha, encima de la atribución, una regla de escala (en m, o en km desde 1000 m) cambia con el zoom y la latitud; se oculta en *Archivo › Configuración…* › **Visualización**.
 
 ## Coordenadas
 

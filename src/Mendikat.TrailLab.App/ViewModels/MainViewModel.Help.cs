@@ -1,5 +1,7 @@
+using System.Globalization;
 using System.IO;
 using Mendikat.TrailLab.App.Resources;
+using Mendikat.TrailLab.App.Settings;
 using Microsoft.Extensions.Logging;
 
 namespace Mendikat.TrailLab.App.ViewModels;
@@ -7,8 +9,20 @@ namespace Mendikat.TrailLab.App.ViewModels;
 /// <summary>Help menu (APP-09): user guide, donation, mendikat.net, updates and "About".</summary>
 public sealed partial class MainViewModel
 {
-    /// <summary>The user guide, copied next to the executable (Help\ayuda.html).</summary>
-    public static string HelpFilePath => Path.Combine(AppContext.BaseDirectory, "Help", "ayuda.html");
+    /// <summary>The user guide in the language of the interface, copied next to the executable.</summary>
+    public static string HelpFilePath => HelpFileFor(CultureInfo.CurrentUICulture);
+
+    /// <summary>
+    /// Help\ayuda.{code}.html for a translated language (ca, eu, fr, pt), Help\ayuda.html for Spanish, or for a language
+    /// whose guide is missing.
+    /// </summary>
+    public static string HelpFileFor(CultureInfo culture)
+    {
+        var folder = Path.Combine(AppContext.BaseDirectory, "Help");
+        var code = AppLanguage.FromCode(culture.TwoLetterISOLanguageName).Code;
+        var translated = Path.Combine(folder, $"ayuda.{code}.html");
+        return code != AppLanguage.DefaultCode && File.Exists(translated) ? translated : Path.Combine(folder, "ayuda.html");
+    }
 
     public RelayCommand HelpCommand { get; private set; } = null!;
 

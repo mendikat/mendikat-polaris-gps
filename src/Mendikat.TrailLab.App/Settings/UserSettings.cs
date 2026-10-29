@@ -21,6 +21,9 @@ public sealed record MapSettings
 {
     /// <summary>Selected map provider id (MAP-04). IGN Spain on first run (MAP-03).</summary>
     public string Provider { get; init; } = MapProviderCatalog.DefaultId;
+
+    /// <summary>Scale bar in the lower right corner of the map; shown by default.</summary>
+    public bool ShowScaleBar { get; init; } = true;
 }
 
 public interface ISettingsStore

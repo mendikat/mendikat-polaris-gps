@@ -25,6 +25,9 @@ public partial class MainWindow : Window
     /// <summary>A press must move at least this many pixels to become a drag; smaller movements never move a point.</summary>
     private const double MinimumDragPixels = 4;
 
+    /// <summary>Widest scale bar; the round distance chosen makes it between 40 % and 100 % of this.</summary>
+    private const double MaxScaleBarPixels = 220;
+
     private readonly MainViewModel _viewModel;
     private readonly MapController _map;
     private bool _closeConfirmed;
@@ -69,6 +72,8 @@ public partial class MainWindow : Window
         PreviewDrop += OnFileDrop;
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
+        MapView.Map.Navigator.ViewportChanged += (_, _) => OnViewportChanged();
+        OnViewportChanged();
         MapView.MapPointerMoved += OnMapPointerMoved;
         MapView.MapPointerPressed += OnMapPointerPressed;
         MapView.MapPointerReleased += OnMapPointerReleased;
@@ -77,6 +82,26 @@ public partial class MainWindow : Window
         MapView.PreviewMouseLeftButtonDown += OnMapLeftButtonDown;
         MapView.PreviewMouseLeftButtonUp += OnMapLeftButtonUp;
         MapView.MouseLeave += (_, _) => _viewModel.UpdatePointer(null);
+    }
+
+    /// <summary>Sizes the scale bar for the current zoom and latitude (at most <see cref="MaxScaleBarPixels"/> wide).</summary>
+    private void OnViewportChanged()
+    {
+        if (!Dispatcher.CheckAccess())
+        {
+            Dispatcher.BeginInvoke(OnViewportChanged);
+            return;
+        }
+
+        var viewport = MapView.Map.Navigator.Viewport;
+        if (ScaleBarLength.For(viewport.Resolution, viewport.CenterY, MaxScaleBarPixels) is not { } scale)
+        {
+            return;
+        }
+
+        ScaleBarLabel.Text = scale.Label;
+        ScaleBarRuler.Width = Math.Round(scale.Pixels);
+        ScaleBarRuler.Segments = scale.Segments;
     }
 
     /// <summary>Asks about unsaved documents before closing (APP-04). Cancelling keeps everything open.</summary>

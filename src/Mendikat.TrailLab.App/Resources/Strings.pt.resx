@@ -13,7 +13,9 @@
   <data name="MenuExit" xml:space="preserve"><value>_Sair</value></data>
   <data name="MenuSettings" xml:space="preserve"><value>_Definições...</value></data>
   <data name="SettingsTitle" xml:space="preserve"><value>Definições</value></data>
-  <data name="SettingsGeneral" xml:space="preserve"><value>Geral</value></data>
+  <data name="SettingsLanguageGroup" xml:space="preserve"><value>Idioma</value></data>
+  <data name="SettingsDisplay" xml:space="preserve"><value>Visualização</value></data>
+  <data name="SettingsShowScaleBar" xml:space="preserve"><value>Mostrar a _régua de escala no mapa</value></data>
   <data name="SettingsLanguage" xml:space="preserve"><value>_Idioma da aplicação:</value></data>
   <data name="SettingsLanguageName" xml:space="preserve"><value>Idioma da aplicação</value></data>
   <data name="SettingsLanguageRestart" xml:space="preserve"><value>A mudança de idioma aplica-se ao voltar a abrir a aplicação.</value></data>

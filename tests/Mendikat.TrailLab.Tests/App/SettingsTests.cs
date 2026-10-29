@@ -70,6 +70,28 @@ public sealed partial class SettingsTests
     }
 
     [Fact]
+    public void The_scale_bar_is_shown_by_default_and_can_be_hidden_at_once()
+    {
+        Assert.True(new UserSettings().Map.ShowScaleBar);
+        Assert.True(_vm.ShowScaleBar);
+        _dialogs.ToolDialog = dialog =>
+        {
+            var settings = (SettingsViewModel)dialog;
+            Assert.True(settings.ShowScaleBar);
+            settings.ShowScaleBar = false;
+            return true;
+        };
+
+        _vm.SettingsCommand.Execute(null);
+
+        Assert.False(_vm.ShowScaleBar);
+        Assert.False(_settings.Current.Map.ShowScaleBar);
+        Assert.Empty(_dialogs.Infos);
+        var reopened = new MainViewModel(_dialogs, new FakeDocumentStore(), _settings, NullLogger<MainViewModel>.Instance);
+        Assert.False(reopened.ShowScaleBar);
+    }
+
+    [Fact]
     public void A_failed_save_is_reported()
     {
         _settings.FailSaving = true;

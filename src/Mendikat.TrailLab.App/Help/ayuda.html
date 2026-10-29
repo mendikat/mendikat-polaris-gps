@@ -4,85 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ayuda de Mendikat TrailLab</title>
-<style>
-  :root {
-    --text: #1f2933;
-    --muted: #5f6b7a;
-    --line: #e1e5eb;
-    --soft: #f3f5f8;
-    --accent: #dc143c;
-    --accent-dark: #a50f2d;
-    --link: #1f5fbf;
-    --warn-bg: #fff8e1;
-    --warn-line: #f0d58a;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: "Segoe UI", system-ui, sans-serif;
-    font-size: 15px;
-    line-height: 1.55;
-    color: var(--text);
-    background: #fff;
-  }
-  header {
-    background: linear-gradient(135deg, var(--accent-dark), var(--accent));
-    color: #fff;
-    padding: 28px 24px 22px;
-  }
-  header .wrap { display: flex; align-items: center; gap: 16px; }
-  header svg { flex: none; }
-  header h1 { margin: 0; font-size: 26px; font-weight: 600; }
-  header .web {
-    margin-left: auto; color: #fff; text-decoration: none; font-weight: 600;
-    border: 1px solid rgba(255,255,255,.7); border-radius: 8px; padding: 8px 14px; white-space: nowrap;
-  }
-  header .web:hover { background: rgba(255,255,255,.15); }
-  header p { margin: 4px 0 0; opacity: .9; }
-  .layout { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 220px 1fr; gap: 32px; padding: 24px; }
-  nav { position: sticky; top: 16px; align-self: start; font-size: 14px; }
-  nav h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 8px; }
-  nav a { display: block; padding: 5px 10px; border-radius: 6px; color: var(--text); text-decoration: none; }
-  nav a:hover { background: var(--soft); color: var(--accent-dark); }
-  main { min-width: 0; }
-  section { margin-bottom: 36px; scroll-margin-top: 16px; }
-  h2 { font-size: 21px; margin: 0 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--line); }
-  h3 { font-size: 16px; margin: 20px 0 6px; }
-  p { margin: 0 0 10px; }
-  a { color: var(--link); }
-  ul, ol { margin: 0 0 12px; padding-left: 22px; }
-  li { margin-bottom: 4px; }
-  .path { font-weight: 600; white-space: nowrap; }
-  kbd {
-    display: inline-block; min-width: 22px; padding: 1px 6px; text-align: center;
-    font-family: "Segoe UI", sans-serif; font-size: 13px;
-    background: var(--soft); border: 1px solid #c9d0d9; border-bottom-width: 2px; border-radius: 4px;
-  }
-  table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 14px; }
-  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { background: var(--soft); font-weight: 600; }
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 8px 0 14px; }
-  .card { background: var(--soft); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
-  .card strong { display: block; margin-bottom: 2px; }
-  .card span { color: var(--muted); font-size: 14px; }
-  .note { background: var(--soft); border-left: 4px solid var(--link); border-radius: 4px; padding: 10px 14px; margin: 10px 0 14px; }
-  .donate {
-    display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
-    background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 10px; padding: 18px 20px;
-  }
-  .donate p { margin: 0; max-width: 560px; }
-  .donate form { margin: 0; }
-  .btn-warning {
-    font: inherit; font-weight: 600; font-size: 17px; cursor: pointer;
-    background: #ffc107; color: #212529; border: 1px solid #e0a800; border-radius: 8px; padding: 10px 22px;
-  }
-  .btn-warning:hover { background: #e0a800; }
-  footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding: 16px 24px 28px; text-align: center; }
-  @media (max-width: 760px) {
-    .layout { grid-template-columns: 1fr; gap: 8px; }
-    nav { position: static; }
-  }
-</style>
+<link rel="stylesheet" href="ayuda.css">
 </head>
 <body>
 
@@ -96,6 +18,7 @@
     <div>
       <h1>Ayuda de Mendikat TrailLab</h1>
       <p>Abre, revisa, edita y guarda archivos GPX sobre el mapa.</p>
+      <p class="langs">Español · <a href="ayuda.ca.html" hreflang="ca">Català</a> · <a href="ayuda.eu.html" hreflang="eu">Euskara</a> · <a href="ayuda.fr.html" hreflang="fr">Français</a> · <a href="ayuda.pt.html" hreflang="pt">Português</a></p>
     </div>
     <a class="web" href="https://www.mendikat.net">www.mendikat.net ↗</a>
   </div>
@@ -112,6 +35,7 @@
     <a href="#herramientas">Herramientas</a>
     <a href="#teclado">Atajos de teclado</a>
     <a href="#archivos">Archivos y guardado</a>
+    <a href="#configuracion">Configuración</a>
     <a href="#problemas">Problemas frecuentes</a>
     <a href="#apoya">Apoya a Mendikat</a>
     <a href="#acerca">Acerca de</a>
@@ -121,9 +45,9 @@
     <section id="empezar">
       <h2>Primeros pasos</h2>
       <ol>
-        <li>Arrastre uno o varios archivos desde el Explorador de Windows y suéltelos sobre la ventana, o use <li><span class="path">Archivo › Abrir archivo…</span> (<kbd>Ctrl</kbd>+<kbd>O</kbd>) y elija un archivo <strong>.gpx</strong>, <strong>.kml</strong>, <strong>.kmz</strong> (Google Earth) o <strong>.tcx</strong> (Garmin). Se pueden abrir varios a la vez: cada uno aparece en su pestaña y con su color en el mapa.</li>
+        <li>Arrastre uno o varios archivos desde el Explorador de Windows y suéltelos sobre la ventana, o use <span class="path">Archivo › Abrir archivo…</span> (<kbd>Ctrl</kbd>+<kbd>O</kbd>) y elija un archivo <strong>.gpx</strong>, <strong>.kml</strong>, <strong>.kmz</strong> (Google Earth), <strong>.tcx</strong> (Garmin), <strong>.plt</strong> o <strong>.wpt</strong> (OziExplorer), o <strong>.trk</strong> o <strong>.wpt</strong> (CompeGPS/TwoNav). Los que no son GPX se abren convertidos a GPX (ver <a href="#archivos">Archivos y guardado</a>). Se pueden abrir varios a la vez: cada uno aparece en su pestaña y con su color en el mapa.</li>
         <li>El mapa se ajusta a los datos. En el panel izquierdo, <strong>Capas</strong> muestra los tracks, rutas y waypoints del archivo, y <strong>Puntos</strong> los puntos del elemento seleccionado.</li>
-        <li>Para empezar un track nuevo: <span class="path">Archivo › Nuevo Track</span> (<kbd>Ctrl</kbd>+<kbd>N</kbd>) y <kbd>Ctrl</kbd> + clic en el mapa para añadir puntos.</li>
+        <li>Para empezar un track nuevo: <span class="path">Archivo › Nuevo archivo</span> (<kbd>Ctrl</kbd>+<kbd>N</kbd>) y <kbd>Ctrl</kbd> + clic en el mapa para añadir puntos.</li>
       </ol>
       <div class="note">Los archivos grandes muestran el porcentaje de carga en la barra de estado. Se puede detener con el botón <strong>Cancelar</strong> o con <kbd>Esc</kbd>.</div>
     </section>
@@ -139,7 +63,9 @@
         <div class="card"><strong>MtbMap</strong><span>Mapa para BTT.</span></div>
       </div>
       <p>La cartografía elegida se recuerda para la próxima vez. Sin conexión no se ve el fondo, pero los archivos se abren, editan y guardan igual.</p>
-      <p>Al mover el puntero, la barra de estado muestra la posición en <strong>UTM WGS84</strong> (por ejemplo <code>30T 575700 4760048</code>) y en <strong>grados, minutos y segundos</strong>, junto al <strong>datum</strong> del archivo (WGS84 en GPX, KML y TCX).</p>
+      <h3>Regla de escala</h3>
+      <p>En la esquina inferior derecha del mapa, encima de la atribución de la cartografía, una regla de bloques blancos y negros indica la <strong>distancia sobre el terreno</strong> que representa: siempre una cifra redonda (10, 20, 50, 100, 200, 500 m, 1, 2, 5 km…), en metros hasta 999 m y en kilómetros desde 1000 m. Cambia de longitud y de cifra al acercar o alejar, y tiene en cuenta la latitud del centro del mapa. Está activada al empezar; se oculta o se vuelve a mostrar en <span class="path">Archivo › Configuración… › Visualización</span> (ver <a href="#configuracion">Configuración</a>).</p>
+      <p>Al mover el puntero, la barra de estado muestra la posición en <strong>UTM WGS84</strong> (por ejemplo <code>30T 575700 4760048</code>) y en <strong>grados, minutos y segundos</strong>, junto al <strong>datum</strong> del archivo: siempre WGS84, porque los archivos en ED50 (OziExplorer, CompeGPS/TwoNav) se pasan a WGS84 al abrirlos.</p>
       <p>Si deja el puntero quieto un momento, se muestra también la <strong>altitud</strong>: la del punto del archivo que haya debajo, marcada «(archivo)», o si no la del terreno: la de un MDT local abierto, marcada con su nombre, o la del MDT del IGN, marcada «(MDT IGN 5 m)». La del IGN sólo existe en España y necesita conexión; sin dato se muestra «—». Pase el ratón por encima para ver de dónde sale.</p>
       <h3>Cartografía y MDT locales</h3>
       <p><span class="path">Archivo › Abrir cartografía…</span> abre mapas escaneados calibrados y modelos digitales del terreno guardados en su equipo, sin conexión:</p>
@@ -211,8 +137,8 @@
       <h2>Atajos de teclado</h2>
       <table>
         <tr><th>Teclas</th><th>Acción</th></tr>
-        <tr><td><kbd>Ctrl</kbd>+<kbd>N</kbd></td><td>Nuevo track</td></tr>
-        <tr><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td>Abrir track</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>N</kbd></td><td>Nuevo archivo</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td>Abrir archivo (GPX, KML, KMZ, TCX, OziExplorer, CompeGPS/TwoNav)</td></tr>
         <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Guardar</td></tr>
         <tr><td><kbd>Ctrl</kbd>+<kbd>F4</kbd></td><td>Cerrar archivo</td></tr>
         <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Deshacer / rehacer</td></tr>
@@ -233,9 +159,18 @@
         <li>Los tracks <strong>.plt</strong> y waypoints <strong>.wpt</strong> de <strong>OziExplorer</strong> y los tracks <strong>.trk</strong> y waypoints <strong>.wpt</strong> de <strong>CompeGPS/TwoNav</strong> también se abren convertidos a GPX (y se pueden convertir por lotes). Los dos tipos de <code>.wpt</code> se reconocen por su contenido. Las coordenadas en ED50 se pasan a WGS84; otro datum o coordenadas UTM no se admiten. Las altitudes de OziExplorer, en pies, se pasan a metros, y sus horas se toman como UTC. Las horas de CompeGPS se pasan a UTC con la zona horaria del archivo.</li>
         <li>Se conservan los metadatos, las extensiones y los campos que la aplicación no edita.</li>
         <li>Guardar es seguro: primero se escribe un archivo temporal, se comprueba y sólo entonces sustituye al original.</li>
-        <li><span class="path">Archivo › Configuración…</span> permite elegir el <strong>idioma de la aplicación</strong>: español (por defecto), català, euskara, français o português. El cambio se aplica al volver a abrir la aplicación. Esta guía y algunos detalles técnicos de los errores de cartografía siguen en español. Los números se escriben siempre con coma decimal, sea cual sea el idioma.</li>
-        <li>La configuración se guarda en <code>%APPDATA%\Mendikat\TrailLab</code> y el registro técnico en <code>%LOCALAPPDATA%\Mendikat\TrailLab\logs</code>.</li>
       </ul>
+    </section>
+
+    <section id="configuracion">
+      <h2>Configuración</h2>
+      <p><span class="path">Archivo › Configuración…</span> tiene dos bloques. Los cambios se guardan al pulsar <strong>Aceptar</strong> y se recuerdan para la próxima vez.</p>
+      <table>
+        <tr><th>Bloque</th><th>Opción</th></tr>
+        <tr><td><strong>Idioma</strong></td><td><strong>Idioma de la aplicación</strong>: español (por defecto), català, euskara, français o português, con su bandera. El cambio se aplica al volver a abrir la aplicación; esta guía (<kbd>F1</kbd>) también se abre en ese idioma. Algunos detalles técnicos de los errores de cartografía siguen en español. Los números se escriben siempre con coma decimal, sea cual sea el idioma.</td></tr>
+        <tr><td><strong>Visualización</strong></td><td><strong>Mostrar la regla de escala en el mapa</strong> (activada por defecto). El cambio se ve al momento, sin reiniciar.</td></tr>
+      </table>
+      <p>La configuración se guarda en <code>%APPDATA%\Mendikat\TrailLab\settings.json</code> (también la cartografía elegida) y el registro técnico en <code>%LOCALAPPDATA%\Mendikat\TrailLab\logs</code>.</p>
     </section>
 
     <section id="problemas">
@@ -243,7 +178,7 @@
       <h3>No se ve el mapa de fondo</h3>
       <p>Sin conexión o con el servidor caído, la barra de estado lo indica en rojo. Pruebe otra cartografía.</p>
       <h3>Un archivo no se abre</h3>
-      <p>El mensaje indica el motivo y, si se conoce, la línea del archivo con el problema (por ejemplo, una coordenada fuera de rango).</p>
+      <p>El mensaje indica el motivo y, si se conoce, la línea del archivo con el problema (por ejemplo, una coordenada fuera de rango). Los archivos de OziExplorer y CompeGPS/TwoNav sólo se abren en WGS84 o ED50 (España y Portugal) y en coordenadas geográficas; con otro datum o en UTM, el mensaje lo dice. Vuelva a exportarlos desde su programa en WGS84 y grados.</p>
       <h3>El desnivel no coincide con el de otro programa</h3>
       <p>Cada programa filtra el ruido del GPS a su manera. TrailLab usa el mismo método que mendikat.net.</p>
     </section>

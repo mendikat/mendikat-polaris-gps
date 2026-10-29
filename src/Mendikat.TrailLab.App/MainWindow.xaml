@@ -255,14 +255,25 @@
                         </ContextMenu>
                     </mapsui:MapControl.ContextMenu>
                 </mapsui:MapControl>
-                <!-- Mandatory attribution of the active provider (MAP-06) -->
-                <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#C8FFFFFF" Padding="6,2" MaxWidth="600">
-                    <TextBlock FontSize="11" TextWrapping="Wrap">
-                        <Hyperlink NavigateUri="{Binding SelectedMapProvider.AttributionUrl}" RequestNavigate="OnAttributionNavigate">
-                            <Run Text="{Binding SelectedMapProvider.AttributionText, Mode=OneWay}" />
-                        </Hyperlink>
-                    </TextBlock>
-                </Border>
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <!-- Scale bar, updated when the view changes (OnViewportChanged); File › Settings › Display hides it -->
+                    <Border x:Name="ScaleBar" HorizontalAlignment="Right" Margin="0,0,10,6" Padding="6,1,6,5" Background="#C8FFFFFF"
+                            BorderBrush="Black" BorderThickness="1" IsHitTestVisible="False"
+                            Visibility="{Binding ShowScaleBar, Converter={StaticResource BoolToVisibility}}">
+                        <StackPanel>
+                            <TextBlock x:Name="ScaleBarLabel" HorizontalAlignment="Center" FontWeight="Bold" FontSize="12" Margin="0,0,0,2" />
+                            <views:ScaleRuler x:Name="ScaleBarRuler" Height="7" HorizontalAlignment="Left" />
+                        </StackPanel>
+                    </Border>
+                    <!-- Mandatory attribution of the active provider (MAP-06) -->
+                    <Border HorizontalAlignment="Right" Background="#C8FFFFFF" Padding="6,2" MaxWidth="600">
+                        <TextBlock FontSize="11" TextWrapping="Wrap">
+                            <Hyperlink NavigateUri="{Binding SelectedMapProvider.AttributionUrl}" RequestNavigate="OnAttributionNavigate">
+                                <Run Text="{Binding SelectedMapProvider.AttributionText, Mode=OneWay}" />
+                            </Hyperlink>
+                        </TextBlock>
+                    </Border>
+                </StackPanel>
             </Grid>
         </Grid>
     </DockPanel>
