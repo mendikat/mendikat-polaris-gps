@@ -90,6 +90,17 @@
   <data name="MenuInsertPoint" xml:space="preserve"><value>_Txertatu puntua</value></data>
   <data name="MenuDeletePoint" xml:space="preserve"><value>E_zabatu puntua</value></data>
   <data name="GestureCtrlClick" xml:space="preserve"><value>Ktrl+klik</value></data>
+  <data name="MenuAddWaypoint" xml:space="preserve"><value>_Gehitu waypointa...</value></data>
+  <data name="MenuEditWaypoint" xml:space="preserve"><value>Editatu _waypointa...</value></data>
+  <data name="MenuDeleteWaypoint" xml:space="preserve"><value>E_zabatu waypointa</value></data>
+  <data name="WaypointNewTitle" xml:space="preserve"><value>Waypoint berria</value></data>
+  <data name="WaypointEditTitle" xml:space="preserve"><value>Editatu waypointa</value></data>
+  <data name="WaypointDefaultName" xml:space="preserve"><value>Waypoint {0}</value></data>
+  <data name="WaypointPosition" xml:space="preserve"><value>Kokapena</value></data>
+  <data name="ConfirmDeleteWaypoint" xml:space="preserve"><value>«{0}» waypointa ezabatu?&#10;&#10;Ktrl+Z erabiliz desegin daiteke.</value></data>
+  <data name="ConfirmDeleteWaypoints" xml:space="preserve"><value>{0} waypoint ezabatu?&#10;&#10;Ktrl+Z erabiliz desegin daiteke.</value></data>
+  <data name="StatusWaypointAdded" xml:space="preserve"><value>«{0}» waypointa gehitu da.</value></data>
+  <data name="StatusWaypointUpdated" xml:space="preserve"><value>Waypointa eguneratu da.</value></data>
   <data name="PanelLayers" xml:space="preserve"><value>Geruzak</value></data>
   <data name="PanelPoints" xml:space="preserve"><value>Puntuak</value></data>
   <data name="PanelPoint" xml:space="preserve"><value>Hautatutako puntua</value></data>

@@ -93,6 +93,17 @@
   <data name="MenuInsertPoint" xml:space="preserve"><value>_Insertar punto</value></data>
   <data name="MenuDeletePoint" xml:space="preserve"><value>_Eliminar punto</value></data>
   <data name="GestureCtrlClick" xml:space="preserve"><value>Ctrl+clic</value></data>
+  <data name="MenuAddWaypoint" xml:space="preserve"><value>_Añadir waypoint...</value></data>
+  <data name="MenuEditWaypoint" xml:space="preserve"><value>Editar _waypoint...</value></data>
+  <data name="MenuDeleteWaypoint" xml:space="preserve"><value>E_liminar waypoint</value></data>
+  <data name="WaypointNewTitle" xml:space="preserve"><value>Nuevo waypoint</value></data>
+  <data name="WaypointEditTitle" xml:space="preserve"><value>Editar waypoint</value></data>
+  <data name="WaypointDefaultName" xml:space="preserve"><value>Waypoint {0}</value></data>
+  <data name="WaypointPosition" xml:space="preserve"><value>Posición</value></data>
+  <data name="ConfirmDeleteWaypoint" xml:space="preserve"><value>¿Eliminar el waypoint «{0}»?&#10;&#10;Se puede deshacer con Ctrl+Z.</value></data>
+  <data name="ConfirmDeleteWaypoints" xml:space="preserve"><value>¿Eliminar {0} waypoints?&#10;&#10;Se puede deshacer con Ctrl+Z.</value></data>
+  <data name="StatusWaypointAdded" xml:space="preserve"><value>Waypoint «{0}» añadido.</value></data>
+  <data name="StatusWaypointUpdated" xml:space="preserve"><value>Waypoint actualizado.</value></data>
   <data name="PanelLayers" xml:space="preserve"><value>Capas</value></data>
   <data name="PanelPoints" xml:space="preserve"><value>Puntos</value></data>
   <data name="PanelPoint" xml:space="preserve"><value>Punto seleccionado</value></data>

@@ -419,15 +419,37 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// Builds the map's context menu from what is under the pointer: on a waypoint, edit or delete it; with a track
+    /// point selected, the point and track commands plus "add waypoint"; elsewhere, only "add waypoint".
+    /// Items carry a Tag with their group: "waypoint", "track" or "add".
+    /// </summary>
     private void OnMapContextMenuOpening(object sender, System.Windows.Controls.ContextMenuEventArgs e)
     {
-        if (!_viewModel.HasTrackPointSelected)
+        string[] groups = _contextOnPoint && _viewModel.HasWaypointSelected ? ["waypoint"]
+            : _viewModel.HasTrackPointSelected ? ["track", "add"]
+            : _viewModel.ActiveDocument is not null && !_viewModel.IsBusy ? ["add"]
+            : [];
+        if (groups.Length == 0 || MapView.ContextMenu is not { } menu)
         {
             e.Handled = true;
             return;
         }
 
+        foreach (var item in menu.Items.OfType<FrameworkElement>())
+        {
+            item.Visibility = groups.Contains(item.Tag as string) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         MapInsertPointItem.IsEnabled = _viewModel.ActiveDocument?.SelectedRows.Count == 1;
+    }
+
+    private void OnMapAddWaypointClick(object sender, RoutedEventArgs e)
+    {
+        if (_contextPosition is { } position)
+        {
+            _viewModel.AddWaypointAt(position);
+        }
     }
 
     /// <summary>

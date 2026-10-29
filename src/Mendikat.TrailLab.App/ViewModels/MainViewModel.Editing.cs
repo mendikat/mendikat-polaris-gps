@@ -172,6 +172,7 @@ public sealed partial class MainViewModel
         RedoCommand = new RelayCommand(Redo, () => !IsBusy && ActiveDocument?.CanRedo == true);
         ApplyPointCommand = new RelayCommand(ApplyPointDetail, () => !IsBusy && ActiveDocument?.Detail is not null);
         RevertPointCommand = new RelayCommand(() => ActiveDocument?.RevertDetail(), () => ActiveDocument?.Detail is not null);
+        InitializeWaypointCommands();
     }
 
     private void RefreshEditingCommands()
@@ -182,12 +183,20 @@ public sealed partial class MainViewModel
         RedoCommand.RaiseCanExecuteChanged();
         ApplyPointCommand.RaiseCanExecuteChanged();
         RevertPointCommand.RaiseCanExecuteChanged();
+        EditWaypointCommand.RaiseCanExecuteChanged();
     }
 
     private void DeletePoints(DocumentViewModel doc)
     {
         var rows = doc.SelectedRows;
-        if (rows.Count > ConfirmDeleteThreshold && !_dialogs.Confirm(string.Format(Strings.ConfirmDeletePoints, rows.Count)))
+        if (doc.SelectedLayer?.Kind == LayerKind.Waypoints)
+        {
+            if (!ConfirmWaypointDeletion(doc))
+            {
+                return;
+            }
+        }
+        else if (rows.Count > ConfirmDeleteThreshold && !_dialogs.Confirm(string.Format(Strings.ConfirmDeletePoints, rows.Count)))
         {
             return;
         }

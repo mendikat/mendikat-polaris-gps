@@ -58,6 +58,7 @@
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuDelete}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />
                 <MenuItem Header="{x:Static res:Strings.MenuInsertPoint}" Command="{Binding InsertPointCommand}" InputGestureText="Insert" />
+                <MenuItem Header="{x:Static res:Strings.MenuEditWaypoint}" Command="{Binding EditWaypointCommand}" />
             </MenuItem>
             <MenuItem Header="{x:Static res:Strings.MenuTools}">
                 <MenuItem Header="{x:Static res:Strings.MenuSimplify}" Command="{Binding SimplifyCommand}" />
@@ -235,18 +236,22 @@
             <Grid Grid.Column="2">
                 <mapsui:MapControl x:Name="MapView" AutomationProperties.Name="{x:Static res:Strings.A11yMapName}"
                                    ContextMenuOpening="OnMapContextMenuOpening">
-                    <!-- Only opens with a track point selected (OnMapContextMenuOpening) -->
+                    <!-- The items shown depend on what is under the pointer: Tag = group (OnMapContextMenuOpening) -->
                     <mapsui:MapControl.ContextMenu>
                         <ContextMenu>
-                            <MenuItem x:Name="MapInsertPointItem" Header="{x:Static res:Strings.MenuInsertPoint}"
+                            <MenuItem Tag="waypoint" Header="{x:Static res:Strings.MenuEditWaypoint}" Command="{Binding EditWaypointCommand}" />
+                            <MenuItem Tag="waypoint" Header="{x:Static res:Strings.MenuDeleteWaypoint}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />
+                            <MenuItem Tag="track" x:Name="MapInsertPointItem" Header="{x:Static res:Strings.MenuInsertPoint}"
                                       InputGestureText="{x:Static res:Strings.GestureCtrlClick}" Click="OnMapInsertPointClick" />
-                            <MenuItem Header="{x:Static res:Strings.MenuDeletePoint}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />
-                            <Separator />
-                            <MenuItem Header="{x:Static res:Strings.MenuSimplify}" Command="{Binding SimplifyCommand}" />
-                            <MenuItem Header="{x:Static res:Strings.MenuRegenerateTimes}" Command="{Binding RegenerateTimesCommand}" />
-                            <MenuItem Header="{x:Static res:Strings.MenuReverse}" Command="{Binding ReverseCommand}" />
-                            <Separator />
-                            <MenuItem Header="{x:Static res:Strings.MenuAdjustElevations}" Command="{Binding AdjustElevationsCommand}" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuDeletePoint}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />
+                            <Separator Tag="track" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuSimplify}" Command="{Binding SimplifyCommand}" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuRegenerateTimes}" Command="{Binding RegenerateTimesCommand}" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuReverse}" Command="{Binding ReverseCommand}" />
+                            <Separator Tag="track" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuAdjustElevations}" Command="{Binding AdjustElevationsCommand}" />
+                            <Separator Tag="track" />
+                            <MenuItem Tag="add" Header="{x:Static res:Strings.MenuAddWaypoint}" Click="OnMapAddWaypointClick" />
                         </ContextMenu>
                     </mapsui:MapControl.ContextMenu>
                 </mapsui:MapControl>

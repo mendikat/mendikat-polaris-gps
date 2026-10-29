@@ -103,6 +103,7 @@ public sealed class WpfDialogService : IDialogService
             DemViewModel dem => new DemWindow(dem),
             ConvertViewModel convert => new ConvertWindow(convert),
             SettingsViewModel settings => new SettingsWindow(settings),
+            WaypointViewModel waypoint => new WaypointWindow(waypoint),
             _ => throw new ArgumentException($"No dialog for {viewModel.GetType().Name}.", nameof(viewModel)),
         };
         dialog.Owner = Owner;

@@ -91,6 +91,114 @@ public sealed class EditingFlowTests
     }
 
     [Fact]
+    public void Adding_a_waypoint_asks_for_its_data_and_can_be_undone()
+    {
+        var position = new GeoPosition(43.1, -2.5);
+        _dialogs.ToolDialog = vm =>
+        {
+            var waypoint = Assert.IsType<WaypointViewModel>(vm);
+            Assert.Equal("Waypoint 3", waypoint.Name);
+            waypoint.Name = "  Fuente  ";
+            waypoint.Description = "Agua todo el año";
+            return true;
+        };
+
+        _vm.AddWaypointAt(position);
+
+        var added = _data.Waypoints[^1];
+        Assert.Equal(3, _data.Waypoints.Count);
+        Assert.Equal("Fuente", added.Name);
+        Assert.Equal("Agua todo el año", added.Description);
+        Assert.Null(added.Comment);
+        Assert.Equal(position, added.Position);
+        Assert.Same(added, Assert.Single(Doc.SelectedRows).Point);
+        Assert.True(_vm.HasWaypointSelected);
+
+        _vm.Undo();
+        Assert.Equal(2, _data.Waypoints.Count);
+    }
+
+    [Fact]
+    public void Cancelling_the_waypoint_dialog_adds_nothing()
+    {
+        _dialogs.ToolDialog = _ => false;
+
+        _vm.AddWaypointAt(new GeoPosition(43.1, -2.5));
+
+        Assert.Equal(2, _data.Waypoints.Count);
+        Assert.False(Doc.IsDirty);
+    }
+
+    [Fact]
+    public void Adding_the_first_waypoint_creates_the_waypoints_layer()
+    {
+        _vm.SelectFromMap(Doc, _data.Waypoints[0]);
+        _dialogs.ConfirmAnswer = true;
+        _vm.DeleteSelection();
+        _vm.SelectFromMap(Doc, _data.Waypoints[0]);
+        _vm.DeleteSelection();
+        Assert.DoesNotContain(Doc.Layers, l => l.Kind == LayerKind.Waypoints);
+        _dialogs.ToolDialog = _ => true;
+
+        _vm.AddWaypointAt(new GeoPosition(43.1, -2.5));
+
+        Assert.Equal(LayerKind.Waypoints, Doc.SelectedLayer!.Kind);
+        Assert.Single(_data.Waypoints);
+    }
+
+    [Fact]
+    public void Editing_a_waypoint_changes_its_texts_in_one_undoable_step()
+    {
+        var waypoint = _data.Waypoints[1];
+        var position = waypoint.Position;
+        _vm.SelectFromMap(Doc, waypoint);
+        Assert.True(_vm.EditWaypointCommand.CanExecute(null));
+        _dialogs.ToolDialog = vm =>
+        {
+            ((WaypointViewModel)vm).Name = "Collado";
+            ((WaypointViewModel)vm).Comment = "Cruce";
+            return true;
+        };
+
+        _vm.EditWaypoint();
+
+        Assert.Equal("Collado", waypoint.Name);
+        Assert.Equal("Cruce", waypoint.Comment);
+        Assert.Equal(position, waypoint.Position);
+        _vm.Undo();
+        Assert.NotEqual("Collado", waypoint.Name);
+    }
+
+    [Fact]
+    public void Waypoint_commands_need_a_selected_waypoint()
+    {
+        _vm.SelectFromMap(Doc, FirstSegment[2]);
+
+        Assert.False(_vm.HasWaypointSelected);
+        Assert.False(_vm.EditWaypointCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public void Deleting_a_waypoint_always_asks_for_confirmation()
+    {
+        var waypoint = _data.Waypoints[0];
+        waypoint.Name = "Refugio";
+        _vm.SelectFromMap(Doc, waypoint);
+        _dialogs.ConfirmAnswer = false;
+
+        _vm.DeleteSelection();
+
+        Assert.Contains("Refugio", Assert.Single(_dialogs.Confirmations));
+        Assert.Equal(2, _data.Waypoints.Count);
+
+        _dialogs.ConfirmAnswer = true;
+        _vm.DeleteSelection();
+
+        Assert.Single(_data.Waypoints);
+        Assert.DoesNotContain(waypoint, _data.Waypoints);
+    }
+
+    [Fact]
     public void Selecting_a_point_from_the_map_shows_its_layer_and_detail()
     {
         var waypoint = _data.Waypoints[1];

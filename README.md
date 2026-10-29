@@ -17,7 +17,8 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Seleccionar un punto | Clic en la lista o en el mapa (cerca del punto); Ctrl/Mayús + clic en la lista para varios |
 | Eliminar | **Supr**. Sin puntos seleccionados, elimina el track o ruta (con confirmación) |
 | Insertar un punto intermedio | **Insert**: punto medio entre el seleccionado y el siguiente |
-| Menú contextual | Con un punto de un track seleccionado, clic derecho en el mapa: **Insertar punto** (en el sitio del clic, como Ctrl+clic; sobre un punto, el punto medio tras él), **Eliminar punto** y las herramientas del menú *Herramientas* |
+| Menú contextual | Con un punto de un track seleccionado, clic derecho en el mapa: **Insertar punto** (en el sitio del clic, como Ctrl+clic; sobre un punto, el punto medio tras él), **Eliminar punto**, las herramientas del menú *Herramientas* y **Añadir waypoint** |
+| Waypoints | Clic derecho en el mapa › **Añadir waypoint…** (nombre, comentario y descripción). Clic derecho sobre un waypoint › **Editar waypoint…** o **Eliminar waypoint**; **Supr** con el waypoint seleccionado también lo elimina, siempre con confirmación |
 | Mover un punto | Seleccionarlo y arrastrarlo en el mapa, o cambiar latitud/longitud en el detalle y pulsar **Aplicar** (Intro) |
 | Editar nombre, descripción, elevación, hora | Panel «Punto seleccionado» › **Aplicar**; **Descartar** (Esc) deshace lo escrito |
 | Deshacer / rehacer | **Ctrl+Z** / **Ctrl+Y** (menú Edición) |
