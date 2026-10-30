@@ -1,0 +1,120 @@
+<!-- Title bar icons of the dialogs: a white line drawing of what the dialog does on the app icon's teal tile.
+     24x24 canvas. Windows use them with DynamicResource, so a window built without the App (tests) gets no icon
+     instead of an error. -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <LinearGradientBrush x:Key="WindowIconTile" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#0D3B41" />
+        <GradientStop Offset="1" Color="#145954" />
+    </LinearGradientBrush>
+    <RectangleGeometry x:Key="WindowIconTileShape" Rect="0,0,24,24" RadiusX="5" RadiusY="5" />
+    <Pen x:Key="WindowIconPen" Brush="White" Thickness="1.8" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" />
+
+    <!-- Adjust elevations with the DEM: mountain and up/down arrow -->
+    <DrawingImage x:Key="IconDem">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource WindowIconTile}" Geometry="{StaticResource WindowIconTileShape}" />
+                <GeometryDrawing Pen="{StaticResource WindowIconPen}" Geometry="M3,19 L8.5,10 L11.5,14.5 L14,11 L18,19 Z" />
+                <GeometryDrawing Pen="{StaticResource WindowIconPen}" Geometry="M19,4 V11 M17,6 L19,4 L21,6 M17,9 L19,11 L21,9" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <!-- Simplify track: a zigzag becomes a straight line -->
+    <DrawingImage x:Key="IconSimplify">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource WindowIconTile}" Geometry="{StaticResource WindowIconTileShape}" />
+                <GeometryDrawing Pen="{StaticResource WindowIconPen}" Geometry="M4,9 L7,5 L10,9 L13,5 L16,9 L20,5" />
+                <GeometryDrawing Pen="{StaticResource WindowIconPen}" Geometry="M4,18 L20,14" />
+                <GeometryDrawing Brush="White" Geometry="M4,16.6 A1.4,1.4 0 1 1 3.99,16.6 Z M20,12.6 A1.4,1.4 0 1 1 19.99,12.6 Z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <!-- Regenerate times: clock -->
+    <DrawingImage x:Key="IconTimes">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource WindowIconTile}" Geometry="{StaticResource WindowIconTileShape}" />
+                <GeometryDrawing Pen="{StaticResource WindowIconPen}" Geometry="M12,4 A8,8 0 1 1 11.99,4 Z M12,7.5 V12 L15,14" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <!-- Join tracks: two lines merge into one -->
+    <DrawingImage x:Key="IconJoin">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource WindowIconTile}" Geometry="{StaticResource WindowIconTileShape}" />
+                <GeometryDrawing Pen="{StaticResource WindowIconPen}" Geometry="M4,6 C9,6 9,12 13,12 M4,18 C9,18 9,12 13,12 H20 M17,9 L20,12 L17,15" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <!-- Convert to GPX: arrows both ways -->
+    <DrawingImage x:Key="IconConvert">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource WindowIconTile}" Geometry="{StaticResource WindowIconTileShape}" />
+                <GeometryDrawing Pen="{StaticResource WindowIconPen}" Geometry="M5,9 H19 M15.5,5.5 L19,9 L15.5,12.5 M19,15 H5 M8.5,11.5 L5,15 L8.5,18.5" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <!-- Settings: gear (Material Design "cog", Apache 2.0), scaled to 80% and centred -->
+    <DrawingImage x:Key="IconSettings">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource WindowIconTile}" Geometry="{StaticResource WindowIconTileShape}" />
+                <DrawingGroup Transform="0.8,0,0,0.8,2.4,2.4">
+                    <GeometryDrawing Brush="White"
+                                     Geometry="F0 M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <!-- Waypoint: map pin -->
+    <DrawingImage x:Key="IconWaypoint">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource WindowIconTile}" Geometry="{StaticResource WindowIconTileShape}" />
+                <GeometryDrawing Pen="{StaticResource WindowIconPen}"
+                                 Geometry="M12,20.5 C12,20.5 6,14.5 6,10 A6,6 0 0 1 18,10 C18,14.5 12,20.5 12,20.5 Z M12,7.8 A2.2,2.2 0 1 1 11.99,7.8 Z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <!-- Elevation profile: axes and profile line -->
+    <DrawingImage x:Key="IconProfile">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource WindowIconTile}" Geometry="{StaticResource WindowIconTileShape}" />
+                <GeometryDrawing Pen="{StaticResource WindowIconPen}" Geometry="M4,4 V20 H20 M6.5,16 L9.5,10 L12.5,13 L16,6.5 L19,11" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <!-- Online cartography (ECWP): globe -->
+    <DrawingImage x:Key="IconOnlineMap">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource WindowIconTile}" Geometry="{StaticResource WindowIconTileShape}" />
+                <GeometryDrawing Pen="{StaticResource WindowIconPen}"
+                                 Geometry="M12,4 A8,8 0 1 1 11.99,4 Z M12,4 C8.5,8 8.5,16 12,20 M12,4 C15.5,8 15.5,16 12,20 M4,12 H20" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <!-- ECW licence: document -->
+    <DrawingImage x:Key="IconLicense">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource WindowIconTile}" Geometry="{StaticResource WindowIconTileShape}" />
+                <GeometryDrawing Pen="{StaticResource WindowIconPen}" Geometry="M6.5,4 H14 L18,8 V20 H6.5 Z M14,4 V8 H18 M9.5,12.5 H15 M9.5,16 H15" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+</ResourceDictionary>

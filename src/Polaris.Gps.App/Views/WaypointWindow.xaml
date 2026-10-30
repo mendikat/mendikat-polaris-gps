@@ -4,7 +4,7 @@
         xmlns:res="clr-namespace:Polaris.Gps.App.Resources"
         Title="{Binding Title}" Width="420" SizeToContent="Height" ResizeMode="NoResize"
         ShowInTaskbar="False" WindowStartupLocation="CenterOwner" FocusManager.FocusedElement="{Binding ElementName=NameBox}"
-        Icon="pack://application:,,,/PolarisGps;component/Assets/icon.ico">
+        Icon="{DynamicResource IconWaypoint}">
     <StackPanel Margin="14">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -31,7 +31,7 @@
             <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Position}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
-            <Button Content="{x:Static res:Strings.SettingsAccept}" IsDefault="True" Padding="14,3" Margin="0,0,8,0" Click="OnAccept" />
+            <Button Style="{DynamicResource AccentButtonStyle}" Content="{x:Static res:Strings.SettingsAccept}" IsDefault="True" Padding="14,3" Margin="0,0,8,0" Click="OnAccept" />
             <Button Content="{x:Static res:Strings.DialogCancel}" IsCancel="True" Padding="14,3" />
         </StackPanel>
     </StackPanel>

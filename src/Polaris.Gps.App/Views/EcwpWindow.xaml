@@ -1,4 +1,4 @@
-<Window x:Class="Polaris.Gps.App.Views.EcwpWindow"
+<Window x:Class="Polaris.Gps.App.Views.EcwpWindow" Icon="{DynamicResource IconOnlineMap}"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:res="clr-namespace:Polaris.Gps.App.Resources"
@@ -9,7 +9,7 @@
         <TextBox x:Name="UrlBox" TextChanged="OnUrlChanged" AutomationProperties.Name="{x:Static res:Strings.EcwpPrompt}" />
         <TextBlock x:Name="Hint" Text="{x:Static res:Strings.EcwpExample}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextWrapping="Wrap" Margin="0,6,0,0" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
-            <Button x:Name="OpenButton" Content="{x:Static res:Strings.EcwpOpen}" IsDefault="True" IsEnabled="False" Padding="14,3" Margin="0,0,8,0" Click="OnOpen" />
+            <Button Style="{DynamicResource AccentButtonStyle}" x:Name="OpenButton" Content="{x:Static res:Strings.EcwpOpen}" IsDefault="True" IsEnabled="False" Padding="14,3" Margin="0,0,8,0" Click="OnOpen" />
             <Button Content="{x:Static res:Strings.DialogCancel}" IsCancel="True" Padding="14,3" />
         </StackPanel>
     </StackPanel>

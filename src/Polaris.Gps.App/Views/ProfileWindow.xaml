@@ -1,4 +1,4 @@
-<Window x:Class="Polaris.Gps.App.Views.ProfileWindow"
+<Window x:Class="Polaris.Gps.App.Views.ProfileWindow" Icon="{DynamicResource IconProfile}"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Polaris.Gps.App"
@@ -91,27 +91,6 @@
             <Setter Property="Margin" Value="2,0,0,3" />
         </Style>
     </Window.Resources>
-    <!-- Title bar icon: a track (a winding line from a green start to a red end) -->
-    <Window.Icon>
-        <DrawingImage>
-            <DrawingImage.Drawing>
-                <DrawingGroup>
-                    <GeometryDrawing Brush="Transparent" Geometry="M0,0 L32,0 L32,32 L0,32 Z" />
-                    <GeometryDrawing Geometry="M6,26 C10,17 15,25 17,16 S25,12 26,6">
-                        <GeometryDrawing.Pen>
-                            <Pen Brush="#DC143C" Thickness="3.5" StartLineCap="Round" EndLineCap="Round" />
-                        </GeometryDrawing.Pen>
-                    </GeometryDrawing>
-                    <GeometryDrawing Brush="#2E7D32" Geometry="M6,22.5 A3.5,3.5 0 1 1 5.99,22.5 Z">
-                        <GeometryDrawing.Pen><Pen Brush="White" Thickness="1.2" /></GeometryDrawing.Pen>
-                    </GeometryDrawing>
-                    <GeometryDrawing Brush="#8B0000" Geometry="M26,2.5 A3.5,3.5 0 1 1 25.99,2.5 Z">
-                        <GeometryDrawing.Pen><Pen Brush="White" Thickness="1.2" /></GeometryDrawing.Pen>
-                    </GeometryDrawing>
-                </DrawingGroup>
-            </DrawingImage.Drawing>
-        </DrawingImage>
-    </Window.Icon>
     <DockPanel>
         <!-- Summary: a row of route figures and a row of time figures; tiles wrap on narrow windows -->
         <DockPanel DockPanel.Dock="Top" Margin="10,8,10,2">
