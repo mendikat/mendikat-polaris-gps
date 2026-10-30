@@ -1,0 +1,37 @@
+<!-- Spanish texts of the prerequisite page of the setup (WiX wixpreq.wxl), shown only when the .NET 10 Desktop Runtime
+     is missing. The Polaris GPS pages themselves are those of the .msi. -->
+<WixLocalization Culture="es-es" Language="3082" xmlns="http://wixtoolset.org/schemas/v4/wxl">
+  <String Id="Caption" Value="Instalación de [WixBundleName]" />
+  <String Id="Title" Value="[WixBundleName] necesita el runtime de escritorio de Microsoft .NET 10" />
+  <String Id="NonPrereqTitle" Value="Instalación de [WixBundleName]" />
+  <String Id="ConfirmCancelMessage" Value="¿Seguro que quieres cancelar la instalación?" />
+  <String Id="HelpHeader" Value="Ayuda de la instalación" />
+  <String Id="HelpText" Value="/passive | /quiet - muestra una interfaz mínima sin preguntas, o ninguna interfaz ni preguntas.&#xA;   Por omisión se muestran la interfaz y todas las preguntas.&#xA;&#xA;/norestart   - no reinicia el equipo. Por omisión se pregunta antes de reiniciar.&#xA;/log log.txt - guarda el registro en ese archivo. Por omisión se crea en %TEMP%." />
+  <String Id="HelpCloseButton" Value="&amp;Cerrar" />
+  <String Id="InstallLicenseTerms" Value="Primero se instalará el runtime de .NET 10 (gratuito, de Microsoft). Pulsa «Aceptar e instalar» para aceptar sus &lt;a href=&quot;#&quot;&gt;condiciones de licencia&lt;/a&gt;; después se abrirá la instalación de Polaris GPS." />
+  <String Id="InstallAcceptAndInstallButton" Value="&amp;Aceptar e instalar" />
+  <String Id="InstallDeclineButton" Value="&amp;Rechazar" />
+  <String Id="ProgressHeader" Value="Instalando" />
+  <String Id="ProgressLabel" Value="En curso:" />
+  <String Id="ProgressCancelButton" Value="&amp;Cancelar" />
+  <String Id="SuccessHeader" Value="Runtime de .NET instalado" />
+  <String Id="SuccessLayoutHeader" Value="Copia completada" />
+  <String Id="SuccessRestartText" Value="Hay que reiniciar el equipo antes de continuar con la instalación de [WixBundleName]." />
+  <String Id="SuccessRestartButton" Value="&amp;Reiniciar" />
+  <String Id="SuccessCloseButton" Value="&amp;Cerrar" />
+  <String Id="FailureHeader" Value="La instalación ha fallado" />
+  <String Id="FailureLayoutHeader" Value="La copia ha fallado" />
+  <String Id="FailureLogLinkText" Value="Algún problema ha impedido la instalación. Corrígelo y vuelve a intentarlo. Más información en el &lt;a href=&quot;#&quot;&gt;registro&lt;/a&gt;." />
+  <String Id="FailureRestartText" Value="Hay que reiniciar el equipo para terminar de deshacer la instalación." />
+  <String Id="FailureRestartButton" Value="&amp;Reiniciar" />
+  <String Id="FailureCloseButton" Value="&amp;Cerrar" />
+  <String Id="PREREQBAINFINITELOOPErrorMessage" Value="[WixBundleName] no ha podido empezar aunque los requisitos están instalados." />
+  <String Id="FilesInUseTitle" Value="Archivos en uso" />
+  <String Id="FilesInUseLabel" Value="Estas aplicaciones usan archivos que hay que actualizar:" />
+  <String Id="FilesInUseNetfxCloseRadioButton" Value="Cerrar las &amp;aplicaciones." />
+  <String Id="FilesInUseCloseRadioButton" Value="Cerrar las &amp;aplicaciones e intentar reiniciarlas." />
+  <String Id="FilesInUseDontCloseRadioButton" Value="&amp;No cerrar las aplicaciones. Habrá que reiniciar el equipo." />
+  <String Id="FilesInUseRetryButton" Value="&amp;Reintentar" />
+  <String Id="FilesInUseIgnoreButton" Value="&amp;Omitir" />
+  <String Id="FilesInUseExitButton" Value="&amp;Salir" />
+</WixLocalization>

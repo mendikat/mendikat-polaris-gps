@@ -20,7 +20,8 @@ public sealed record ItemLayers(object Model, IReadOnlyList<ILayer> Layers);
 /// </summary>
 public static class TrailLayerFactory
 {
-    public static IReadOnlyList<ItemLayers> CreateLayers(TrailData data, Color color, string name)
+    /// <param name="coloring">Colours the track lines by elevation, slope or speed (View › Colour tracks by); routes keep <paramref name="color"/>.</param>
+    public static IReadOnlyList<ItemLayers> CreateLayers(TrailData data, Color color, string name, TrackColorMode coloring = TrackColorMode.None)
     {
         // Styles are shared by all features of the document: large tracks have 100 000+ points (NFR-09).
         var trackLine = MapStyles.TrackLine(color);
@@ -32,7 +33,9 @@ public static class TrailLayerFactory
         for (var t = 0; t < data.Tracks.Count; t++)
         {
             var track = data.Tracks[t];
-            var lines = track.Segments.Select(s => LineFeature(s.Points, trackLine, track)).OfType<IFeature>().ToList();
+            var lines = TrackColoring.Classify(track, coloring) is { } classes
+                ? ColoredLines(track, classes, coloring, trackLine)
+                : track.Segments.Select(s => LineFeature(s.Points, trackLine, track)).OfType<IFeature>().ToList();
             var points = track.Segments.SelectMany(s => s.Points).Select(p => (IFeature)PointFeature(p, PointStyle(p, trackPoint))).ToList();
             result.Add(new ItemLayers(track, [Layer($"{name}:track{t}:lines", lines), Layer($"{name}:track{t}:points", points)]));
         }
@@ -47,7 +50,10 @@ public static class TrailLayerFactory
 
         if (data.Waypoints.Count > 0)
         {
-            var waypoints = data.Waypoints.Select(w => (IFeature)WaypointFeature(w, waypoint)).ToList();
+            var limits = LabelLimits(data.Waypoints);
+            var waypoints = data.Waypoints
+                .Select((w, i) => (IFeature)WaypointFeature(w, WaypointSymbols.Icon(WaypointSymbols.KindOf(w.Symbol)) ?? waypoint, limits[i]))
+                .ToList();
             result.Add(new ItemLayers(data.Waypoints, [Layer($"{name}:waypoints", waypoints)]));
         }
 
@@ -55,7 +61,14 @@ public static class TrailLayerFactory
     }
 
     /// <summary>Highlight of selected points (LAY-02/LAY-03), drawn above everything else.</summary>
-    public static IEnumerable<IFeature> SelectionFeatures(IEnumerable<GeoPosition> positions) => Markers(positions, MapStyles.SelectedPoint);
+    public static IEnumerable<IFeature> SelectionFeatures(IEnumerable<GeoPosition> positions) =>
+        positions.Select(p =>
+        {
+            var feature = new PointFeature(WebMercator.ToWorld(p));
+            feature.Styles.Add(MapStyles.SelectedPointEdge);
+            feature.Styles.Add(MapStyles.SelectedPoint);
+            return (IFeature)feature;
+        });
 
     /// <summary>Markers with the given style at the given positions (selection, profile hover…).</summary>
     public static IEnumerable<IFeature> Markers(IEnumerable<GeoPosition> positions, IStyle style) =>
@@ -65,6 +78,33 @@ public static class TrailLayerFactory
             feature.Styles.Add(style);
             return (IFeature)feature;
         });
+
+    /// <summary>
+    /// Features of the UTM grid: each line, and its label at the first sample inside <paramref name="view"/> (bottom
+    /// of the easting lines, left of the northing lines).
+    /// </summary>
+    public static IEnumerable<IFeature> GridFeatures(IReadOnlyList<GridLine> lines, GeoBounds view)
+    {
+        foreach (var line in lines)
+        {
+            var coordinates = line.Points.Select(p =>
+            {
+                var (x, y) = WebMercator.ToWorld(p);
+                return new Coordinate(x, y);
+            }).ToArray();
+            var feature = new GeometryFeature(new LineString(coordinates));
+            feature.Styles.Add(MapStyles.GridLine);
+            yield return feature;
+
+            var anchor = line.Points.Skip(1).FirstOrDefault(view.Contains);
+            if (anchor != default)
+            {
+                var label = new PointFeature(WebMercator.ToWorld(anchor));
+                label.Styles.Add(MapStyles.GridLabel(line.Label, line.IsEasting));
+                yield return label;
+            }
+        }
+    }
 
     /// <summary>Extent of the data in Web Mercator, or null if there are no points.</summary>
     public static MRect? WorldExtent(GeoBounds? bounds)
@@ -77,6 +117,92 @@ public static class TrailLayerFactory
         var (minX, minY) = WebMercator.ToWorld(new GeoPosition(b.MinLatitude, b.MinLongitude));
         var (maxX, maxY) = WebMercator.ToWorld(new GeoPosition(b.MaxLatitude, b.MaxLongitude));
         return new MRect(minX, minY, maxX, maxY);
+    }
+
+    /// <summary>
+    /// The lines of a track coloured by class: one feature per run of consecutive points of the same class (a run shares
+    /// its last point with the next one, so the line has no gaps); points without a value use the document colour.
+    /// </summary>
+    private static List<IFeature> ColoredLines(Track track, int[] classes, TrackColorMode mode, IStyle plain)
+    {
+        var styles = Enumerable.Range(0, TrackColoring.ClassCount(mode))
+            .Select(i => TrackColoring.ClassColor(mode, i))
+            .Select(c => MapStyles.ColoredTrackLine(new Color(c.R, c.G, c.B)))
+            .ToArray();
+        var lines = new List<IFeature>();
+        var offset = 0;
+        foreach (var segment in track.Segments)
+        {
+            var points = segment.Points;
+            var start = 0;
+            while (start < points.Count - 1)
+            {
+                var current = classes[offset + start];
+                var end = start + 1;
+                while (end < points.Count - 1 && classes[offset + end] == current)
+                {
+                    end++;
+                }
+
+                if (LineFeature(points.GetRange(start, end - start + 1), current < 0 ? plain : styles[current], track) is { } line)
+                {
+                    lines.Add(line);
+                }
+
+                start = end;
+            }
+
+            offset += points.Count;
+        }
+
+        return lines;
+    }
+
+    /// <summary>Approximate size in pixels of a waypoint label: 7 px per character plus the padding, 18 px high.</summary>
+    private static double LabelWidth(string? name) => (name?.Length ?? 0) * 7 + 12;
+
+    private const double LabelHeight = 18;
+
+    /// <summary>Above this many waypoints the labels are not decluttered (the check compares every pair).</summary>
+    public const int MaxDeclutteredWaypoints = 3000;
+
+    /// <summary>
+    /// The coarsest resolution (meters per pixel) at which each waypoint label is drawn, so that labels do not overlap:
+    /// a label is hidden while it would overlap the label of an earlier waypoint, and shows as the map zooms in and they
+    /// separate. Earlier waypoints win. Two labels separate below the resolution where their distance in pixels exceeds
+    /// half their widths together (horizontally) or the label height (vertically).
+    /// </summary>
+    public static double[] LabelLimits(IReadOnlyList<TrailPoint> waypoints)
+    {
+        var limits = Enumerable.Repeat(MapStyles.PointsMaxResolution * 10, waypoints.Count).ToArray();
+        if (waypoints.Count > MaxDeclutteredWaypoints)
+        {
+            return limits;
+        }
+
+        var world = waypoints.Select(w => WebMercator.ToWorld(w.Position)).ToArray();
+        for (var i = 0; i < waypoints.Count; i++)
+        {
+            if (string.IsNullOrWhiteSpace(waypoints[i].Name))
+            {
+                continue;
+            }
+
+            for (var j = 0; j < i; j++)
+            {
+                if (string.IsNullOrWhiteSpace(waypoints[j].Name))
+                {
+                    continue;
+                }
+
+                var dx = Math.Abs(world[i].X - world[j].X);
+                var dy = Math.Abs(world[i].Y - world[j].Y);
+                var separate = Math.Max(dx / ((LabelWidth(waypoints[i].Name) + LabelWidth(waypoints[j].Name)) / 2), dy / LabelHeight);
+                limits[i] = Math.Min(limits[i], separate);
+            }
+        }
+
+        return limits;
     }
 
     private static IStyle PointStyle(TrailPoint point, IStyle normal) => point.IsAdded ? MapStyles.AddedPoint : normal;
@@ -108,12 +234,12 @@ public static class TrailLayerFactory
         return feature;
     }
 
-    private static PointFeature WaypointFeature(TrailPoint point, IStyle symbol)
+    private static PointFeature WaypointFeature(TrailPoint point, IStyle symbol, double labelMaxResolution)
     {
         var feature = PointFeature(point, symbol);
         if (!string.IsNullOrWhiteSpace(point.Name))
         {
-            feature.Styles.Add(MapStyles.WaypointLabel(point.Name));
+            feature.Styles.Add(MapStyles.WaypointLabel(point.Name, labelMaxResolution));
         }
 
         return feature;

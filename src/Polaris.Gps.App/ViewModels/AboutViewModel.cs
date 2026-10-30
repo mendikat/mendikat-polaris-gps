@@ -12,15 +12,15 @@ public sealed class AboutViewModel
 
     public const string WebUrl = "https://www.mendikat.net";
 
-    /// <summary>Where to look for new versions. Provisional: the mendikat.net home page until the download page exists.</summary>
-    public const string UpdatesUrl = WebUrl;
+    /// <summary>Where the new versions are published (a public repository: the source code one is private).</summary>
+    public const string UpdatesUrl = Services.GitHubUpdateChecker.ReleasesPage;
 
     /// <summary>PayPal donation button of mendikat.net (same <c>hosted_button_id</c> as the web form).</summary>
     public const string DonateUrl = "https://www.paypal.com/donate/?hosted_button_id=4BNLU9ACSHTFN";
 
     public string ProductName => Strings.AppTitle;
 
-    /// <summary>"Versión 0.4.0". The build may append "+commit" to the informational version; it is not shown.</summary>
+    /// <summary>"Versión 0.5.0". The build may append "+commit" to the informational version; it is not shown.</summary>
     public string VersionText => string.Format(Strings.AboutVersion, Version);
 
     public static string Version

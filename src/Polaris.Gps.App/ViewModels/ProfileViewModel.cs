@@ -1,4 +1,5 @@
 using System.Globalization;
+using Polaris.Gps.App.Charting;
 using Polaris.Gps.App.Resources;
 using Polaris.Gps.Domain.Model;
 using Polaris.Gps.Domain.Profiles;
@@ -17,11 +18,20 @@ public sealed class ProfileViewModel : ObservableObject
     private double? _cursorDistance;
     private double? _hoverDistance;
     private string _hoverText = Strings.ProfileHint;
+    private ChartModeOption _chartMode;
 
     public ProfileViewModel(DocumentViewModel document, LayerItemViewModel layer)
     {
         Document = document;
         Layer = layer;
+        ChartModes =
+        [
+            new(ProfileChartMode.Elevation, Strings.ChartElevation),
+            new(ProfileChartMode.ElevationBySlope, Strings.ChartElevationBySlope),
+            new(ProfileChartMode.Slope, Strings.ChartSlope),
+            new(ProfileChartMode.Speed, Strings.ChartSpeed),
+        ];
+        _chartMode = ChartModes[0];
         _profile = Build();
         UpdateCursor();
         document.ContentChanged += OnContentChanged;
@@ -52,9 +62,41 @@ public sealed class ProfileViewModel : ObservableObject
                 OnPropertyChanged(nameof(MissingWarning));
                 OnPropertyChanged(nameof(HasMissingWarning));
                 OnPropertyChanged(nameof(NoTimesNote));
+                OnPropertyChanged(nameof(Climbs));
+                OnPropertyChanged(nameof(HasClimbs));
             }
         }
     }
+
+    /// <summary>The graphs the chart can show: elevation, elevation coloured by slope, slope and speed.</summary>
+    public IReadOnlyList<ChartModeOption> ChartModes { get; }
+
+    public ChartModeOption ChartMode
+    {
+        get => _chartMode;
+        set
+        {
+            if (value is not null && SetProperty(ref _chartMode, value))
+            {
+                OnPropertyChanged(nameof(Mode));
+            }
+        }
+    }
+
+    public ProfileChartMode Mode => ChartMode.Mode;
+
+    /// <summary>Climbs of at least 50 m of ascent (<see cref="ProfileAnalysis.Climbs"/>), as table rows.</summary>
+    public IReadOnlyList<ClimbRow> Climbs => Profile.HasElevation
+        ? Profile.Analysis.Climbs.Select((c, i) => new ClimbRow(
+            i + 1,
+            $"{(c.StartDistance / 1000).ToString("N2", Spanish)} km",
+            $"{(c.Length / 1000).ToString("N2", Spanish)} km",
+            $"+{c.Gain.ToString("N0", Spanish)} m",
+            $"{c.AverageSlope.ToString("N1", Spanish)} %",
+            $"{c.MaxSlope.ToString("N0", Spanish)} %")).ToList()
+        : [];
+
+    public bool HasClimbs => Climbs.Count > 0;
 
     /// <summary>Adds the distance between segments (off by default, PROF-02).</summary>
     public bool IncludeSegmentGaps
@@ -202,7 +244,19 @@ public sealed class ProfileViewModel : ObservableObject
     {
         var elevation = sample.Elevation is { } e ? $"{e.ToString("N1", Spanish)} m" : Strings.ProfileElevationMissingValue;
         var number = HasSeveralSegments ? $"{sample.Segment + 1}·{sample.Index + 1}" : (sample.Index + 1).ToString(Spanish);
-        return string.Format(Spanish, Strings.ProfileHover, (sample.Distance / 1000).ToString("N3", Spanish), elevation, number);
+        var text = string.Format(Spanish, Strings.ProfileHover, (sample.Distance / 1000).ToString("N3", Spanish), elevation, number);
+        var index = IndexOf(sample);
+        if (Profile.Analysis.Slopes[index] is { } slope)
+        {
+            text += " · " + string.Format(Spanish, Strings.ProfileHoverSlope, slope.ToString("N0", Spanish));
+        }
+
+        if (Profile.Analysis.Speeds[index] is { } speed)
+        {
+            text += " · " + string.Format(Spanish, Strings.ProfileHoverSpeed, speed.ToString("N1", Spanish));
+        }
+
+        return text;
     }
 
     private ElevationProfile Build() => Layer.Model switch
@@ -253,3 +307,12 @@ public sealed record ProfileStat(ProfileStatKind Kind, string Label, string Valu
     /// <summary>"Desnivel positivo: +267 m", read by screen readers.</summary>
     public string Description => $"{Label}: {Value}";
 }
+
+/// <summary>A graph of the profile window, as shown in its list.</summary>
+public sealed record ChartModeOption(ProfileChartMode Mode, string Name)
+{
+    public override string ToString() => Name;
+}
+
+/// <summary>A row of the climbs table: number, start, length, ascent, average and steepest slope.</summary>
+public sealed record ClimbRow(int Number, string Start, string Length, string Gain, string AverageSlope, string MaxSlope);

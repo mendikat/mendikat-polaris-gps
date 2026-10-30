@@ -27,7 +27,18 @@
             </StackPanel>
         </GroupBox>
         <GroupBox Header="{x:Static res:Strings.SettingsDisplay}" Padding="8" Margin="0,10,0,0">
-            <CheckBox Content="{x:Static res:Strings.SettingsShowScaleBar}" IsChecked="{Binding ShowScaleBar}" />
+            <StackPanel>
+                <CheckBox Content="{x:Static res:Strings.SettingsShowScaleBar}" IsChecked="{Binding ShowScaleBar}" />
+                <CheckBox Content="{x:Static res:Strings.SettingsShowUtmGrid}" IsChecked="{Binding ShowUtmGrid}" Margin="0,6,0,0" />
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="{x:Static res:Strings.SettingsCoordinates}" Padding="8" Margin="0,10,0,0">
+            <StackPanel>
+                <Label Content="{x:Static res:Strings.SettingsDatum}" Target="{Binding ElementName=DatumBox}" Padding="0,0,0,4" />
+                <ComboBox x:Name="DatumBox" ItemsSource="{Binding Datums}" SelectedItem="{Binding Datum}"
+                          AutomationProperties.Name="{x:Static res:Strings.SettingsDatumName}" />
+                <TextBlock Text="{x:Static res:Strings.SettingsDatumHint}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextWrapping="Wrap" Margin="0,6,0,0" />
+            </StackPanel>
         </GroupBox>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
             <Button Style="{DynamicResource AccentButtonStyle}" Content="{x:Static res:Strings.SettingsAccept}" IsDefault="True" Padding="14,3" Margin="0,0,8,0" Click="OnAccept" />

@@ -31,8 +31,10 @@
     <a href="#mapa">Mapa e coordenadas</a>
     <a href="#capas">Camadas e pontos</a>
     <a href="#editar">Edição</a>
+    <a href="#dibujar">Desenho</a>
     <a href="#perfil">Perfil de elevação</a>
     <a href="#herramientas">Ferramentas</a>
+    <a href="#gps">Comunicações</a>
     <a href="#teclado">Atalhos de teclado</a>
     <a href="#archivos">Ficheiros e gravação</a>
     <a href="#configuracion">Definições</a>
@@ -79,6 +81,11 @@
         <li><strong>MDT</strong>: <code>.hgt</code> (SRTM) e <code>.asc</code> (ESRI ASCII Grid, com o seu <code>.prj</code> ao lado). Também <code>.tif</code> de uma banda de altitudes. Não são desenhados: dão a altitude sob o ponteiro e aparecem em <em>Ajustar altitudes</em> depois do MDT do IGN.</li>
       </ul>
       <p>O que for aberto aparece no botão <strong>Cartografias do utilizador</strong> da barra de ferramentas. A que está no topo da lista é desenhada por cima das restantes: arraste a pega <strong>≡</strong> (ou use <kbd>Ctrl</kbd>+<kbd>↑</kbd> / <kbd>Ctrl</kbd>+<kbd>↓</kbd>) para mudar a ordem; a cartografia online fica sempre no fundo e os tracks sempre por cima. O controlo deslizante de cada mapa ajusta a sua opacidade para ver o que está por baixo. A caixa de verificação mostra ou oculta cada mapa (num MDT, decide se é usado), <strong>⤢</strong> leva até ele e <strong>✕</strong> remove-o. São suportados os datums WGS84, ETRS89 e ED50 (fusos 29 a 31) em coordenadas geográficas, UTM ou Transverse Mercator; se um ficheiro usar outro sistema, é mostrado um aviso em vez de o posicionar mal. Não são lembrados ao fechar a aplicação.</p>
+      <p>As coordenadas são mostradas no <strong>datum</strong> escolhido em <span class="path">Ficheiro › Definições… › Coordenadas</span>: WGS84 (predefinido) ou <strong>ED50</strong>, o dos mapas e guias antigos de Espanha. O ED50 só se aplica nos fusos 29 a 31 (Espanha peninsular, Baleares e Portugal); nas Canárias e fora desses fusos continuam a ser mostradas em WGS84 e a barra de estado indica-o. Os ficheiros são sempre guardados em WGS84.</p>
+      <h3>Quadrícula UTM</h3>
+      <p>Com <span class="path">Ficheiro › Definições… › Visualização › Mostrar a quadrícula UTM no mapa</span> (desativada por predefinição) são desenhadas as linhas da quadrícula UTM do fuso do centro do mapa, no datum escolhido, com o seu valor em quilómetros (ou em metros ao aproximar muito). O espaçamento adapta-se ao zoom: 100 m, 1 km, 10 km… Ao afastar muito, oculta-se.</p>
+      <h3>Colorir os tracks</h3>
+      <p><span class="path">Ver › Colorir tracks por</span> pinta cada troço dos tracks segundo a <strong>altitude</strong>, o <strong>declive</strong> ou a <strong>velocidade</strong>, com uma legenda no canto inferior esquerdo do mapa. O declive usa classes fixas (de descida forte em azul-escuro a mais de 25 % em grená); a altitude e a velocidade vão do azul (o mais baixo de cada track) ao vermelho (o mais alto). <strong>Nenhum</strong> volta à cor do documento. A escolha é lembrada.</p>
     </section>
 
     <section id="capas">
@@ -89,6 +96,8 @@
         <li>Os <strong>waypoints</strong> do GPX são desenhados como triângulos, com o seu nome ao aproximar.</li>
         <li>O painel <strong>Ponto selecionado</strong> mostra e permite alterar o nome, o comentário, a descrição, a latitude, a longitude, a elevação e a hora. Também indica de onde vem a elevação: do ficheiro, interpolada, do MDT ou editada à mão.</li>
       </ul>
+      <p>Cada waypoint pode ter um <strong>símbolo</strong> (cume, colo, estacionamento, abrigo, acampamento, fonte, perigo, miradouro, informação, início de trilho), escolhido ao adicioná-lo ou editá-lo e guardado no GPX com o nome usado pelos GPS Garmin. No mapa é desenhado com o seu ícone; sem símbolo, com o triângulo da cor do documento. Quando os nomes de vários waypoints se tocariam, só se mostra o primeiro até aproximar o suficiente. Com a camada de waypoints selecionada, a caixa de pesquisa sobre a lista filtra pelo nome (sem distinguir maiúsculas nem acentos).</p>
+      <p>Um track em várias partes mostra em <strong>Camadas</strong> a lista dos seus <strong>segmentos</strong>, com os pontos e o comprimento. Um clique num segmento seleciona os seus pontos (ficam realçados no mapa) e <strong>✕</strong> elimina-o, após confirmação; os outros segmentos não mudam e anula-se com <kbd>Ctrl</kbd>+<kbd>Z</kbd>.</p>
     </section>
 
     <section id="editar">
@@ -107,6 +116,19 @@
       <p>Um asterisco <strong>*</strong> no separador e no título indica alterações por guardar.</p>
     </section>
 
+    <section id="dibujar">
+      <h2>Desenho</h2>
+      <p>Prima <strong>✎ Desenhar</strong> na barra de ferramentas (ou <span class="path">Edição › Modo desenho</span>, <kbd>Ctrl</kbd>+<kbd>D</kbd>): cada clique no mapa adiciona um ponto após o selecionado, e arrastar continua a mover o mapa. <kbd>Esc</kbd> termina. Sem documento aberto, é criado um novo. <span class="path">Edição › Novo track</span> e <span class="path">Nova rota</span> adicionam um track ou uma rota vazios ao documento aberto e começam a desenhar neles. <kbd>Ctrl</kbd> + clique continua a adicionar pontos fora do modo desenho.</p>
+      <table>
+        <tr><th>Opção</th><th>O que faz</th></tr>
+        <tr><td><strong>Seguir caminhos</strong></td><td>Une cada ponto novo ao anterior por trilhos, estradões e estradas do OpenStreetMap, com o serviço <strong>BRouter</strong> (requer ligação). Escolha o tipo de percurso: caminhada de montanha, bicicleta de trekking, bicicleta de montanha, bicicleta de estrada ou o mais curto. Se não houver caminho até ao ponto (longe de um trilho), nada é adicionado e a barra de estado explica-o: desative a opção para esse troço e será unido em linha reta.</td></tr>
+        <tr><td><strong>Ajustar a pontos</strong></td><td>Um clique perto de um ponto ou waypoint de qualquer documento aberto toma a sua posição exata e a sua altitude, para ligar a outros percursos.</td></tr>
+        <tr><td><strong>Altitude do MDT</strong></td><td>Os pontos novos tomam a altitude do terreno: dos seus MDT locais ou, senão, do MDT do IGN espanhol de 5 m (Espanha, com ligação). Sem dados, ficam sem altitude.</td></tr>
+      </table>
+      <p>Enquanto desenha, a barra de estado mostra a <strong>distância</strong>, o <strong>desnível</strong> e o <strong>tempo estimado</strong> (método MIDE: 4 km/h no plano, 400 m/h a subir e 600 m/h a descer, sem paragens) do track ou rota selecionado.</p>
+      <p>Para terminar um percurso: <span class="path">Ferramentas › Fechar em circular</span> leva-o de volta ao início (por caminhos se «Seguir caminhos» estiver ativado) e <span class="path">Ida e volta</span> adiciona a volta pelos mesmos pontos. Tudo se anula com <kbd>Ctrl</kbd>+<kbd>Z</kbd>.</p>
+    </section>
+
     <section id="perfil">
       <h2>Perfil de elevação</h2>
       <p>Selecione um track ou rota em <strong>Camadas</strong> e prima <strong>Perfil</strong> (ou <span class="path">Ver › Perfil de elevação</span>).</p>
@@ -119,6 +141,7 @@
         <li><strong>Parado</strong>: troços a menos de 1 km/h e pausas entre segmentos. A <strong>velocidade média</strong> só conta o tempo em movimento; a <strong>máxima</strong> é a maior mantida durante pelo menos 30 s.</li>
         <li>Ao passar o ponteiro pelo perfil, o ponto é marcado no mapa; um clique seleciona-o e <kbd>←</kbd> <kbd>→</kbd> percorrem os pontos.</li>
       </ul>
+      <p>O seletor sob o gráfico muda o que é desenhado: <strong>Altitude</strong>, <strong>Altitude colorida por declive</strong> (com as cores do mapa), <strong>Declive</strong> (em %, medido a cada 50 m sobre a altitude suavizada) ou <strong>Velocidade</strong> (em km/h, média de 30 s; requer horas). Ao passar o ponteiro, leem-se também o declive e a velocidade do ponto. A lista <strong>Subidas</strong> mostra as subidas de mais de 50 m de desnível: início, comprimento, desnível e declive médio e máximo.</p>
     </section>
 
     <section id="herramientas">
@@ -134,6 +157,21 @@
       <p>Une dois ou mais tracks num só, por proximidade: cada track é colocado a seguir ao que tem a extremidade mais próxima e, se for preciso, o seu sentido é invertido (as horas são refletidas como em «Inverter track»). A lista inclui os tracks de todos os documentos abertos; desmarque os que não quiser unir. Se o intervalo entre dois tracks ultrapassar o <strong>intervalo máximo</strong>, o seguinte começa um segmento novo. A pré-visualização mostra a ordem e cada intervalo. Os tracks originais não mudam: o resultado abre-se num GPX novo por guardar, com o nome do primeiro track.</p>
       <h3>Ajustar altitudes com o MDT do IGN</h3>
       <p>Consulta o Modelo Digital do Terreno do IGN espanhol (5 m ou 25 m) e substitui as elevações. Só cobre Espanha e precisa de ligação. Os pontos sem dados (mar ou fora de Espanha) conservam a sua elevação.</p>
+      <h3>Limpar track</h3>
+      <p>Remove os <strong>saltos do GPS</strong> (pontos a que se chegaria acima da velocidade máxima; requer horas), os <strong>picos</strong> (um ponto que se afasta e a linha volta) e as <strong>paragens</strong> (de um grupo de pontos num raio pequeno ficam o primeiro e o último), e pode aplicar uma <strong>suavização gaussiana da altitude</strong> com uma janela à escolha (100 m por predefinição, a que o mendikat.net usa para o desnível). Cada segmento é limpo em separado e nunca se removem o primeiro nem o último ponto. A pré-visualização indica quantos pontos se removem e quantas altitudes mudam.</p>
+      <h3>Cortar</h3>
+      <p>Com um único ponto selecionado: <strong>Partir no ponto selecionado</strong> divide o track ou a rota em dois (a segunda parte, com « (2)» no nome, começa numa cópia do ponto); <strong>Eliminar os pontos anteriores</strong> ou <strong>posteriores</strong> corta o percurso para que comece ou termine nele, também nos outros segmentos. <strong>Separar os segmentos em tracks</strong> faz um track de cada segmento. Também estão no menu de contexto do mapa.</p>
+      <p>Em <strong>Regenerar tempos</strong>, a opção <strong>Segundo a distância e o desnível (método MIDE)</strong> calcula horas de passagem realistas para um percurso planeado: a velocidade indicada é a do plano e as subidas e descidas acrescentam tempo na mesma proporção.</p>
+    </section>
+
+    <section id="gps">
+      <h2>Comunicações</h2>
+      <p>O menu <strong>Comunicações</strong> trabalha com um GPS ligado por USB como unidade de disco: <strong>Garmin</strong> (pasta <code>Garmin\GPX</code>) e <strong>TwoNav</strong> (<code>TwoNavData\Data</code>). Um Garmin aparece com o seu modelo.</p>
+      <ul>
+        <li><span class="path">Enviar para o GPS…</span> copia o documento ativo como ficheiro GPX para o GPS, com o nome que escolher. O documento não muda (nem é guardado nem muda de ficheiro). Se já existir um ficheiro com esse nome, é pedida confirmação. O GPS carrega-o ao reiniciar ou ao desligá-lo.</li>
+        <li><span class="path">Receber do GPS…</span> lista os tracks, rotas e waypoints do GPS, os mais recentes primeiro (num Garmin, também os de <code>Current</code> e <code>Archive</code>), e abre os que marcar, convertidos para GPX se for preciso.</li>
+      </ul>
+      <div class="note">Os GPS e relógios que se ligam como dispositivo multimédia (MTP) não são unidades de disco e não aparecem: coloque-os em modo de armazenamento em massa se o permitirem. Se ligar o GPS com a caixa de diálogo aberta, prima <strong>Procurar de novo</strong>.</div>
     </section>
 
     <section id="teclado">
@@ -150,6 +188,7 @@
         <tr><td><kbd>Esc</kbd></td><td>Cancelar a abertura de um ficheiro</td></tr>
         <tr><td><kbd>F1</kbd></td><td>Esta ajuda</td></tr>
         <tr><td><kbd>Alt</kbd> + letra sublinhada</td><td>Abrir os menus com o teclado</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Modo desenho (<kbd>Esc</kbd> termina-o)</td></tr>
       </table>
     </section>
 
@@ -167,13 +206,16 @@
 
     <section id="configuracion">
       <h2>Definições</h2>
-      <p><span class="path">Ficheiro › Definições…</span> tem dois blocos. As alterações são guardadas ao premir <strong>OK</strong> e lembradas para a próxima vez.</p>
+      <p><span class="path">Ficheiro › Definições…</span> tem três blocos. As alterações são guardadas ao premir <strong>OK</strong> e lembradas para a próxima vez.</p>
       <table>
         <tr><th>Bloco</th><th>Opção</th></tr>
         <tr><td><strong>Idioma</strong></td><td><strong>Idioma da aplicação</strong>: español (predefinido), català, euskara, français ou português, com a sua bandeira. A alteração aplica-se ao voltar a abrir a aplicação; este guia (<kbd>F1</kbd>) também se abre nesse idioma. Alguns detalhes técnicos dos erros de cartografia continuam em espanhol. Os números escrevem-se sempre com vírgula decimal, seja qual for o idioma. Se for instalada com o instalador (<code>.msi</code>), abre-se da primeira vez no idioma escolhido ao instalar.</td></tr>
         <tr><td><strong>Visualização</strong></td><td><strong>Mostrar a régua de escala no mapa</strong> (ativada por predefinição). A alteração vê-se de imediato, sem reiniciar. As cores da aplicação seguem o modo claro ou escuro do Windows (<em>Definições do Windows › Personalização › Cores</em>); o mapa não muda.</td></tr>
+        <tr><td><strong>Coordenadas</strong></td><td><strong>Datum</strong>: WGS84 (predefinido) ou ED50, em que as coordenadas são mostradas e escritas (barra de estado, lista de pontos, detalhe e quadrícula UTM). Ver <a href="#mapa">Mapa e coordenadas</a>.</td></tr>
+        <tr><td><strong>Visualização</strong></td><td><strong>Mostrar a quadrícula UTM no mapa</strong> (desativada por predefinição).</td></tr>
       </table>
       <p>As definições são guardadas em <code>%APPDATA%\Polaris GPS\settings.json</code> (também a cartografia escolhida) e o registo técnico em <code>%LOCALAPPDATA%\Polaris GPS\logs</code>.</p>
+      <p>As opções de desenho (seguir caminhos e o tipo de percurso, ajustar a pontos, altitude do MDT) e a cor dos tracks também são lembradas. <span class="path">Ajuda › Procurar atualizações</span> verifica se há uma versão nova e oferece abrir a sua página de transferência. O programa de instalação (<code>PolarisGPS-…-setup.exe</code>) instala também o runtime do .NET 10 se faltar.</p>
     </section>
 
     <section id="problemas">

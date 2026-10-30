@@ -32,6 +32,29 @@ public static class CoordinateFormatter
         return $"{zone}{Band(position.Latitude)} {e} {n}";
     }
 
+    /// <summary>
+    /// UTM text of a WGS84 position in <paramref name="datum"/>: as <see cref="FormatUtm(GeoPosition)"/> for WGS84, or on
+    /// the ED50 datum inside its zones 29–31 (elsewhere WGS84, see <see cref="CoordinateDatums.Effective"/>).
+    /// </summary>
+    public static string FormatUtm(GeoPosition position, CoordinateDatum datum)
+    {
+        if (CoordinateDatums.Effective(datum, position) != CoordinateDatum.Ed50)
+        {
+            return FormatUtm(position);
+        }
+
+        var (zone, easting, northing) = CoordinateDatums.Ed50Utm(position);
+        var (latitude, _) = CoordinateDatums.FromWgs84(position, datum);
+        return string.Create(CultureInfo.InvariantCulture, $"{zone}{Band(latitude)} {Math.Floor(easting):0} {Math.Floor(northing):0}");
+    }
+
+    /// <summary>Degrees, minutes and seconds of a WGS84 position in <paramref name="datum"/> (see <see cref="CoordinateDatums.Effective"/>).</summary>
+    public static string FormatDms(GeoPosition position, CoordinateDatum datum)
+    {
+        var (latitude, longitude) = CoordinateDatums.FromWgs84(position, datum);
+        return FormatDms(new GeoPosition(latitude, longitude));
+    }
+
     /// <summary>Latitude band letter for -80 ≤ latitude ≤ 84 (the band is not the zone).</summary>
     public static char Band(double latitude)
     {

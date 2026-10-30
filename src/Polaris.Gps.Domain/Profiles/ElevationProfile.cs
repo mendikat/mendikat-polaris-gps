@@ -59,6 +59,11 @@ public sealed class ElevationProfile
 
     public bool HasElevation => MinElevation is not null;
 
+    private ProfileAnalysis? _analysis;
+
+    /// <summary>Slope and speed of each sample and the climbs, computed when first needed.</summary>
+    public ProfileAnalysis Analysis => _analysis ??= ProfileAnalysis.Analyze(Samples);
+
     /// <param name="segments">Ordered point lists (track segments, or a single route list).</param>
     /// <param name="includeSegmentGaps">If true, the geodesic distance between consecutive segments is added.</param>
     public static ElevationProfile Build(IEnumerable<IReadOnlyList<TrailPoint>> segments, bool includeSegmentGaps = false)

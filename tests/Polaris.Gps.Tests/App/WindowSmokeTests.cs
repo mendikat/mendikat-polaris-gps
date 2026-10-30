@@ -73,6 +73,7 @@ public sealed class WindowSmokeTests
             Window[] windows =
             [
                 new SimplifyWindow(new SimplifyViewModel(layer)),
+                new CleanWindow(new CleanViewModel(layer)),
                 new JoinTracksWindow(new JoinTracksViewModel([(SampleTrack(42.8), "a.gpx"), (SampleTrack(42.9), "b.gpx")])),
                 new TimesWindow(new TimesViewModel(layer)),
                 new DemWindow(new DemViewModel(layer, _ => new NoDataSource())),

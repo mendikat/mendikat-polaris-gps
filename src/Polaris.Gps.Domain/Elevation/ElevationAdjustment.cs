@@ -81,10 +81,13 @@ public sealed class SetElevationsCommand : IEditCommand
 {
     private readonly IReadOnlyList<(TrailPoint Point, double Elevation)> _changes;
     private readonly (double? Elevation, ElevationSource Source)[] _previous;
+    private readonly ElevationSource _source;
 
-    public SetElevationsCommand(IReadOnlyList<(TrailPoint Point, double Elevation)> changes)
+    /// <param name="source">Origin recorded for the new elevations: the DEM by default, or the smoothing of the cleaning tool.</param>
+    public SetElevationsCommand(IReadOnlyList<(TrailPoint Point, double Elevation)> changes, ElevationSource source = ElevationSource.Dem)
     {
         _changes = changes;
+        _source = source;
         _previous = changes.Select(c => (c.Point.Elevation, c.Point.ElevationSource)).ToArray();
     }
 
@@ -93,7 +96,7 @@ public sealed class SetElevationsCommand : IEditCommand
         foreach (var (point, elevation) in _changes)
         {
             point.Elevation = elevation;
-            point.ElevationSource = ElevationSource.Dem;
+            point.ElevationSource = _source;
         }
     }
 

@@ -89,12 +89,39 @@ public sealed class LayerItemViewModel : ObservableObject
 
     public bool IsSequence => Kind != LayerKind.Waypoints;
 
+    /// <summary>The segments of a track that has more than one, to select or delete them one by one; empty otherwise.</summary>
+    public IReadOnlyList<SegmentItemViewModel> Segments => Model is Track { Segments.Count: > 1 } track
+        ? track.Segments.Select((s, i) => new SegmentItemViewModel(this, s, i)).ToList()
+        : [];
+
+    public bool HasSegments => Segments.Count > 0;
+
     /// <summary>Updates name and statistics after an edit (EDIT-07).</summary>
     public void Refresh()
     {
         OnPropertyChanged(nameof(Name));
         OnPropertyChanged(nameof(Details));
+        OnPropertyChanged(nameof(Segments));
+        OnPropertyChanged(nameof(HasSegments));
     }
 
     private static string NameOrDefault(string? name) => string.IsNullOrWhiteSpace(name) ? Strings.UnnamedItem : name;
+}
+
+/// <summary>A segment of a track in the layers panel: "Segmento 2 · 340 puntos · 2,10 km".</summary>
+public sealed class SegmentItemViewModel(LayerItemViewModel layer, TrackSegment segment, int index)
+{
+    private static readonly CultureInfo Spanish = CultureInfo.GetCultureInfo("es-ES");
+
+    public LayerItemViewModel Layer => layer;
+
+    public TrackSegment Segment => segment;
+
+    /// <summary>0-based position in the track.</summary>
+    public int Index => index;
+
+    public string Label => string.Format(
+        Spanish, Strings.SegmentLabel, index + 1, segment.Points.Count.ToString("N0", Spanish), (Geodesy.Length(segment.Points) / 1000).ToString("N2", Spanish));
+
+    public string DeleteName => string.Format(Spanish, Strings.DeleteSegmentName, index + 1);
 }

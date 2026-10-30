@@ -1,10 +1,12 @@
 using Polaris.Gps.App.Services;
 using Polaris.Gps.Domain.Model;
+using Polaris.Gps.Mapping.Coordinates;
 
 namespace Polaris.Gps.App.ViewModels;
 
 /// <summary>A row of the points list. Texts are computed on demand so large tracks build quickly.</summary>
-public sealed class PointRowViewModel(TrailPoint point, List<TrailPoint> owner, int index, int? segment, bool showSegment)
+public sealed class PointRowViewModel(
+    TrailPoint point, List<TrailPoint> owner, int index, int? segment, bool showSegment, CoordinateDatum datum = CoordinateDatum.Wgs84)
 {
     public TrailPoint Point => point;
 
@@ -19,9 +21,9 @@ public sealed class PointRowViewModel(TrailPoint point, List<TrailPoint> owner, 
 
     public string Name => point.Name ?? string.Empty;
 
-    public string Latitude => PointInput.FormatCoordinate(point.Position.Latitude);
+    public string Latitude => PointInput.FormatPosition(point.Position, datum).Latitude;
 
-    public string Longitude => PointInput.FormatCoordinate(point.Position.Longitude);
+    public string Longitude => PointInput.FormatPosition(point.Position, datum).Longitude;
 
     public string Elevation => PointInput.FormatElevation(point.Elevation);
 

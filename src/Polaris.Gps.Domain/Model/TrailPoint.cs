@@ -54,4 +54,7 @@ public enum ElevationSource
 
     /// <summary>Typed by the user.</summary>
     Edited,
+
+    /// <summary>Smoothed by the cleaning tool (Gaussian moving average, as mendikat.net).</summary>
+    Smoothed,
 }

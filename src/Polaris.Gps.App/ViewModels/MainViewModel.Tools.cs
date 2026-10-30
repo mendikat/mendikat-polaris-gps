@@ -13,6 +13,8 @@ public sealed partial class MainViewModel
 {
     public RelayCommand SimplifyCommand { get; private set; } = null!;
 
+    public RelayCommand CleanCommand { get; private set; } = null!;
+
     public RelayCommand RegenerateTimesCommand { get; private set; } = null!;
 
     public RelayCommand AdjustElevationsCommand { get; private set; } = null!;
@@ -46,6 +48,28 @@ public sealed partial class MainViewModel
         _logger.LogInformation(
             "Simplified a {Kind} in {FileName}: {Original} -> {Result} points, tolerance {Tolerance} m",
             layer.Kind, doc.FileName, plan.OriginalCount, plan.ResultCount, plan.ToleranceMeters);
+    }
+
+    /// <summary>Removes GPS jumps, spikes and stops and smooths the elevation, with preview; one undoable step.</summary>
+    public void Clean()
+    {
+        if (ActiveDocument is not { SelectedLayer: { IsSequence: true } layer } doc)
+        {
+            StatusMessage = Strings.StatusSelectSomething;
+            return;
+        }
+
+        var dialog = new CleanViewModel(layer);
+        if (!_dialogs.ShowToolDialog(dialog) || dialog.Plan is not { Command: { } command } plan)
+        {
+            return;
+        }
+
+        doc.Document.Execute(command);
+        StatusMessage = string.Format(Strings.StatusCleaned, layer.Name, plan.Removed.ToString("N0", Spanish), plan.Smoothed.ToString("N0", Spanish));
+        _logger.LogInformation(
+            "Cleaned a {Kind} in {FileName}: {Jumps} jumps, {Stops} stop points removed, {Smoothed} elevations smoothed",
+            layer.Kind, doc.FileName, plan.Jumps, plan.StopPoints, plan.Smoothed);
     }
 
     /// <summary>New times from a start time and a speed or interval, with preview; one undoable step (TIME-06).</summary>
@@ -178,6 +202,7 @@ public sealed partial class MainViewModel
         ReverseCommand = new RelayCommand(Reverse, CanUseTools);
         JoinTracksCommand = new RelayCommand(JoinTracks, () => !IsBusy && JoinableTracks().Skip(1).Any());
         SimplifyCommand = new RelayCommand(Simplify, CanUseTools);
+        CleanCommand = new RelayCommand(Clean, CanUseTools);
         RegenerateTimesCommand = new RelayCommand(RegenerateTimes, CanUseTools);
         AdjustElevationsCommand = new RelayCommand(AdjustElevations, () => CanUseTools() && ElevationSources is not null);
     }
@@ -187,10 +212,14 @@ public sealed partial class MainViewModel
     private void RefreshToolCommands()
     {
         SimplifyCommand.RaiseCanExecuteChanged();
+        CleanCommand.RaiseCanExecuteChanged();
         RegenerateTimesCommand.RaiseCanExecuteChanged();
         AdjustElevationsCommand.RaiseCanExecuteChanged();
         ReverseCommand.RaiseCanExecuteChanged();
         JoinTracksCommand.RaiseCanExecuteChanged();
         ConvertToGpxCommand.RaiseCanExecuteChanged();
+        RefreshCutCommands();
+        RefreshDrawingCommands();
+        RefreshCommunicationCommands();
     }
 }

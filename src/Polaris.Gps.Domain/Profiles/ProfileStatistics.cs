@@ -81,13 +81,18 @@ public static class ProfileStatistics
     /// </summary>
     /// <param name="segment">The samples of one segment, in order.</param>
     /// <param name="count">Number of elevations to smooth.</param>
-    public static int WindowPoints(IReadOnlyList<ProfileSample> segment, int count)
+    public static int WindowPoints(IReadOnlyList<ProfileSample> segment, int count) =>
+        WindowPoints(segment.Select(s => s.Distance).ToList(), count);
+
+    /// <summary>As <see cref="WindowPoints(IReadOnlyList{ProfileSample}, int)"/>, from the cumulative distances (meters) of a segment.</summary>
+    /// <param name="window">Window width in meters; <see cref="SmoothingWindow"/> (mendikat.net) by default.</param>
+    public static int WindowPoints(IReadOnlyList<double> distances, int count, double window = SmoothingWindow)
     {
         var length = 0.0;
         var steps = 0;
-        for (var i = 1; i < segment.Count; i++)
+        for (var i = 1; i < distances.Count; i++)
         {
-            var step = segment[i].Distance - segment[i - 1].Distance;
+            var step = distances[i] - distances[i - 1];
             if (step > MinimumStep)
             {
                 length += step;
@@ -97,10 +102,10 @@ public static class ProfileStatistics
 
         if (steps == 0)
         {
-            return Math.Min((int)(SmoothingWindow / MinimumStep), count);
+            return Math.Min((int)(window / MinimumStep), count);
         }
 
-        var points = (int)Math.Round(SmoothingWindow / (length / steps), MidpointRounding.AwayFromZero);
+        var points = (int)Math.Round(window / (length / steps), MidpointRounding.AwayFromZero);
         return Math.Min(Math.Max(points, 1), count);
     }
 

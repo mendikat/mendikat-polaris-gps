@@ -2,7 +2,7 @@
      replaces the installed one (MajorUpgrade). Pages (Ui.wxs): splash with the application language, licence in that
      language, folder, progress. The chosen language is saved in HKLM\SOFTWARE\Mendikat\Polaris GPS\Language and the
      application uses it the first time each user starts it (InstalledLanguage). The .NET 10 Desktop Runtime is not
-     installed here: if it is missing, Windows shows its download link when the application starts. -->
+     installed by the .msi: the setup program (installer\Polaris.Gps.Setup) installs it first when it is missing. -->
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <!-- UpgradeCode identifies the product across versions: never change it. -->
   <Package Name="Polaris GPS" Manufacturer="Mendikat" Version="$(Version)"

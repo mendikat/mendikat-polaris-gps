@@ -25,6 +25,9 @@ public static class MapStyles
 
     public static IStyle TrackLine(Color color) => new VectorStyle { Line = new Pen(color, 3) };
 
+    /// <summary>A stretch of a track coloured by elevation, slope or speed: a little wider than the plain line.</summary>
+    public static IStyle ColoredTrackLine(Color color) => new VectorStyle { Line = new Pen(color, 4) };
+
     public static IStyle RouteLine(Color color) =>
         new VectorStyle { Line = new Pen(color, 2.5) { PenStyle = PenStyle.Dash } };
 
@@ -46,13 +49,25 @@ public static class MapStyles
         Outline = new Pen(Color.Black, 1),
     };
 
-    /// <summary>Selected point (LAY-03): large yellow circle with black outline, always visible.</summary>
+    /// <summary>
+    /// Selected point (LAY-03): a yellow ring with a black edge, always visible. It is hollow and wider than the waypoint
+    /// icons, so the symbol of a selected waypoint stays visible inside it.
+    /// </summary>
     public static IStyle SelectedPoint { get; } = new SymbolStyle
     {
         SymbolType = SymbolType.Ellipse,
-        SymbolScale = 0.6,
-        Fill = new Brush(new Color(255, 230, 0)),
-        Outline = new Pen(Color.Black, 2),
+        SymbolScale = 0.95,
+        Fill = new Brush(Color.Transparent),
+        Outline = new Pen(new Color(255, 215, 0), 4),
+    };
+
+    /// <summary>Black edge drawn under <see cref="SelectedPoint"/>, so the ring reads on light and dark maps.</summary>
+    public static IStyle SelectedPointEdge { get; } = new SymbolStyle
+    {
+        SymbolType = SymbolType.Ellipse,
+        SymbolScale = 0.95,
+        Fill = new Brush(Color.Transparent),
+        Outline = new Pen(Color.Black, 6.5),
     };
 
     /// <summary>Point under the pointer in the elevation profile (PROF-04): blue ring, always visible.</summary>
@@ -72,12 +87,26 @@ public static class MapStyles
         Outline = new Pen(Color.White, 1.5),
     };
 
-    public static IStyle WaypointLabel(string text) => new LabelStyle
+    /// <param name="maxResolution">Coarsest resolution at which it is drawn: lower where it would overlap another label.</param>
+    /// <summary>UTM grid line: thin, dark and translucent, so it reads on any cartography without hiding it.</summary>
+    public static IStyle GridLine { get; } = new VectorStyle { Line = new Pen(new Color(20, 20, 60, 110), 1) };
+
+    /// <summary>Label of a grid line, in kilometres or metres; easting labels sit above the bottom, northing ones right of the left edge.</summary>
+    public static IStyle GridLabel(string text, bool easting) => new LabelStyle
+    {
+        Text = text,
+        Offset = easting ? new Offset(0, -10) : new Offset(18, 0),
+        BackColor = new Brush(new Color(255, 255, 255, 190)),
+        ForeColor = new Color(20, 20, 60),
+        Font = new Font { Size = 10 },
+    };
+
+    public static IStyle WaypointLabel(string text, double maxResolution = PointsMaxResolution * 10) => new LabelStyle
     {
         Text = text,
         Offset = new Offset(0, -18),
         BackColor = new Brush(new Color(255, 255, 255, 200)),
         ForeColor = Color.Black,
-        MaxVisible = PointsMaxResolution * 10,
+        MaxVisible = maxResolution,
     };
 }

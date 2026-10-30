@@ -83,27 +83,6 @@ public sealed partial class MainViewModel
         _logger.LogInformation("Inserted a point in {FileName}", doc.FileName);
     }
 
-    /// <summary>
-    /// Ctrl+click on the map (APP-08): adds a point at <paramref name="position"/> to the active document, right after
-    /// the selected point, or at the end of the selected track, route or waypoint list. The new point is selected, so
-    /// consecutive clicks draw a line. Undoable like any edit.
-    /// </summary>
-    public void AddPointAt(GeoPosition position)
-    {
-        var doc = ActiveDocument;
-        if (IsBusy || doc is null)
-        {
-            return;
-        }
-
-        var after = doc.SelectedRows.Count == 1 ? doc.SelectedRows[0].Point : null;
-        var (command, point) = PointEditing.CreateAddition(doc.Document.Data, doc.SelectedLayer?.Model, after, position);
-        doc.Document.Execute(command);
-        doc.SelectPoints([point]);
-        StatusMessage = Strings.StatusPointAdded;
-        _logger.LogInformation("Added a point in {FileName}", doc.FileName);
-    }
-
     /// <summary>Moves a point to a new position, e.g. after dragging it on the map (EDIT-04).</summary>
     public void MovePoint(DocumentViewModel doc, TrailPoint point, GeoPosition position)
     {

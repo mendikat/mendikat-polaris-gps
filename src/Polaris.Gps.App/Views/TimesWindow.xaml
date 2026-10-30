@@ -35,7 +35,9 @@
         </Grid>
 
         <RadioButton Content="{x:Static res:Strings.TimesModeDistance}" IsChecked="{Binding ByDistance}" Margin="0,12,0,4" GroupName="Mode" />
-        <StackPanel Orientation="Horizontal" Margin="22,0,0,0" IsEnabled="{Binding ByDistance}">
+        <RadioButton Content="{x:Static res:Strings.TimesModeSlope}" IsChecked="{Binding BySlope}" Margin="0,4,0,4" GroupName="Mode"
+                     ToolTip="{x:Static res:Strings.TimesModeSlopeToolTip}" />
+        <StackPanel Orientation="Horizontal" Margin="22,0,0,0" IsEnabled="{Binding UsesSpeed}">
             <TextBlock Text="{x:Static res:Strings.TimesSpeed}" Style="{StaticResource Label}" />
             <TextBox Width="70" Text="{Binding SpeedText, UpdateSourceTrigger=PropertyChanged}" Margin="0,3,6,3"
                      AutomationProperties.Name="{x:Static res:Strings.TimesSpeed}" />
@@ -43,7 +45,7 @@
                       AutomationProperties.Name="{x:Static res:Strings.A11ySpeedUnitName}" />
         </StackPanel>
         <CheckBox Content="{x:Static res:Strings.TimesIncludeGaps}" IsChecked="{Binding IncludeSegmentGaps}" Margin="22,4,0,0"
-                  IsEnabled="{Binding ByDistance}" Visibility="{Binding HasSeveralSegments, Converter={StaticResource BoolToVisibility}}" />
+                  IsEnabled="{Binding UsesSpeed}" Visibility="{Binding HasSeveralSegments, Converter={StaticResource BoolToVisibility}}" />
 
         <RadioButton Content="{x:Static res:Strings.TimesModeUniform}" IsChecked="{Binding Uniform}" Margin="0,10,0,4" GroupName="Mode" />
         <StackPanel Orientation="Horizontal" Margin="22,0,0,0" IsEnabled="{Binding Uniform}">

@@ -1,0 +1,32 @@
+<!-- Setup program of Polaris GPS (PolarisGPS-<version>-setup.exe), a WiX Burn bundle: installs the .NET 10 Desktop
+     Runtime (x64) when it is missing and then runs the Polaris GPS installer (.msi) with its own pages. The runtime
+     installer is downloaded once from Microsoft (aka.ms, latest 10.0.x) into obj\runtime and embedded, so the setup
+     works offline. Builds the .msi project first.
+     Usage, from the repository root: dotnet build installer\Polaris.Gps.Setup -c Release
+     Output: artifacts\installer\PolarisGPS-<version>-setup.exe -->
+<Project Sdk="WixToolset.Sdk/5.0.2">
+  <PropertyGroup>
+    <OutputType>Bundle</OutputType>
+    <Platform>x64</Platform>
+    <OutputName>PolarisGPS-$(Version)-setup</OutputName>
+    <OutputPath>$(MSBuildThisFileDirectory)..\..\artifacts\installer\</OutputPath>
+    <AppDir>$(MSBuildThisFileDirectory)..\..\src\Polaris.Gps.App\</AppDir>
+    <RuntimeDir>$(MSBuildThisFileDirectory)obj\runtime\</RuntimeDir>
+    <RuntimeUrl>https://aka.ms/dotnet/10.0/windowsdesktop-runtime-win-x64.exe</RuntimeUrl>
+    <DefineConstants>Version=$(Version);AppDir=$(AppDir);RuntimeDir=$(RuntimeDir)</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.Bal.wixext" Version="5.0.2" />
+    <PackageReference Include="WixToolset.Netfx.wixext" Version="5.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The .msi: built first; Bundle.wxs uses its output path. -->
+    <ProjectReference Include="..\Polaris.Gps.Installer\Polaris.Gps.Installer.wixproj" />
+  </ItemGroup>
+
+  <!-- The .NET Desktop Runtime installer, downloaded once (about 60 MB). Delete obj\runtime to get a newer 10.0.x. -->
+  <Target Name="DownloadRuntime" BeforeTargets="BeforeBuild" Condition="!Exists('$(RuntimeDir)windowsdesktop-runtime-win-x64.exe')">
+    <MakeDir Directories="$(RuntimeDir)" />
+    <DownloadFile SourceUrl="$(RuntimeUrl)" DestinationFolder="$(RuntimeDir)" DestinationFileName="windowsdesktop-runtime-win-x64.exe" Retries="2" />
+  </Target>
+</Project>

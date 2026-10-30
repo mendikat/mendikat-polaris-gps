@@ -42,7 +42,8 @@ public sealed partial class MainViewModel : ObservableObject
         _logger = logger;
         var saved = settings.Load();
         _selectedMapProvider = MapProviderCatalog.FindOrDefault(saved.Map.Provider);
-        _showScaleBar = saved.Map.ShowScaleBar;
+        ApplyDisplaySettings(saved);
+        _trackColoring = Enum.TryParse<Mapping.Layers.TrackColorMode>(saved.Map.TrackColoring, out var coloring) && Enum.IsDefined(coloring) ? coloring : default;
 
         NewGpxCommand = new RelayCommand(NewGpx, () => !IsBusy);
         OpenGpxCommand = new RelayCommand(_ => OpenAsync(DocumentFormat.Gpx), _ => !IsBusy);
@@ -51,7 +52,7 @@ public sealed partial class MainViewModel : ObservableObject
         CloseDocumentCommand = new RelayCommand(
             p => CloseDocumentAsync(p as DocumentViewModel ?? ActiveDocument),
             p => !IsBusy && (p as DocumentViewModel ?? ActiveDocument) is not null);
-        CancelOperationCommand = new RelayCommand(CancelOperation, () => CanCancelOperation);
+        CancelOperationCommand = new RelayCommand(CancelOperation, () => CanCancelOperation || IsDrawing);
         ExitCommand = new RelayCommand(() => ExitRequested?.Invoke(this, EventArgs.Empty));
         ZoomInCommand = new RelayCommand(() => MapRequested?.Invoke(this, new MapRequest.ZoomIn()));
         ZoomOutCommand = new RelayCommand(() => MapRequested?.Invoke(this, new MapRequest.ZoomOut()));
@@ -60,6 +61,11 @@ public sealed partial class MainViewModel : ObservableObject
         ElevationProfileCommand = new RelayCommand(OpenProfile, () => ActiveDocument?.SelectedLayer?.IsSequence == true);
         InitializeEditingCommands();
         InitializeToolCommands();
+        InitializeCutCommands();
+        InitializeColoringCommands();
+        InitializeDrawing(saved.Drawing);
+        InitializeCommunicationCommands();
+        InitializeSegmentCommands();
         InitializeHelpCommands();
         InitializeSettingsCommands();
         InitializeLocalMapCommands();
@@ -96,6 +102,7 @@ public sealed partial class MainViewModel : ObservableObject
 
                 OnPropertyChanged(nameof(Title));
                 OnPropertyChanged(nameof(PointerDatum));
+                UpdateDrawingStats();
                 RefreshCommands();
             }
         }
@@ -213,8 +220,9 @@ public sealed partial class MainViewModel : ObservableObject
     {
         if (position is { } p)
         {
-            PointerUtm = CoordinateFormatter.FormatUtm(p);
-            PointerDms = CoordinateFormatter.FormatDms(p);
+            PointerUtm = CoordinateFormatter.FormatUtm(p, CoordinateDatum);
+            PointerDms = CoordinateFormatter.FormatDms(p, CoordinateDatum);
+            PointerDatum = CoordinateDatums.Name(CoordinateDatums.Effective(CoordinateDatum, p));
         }
         else
         {
@@ -254,7 +262,7 @@ public sealed partial class MainViewModel : ObservableObject
     private DocumentViewModel AddNewDocument(TrailData data)
     {
         var title = string.Format(Strings.NewDocumentTitle, _nextNewDocumentNumber++);
-        var viewModel = new DocumentViewModel(TrailDocument.CreateNew(DocumentFormat.Gpx, title, data), _nextColorIndex++);
+        var viewModel = new DocumentViewModel(TrailDocument.CreateNew(DocumentFormat.Gpx, title, data), _nextColorIndex++) { Datum = CoordinateDatum };
         Documents.Add(viewModel);
         OnPropertyChanged(nameof(HasDocuments));
         ActiveDocument = viewModel;
@@ -341,7 +349,7 @@ public sealed partial class MainViewModel : ObservableObject
         try
         {
             var document = await _store.LoadAsync(path, format, progress, cancellation.Token);
-            var viewModel = new DocumentViewModel(document, _nextColorIndex++);
+            var viewModel = new DocumentViewModel(document, _nextColorIndex++) { Datum = CoordinateDatum };
             Documents.Add(viewModel);
             OnPropertyChanged(nameof(HasDocuments));
             ActiveDocument = viewModel;
@@ -377,7 +385,18 @@ public sealed partial class MainViewModel : ObservableObject
     }
 
     /// <summary>Stops opening a file (NFR-02). Nothing is added; open documents are not affected.</summary>
-    public void CancelOperation() => _openCancellation?.Cancel();
+    /// <summary>Esc: cancels the file being opened, or ends the drawing mode.</summary>
+    public void CancelOperation()
+    {
+        if (_openCancellation is not null)
+        {
+            _openCancellation.Cancel();
+        }
+        else
+        {
+            IsDrawing = false;
+        }
+    }
 
     private void SetOpenCancellation(CancellationTokenSource? cancellation)
     {
@@ -598,6 +617,13 @@ public sealed partial class MainViewModel : ObservableObject
             case nameof(DocumentViewModel.SelectedLayer):
                 ElevationProfileCommand.RaiseCanExecuteChanged();
                 RefreshToolCommands();
+                UpdateDrawingStats();
+                break;
+            case nameof(DocumentViewModel.SelectedRows):
+                RefreshCutCommands();
+                break;
+            case nameof(DocumentViewModel.Counts):
+                UpdateDrawingStats();
                 break;
         }
     }

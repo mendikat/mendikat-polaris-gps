@@ -4,6 +4,7 @@ using Polaris.Gps.App.Resources;
 using Polaris.Gps.App.Services;
 using Polaris.Gps.Domain.Documents;
 using Polaris.Gps.Domain.Model;
+using Polaris.Gps.Mapping.Coordinates;
 using Polaris.Gps.Mapping.Layers;
 
 namespace Polaris.Gps.App.ViewModels;
@@ -19,6 +20,8 @@ public sealed class DocumentViewModel : ObservableObject
     private IReadOnlyList<PointRowViewModel> _rows = [];
     private IReadOnlyList<PointRowViewModel> _selectedRows = [];
     private PointDetailViewModel? _detail;
+    private CoordinateDatum _datum;
+    private string _waypointFilter = string.Empty;
 
     public DocumentViewModel(TrailDocument document, int colorIndex = 0)
     {
@@ -91,6 +94,7 @@ public sealed class DocumentViewModel : ObservableObject
         {
             if (SetProperty(ref _selectedLayer, value))
             {
+                OnPropertyChanged(nameof(IsWaypointLayer));
                 Rows = BuildRows(value);
                 SetSelectedRows([]);
             }
@@ -138,7 +142,7 @@ public sealed class DocumentViewModel : ObservableObject
         }
 
         SelectedRows = selection;
-        Detail = selection.Count == 1 ? new PointDetailViewModel(selection[0].Point) : null;
+        Detail = selection.Count == 1 ? new PointDetailViewModel(selection[0].Point, Datum, IsWaypointLayer) : null;
         OnPropertyChanged(nameof(SelectionHint));
         SelectionChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -162,7 +166,51 @@ public sealed class DocumentViewModel : ObservableObject
 
         SelectedLayer = layer;
         var wanted = points.ToHashSet(ReferenceEqualityComparer.Instance);
+        if (WaypointFilter.Length > 0 && !Rows.Any(r => wanted.Contains(r.Point)))
+        {
+            WaypointFilter = string.Empty; // a waypoint hidden by the filter was picked on the map: list them all
+        }
+
         SetSelectedRows(Rows.Where(r => wanted.Contains(r.Point)));
+    }
+
+    /// <summary>The waypoints are listed: the panel offers the name filter.</summary>
+    public bool IsWaypointLayer => SelectedLayer?.Kind == LayerKind.Waypoints;
+
+    /// <summary>Lists only the waypoints whose name contains this text (ignoring case and accents); empty lists all.</summary>
+    public string WaypointFilter
+    {
+        get => _waypointFilter;
+        set
+        {
+            if (SetProperty(ref _waypointFilter, value ?? string.Empty) && IsWaypointLayer)
+            {
+                RefreshCoordinates();
+            }
+        }
+    }
+
+    /// <summary>Datum of the coordinates in the points list and the detail (File › Settings › Coordinates); WGS84 by default.</summary>
+    public CoordinateDatum Datum
+    {
+        get => _datum;
+        set
+        {
+            if (SetProperty(ref _datum, value))
+            {
+                RefreshCoordinates();
+            }
+        }
+    }
+
+    /// <summary>Rebuilds the coordinate texts of the list and the detail after the coordinate datum changed.</summary>
+    private void RefreshCoordinates()
+    {
+        var selected = SelectedPoints.ToHashSet(ReferenceEqualityComparer.Instance);
+        Rows = BuildRows(SelectedLayer);
+        _selectedRows = [];
+        SetSelectedRows(Rows.Where(r => selected.Contains(r.Point)));
+        RevertDetail();
     }
 
     /// <summary>Discards the edits typed in the detail panel.</summary>
@@ -170,7 +218,7 @@ public sealed class DocumentViewModel : ObservableObject
     {
         if (SelectedRows.Count == 1)
         {
-            Detail = new PointDetailViewModel(SelectedRows[0].Point);
+            Detail = new PointDetailViewModel(SelectedRows[0].Point, Datum, IsWaypointLayer);
         }
     }
 
@@ -244,7 +292,10 @@ public sealed class DocumentViewModel : ObservableObject
         }
     }
 
-    private static List<PointRowViewModel> BuildRows(LayerItemViewModel? layer)
+    private static bool Matches(string? name, string filter) =>
+        name is not null && Spanish.CompareInfo.IndexOf(name, filter, CompareOptions.IgnoreCase | CompareOptions.IgnoreNonSpace) >= 0;
+
+    private List<PointRowViewModel> BuildRows(LayerItemViewModel? layer)
     {
         if (layer is null)
         {
@@ -253,12 +304,18 @@ public sealed class DocumentViewModel : ObservableObject
 
         var lists = layer.PointLists.ToList();
         var showSegment = lists.Count > 1;
+        var filter = layer.Kind == LayerKind.Waypoints ? WaypointFilter.Trim() : string.Empty;
         var rows = new List<PointRowViewModel>(layer.PointCount);
         foreach (var (points, segment) in lists)
         {
             for (var i = 0; i < points.Count; i++)
             {
-                rows.Add(new PointRowViewModel(points[i], points, i, segment, showSegment));
+                if (filter.Length > 0 && !Matches(points[i].Name, filter))
+                {
+                    continue;
+                }
+
+                rows.Add(new PointRowViewModel(points[i], points, i, segment, showSegment, Datum));
             }
         }
 

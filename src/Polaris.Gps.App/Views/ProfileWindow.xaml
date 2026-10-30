@@ -117,6 +117,8 @@
         <!-- Readout of the point under the pointer (PROF-04) and the segment gap option (PROF-02) -->
         <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}" BorderThickness="0,1,0,0" Padding="10,4">
             <DockPanel>
+                <ComboBox DockPanel.Dock="Left" ItemsSource="{Binding ChartModes}" SelectedItem="{Binding ChartMode}" MinWidth="200" Margin="0,0,12,0"
+                          VerticalAlignment="Center" AutomationProperties.Name="{x:Static res:Strings.ChartModeName}" />
                 <CheckBox DockPanel.Dock="Right" Content="{x:Static res:Strings.ProfileIncludeGaps}" Margin="12,0,0,0"
                           IsChecked="{Binding IncludeSegmentGaps}" VerticalAlignment="Center"
                           Visibility="{Binding HasSeveralSegments, Converter={StaticResource BoolToVisibility}}" />
@@ -125,12 +127,29 @@
             </DockPanel>
         </Border>
 
+        <!-- Climbs of at least 50 m (collapsed by default) -->
+        <Expander DockPanel.Dock="Bottom" Margin="10,0,10,4" Header="{x:Static res:Strings.ClimbsHeader}"
+                  Visibility="{Binding HasClimbs, Converter={StaticResource BoolToVisibility}}">
+            <DataGrid ItemsSource="{Binding Climbs}" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column"
+                      MaxHeight="150" CanUserAddRows="False" SelectionMode="Single" AutomationProperties.Name="{x:Static res:Strings.ClimbsHeader}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#" Binding="{Binding Number}" />
+                    <DataGridTextColumn Header="{x:Static res:Strings.ClimbStart}" Binding="{Binding Start}" />
+                    <DataGridTextColumn Header="{x:Static res:Strings.ClimbLength}" Binding="{Binding Length}" />
+                    <DataGridTextColumn Header="{x:Static res:Strings.ClimbGain}" Binding="{Binding Gain}" />
+                    <DataGridTextColumn Header="{x:Static res:Strings.ClimbAverageSlope}" Binding="{Binding AverageSlope}" />
+                    <DataGridTextColumn Header="{x:Static res:Strings.ClimbMaxSlope}" Binding="{Binding MaxSlope}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Expander>
+
         <charting:ProfileChart x:Name="Chart" Margin="4"
                                Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                SecondaryForeground="{DynamicResource TextFillColorSecondaryBrush}"
                                GridBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
                                Profile="{Binding Profile}"
+                               Mode="{Binding Mode}"
                                CursorDistance="{Binding CursorDistance}"
                                HoverDistance="{Binding HoverDistance}"
                                AutomationProperties.Name="{x:Static res:Strings.MenuElevationProfile}" />

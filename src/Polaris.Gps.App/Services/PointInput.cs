@@ -1,6 +1,8 @@
 using System.Globalization;
+using Polaris.Gps.Domain.Geo;
 using Polaris.Gps.Domain.Model;
 using Polaris.Gps.Gpx;
+using Polaris.Gps.Mapping.Coordinates;
 
 namespace Polaris.Gps.App.Services;
 
@@ -14,6 +16,16 @@ public static class PointInput
     private static readonly string[] UtcFormats = ["yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm:ssZ"];
 
     public static string FormatCoordinate(double degrees) => degrees.ToString("0.0000000", Spanish);
+
+    /// <summary>
+    /// Latitude and longitude texts of a WGS84 position in <paramref name="datum"/>, the datum of the coordinates shown
+    /// and typed (File › Settings › Coordinates; see <see cref="CoordinateDatums.Effective"/>).
+    /// </summary>
+    public static (string Latitude, string Longitude) FormatPosition(GeoPosition position, CoordinateDatum datum = CoordinateDatum.Wgs84)
+    {
+        var (latitude, longitude) = CoordinateDatums.FromWgs84(position, datum);
+        return (FormatCoordinate(latitude), FormatCoordinate(longitude));
+    }
 
     public static string FormatElevation(double? meters) => meters?.ToString("0.0", Spanish) ?? string.Empty;
 

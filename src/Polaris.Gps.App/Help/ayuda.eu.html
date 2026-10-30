@@ -31,8 +31,10 @@
     <a href="#mapa">Mapa eta koordenatuak</a>
     <a href="#capas">Geruzak eta puntuak</a>
     <a href="#editar">Edizioa</a>
+    <a href="#dibujar">Marrazketa</a>
     <a href="#perfil">Altuera-profila</a>
     <a href="#herramientas">Tresnak</a>
+    <a href="#gps">Komunikazioak</a>
     <a href="#teclado">Laster-teklak</a>
     <a href="#archivos">Fitxategiak eta gordetzea</a>
     <a href="#configuracion">Ezarpenak</a>
@@ -79,6 +81,11 @@
         <li><strong>LEM</strong>: <code>.hgt</code> (SRTM) eta <code>.asc</code> (ESRI ASCII Grid, bere <code>.prj</code>-a ondoan duela). Baita altueren banda bakarreko <code>.tif</code> fitxategiak ere. Ez dira marrazten: erakuslearen azpiko altuera ematen dute eta <em>Doitu altuerak</em> aukeran agertzen dira, IGNren LEMaren ondoren.</li>
       </ul>
       <p>Irekitakoa tresna-barrako <strong>Erabiltzailearen kartografiak</strong> botoian agertzen da. Zerrendako goikoa besteen gainean marrazten da: arrastatu <strong>≡</strong> heldulekua (edo erabili <kbd>Ctrl</kbd>+<kbd>↑</kbd> / <kbd>Ctrl</kbd>+<kbd>↓</kbd>) ordena aldatzeko; lineako kartografia beti hondoan geratzen da eta trackak beti gainean. Mapa bakoitzaren graduatzaileak opakutasuna doitzen du azpian dagoena ikusteko. Kontrol-laukiak mapa bakoitza erakutsi edo ezkutatzen du (LEM batean, erabiltzen den ala ez erabakitzen du), <strong>⤢</strong> ikonoak hara eramaten zaitu eta <strong>✕</strong> ikonoak kentzen du. WGS84, ETRS89 eta ED50 (29tik 31ra arteko fusoak) datumak onartzen dira, geografikoetan, UTMn edo Transverse Mercator proiekzioan; fitxategi batek beste sistema bat erabiltzen badu, abisua ematen da gaizki kokatu beharrean. Ez dira gogoratzen aplikazioa ixtean.</p>
+      <p>Koordenatuak <span class="path">Fitxategia › Ezarpenak… › Koordenatuak</span> atalean aukeratutako <strong>datuman</strong> erakusten dira: WGS84 (lehenetsia) edo <strong>ED50</strong>, Espainiako mapa eta gida zaharretakoa. ED50 29tik 31ra bitarteko eremuetan bakarrik aplikatzen da (Espainia penintsularra, Balearrak eta Portugal); Kanarietan eta eremu horietatik kanpo WGS84n erakusten jarraitzen dira, eta egoera-barrak hala adierazten du. Fitxategiak beti WGS84n gordetzen dira.</p>
+      <h3>UTM sareta</h3>
+      <p><span class="path">Fitxategia › Ezarpenak… › Bistaratzea › Erakutsi UTM sareta mapan</span> aukerarekin (lehenespenez desaktibatuta) maparen erdiko eremuko UTM saretaren lerroak marrazten dira, aukeratutako datuman, beren balioarekin kilometrotan (edo metrotan, asko hurbiltzean). Tartea zoomera egokitzen da: 100 m, 1 km, 10 km… Asko urruntzean ezkutatu egiten da.</p>
+      <h3>Track-ak koloreztatu</h3>
+      <p><span class="path">Ikusi › Koloreztatu track-ak</span> aukerak track-en zati bakoitza bere <strong>altueraren</strong>, <strong>maldaren</strong> edo <strong>abiaduraren</strong> arabera margotzen du, maparen beheko ezkerreko izkinan legenda batekin. Maldak klase finkoak erabiltzen ditu (jaitsiera handia urdin ilunez eta % 25etik gorakoa granatez); altuera eta abiadura urdinetik (track bakoitzeko baxuena) gorrira (altuena) doaz. <strong>Bat ere ez</strong> aukerak dokumentuaren kolorera itzultzen du. Aukera gogoratu egiten da.</p>
     </section>
 
     <section id="capas">
@@ -89,6 +96,8 @@
         <li>GPXko <strong>waypointak</strong> triangelu gisa marrazten dira, eta hurbiltzean beren izena ikusten da.</li>
         <li><strong>Hautatutako puntua</strong> panelak izena, iruzkina, deskribapena, latitudea, longitudea, altuera eta ordua erakusten ditu eta aldatzen uzten du. Altuera nondik datorren ere adierazten du: fitxategitik, interpolatua, LEMetik edo eskuz editatua.</li>
       </ul>
+      <p>Waypoint bakoitzak <strong>ikur</strong> bat izan dezake (gailurra, lepoa, aparkalekua, aterpea, kanpalekua, iturria, arriskua, begiratokia, informazioa, ibilbidearen hasiera); gehitzean edo editatzean aukeratzen da eta GPXan gordetzen da Garmin GPSek erabiltzen duten izenarekin. Mapan bere ikonoarekin marrazten da; ikurrik gabe, dokumentuaren koloreko triangeluarekin. Hainbat waypointen izenak elkar ukituko luketenean, lehena bakarrik erakusten da behar adina hurbildu arte. Waypointen geruza hautatuta dagoela, zerrendaren gaineko bilaketa-laukiak izenaren arabera iragazten du (maiuskulak eta azentuak bereizi gabe).</p>
+      <p>Hainbat zatitan dagoen track batek bere <strong>segmentuen</strong> zerrenda erakusten du <strong>Geruzak</strong> atalean, puntuekin eta luzerarekin. Segmentu batean klik eginez haren puntuak hautatzen dira (mapan nabarmenduta ikusten dira), eta <strong>✕</strong> sakatuta ezabatu egiten da, berretsi ondoren; beste segmentuak ez dira aldatzen, eta <kbd>Ktrl</kbd>+<kbd>Z</kbd> sakatuta desegin daiteke.</p>
     </section>
 
     <section id="editar">
@@ -107,6 +116,19 @@
       <p>Fitxan eta izenburuan dagoen <strong>*</strong> izartxoak gorde gabeko aldaketak daudela adierazten du.</p>
     </section>
 
+    <section id="dibujar">
+      <h2>Marrazketa</h2>
+      <p>Sakatu <strong>✎ Marraztu</strong> tresna-barran (edo <span class="path">Edizioa › Marrazketa modua</span>, <kbd>Ktrl</kbd>+<kbd>D</kbd>): mapan egindako klik bakoitzak puntu bat gehitzen du hautatutakoaren ondoren, eta arrastatuz mapa mugitzen jarraitzen da. <kbd>Esc</kbd> sakatuta amaitzen da. Dokumenturik irekita ez badago, berri bat sortzen da. <span class="path">Edizioa › Track berria</span> eta <span class="path">Ibilbide berria</span> aukerek track edo ibilbide huts bat gehitzen diote irekitako dokumentuari eta bertan marrazten hasten dira. <kbd>Ktrl</kbd> + klik eginez marrazketa modutik kanpo ere puntuak gehitzen dira.</p>
+      <table>
+        <tr><th>Aukera</th><th>Zer egiten duen</th></tr>
+        <tr><td><strong>Jarraitu bideei</strong></td><td>Puntu berri bakoitza aurrekoarekin lotzen du OpenStreetMapeko bidezidor, pista eta errepideetatik, <strong>BRouter</strong> zerbitzuarekin (konexioa behar da). Aukeratu ibilbide mota: mendi-ibilaldiak, trekking bizikleta, mendiko bizikleta, errepideko bizikleta edo laburrena. Punturaino biderik ez badago (bidezidor batetik urrun), ez da ezer gehitzen eta egoera-barrak azaltzen du: desaktibatu aukera zati horretarako eta lerro zuzenean lotuko da.</td></tr>
+        <tr><td><strong>Doitu puntuetara</strong></td><td>Irekitako edozein dokumentutako puntu edo waypoint baten ondoan klik eginez, haren kokapen zehatza eta altuera hartzen dira, beste ibilbide batzuekin lotzeko.</td></tr>
+        <tr><td><strong>LEMaren altuera</strong></td><td>Puntu berriek lurraren altuera hartzen dute: zure tokiko LEMetatik edo, bestela, IGNren 5 m-ko LEMetik (Espainia, konexioarekin). Daturik gabe, altuerarik gabe geratzen dira.</td></tr>
+      </table>
+      <p>Marrazten ari zaren bitartean, egoera-barrak hautatutako track edo ibilbidearen <strong>distantzia</strong>, <strong>desnibela</strong> eta <strong>kalkulatutako denbora</strong> erakusten ditu (MIDE metodoa: 4 km/h lautadan, 400 m/h igotzen eta 600 m/h jaisten, geldialdirik gabe).</p>
+      <p>Ibilbide bat amaitzeko: <span class="path">Tresnak › Itxi zirkularra</span> aukerak hasierara itzultzen du (bideetatik, «Jarraitu bideei» aktibatuta badago), eta <span class="path">Joan-etorria</span> aukerak itzulera gehitzen du puntu beretatik. Dena desegin daiteke <kbd>Ktrl</kbd>+<kbd>Z</kbd> sakatuta.</p>
+    </section>
+
     <section id="perfil">
       <h2>Altuera-profila</h2>
       <p>Hautatu track edo ibilbide bat <strong>Geruzak</strong> atalean eta sakatu <strong>Profila</strong> (edo <span class="path">Ikusi › Altuera-profila</span>).</p>
@@ -119,6 +141,7 @@
         <li><strong>Geldirik</strong>: 1 km/h baino gutxiagoko zatiak eta segmentuen arteko etenak. <strong>Batez besteko abiadurak</strong> mugimenduko denbora bakarrik hartzen du kontuan; <strong>gehienekoa</strong> gutxienez 30 s mantendutako handiena da.</li>
         <li>Erakuslea profilaren gainetik pasatzean, puntua mapan markatzen da; klik eginez hautatzen da, eta <kbd>←</kbd> <kbd>→</kbd> teklekin puntuz puntu ibil daiteke.</li>
       </ul>
+      <p>Grafikoaren azpiko hautatzaileak marrazten dena aldatzen du: <strong>Altuera</strong>, <strong>Altuera, maldaren arabera koloreztatua</strong> (maparen koloreekin), <strong>Malda</strong> (%-tan, 50 m-tik behin neurtua altuera leunduaren gainean) edo <strong>Abiadura</strong> (km/h-tan, 30 s-ko batez bestekoa; orduak behar dira). Erakuslea pasatzean, puntuaren malda eta abiadura ere irakurtzen dira. <strong>Igoerak</strong> zerrendak 50 m-tik gorako desnibela duten igoerak erakusten ditu: hasiera, luzera, desnibela eta batez besteko eta gehienezko malda.</p>
     </section>
 
     <section id="herramientas">
@@ -134,6 +157,21 @@
       <p>Bi track edo gehiago bakar batean elkartzen ditu, hurbiltasunaren arabera: track bakoitza mutur hurbilena duenaren ondoren jartzen da eta, behar izanez gero, noranzkoa alderantzikatzen zaio (orduak «Alderantzikatu track-a» tresnan bezala islatzen dira). Zerrendan irekitako dokumentu guztietako track-ak daude; kendu marka elkartu nahi ez dituzunei. Bi track-en arteko hutsuneak <strong>gehienezko hutsunea</strong> gainditzen badu, hurrengoak segmentu berri bat hasten du. Aurrebistak ordena eta hutsune bakoitza erakusten ditu. Jatorrizko track-ak ez dira aldatzen: emaitza gorde gabeko GPX berri batean irekitzen da, lehen track-aren izenarekin.</p>
       <h3>Doitu altuerak IGNren LEMarekin</h3>
       <p>IGNren Lurraren Eredu Digitala (5 m edo 25 m) kontsultatzen du eta altuerak ordezten ditu. Espainia bakarrik hartzen du eta konexioa behar du. Daturik gabeko puntuek (itsasoa edo Espainiatik kanpo) beren altuera gordetzen dute.</p>
+      <h3>Garbitu track-a</h3>
+      <p><strong>GPSaren jauziak</strong> kentzen ditu (gehienezko abiaduratik gora iritsiko litzatekeen puntuak; orduak behar dira), baita <strong>erpinak</strong> (aldendu eta lerroa itzultzen den puntua) eta <strong>geldialdiak</strong> ere (erradio txiki bateko puntu-talde batetik lehena eta azkena gordetzen dira), eta altueraren <strong>leuntze gaussiarra</strong> aplika dezake, aukeratutako leiho batekin (lehenespenez 100 m, mendikat.net-ek desnibelerako erabiltzen duena). Segmentu bakoitza bere aldetik garbitzen da, eta ez dira inoiz haren lehen eta azken puntuak kentzen. Aurrebistak esaten du zenbat puntu kentzen diren eta zenbat altuera aldatzen diren.</p>
+      <h3>Moztu</h3>
+      <p>Puntu bakar bat hautatuta: <strong>Zatitu hautatutako puntuan</strong> aukerak track-a edo ibilbidea bitan zatitzen du (bigarren zatia, izenean « (2)» duela, puntuaren kopia batean hasten da); <strong>Ezabatu aurreko puntuak</strong> edo <strong>ondorengo puntuak</strong> aukerak ibilbidea mozten du bertan has edo amai dadin, baita beste segmentuetan ere. <strong>Bereizi segmentuak track-etan</strong> aukerak segmentu bakoitzetik track bat egiten du. Maparen laster-menuan ere badaude.</p>
+      <p><strong>Birsortu denborak</strong> atalean, <strong>Distantziaren eta desnibelaren arabera (MIDE metodoa)</strong> aukerak pasatze-ordu errealistak kalkulatzen ditu planifikatutako ibilbide baterako: adierazitako abiadura lautadakoa da, eta igoerek eta jaitsierek denbora gehitzen dute proportzio berean.</p>
+    </section>
+
+    <section id="gps">
+      <h2>Komunikazioak</h2>
+      <p><strong>Komunikazioak</strong> menuak USB bidez disko-unitate gisa konektatutako GPS batekin lan egiten du: <strong>Garmin</strong> (<code>Garmin\GPX</code> karpeta) eta <strong>TwoNav</strong> (<code>TwoNavData\Data</code>). Garmin bat bere modeloarekin agertzen da.</p>
+      <ul>
+        <li><span class="path">Bidali GPSra…</span> aukerak dokumentu aktiboa GPX fitxategi gisa kopiatzen du GPSan, zuk aukeratutako izenarekin. Dokumentua ez da aldatzen (ez da gordetzen eta ez du fitxategiz aldatzen). Izen hori duen fitxategi bat badago, berrespena eskatzen da. GPSak berrabiaraztean edo deskonektatzean kargatzen du.</li>
+        <li><span class="path">Jaso GPSetik…</span> aukerak GPSko trackak, ibilbideak eta waypointak zerrendatzen ditu, berrienak lehenik (Garmin batean, <code>Current</code> eta <code>Archive</code> karpetetakoak ere), eta markatzen dituzunak irekitzen ditu, behar izanez gero GPXra bihurtuta.</li>
+      </ul>
+      <div class="note">Multimedia gailu gisa (MTP) konektatzen diren GPS eta erlojuak ez dira disko-unitateak eta ez dira agertzen: jarri biltegiratze masiboko moduan, aukera badute. Elkarrizketa-koadroa irekita dagoela GPSa konektatzen baduzu, sakatu <strong>Bilatu berriro</strong>.</div>
     </section>
 
     <section id="teclado">
@@ -150,6 +188,7 @@
         <tr><td><kbd>Esc</kbd></td><td>Utzi fitxategi baten irekiera</td></tr>
         <tr><td><kbd>F1</kbd></td><td>Laguntza hau</td></tr>
         <tr><td><kbd>Alt</kbd> + azpimarratutako letra</td><td>Ireki menuak teklatuarekin</td></tr>
+        <tr><td><kbd>Ktrl</kbd>+<kbd>D</kbd></td><td>Marrazketa modua (<kbd>Esc</kbd> sakatuta amaitzen da)</td></tr>
       </table>
     </section>
 
@@ -167,13 +206,16 @@
 
     <section id="configuracion">
       <h2>Ezarpenak</h2>
-      <p><span class="path">Fitxategia › Ezarpenak…</span> leihoak bi bloke ditu. Aldaketak <strong>Ados</strong> sakatzean gordetzen dira eta hurrengorako gogoratzen dira.</p>
+      <p><span class="path">Fitxategia › Ezarpenak…</span> leihoak hiru bloke ditu. Aldaketak <strong>Ados</strong> sakatzean gordetzen dira eta hurrengorako gogoratzen dira.</p>
       <table>
         <tr><th>Blokea</th><th>Aukera</th></tr>
         <tr><td><strong>Hizkuntza</strong></td><td><strong>Aplikazioaren hizkuntza</strong>: español (lehenetsia), català, euskara, français edo português, bere banderarekin. Aldaketa aplikazioa berriro irekitzean aplikatzen da; gida hau (<kbd>F1</kbd>) ere hizkuntza horretan irekitzen da. Kartografia-erroreen xehetasun tekniko batzuk gaztelaniaz jarraitzen dute. Zenbakiak beti koma hamartarrarekin idazten dira, hizkuntza edozein dela ere. Instalatzailearekin (<code>.msi</code>) instalatzen bada, lehen aldiz instalatzean aukeratutako hizkuntzan irekitzen da.</td></tr>
         <tr><td><strong>Bistaratzea</strong></td><td><strong>Erakutsi eskala-erregela mapan</strong> (lehenespenez aktibatuta). Aldaketa berehala ikusten da, berrabiarazi gabe. Aplikazioaren koloreek Windowsen modu argia edo iluna jarraitzen dute (<em>Windowsen ezarpenak › Pertsonalizazioa › Koloreak</em>); mapa ez da aldatzen.</td></tr>
+        <tr><td><strong>Koordenatuak</strong></td><td><strong>Datuma</strong>: WGS84 (lehenetsia) edo ED50; koordenatuak horretan erakusten eta idazten dira (egoera-barra, puntuen zerrenda, xehetasuna eta UTM sareta). Ikus <a href="#mapa">Mapa eta koordenatuak</a>.</td></tr>
+        <tr><td><strong>Bistaratzea</strong></td><td><strong>Erakutsi UTM sareta mapan</strong> (lehenespenez desaktibatuta).</td></tr>
       </table>
       <p>Ezarpenak <code>%APPDATA%\Polaris GPS\settings.json</code> fitxategian gordetzen dira (baita aukeratutako kartografia ere), eta erregistro teknikoa <code>%LOCALAPPDATA%\Polaris GPS\logs</code> karpetan.</p>
+      <p>Marrazketa-aukerak (jarraitu bideei eta ibilbide mota, doitu puntuetara, LEMaren altuera) eta track-en kolorea ere gogoratzen dira. <span class="path">Laguntza › Bilatu eguneratzeak</span> aukerak bertsio berririk dagoen egiaztatzen du eta haren deskarga-orria irekitzea eskaintzen du. Instalazio-programak (<code>PolarisGPS-…-setup.exe</code>) .NET 10 runtimea ere instalatzen du falta bada.</p>
     </section>
 
     <section id="problemas">

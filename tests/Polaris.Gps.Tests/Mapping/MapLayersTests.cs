@@ -89,9 +89,35 @@ public sealed class MapLayersTests
         Assert.Same(data.Waypoints, item.Model);
         var features = ((MemoryLayer)item.Layers.Single()).Features.ToList();
         Assert.Equal(3, features.Count);
-        Assert.All(features, f => Assert.IsType<Mapsui.Styles.SymbolStyle>(f.Styles.First()));
+        // "summit" (any case) has its own icon; a waypoint without symbol keeps the triangle of the document colour
+        Assert.All(features.Take(2), f => Assert.IsType<Mapsui.Styles.ImageStyle>(f.Styles.First()));
+        Assert.IsType<Mapsui.Styles.SymbolStyle>(features[2].Styles.First());
         Assert.Equal("Aguda, Peña (1909 m)", ((Mapsui.Styles.LabelStyle)features[1].Styles.Last()).GetLabelText(features[1]));
         Assert.Single(features[2].Styles); // without a name there is no label
+    }
+
+    [Fact]
+    public void Waypoint_symbols_are_matched_by_name_and_synonyms()
+    {
+        Assert.Equal(WaypointKind.Summit, WaypointSymbols.KindOf("SUMMIT"));
+        Assert.Equal(WaypointKind.Shelter, WaypointSymbols.KindOf("Hut"));
+        Assert.Equal(WaypointKind.Generic, WaypointSymbols.KindOf("Flag, Blue"));
+        Assert.Null(WaypointSymbols.Icon(WaypointKind.Generic));
+        Assert.All(WaypointSymbols.All.Skip(1), s => Assert.StartsWith("<svg", WaypointSymbols.Svg(s.Kind)));
+    }
+
+    [Fact]
+    public void Overlapping_labels_show_only_when_zoomed_in_enough_to_separate()
+    {
+        // Two named waypoints 100 m apart east-west, a third far away.
+        TrailPoint W(double lat, double lon, string? name) => new(new GeoPosition(lat, lon)) { Name = name };
+        var waypoints = new List<TrailPoint> { W(43, -2, "Aitzgorri"), W(43, -1.99877, "Aketegi"), W(44, -2, "Lejos"), W(43, -1.9995, null) };
+
+        var limits = TrailLayerFactory.LabelLimits(waypoints);
+
+        Assert.Equal(MapStyles.PointsMaxResolution * 10, limits[0]); // the first one always wins
+        Assert.InRange(limits[1], 1, 5); // ~137 m in Web Mercator over labels ~68 px wide: about 2 m/px
+        Assert.Equal(MapStyles.PointsMaxResolution * 10, limits[2]);
     }
 
     [Fact]

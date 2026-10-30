@@ -24,8 +24,17 @@ public sealed partial class MainViewModel
     private CancellationTokenSource? _elevationLookup;
     private DateTime _terrainPausedUntil = DateTime.MinValue;
 
-    /// <summary>Datum of the active document's coordinates; WGS84 for the map when no document is open (COORD-07).</summary>
-    public string PointerDatum => ActiveDocument?.Document.Data.Datum ?? TrailData.Wgs84;
+    private string _pointerDatum = TrailData.Wgs84;
+
+    /// <summary>
+    /// Datum of the coordinates shown in the status bar (COORD-07): the one chosen in File › Settings, or WGS84 where ED50
+    /// does not apply (outside UTM zones 29–31).
+    /// </summary>
+    public string PointerDatum
+    {
+        get => _pointerDatum;
+        private set => SetProperty(ref _pointerDatum, value);
+    }
 
     /// <summary>"Alt. 1.234 m (archivo)", "Alt. 1.234 m (MDT IGN)" or "—" (COORD-08).</summary>
     public string PointerElevation

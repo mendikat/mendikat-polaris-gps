@@ -7,6 +7,8 @@ public sealed record UserSettings
 {
     public MapSettings Map { get; init; } = new();
 
+    public DrawingSettings Drawing { get; init; } = new();
+
     /// <summary>Language of the user interface (<see cref="AppLanguage.Code"/>); applied when the application starts.</summary>
     public string Language { get; init; } = AppLanguage.DefaultCode;
 
@@ -15,6 +17,9 @@ public sealed record UserSettings
     /// the SDK licence requires.
     /// </summary>
     public bool EcwLicenseAccepted { get; init; }
+
+    /// <summary>Datum of the coordinates shown and typed: "WGS84" (default) or "ED50" (<see cref="Mapping.Coordinates.CoordinateDatums"/>).</summary>
+    public string Datum { get; init; } = "WGS84";
 }
 
 public sealed record MapSettings
@@ -24,6 +29,28 @@ public sealed record MapSettings
 
     /// <summary>Scale bar in the lower right corner of the map; shown by default.</summary>
     public bool ShowScaleBar { get; init; } = true;
+
+    /// <summary>UTM grid over the map, in the coordinate datum; hidden by default.</summary>
+    public bool ShowUtmGrid { get; init; }
+
+    /// <summary>Colour of the tracks on the map: "None" (document colour, default), "Elevation", "Slope" or "Speed".</summary>
+    public string TrackColoring { get; init; } = "None";
+}
+
+/// <summary>Drawing options (toolbar), remembered between sessions.</summary>
+public sealed record DrawingSettings
+{
+    /// <summary>Join new points along paths with BRouter; off by default (needs Internet).</summary>
+    public bool FollowPaths { get; init; }
+
+    /// <summary>BRouter profile id; mountain hiking by default.</summary>
+    public string RoutingProfile { get; init; } = "hiking-mountain";
+
+    /// <summary>Snap a click to a nearby existing point; on by default.</summary>
+    public bool SnapToPoints { get; init; } = true;
+
+    /// <summary>Terrain elevation for new points; on by default.</summary>
+    public bool AutoElevation { get; init; } = true;
 }
 
 public interface ISettingsStore

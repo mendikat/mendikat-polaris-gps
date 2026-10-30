@@ -11,6 +11,9 @@ public sealed partial class MainViewModel
 {
     public RelayCommand EditWaypointCommand { get; private set; } = null!;
 
+    /// <summary>The symbol of the last waypoint added, proposed for the next one (several summits in a row…).</summary>
+    private string? LastSymbol { get; set; }
+
     /// <summary>One or more waypoints are selected.</summary>
     public bool HasWaypointSelected =>
         !IsBusy && ActiveDocument is { SelectedRows.Count: > 0, SelectedLayer.Kind: LayerKind.Waypoints };
@@ -26,7 +29,7 @@ public sealed partial class MainViewModel
 
         var waypoints = doc.Document.Data.Waypoints;
         var dialog = new WaypointViewModel(Strings.WaypointNewTitle, position,
-            string.Format(Strings.WaypointDefaultName, waypoints.Count + 1), null, null);
+            string.Format(Strings.WaypointDefaultName, waypoints.Count + 1), null, null, CoordinateDatum, LastSymbol);
         if (!_dialogs.ShowToolDialog(dialog))
         {
             return;
@@ -37,8 +40,10 @@ public sealed partial class MainViewModel
             Name = WaypointViewModel.Clean(dialog.Name),
             Comment = WaypointViewModel.Clean(dialog.Comment),
             Description = WaypointViewModel.Clean(dialog.Description),
+            Symbol = dialog.Symbol.GpxName,
             IsAdded = true,
         };
+        LastSymbol = point.Symbol;
         doc.Document.Execute(new InsertPointCommand(waypoints, waypoints.Count, point));
         doc.SelectPoints([point]);
         StatusMessage = string.Format(Strings.StatusWaypointAdded, point.Name ?? string.Empty);
@@ -55,7 +60,7 @@ public sealed partial class MainViewModel
         }
 
         var point = doc.SelectedRows[0].Point;
-        var dialog = new WaypointViewModel(Strings.WaypointEditTitle, point.Position, point.Name, point.Comment, point.Description);
+        var dialog = new WaypointViewModel(Strings.WaypointEditTitle, point.Position, point.Name, point.Comment, point.Description, CoordinateDatum, point.Symbol);
         if (!_dialogs.ShowToolDialog(dialog))
         {
             return;
@@ -66,6 +71,7 @@ public sealed partial class MainViewModel
             Name = WaypointViewModel.Clean(dialog.Name),
             Comment = WaypointViewModel.Clean(dialog.Comment),
             Description = WaypointViewModel.Clean(dialog.Description),
+            Symbol = dialog.Symbol.GpxName,
         };
         if (values == PointValues.From(point))
         {

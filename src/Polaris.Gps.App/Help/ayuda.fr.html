@@ -31,8 +31,10 @@
     <a href="#mapa">Carte et coordonnées</a>
     <a href="#capas">Couches et points</a>
     <a href="#editar">Édition</a>
+    <a href="#dibujar">Dessin</a>
     <a href="#perfil">Profil altimétrique</a>
     <a href="#herramientas">Outils</a>
+    <a href="#gps">Communications</a>
     <a href="#teclado">Raccourcis clavier</a>
     <a href="#archivos">Fichiers et enregistrement</a>
     <a href="#configuracion">Paramètres</a>
@@ -79,6 +81,11 @@
         <li><strong>MNT</strong> : <code>.hgt</code> (SRTM) et <code>.asc</code> (ESRI ASCII Grid, avec son <code>.prj</code> à côté). Aussi les <code>.tif</code> à une bande d'altitudes. Ils ne sont pas dessinés : ils donnent l'altitude sous le pointeur et apparaissent dans <em>Ajuster les altitudes</em> après le MNT de l'IGN.</li>
       </ul>
       <p>Ce qui est ouvert apparaît dans le bouton <strong>Cartographies utilisateur</strong> de la barre d'outils. Celle du haut de la liste est dessinée au-dessus des autres : faites glisser la poignée <strong>≡</strong> (ou utilisez <kbd>Ctrl</kbd>+<kbd>↑</kbd> / <kbd>Ctrl</kbd>+<kbd>↓</kbd>) pour changer l'ordre ; la cartographie en ligne reste toujours au fond et les traces toujours au-dessus. Le curseur de chaque carte règle son opacité pour voir ce qui se trouve dessous. La case affiche ou masque chaque carte (pour un MNT, elle décide s'il est utilisé), <strong>⤢</strong> vous y amène et <strong>✕</strong> la retire. Les datums WGS84, ETRS89 et ED50 (fuseaux 29 à 31) sont pris en charge, en coordonnées géographiques, UTM ou Mercator transverse ; si un fichier utilise un autre système, un avertissement s'affiche au lieu de le placer au mauvais endroit. Elles ne sont pas mémorisées à la fermeture de l'application.</p>
+      <p>Les coordonnées sont affichées dans le <strong>datum</strong> choisi dans <span class="path">Fichier › Paramètres… › Coordonnées</span> : WGS84 (par défaut) ou <strong>ED50</strong>, celui des anciennes cartes et des anciens topoguides d'Espagne. ED50 ne s'applique que dans les fuseaux 29 à 31 (Espagne péninsulaire, Baléares et Portugal) ; aux Canaries et hors de ces fuseaux, elles restent affichées en WGS84 et la barre d'état l'indique. Les fichiers sont toujours enregistrés en WGS84.</p>
+      <h3>Quadrillage UTM</h3>
+      <p>Avec <span class="path">Fichier › Paramètres… › Affichage › Afficher le quadrillage UTM sur la carte</span> (désactivé par défaut), les lignes du quadrillage UTM du fuseau du centre de la carte sont dessinées dans le datum choisi, avec leur valeur en kilomètres (ou en mètres en zoomant beaucoup). L'espacement s'adapte au zoom : 100 m, 1 km, 10 km… Très dézoomé, il est masqué.</p>
+      <h3>Colorer les traces</h3>
+      <p><span class="path">Affichage › Colorer les traces selon</span> peint chaque tronçon des traces selon son <strong>altitude</strong>, sa <strong>pente</strong> ou sa <strong>vitesse</strong>, avec une légende dans le coin inférieur gauche de la carte. La pente utilise des classes fixes (de la forte descente en bleu foncé à plus de 25 % en grenat) ; l'altitude et la vitesse vont du bleu (le plus bas de chaque trace) au rouge (le plus haut). <strong>Aucune</strong> revient à la couleur du document. Le choix est mémorisé.</p>
     </section>
 
     <section id="capas">
@@ -89,6 +96,8 @@
         <li>Les <strong>waypoints</strong> du GPX sont dessinés comme des triangles, avec leur nom quand vous zoomez.</li>
         <li>Le panneau <strong>Point sélectionné</strong> affiche et permet de modifier le nom, le commentaire, la description, la latitude, la longitude, l'altitude et l'heure. Il indique aussi d'où vient l'altitude : du fichier, interpolée, du MNT ou saisie à la main.</li>
       </ul>
+      <p>Chaque waypoint peut avoir un <strong>symbole</strong> (sommet, col, parking, refuge, camping, source, danger, point de vue, information, départ de sentier), choisi en l'ajoutant ou en le modifiant et enregistré dans le GPX sous le nom utilisé par les GPS Garmin. Sur la carte, il est dessiné avec son icône ; sans symbole, avec le triangle de la couleur du document. Quand les noms de plusieurs waypoints se chevaucheraient, seul le premier est affiché jusqu'à ce que vous zoomiez assez. Avec la couche des waypoints sélectionnée, la zone de recherche au-dessus de la liste filtre par nom (sans tenir compte des majuscules ni des accents).</p>
+      <p>Une trace en plusieurs parties affiche dans <strong>Couches</strong> la liste de ses <strong>segments</strong>, avec leurs points et leur longueur. Un clic sur un segment sélectionne ses points (mis en évidence sur la carte) et <strong>✕</strong> le supprime après confirmation ; les autres segments ne changent pas et l'opération s'annule avec <kbd>Ctrl</kbd>+<kbd>Z</kbd>.</p>
     </section>
 
     <section id="editar">
@@ -107,6 +116,19 @@
       <p>Un astérisque <strong>*</strong> dans l'onglet et dans le titre indique des modifications non enregistrées.</p>
     </section>
 
+    <section id="dibujar">
+      <h2>Dessin</h2>
+      <p>Cliquez sur <strong>✎ Dessiner</strong> dans la barre d'outils (ou <span class="path">Édition › Mode dessin</span>, <kbd>Ctrl</kbd>+<kbd>D</kbd>) : chaque clic sur la carte ajoute un point après le point sélectionné, et glisser déplace toujours la carte. <kbd>Échap</kbd> termine. Sans document ouvert, un nouveau est créé. <span class="path">Édition › Nouvelle trace</span> et <span class="path">Nouvel itinéraire</span> ajoutent une trace ou un itinéraire vide au document ouvert et y commencent le dessin. <kbd>Ctrl</kbd> + clic ajoute toujours des points hors du mode dessin.</p>
+      <table>
+        <tr><th>Option</th><th>Effet</th></tr>
+        <tr><td><strong>Suivre les chemins</strong></td><td>Relie chaque nouveau point au précédent par les sentiers, pistes et routes d'OpenStreetMap, avec le service <strong>BRouter</strong> (connexion nécessaire). Choisissez le type de parcours : randonnée en montagne, vélo de randonnée, VTT, vélo de route ou le plus court. S'il n'y a pas de chemin jusqu'au point (loin d'un sentier), rien n'est ajouté et la barre d'état l'explique : désactivez l'option pour ce tronçon et il sera relié en ligne droite.</td></tr>
+        <tr><td><strong>Aimanter aux points</strong></td><td>Un clic près d'un point ou d'un waypoint de n'importe quel document ouvert prend sa position exacte et son altitude, pour raccorder d'autres parcours.</td></tr>
+        <tr><td><strong>Altitude du MNT</strong></td><td>Les nouveaux points prennent l'altitude du terrain : de vos MNT locaux ou, sinon, du MNT de l'IGN espagnol à 5 m (Espagne, avec connexion). Sans donnée, ils restent sans altitude.</td></tr>
+      </table>
+      <p>Pendant le dessin, la barre d'état affiche la <strong>distance</strong>, le <strong>dénivelé</strong> et le <strong>temps estimé</strong> (méthode MIDE : 4 km/h sur le plat, 400 m/h en montée et 600 m/h en descente, sans arrêts) de la trace ou de l'itinéraire sélectionné.</p>
+      <p>Pour terminer un parcours : <span class="path">Outils › Fermer en boucle</span> le ramène au départ (par les chemins si « Suivre les chemins » est activé) et <span class="path">Aller-retour</span> ajoute le retour par les mêmes points. Tout s'annule avec <kbd>Ctrl</kbd>+<kbd>Z</kbd>.</p>
+    </section>
+
     <section id="perfil">
       <h2>Profil altimétrique</h2>
       <p>Sélectionnez une trace ou un itinéraire dans <strong>Couches</strong> et cliquez sur <strong>Profil</strong> (ou <span class="path">Affichage › Profil altimétrique</span>).</p>
@@ -119,6 +141,7 @@
         <li><strong>À l'arrêt</strong> : tronçons à moins de 1 km/h et pauses entre segments. La <strong>vitesse moyenne</strong> ne compte que le temps en mouvement ; la <strong>maximale</strong> est la plus élevée maintenue pendant au moins 30 s.</li>
         <li>Quand le pointeur passe sur le profil, le point est marqué sur la carte ; un clic le sélectionne et <kbd>←</kbd> <kbd>→</kbd> parcourent les points.</li>
       </ul>
+      <p>Le sélecteur sous le graphique change ce qui est dessiné : <strong>Altitude</strong>, <strong>Altitude colorée selon la pente</strong> (avec les couleurs de la carte), <strong>Pente</strong> (en %, mesurée tous les 50 m sur l'altitude lissée) ou <strong>Vitesse</strong> (en km/h, moyenne sur 30 s ; heures nécessaires). Au passage du pointeur, on lit aussi la pente et la vitesse du point. La liste <strong>Montées</strong> affiche les montées de plus de 50 m de dénivelé : début, longueur, dénivelé, pente moyenne et maximale.</p>
     </section>
 
     <section id="herramientas">
@@ -134,6 +157,21 @@
       <p>Joint deux traces ou plus en une seule, par proximité : chaque trace est placée à la suite de celle dont l'extrémité est la plus proche et, si nécessaire, son sens est inversé (ses heures sont reflétées comme dans « Inverser la trace »). La liste contient les traces de tous les documents ouverts ; décochez celles que vous ne voulez pas joindre. Si l'écart entre deux traces dépasse l'<strong>écart maximal</strong>, la suivante commence un nouveau segment. L'aperçu montre l'ordre et chaque écart. Les traces d'origine ne changent pas : le résultat s'ouvre dans un nouveau GPX non enregistré, avec le nom de la première trace.</p>
       <h3>Ajuster les altitudes avec le MNT de l'IGN</h3>
       <p>Interroge le Modèle numérique de terrain de l'IGN espagnol (5 m ou 25 m) et remplace les altitudes. Il ne couvre que l'Espagne et nécessite une connexion. Les points sans donnée (mer ou hors d'Espagne) conservent leur altitude.</p>
+      <h3>Nettoyer la trace</h3>
+      <p>Supprime les <strong>sauts du GPS</strong> (points atteints au-delà de la vitesse maximale ; heures nécessaires), les <strong>pics</strong> (un point qui s'écarte et la ligne revient) et les <strong>arrêts</strong> (d'un groupe de points dans un petit rayon, on garde le premier et le dernier), et peut appliquer un <strong>lissage gaussien de l'altitude</strong> avec une fenêtre au choix (100 m par défaut, celle qu'utilise mendikat.net pour le dénivelé). Chaque segment est nettoyé séparément et son premier et son dernier point ne sont jamais supprimés. L'aperçu indique combien de points sont supprimés et combien d'altitudes changent.</p>
+      <h3>Couper</h3>
+      <p>Avec un seul point sélectionné : <strong>Couper au point sélectionné</strong> divise la trace ou l'itinéraire en deux (la seconde partie, avec « (2) » dans le nom, commence par une copie du point) ; <strong>Supprimer les points précédents</strong> ou <strong>suivants</strong> raccourcit le parcours pour qu'il commence ou finisse là, y compris dans les autres segments. <strong>Séparer les segments en traces</strong> fait une trace de chaque segment. Ces commandes sont aussi dans le menu contextuel de la carte.</p>
+      <p>Dans <strong>Régénérer les heures</strong>, l'option <strong>Selon la distance et le dénivelé (méthode MIDE)</strong> calcule des heures de passage réalistes pour un parcours planifié : la vitesse indiquée est celle du plat, et les montées et descentes ajoutent du temps dans la même proportion.</p>
+    </section>
+
+    <section id="gps">
+      <h2>Communications</h2>
+      <p>Le menu <strong>Communications</strong> fonctionne avec un GPS branché en USB comme lecteur de disque : <strong>Garmin</strong> (dossier <code>Garmin\GPX</code>) et <strong>TwoNav</strong> (<code>TwoNavData\Data</code>). Un Garmin apparaît avec son modèle.</p>
+      <ul>
+        <li><span class="path">Envoyer au GPS…</span> copie le document actif comme fichier GPX sur le GPS, sous le nom de votre choix. Le document ne change pas (il n'est ni enregistré ni rattaché à un autre fichier). Si un fichier de ce nom existe déjà, une confirmation est demandée. Le GPS le charge au redémarrage ou une fois débranché.</li>
+        <li><span class="path">Recevoir du GPS…</span> liste les traces, itinéraires et waypoints du GPS, les plus récents d'abord (sur un Garmin, aussi ceux de <code>Current</code> et <code>Archive</code>), et ouvre ceux que vous cochez, convertis en GPX si nécessaire.</li>
+      </ul>
+      <div class="note">Les GPS et montres qui se branchent comme appareil multimédia (MTP) ne sont pas des lecteurs de disque et n'apparaissent pas : passez-les en mode stockage de masse s'ils le permettent. Si vous branchez le GPS alors que la boîte de dialogue est ouverte, cliquez sur <strong>Rechercher à nouveau</strong>.</div>
     </section>
 
     <section id="teclado">
@@ -150,6 +188,7 @@
         <tr><td><kbd>Échap</kbd></td><td>Annuler l'ouverture d'un fichier</td></tr>
         <tr><td><kbd>F1</kbd></td><td>Cette aide</td></tr>
         <tr><td><kbd>Alt</kbd> + lettre soulignée</td><td>Ouvrir les menus au clavier</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Mode dessin (<kbd>Échap</kbd> le termine)</td></tr>
       </table>
     </section>
 
@@ -167,13 +206,16 @@
 
     <section id="configuracion">
       <h2>Paramètres</h2>
-      <p><span class="path">Fichier › Paramètres…</span> comporte deux blocs. Les modifications sont enregistrées quand vous cliquez sur <strong>OK</strong> et sont mémorisées pour la prochaine fois.</p>
+      <p><span class="path">Fichier › Paramètres…</span> comporte trois blocs. Les modifications sont enregistrées quand vous cliquez sur <strong>OK</strong> et sont mémorisées pour la prochaine fois.</p>
       <table>
         <tr><th>Bloc</th><th>Option</th></tr>
         <tr><td><strong>Langue</strong></td><td><strong>Langue de l'application</strong> : español (par défaut), català, euskara, français ou português, avec son drapeau. Le changement s'applique à la prochaine ouverture de l'application ; ce guide (<kbd>F1</kbd>) s'ouvre aussi dans cette langue. Certains détails techniques des erreurs de cartographie restent en espagnol. Les nombres s'écrivent toujours avec une virgule décimale, quelle que soit la langue. Si elle est installée avec le programme d'installation (<code>.msi</code>), elle s'ouvre la première fois dans la langue choisie lors de l'installation.</td></tr>
         <tr><td><strong>Affichage</strong></td><td><strong>Afficher la barre d'échelle sur la carte</strong> (activée par défaut). Le changement est visible immédiatement, sans redémarrer. Les couleurs de l'application suivent le mode clair ou sombre de Windows (<em>Paramètres Windows › Personnalisation › Couleurs</em>) ; la carte ne change pas.</td></tr>
+        <tr><td><strong>Coordonnées</strong></td><td><strong>Datum</strong> : WGS84 (par défaut) ou ED50, dans lequel les coordonnées sont affichées et saisies (barre d'état, liste des points, détail et quadrillage UTM). Voir <a href="#mapa">Carte et coordonnées</a>.</td></tr>
+        <tr><td><strong>Affichage</strong></td><td><strong>Afficher le quadrillage UTM sur la carte</strong> (désactivé par défaut).</td></tr>
       </table>
       <p>Les paramètres sont enregistrés dans <code>%APPDATA%\Polaris GPS\settings.json</code> (avec la cartographie choisie) et le journal technique dans <code>%LOCALAPPDATA%\Polaris GPS\logs</code>.</p>
+      <p>Les options de dessin (suivre les chemins et le type de parcours, aimanter aux points, altitude du MNT) et la couleur des traces sont aussi mémorisées. <span class="path">Aide › Rechercher des mises à jour</span> vérifie s'il existe une nouvelle version et propose d'ouvrir sa page de téléchargement. Le programme d'installation (<code>PolarisGPS-…-setup.exe</code>) installe aussi le runtime .NET 10 s'il manque.</p>
     </section>
 
     <section id="problemas">

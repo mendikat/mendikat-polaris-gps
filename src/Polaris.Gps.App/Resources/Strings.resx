@@ -331,7 +331,7 @@
   <data name="A11yElevationName" xml:space="preserve"><value>Altitud bajo el puntero</value></data>
   <data name="A11yElevationToolTip" xml:space="preserve"><value>Altitud bajo el puntero: la del punto del archivo si lo hay; si no, la del terreno según el MDT del IGN (sólo España, necesita Internet).</value></data>
   <data name="A11yDatumName" xml:space="preserve"><value>Datum de las coordenadas</value></data>
-  <data name="A11yDatumToolTip" xml:space="preserve"><value>Datum de las coordenadas del archivo activo. GPX, KML y TCX usan siempre WGS84.</value></data>
+  <data name="A11yDatumToolTip" xml:space="preserve"><value>Datum de las coordenadas mostradas (Archivo › Configuración › Coordenadas). Los archivos se guardan siempre en WGS84.</value></data>
   <data name="MenuOpenLocalMap" xml:space="preserve"><value>Abrir car_tografía...</value></data>
   <data name="DialogOpenLocalMapTitle" xml:space="preserve"><value>Abrir cartografía local</value></data>
   <data name="FilterLocalMaps" xml:space="preserve"><value>Mapas y MDT (*.map;*.imp;*.rmap;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt;*.jpg;*.png)&#124;*.map;*.imp;*.rmap;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt;*.jpg;*.jpeg;*.png;*.gif;*.bmp&#124;GeoTIFF y COG (*.tif;*.tiff;*.cog)&#124;*.tif;*.tiff;*.cog&#124;ECW (*.ecw)&#124;*.ecw&#124;Imágenes con .tfw, .jgw, .pgw… (*.tif;*.jpg;*.png;*.gif;*.bmp)&#124;*.tif;*.tiff;*.jpg;*.jpeg;*.png;*.gif;*.bmp&#124;Mapas de OziExplorer (*.map)&#124;*.map&#124;Mapas de CompeGPS/TwoNav (*.imp;*.rmap)&#124;*.imp;*.rmap&#124;MDT ESRI ASCII Grid (*.asc)&#124;*.asc&#124;MDT SRTM (*.hgt)&#124;*.hgt&#124;Todos los archivos (*.*)&#124;*.*</value></data>
@@ -394,4 +394,144 @@
 • Prohibition of Reverse Engineering, Decompilation and Disassembly. You may not reverse engineer, decompile, or disassemble the Software or modifying the Enhanced Compressed Wavelet  (“ECW”)file format in any manner.
 
 • Export Restrictions. You acknowledge that the Software, or any part thereof, or any process or service that is the direct product of the Software is of U.S. origin. You agree to comply with all applicable international and national laws that apply to these products, including the U.S. Export Administration Regulations, as well as end-user, end-use and destination restrictions and embargoes issued by U.S. and other governments having jurisdiction.</value></data>
+  <data name="SettingsShowUtmGrid" xml:space="preserve"><value>Mostrar la _cuadrícula UTM en el mapa</value></data>
+  <data name="SettingsCoordinates" xml:space="preserve"><value>Coordenadas</value></data>
+  <data name="SettingsDatum" xml:space="preserve"><value>_Datum:</value></data>
+  <data name="SettingsDatumName" xml:space="preserve"><value>Datum de las coordenadas</value></data>
+  <data name="SettingsDatumHint" xml:space="preserve"><value>Datum en el que se muestran y se escriben las coordenadas (barra de estado, lista de puntos, detalle y cuadrícula UTM). ED50 sólo se aplica en los husos 29 a 31 (España y Portugal); los archivos se guardan siempre en WGS84.</value></data>
+  <data name="MenuSplitAtPoint" xml:space="preserve"><value>_Partir en el punto seleccionado</value></data>
+  <data name="MenuRemoveBefore" xml:space="preserve"><value>Eliminar los puntos a_nteriores</value></data>
+  <data name="MenuRemoveAfter" xml:space="preserve"><value>Eliminar los puntos p_osteriores</value></data>
+  <data name="MenuSegmentsToTracks" xml:space="preserve"><value>Separar los segmentos en _tracks</value></data>
+  <data name="StatusCutNeedsPoint" xml:space="preserve"><value>Para cortar, selecciona un único punto de un track o de una ruta.</value></data>
+  <data name="StatusSplitAtEnd" xml:space="preserve"><value>No se puede partir por el primer ni por el último punto.</value></data>
+  <data name="StatusSplit" xml:space="preserve"><value>«{0}» partido en dos; la segunda parte es «{1}».</value></data>
+  <data name="StatusSingleSegment" xml:space="preserve"><value>El track sólo tiene un segmento.</value></data>
+  <data name="StatusSegmentsToTracks" xml:space="preserve"><value>Segmentos separados en {0} tracks.</value></data>
+  <data name="StatusNothingToRemove" xml:space="preserve"><value>No hay puntos que eliminar en ese lado del punto seleccionado.</value></data>
+  <data name="MenuClean" xml:space="preserve"><value>_Limpiar track...</value></data>
+  <data name="CleanTitle" xml:space="preserve"><value>Limpiar «{0}»</value></data>
+  <data name="CleanJumps" xml:space="preserve"><value>Quitar los saltos del GPS: velocidad máxima</value></data>
+  <data name="CleanSpikes" xml:space="preserve"><value>Quitar los picos: puntos que se separan más de</value></data>
+  <data name="CleanStops" xml:space="preserve"><value>Quitar las paradas: puntos agrupados en un radio de</value></data>
+  <data name="CleanSmooth" xml:space="preserve"><value>_Suavizado gaussiano de la altitud, aplicando una ventana de</value></data>
+  <data name="CleanNoTimes" xml:space="preserve"><value>Sin horas no se pueden detectar los saltos por velocidad ni las paradas de un recorrido grabado; sí los picos.</value></data>
+  <data name="CleanPreview" xml:space="preserve"><value>Se eliminan {0} saltos o picos y {1} puntos de paradas; se suavizan {2} altitudes. {3} → {4} puntos.</value></data>
+  <data name="CleanInvalidSpeed" xml:space="preserve"><value>Escribe una velocidad entre 1 y 1.000 km/h.</value></data>
+  <data name="CleanInvalidDistance" xml:space="preserve"><value>Escribe una distancia en metros entre 1 y 10.000.</value></data>
+  <data name="CleanNote" xml:space="preserve"><value>Cada segmento se limpia por separado y nunca se eliminan su primer ni su último punto. De una parada se conservan el primer y el último punto. Se puede deshacer con Ctrl+Z.</value></data>
+  <data name="StatusCleaned" xml:space="preserve"><value>«{0}» limpio: {1} puntos eliminados y {2} altitudes suavizadas.</value></data>
+  <data name="ElevationSourceSmoothed" xml:space="preserve"><value>suavizada</value></data>
+  <data name="MenuTrackColoring" xml:space="preserve"><value>_Colorear tracks por</value></data>
+  <data name="MenuColoringNone" xml:space="preserve"><value>_Ninguno (color del documento)</value></data>
+  <data name="MenuColoringElevation" xml:space="preserve"><value>_Altitud</value></data>
+  <data name="MenuColoringSlope" xml:space="preserve"><value>_Pendiente</value></data>
+  <data name="MenuColoringSpeed" xml:space="preserve"><value>_Velocidad</value></data>
+  <data name="LegendElevation" xml:space="preserve"><value>Altitud (de cada track)</value></data>
+  <data name="LegendSlope" xml:space="preserve"><value>Pendiente</value></data>
+  <data name="LegendSpeed" xml:space="preserve"><value>Velocidad (de cada track)</value></data>
+  <data name="LegendLow" xml:space="preserve"><value>mín.</value></data>
+  <data name="LegendHigh" xml:space="preserve"><value>máx.</value></data>
+  <data name="ProfileNoSpeeds" xml:space="preserve"><value>Este track o ruta no tiene horas: no se puede calcular la velocidad.</value></data>
+  <data name="ProfileAxisSlope" xml:space="preserve"><value>Pendiente (%)</value></data>
+  <data name="ProfileAxisSpeed" xml:space="preserve"><value>Velocidad (km/h)</value></data>
+  <data name="ChartElevation" xml:space="preserve"><value>Altitud</value></data>
+  <data name="ChartElevationBySlope" xml:space="preserve"><value>Altitud coloreada por pendiente</value></data>
+  <data name="ChartSlope" xml:space="preserve"><value>Pendiente</value></data>
+  <data name="ChartSpeed" xml:space="preserve"><value>Velocidad</value></data>
+  <data name="ChartModeName" xml:space="preserve"><value>Gráfica del perfil</value></data>
+  <data name="ProfileHoverSlope" xml:space="preserve"><value>pendiente {0} %</value></data>
+  <data name="ProfileHoverSpeed" xml:space="preserve"><value>{0} km/h</value></data>
+  <data name="ClimbsHeader" xml:space="preserve"><value>Subidas (más de 50 m de desnivel)</value></data>
+  <data name="ClimbStart" xml:space="preserve"><value>Inicio</value></data>
+  <data name="ClimbLength" xml:space="preserve"><value>Longitud</value></data>
+  <data name="ClimbGain" xml:space="preserve"><value>Desnivel</value></data>
+  <data name="ClimbAverageSlope" xml:space="preserve"><value>Pendiente media</value></data>
+  <data name="ClimbMaxSlope" xml:space="preserve"><value>Pendiente máx.</value></data>
+  <data name="StatusDrawingOn" xml:space="preserve"><value>Modo dibujo: cada clic en el mapa añade un punto (arrastrar sigue moviendo el mapa). Esc para terminar.</value></data>
+  <data name="StatusDrawingOff" xml:space="preserve"><value>Modo dibujo terminado.</value></data>
+  <data name="StatusRouting" xml:space="preserve"><value>Calculando el camino…</value></data>
+  <data name="StatusRouted" xml:space="preserve"><value>Tramo por caminos añadido: {0} puntos, {1}.</value></data>
+  <data name="StatusNoRoute" xml:space="preserve"><value>No se encontró un camino hasta ese punto. Acércalo a una senda o pista, o desactiva «Seguir caminos» para ese tramo.</value></data>
+  <data name="StatusRoutingFailed" xml:space="preserve"><value>No se pudo calcular el camino: sin conexión o el servicio BRouter no responde. El punto no se ha añadido.</value></data>
+  <data name="StatusPointSnapped" xml:space="preserve"><value>Punto añadido sobre un punto existente.</value></data>
+  <data name="StatusAlreadyClosed" xml:space="preserve"><value>El recorrido ya termina donde empieza.</value></data>
+  <data name="StatusLoopClosed" xml:space="preserve"><value>«{0}» cerrado: termina donde empieza.</value></data>
+  <data name="StatusOutAndBack" xml:space="preserve"><value>Vuelta añadida a «{0}» por el mismo camino.</value></data>
+  <data name="NewTrackNumbered" xml:space="preserve"><value>Track {0}</value></data>
+  <data name="NewRouteNumbered" xml:space="preserve"><value>Ruta {0}</value></data>
+  <data name="DrawingStats" xml:space="preserve"><value>✎ {0} km · +{1} m / −{2} m · ≈ {3} (MIDE)</value></data>
+  <data name="A11yDrawingStatsName" xml:space="preserve"><value>Datos de lo dibujado</value></data>
+  <data name="RoutingHiking" xml:space="preserve"><value>Senderismo de montaña</value></data>
+  <data name="RoutingTrekking" xml:space="preserve"><value>Bici de trekking</value></data>
+  <data name="RoutingMtb" xml:space="preserve"><value>Bicicleta de montaña</value></data>
+  <data name="RoutingRoadBike" xml:space="preserve"><value>Bici de carretera</value></data>
+  <data name="RoutingShortest" xml:space="preserve"><value>El más corto</value></data>
+  <data name="ToolDraw" xml:space="preserve"><value>✎ Dibujar</value></data>
+  <data name="ToolDrawToolTip" xml:space="preserve"><value>Modo dibujo (Ctrl+D): cada clic en el mapa añade un punto tras el seleccionado. Esc para terminar.</value></data>
+  <data name="ToolFollowPaths" xml:space="preserve"><value>Seguir caminos</value></data>
+  <data name="ToolFollowPathsToolTip" xml:space="preserve"><value>Une cada punto nuevo con el anterior por sendas, pistas y carreteras de OpenStreetMap (servicio BRouter, requiere Internet).</value></data>
+  <data name="ToolRoutingProfileName" xml:space="preserve"><value>Tipo de recorrido para seguir caminos</value></data>
+  <data name="ToolSnap" xml:space="preserve"><value>Ajustar a puntos</value></data>
+  <data name="ToolSnapToolTip" xml:space="preserve"><value>Un clic cerca de un punto o waypoint existente toma su posición exacta y su altitud.</value></data>
+  <data name="ToolAutoElevation" xml:space="preserve"><value>Altitud del MDT</value></data>
+  <data name="ToolAutoElevationToolTip" xml:space="preserve"><value>Los puntos nuevos toman la altitud del terreno: primero de tus MDT, si no del MDT del IGN de 5 m (España, con conexión).</value></data>
+  <data name="MenuDrawMode" xml:space="preserve"><value>_Modo dibujo</value></data>
+  <data name="MenuNewTrack" xml:space="preserve"><value>Nuevo _track</value></data>
+  <data name="MenuNewRoute" xml:space="preserve"><value>Nueva r_uta</value></data>
+  <data name="MenuCloseLoop" xml:space="preserve"><value>Cerrar en _circular</value></data>
+  <data name="MenuOutAndBack" xml:space="preserve"><value>Ida y _vuelta</value></data>
+  <data name="TimesModeSlope" xml:space="preserve"><value>Según la distancia y el desnivel (método MIDE)</value></data>
+  <data name="TimesModeSlopeToolTip" xml:space="preserve"><value>La velocidad es la del llano (4 km/h en el MIDE); se suben 400 m/h y se bajan 600 m/h a esa misma escala, sin paradas.</value></data>
+  <data name="FieldSymbol" xml:space="preserve"><value>_Símbolo</value></data>
+  <data name="FieldSymbolName" xml:space="preserve"><value>Símbolo del waypoint</value></data>
+  <data name="SymbolNone" xml:space="preserve"><value>(ninguno)</value></data>
+  <data name="SymbolGeneric" xml:space="preserve"><value>Waypoint</value></data>
+  <data name="SymbolSummit" xml:space="preserve"><value>Cima</value></data>
+  <data name="SymbolPass" xml:space="preserve"><value>Collado</value></data>
+  <data name="SymbolParking" xml:space="preserve"><value>Aparcamiento</value></data>
+  <data name="SymbolShelter" xml:space="preserve"><value>Refugio</value></data>
+  <data name="SymbolCampground" xml:space="preserve"><value>Acampada</value></data>
+  <data name="SymbolWater" xml:space="preserve"><value>Fuente</value></data>
+  <data name="SymbolDanger" xml:space="preserve"><value>Peligro</value></data>
+  <data name="SymbolViewpoint" xml:space="preserve"><value>Mirador</value></data>
+  <data name="SymbolInformation" xml:space="preserve"><value>Información</value></data>
+  <data name="SymbolTrailHead" xml:space="preserve"><value>Inicio de ruta</value></data>
+  <data name="WaypointFilterToolTip" xml:space="preserve"><value>Buscar waypoints por nombre</value></data>
+  <data name="MenuCommunications" xml:space="preserve"><value>_Comunicaciones</value></data>
+  <data name="MenuSendToGps" xml:space="preserve"><value>_Enviar al GPS...</value></data>
+  <data name="MenuReceiveFromGps" xml:space="preserve"><value>_Recibir del GPS...</value></data>
+  <data name="GpsSendTitle" xml:space="preserve"><value>Enviar al GPS</value></data>
+  <data name="GpsReceiveTitle" xml:space="preserve"><value>Recibir del GPS</value></data>
+  <data name="GpsDevice" xml:space="preserve"><value>_GPS conectado:</value></data>
+  <data name="GpsRefresh" xml:space="preserve"><value>_Buscar de nuevo</value></data>
+  <data name="GpsNoDevice" xml:space="preserve"><value>No se encuentra ningún GPS. Conéctalo por USB y pulsa «Buscar de nuevo».</value></data>
+  <data name="GpsFileName" xml:space="preserve"><value>_Nombre del archivo en el GPS:</value></data>
+  <data name="GpsFiles" xml:space="preserve"><value>Archivos del GPS (marca los que quieras abrir):</value></data>
+  <data name="GpsNote" xml:space="preserve"><value>Garmin (carpeta Garmin\GPX) y TwoNav (TwoNavData\Data) conectados como unidad USB. Los que se conectan como dispositivo multimedia (MTP), como muchos relojes, no aparecen: ponlos en modo almacenamiento masivo si lo permiten.</value></data>
+  <data name="GpsSend" xml:space="preserve"><value>Enviar</value></data>
+  <data name="GpsOpen" xml:space="preserve"><value>Abrir</value></data>
+  <data name="GpsConfirmReplace" xml:space="preserve"><value>«{0}» ya existe en {1}. ¿Reemplazarlo?</value></data>
+  <data name="GpsSent" xml:space="preserve"><value>«{0}» enviado a {1}. El GPS lo carga al reiniciarse o al desconectarlo.</value></data>
+  <data name="GpsSendFailed" xml:space="preserve"><value>No se pudo escribir en {0}: {1}</value></data>
+  <data name="GpsReadFailed" xml:space="preserve"><value>No se pudieron leer los archivos del GPS: {0}</value></data>
+  <data name="StatusCheckingUpdates" xml:space="preserve"><value>Buscando actualizaciones…</value></data>
+  <data name="UpdateAvailableStatus" xml:space="preserve"><value>Hay una versión nueva: {0}.</value></data>
+  <data name="UpdateAvailable" xml:space="preserve"><value>Hay una versión nueva de Polaris GPS: {0} (tienes la {1}).
+
+¿Abrir su página para descargar el programa de instalación?</value></data>
+  <data name="UpdateNone" xml:space="preserve"><value>Tienes la última versión de Polaris GPS ({0}).</value></data>
+  <data name="UpdateCheckFailed" xml:space="preserve"><value>No se pudo comprobar si hay una versión nueva (sin conexión o el servicio no responde).
+
+¿Abrir la página de versiones en el navegador?</value></data>
+  <data name="StatusPointAddedDrawing" xml:space="preserve"><value>Punto añadido. Clic para añadir el siguiente; Esc para terminar.</value></data>
+  <data name="SegmentLabel" xml:space="preserve"><value>Segmento {0} · {1} puntos · {2} km</value></data>
+  <data name="DeleteSegmentName" xml:space="preserve"><value>Eliminar el segmento {0}</value></data>
+  <data name="DeleteSegmentToolTip" xml:space="preserve"><value>Eliminar este segmento (se puede deshacer)</value></data>
+  <data name="SelectSegmentToolTip" xml:space="preserve"><value>Seleccionar los puntos de este segmento</value></data>
+  <data name="ConfirmDeleteSegment" xml:space="preserve"><value>¿Eliminar el segmento {0} de «{1}» ({2} puntos)? Se puede deshacer con Ctrl+Z.</value></data>
+  <data name="StatusSegmentDeleted" xml:space="preserve"><value>Segmento {0} de «{1}» eliminado.</value></data>
+  <data name="CleanSmoothToolTip" xml:space="preserve"><value>Ancho de la ventana a lo largo del recorrido. 100 m es la que usa mendikat.net para el desnivel; más ancha suaviza más.</value></data>
+  <data name="CleanInvalidWindow" xml:space="preserve"><value>Escribe una ventana en metros entre 10 y 5.000.</value></data>
+  <data name="FieldSymbolPlain" xml:space="preserve"><value>Símbolo</value></data>
 </root>

@@ -6,6 +6,7 @@ using Polaris.Gps.App.ViewModels;
 using Polaris.Gps.Domain.Geo;
 using Polaris.Gps.Domain.Model;
 using Polaris.Gps.Mapping.Coordinates;
+using Mapsui.Extensions;
 using Polaris.Gps.Mapping.Layers;
 using Polaris.Gps.Mapping.Local;
 using Polaris.Gps.Mapping.Providers;
@@ -29,9 +30,10 @@ public sealed class MapController : IDisposable
 
     private const int BaseLayerGroup = 0;
     private const int LocalMapLayerGroup = 1;
-    private const int DataLayerGroup = 2;
-    private const int SelectionLayerGroup = 3;
-    private const int HoverLayerGroup = 4;
+    private const int GridLayerGroup = 2;
+    private const int DataLayerGroup = 3;
+    private const int SelectionLayerGroup = 4;
+    private const int HoverLayerGroup = 5;
 
     private readonly Mapsui.Map _map;
     private readonly HttpClient _httpClient;
@@ -39,10 +41,12 @@ public sealed class MapController : IDisposable
     private readonly Dictionary<DocumentViewModel, IReadOnlyList<ItemLayers>> _documentLayers = [];
     private readonly MemoryLayer _selectionLayer = new("selection") { Style = null };
     private readonly MemoryLayer _hoverLayer = new("profile-hover") { Style = null };
+    private readonly MemoryLayer _gridLayer = new("utm-grid") { Style = null, Enabled = false };
     private readonly Dictionary<LocalMapItemViewModel, TileLayer> _localLayers = [];
     private TileLayer? _baseLayer;
     private ObservedTileSource? _tileSource;
     private bool _lastTileFailed;
+    private TrackColorMode _trackColoring;
 
     public MapController(Mapsui.Map map, HttpClient httpClient, ILogger<MapController> logger)
     {
@@ -51,6 +55,7 @@ public sealed class MapController : IDisposable
         _logger = logger;
         _map.Layers.Add(_selectionLayer, SelectionLayerGroup);
         _map.Layers.Add(_hoverLayer, HoverLayerGroup);
+        _map.Layers.Add(_gridLayer, GridLayerGroup);
         ZoomTo(InitialBounds);
     }
 
@@ -87,7 +92,7 @@ public sealed class MapController : IDisposable
     public void ShowDocument(DocumentViewModel document)
     {
         var old = _documentLayers.GetValueOrDefault(document) ?? [];
-        var items = TrailLayerFactory.CreateLayers(document.Document.Data, MapStyles.ColorFor(document.ColorIndex), document.FileName);
+        var items = TrailLayerFactory.CreateLayers(document.Document.Data, MapStyles.ColorFor(document.ColorIndex), document.FileName, _trackColoring);
         foreach (var item in items)
         {
             var visible = document.Layers.FirstOrDefault(l => ReferenceEquals(l.Model, item.Model))?.IsVisible ?? true;
@@ -261,7 +266,53 @@ public sealed class MapController : IDisposable
 
         _selectionLayer.Dispose();
         _hoverLayer.Dispose();
+        _gridLayer.Dispose();
         _baseLayer?.Dispose();
+    }
+
+    /// <summary>
+    /// Draws the UTM grid of the visible area in <paramref name="datum"/>, or hides it. Called when the view changes
+    /// and when the setting changes; cheap (a few dozen sampled lines).
+    /// </summary>
+    public void UpdateGrid(bool show, CoordinateDatum datum)
+    {
+        _gridLayer.Enabled = show;
+        if (!show)
+        {
+            _gridLayer.Features = [];
+            _gridLayer.DataHasChanged();
+            return;
+        }
+
+        var viewport = _map.Navigator.Viewport;
+        var extent = viewport.ToExtent();
+        if (extent is null || viewport.Width <= 0)
+        {
+            return;
+        }
+
+        var sw = WebMercator.ToGeo(extent.MinX, extent.MinY);
+        var ne = WebMercator.ToGeo(extent.MaxX, extent.MaxY);
+        var view = new GeoBounds(sw.Latitude, sw.Longitude, ne.Latitude, ne.Longitude);
+        var centreLatitude = (sw.Latitude + ne.Latitude) / 2 * Math.PI / 180;
+        var lines = UtmGrid.Lines(view, viewport.Resolution * Math.Cos(centreLatitude), datum);
+        _gridLayer.Features = TrailLayerFactory.GridFeatures(lines, view).ToList();
+        _gridLayer.DataHasChanged();
+    }
+
+    /// <summary>Colours the tracks of every document by elevation, slope or speed, or with their document colour (None).</summary>
+    public void SetTrackColoring(TrackColorMode mode, IEnumerable<DocumentViewModel> documents)
+    {
+        if (mode == _trackColoring)
+        {
+            return;
+        }
+
+        _trackColoring = mode;
+        foreach (var document in documents)
+        {
+            ShowDocument(document);
+        }
     }
 
     /// <summary>Removes and disposes layers. Mapsui rejects empty lists, so nothing is called for an empty one.</summary>

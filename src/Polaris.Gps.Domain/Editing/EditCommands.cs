@@ -197,3 +197,49 @@ public sealed class CompositeCommand(IReadOnlyList<IEditCommand> commands) : IEd
         }
     }
 }
+
+/// <summary>Inserts a whole item (track, route, segment…) at a position of its list.</summary>
+public sealed class InsertItemCommand<T>(List<T> owner, int index, T item) : IEditCommand
+    where T : class
+{
+    public void Do() => owner.Insert(index, item);
+
+    public void Undo()
+    {
+        if (!ReferenceEquals(owner[index], item))
+        {
+            throw new InvalidOperationException("The inserted item is no longer at its position.");
+        }
+
+        owner.RemoveAt(index);
+    }
+}
+
+/// <summary>Replaces the whole content of a list (cuts, cleaning); undo restores the previous items in their order.</summary>
+public sealed class ReplaceItemsCommand<T>(List<T> owner, IReadOnlyList<T> items) : IEditCommand
+{
+    private List<T>? _previous;
+
+    public void Do()
+    {
+        _previous = [.. owner];
+        owner.Clear();
+        owner.AddRange(items);
+    }
+
+    public void Undo()
+    {
+        owner.Clear();
+        owner.AddRange(_previous ?? throw new InvalidOperationException("The command was not done."));
+    }
+}
+
+/// <summary>Inserts several points at a position of an ordered list, in order (a stretch drawn along a path).</summary>
+public sealed class InsertPointsCommand(List<TrailPoint> owner, int index, IReadOnlyList<TrailPoint> points) : IEditCommand
+{
+    public IReadOnlyList<TrailPoint> Points => points;
+
+    public void Do() => owner.InsertRange(index, points);
+
+    public void Undo() => owner.RemoveRange(index, points.Count);
+}

@@ -3,7 +3,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.4.0.**
+> **Estado: versión 0.5.0.**
 > Se abren archivos GPX, y KML, KMZ, TCX, OziExplorer (PLT, WPT) y CompeGPS/TwoNav (TRK, WPT) convertidos a GPX, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -13,21 +13,27 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 
 | Acción | Cómo |
 |--------|------|
-| Ver los puntos de un track, ruta o waypoints | Seleccionarlo en **Capas** (panel izquierdo); la casilla lo muestra u oculta en el mapa |
+| Ver los puntos de un track, ruta o waypoints | Seleccionarlo en **Capas** (panel izquierdo); la casilla lo muestra u oculta en el mapa. Un track en varias partes lista sus segmentos: clic selecciona sus puntos y ✕ elimina ese segmento (con confirmación; se deshace) |
 | Seleccionar un punto | Clic en la lista o en el mapa (cerca del punto); Ctrl/Mayús + clic en la lista para varios |
 | Eliminar | **Supr**. Sin puntos seleccionados, elimina el track o ruta (con confirmación) |
 | Insertar un punto intermedio | **Insert**: punto medio entre el seleccionado y el siguiente |
 | Menú contextual | Con un punto de un track seleccionado, clic derecho en el mapa: **Insertar punto** (en el sitio del clic, como Ctrl+clic; sobre un punto, el punto medio tras él), **Eliminar punto**, las herramientas del menú *Herramientas* y **Añadir waypoint** |
-| Waypoints | Clic derecho en el mapa › **Añadir waypoint…** (nombre, comentario y descripción). Clic derecho sobre un waypoint › **Editar waypoint…** o **Eliminar waypoint**; **Supr** con el waypoint seleccionado también lo elimina, siempre con confirmación |
+| Waypoints | Clic derecho en el mapa › **Añadir waypoint…** (nombre, comentario, descripción y **símbolo**: cima, collado, aparcamiento, refugio, fuente…, guardado como `sym` de Garmin y dibujado con su icono). Clic derecho sobre un waypoint › **Editar waypoint…** o **Eliminar waypoint**; **Supr** con el waypoint seleccionado también lo elimina, siempre con confirmación. Con la capa de waypoints seleccionada, la casilla sobre la lista filtra por nombre. Los nombres que se solaparían se ocultan hasta acercarse |
 | Mover un punto | Seleccionarlo y arrastrarlo en el mapa, o cambiar latitud/longitud en el detalle y pulsar **Aplicar** (Intro) |
 | Editar nombre, descripción, elevación, hora | Panel «Punto seleccionado» › **Aplicar**; **Descartar** (Esc) deshace lo escrito |
 | Deshacer / rehacer | **Ctrl+Z** / **Ctrl+Y** (menú Edición) |
-| Perfil de elevación | Seleccionar un track o ruta en **Capas** › botón **Perfil** (o Ver › Perfil de elevación). Muestra distancia, desnivel positivo y negativo, elevación mínima y máxima, y tiempo total, en movimiento y detenido. Puntero sobre el perfil: marca el punto en el mapa; clic: lo selecciona; ← →: punto anterior / siguiente |
+| Perfil de elevación | Seleccionar un track o ruta en **Capas** › botón **Perfil** (o Ver › Perfil de elevación). Muestra distancia, desnivel positivo y negativo, elevación mínima y máxima, y tiempo total, en movimiento y detenido. Puntero sobre el perfil: marca el punto en el mapa; clic: lo selecciona; ← →: punto anterior / siguiente. Selector de gráfica: altitud, altitud coloreada por pendiente, pendiente (%) o velocidad (km/h); lista de subidas de más de 50 m |
 | Simplificar un track o ruta | Seleccionarlo en **Capas** › *Herramientas › Simplificar track…*; tolerancia en metros con vista previa del número de puntos |
 | Regenerar tiempos | *Herramientas › Regenerar tiempos…*: fecha, hora y zona horaria de inicio, y velocidad (km/h, m/s, min/km) o intervalo fijo; vista previa en hora local y UTC |
 | Invertir el sentido | *Herramientas › Invertir track*: invierte puntos y segmentos del track o ruta seleccionado; las horas se reflejan (mismo inicio y fin, mismos intervalos). Se deshace con Ctrl+Z |
 | Unir tracks | *Herramientas › Unir tracks…*: marcar los tracks (de todos los documentos abiertos), el hueco máximo dentro de un segmento y si se permite invertir alguno; se encadenan por el extremo más cercano, con vista previa del orden y de cada hueco. El resultado se abre en un GPX nuevo sin guardar y los originales no cambian |
 | Ajustar altitudes con el MDT | *Herramientas › Ajustar altitudes con el MDT del IGN…* › **Consultar** (5 m o 25 m; requiere Internet) › revisar cuántos puntos cambian y cuántos no tienen dato › **Aplicar**. Sólo España; el origen de cada elevación se ve en el detalle del punto |
+| Limpiar un track | *Herramientas › Limpiar track…*: quita saltos del GPS (velocidad máxima, necesita horas), picos (el punto se separa y la línea vuelve) y paradas (quedan el primer y el último punto), y aplica un suavizado gaussiano de la altitud con la ventana elegida (100 m por defecto, como mendikat.net); vista previa y un solo paso de deshacer |
+| Cortar | Con un punto seleccionado: *Herramientas › Partir en el punto seleccionado* (dos tracks o rutas; la segunda empieza en una copia del punto), *Eliminar los puntos anteriores / posteriores*; *Separar los segmentos en tracks*. También en el menú contextual |
+| Dibujar | **✎ Dibujar** (o *Edición › Modo dibujo*, Ctrl+D): cada clic añade un punto tras el seleccionado; Esc termina. *Edición › Nuevo track / Nueva ruta* en el documento abierto. Opciones de la barra: **Seguir caminos** (BRouter, por sendas y pistas de OSM, con tipo de recorrido), **Ajustar a puntos** (toma la posición y altitud de un punto cercano) y **Altitud del MDT** (MDT locales o IGN 5 m). La barra de estado muestra distancia, desnivel y tiempo MIDE |
+| Cerrar en circular, ida y vuelta | *Herramientas › Cerrar en circular* (vuelve al inicio, por caminos si están activados) e *Ida y vuelta* (añade la vuelta por los mismos puntos) |
+| Tiempos por desnivel | *Herramientas › Regenerar tiempos…* › **Según la distancia y el desnivel (método MIDE)**: 4 km/h en llano, 400 m/h de subida, 600 m/h de bajada (la velocidad escrita escala las tres) |
+| Enviar o recibir del GPS | *Comunicaciones › Enviar al GPS…* copia el documento como GPX en un Garmin (`Garmin\GPX`) o TwoNav (`TwoNavData\Data`) conectado como unidad USB; *Recibir del GPS…* abre sus tracks, rutas y waypoints |
 | Abrir arrastrando | Soltar sobre la ventana uno o varios archivos GPX, KML, KMZ, TCX, PLT, WPT, TRK (se abren como documentos) o `.map`, `.imp`, `.rmap`, `.asc`, `.hgt` (como cartografía de usuario) |
 | Abrir KML, KMZ, TCX, PLT, WPT o TRK | *Archivo › Abrir archivo…* (Ctrl+O): se abre como un GPX nuevo «nombre.gpx» sin guardar; **Guardar** pide dónde guardarlo |
 | Convertir varios archivos a GPX | *Archivo › Convertir a GPX…*: elegir los KML, KMZ, TCX, PLT, WPT o TRK, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
@@ -35,9 +41,12 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Cambiar el idioma | *Archivo › Configuración…* › **Idioma de la aplicación**: español (por defecto), català, euskara, français o português, con su bandera. El instalador `.msi` también lo pregunta y es el idioma de la primera ejecución. Se aplica al volver a abrir la aplicación, también a la guía de ayuda (F1). Algunos detalles técnicos de los errores de cartografía siguen en español; los números mantienen la coma decimal |
 | Modo claro u oscuro | La aplicación sigue el modo de Windows (*Configuración de Windows › Personalización › Colores*), también en la barra de título; el mapa y su regla de escala no cambian |
 | Mostrar u ocultar la regla de escala | *Archivo › Configuración…* › **Visualización** › **Mostrar la regla de escala en el mapa** (activada por defecto); el cambio se ve al aceptar |
+| Cuadrícula UTM | *Archivo › Configuración…* › **Visualización** › **Mostrar la cuadrícula UTM en el mapa** (desactivada por defecto), en el huso del centro y el datum elegido |
+| Datum ED50 | *Archivo › Configuración…* › **Coordenadas** › **Datum**: WGS84 (por defecto) o ED50 para la barra de estado, la lista de puntos, el detalle y la cuadrícula (husos 29 a 31; los archivos siguen en WGS84) |
+| Colorear los tracks | *Ver › Colorear tracks por* › Altitud, Pendiente o Velocidad, con leyenda en el mapa; Ninguno vuelve al color del documento |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
 | Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |
-| Ayuda | **F1** o *Ayuda › Ayuda de Polaris GPS* (guía HTML en el navegador, en el idioma de la aplicación; arriba enlaza a los demás idiomas). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones y Acerca de (versión, autor) |
+| Ayuda | **F1** o *Ayuda › Ayuda de Polaris GPS* (guía HTML en el navegador, en el idioma de la aplicación; arriba enlaza a los demás idiomas). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones (compara con la última release de `mendikat/polaris-gps-releases` y ofrece abrir su página) y Acerca de (versión, autor) |
 
 ## Requisitos
 
@@ -102,8 +111,26 @@ dotnet build installer\Polaris.Gps.Installer -c Release   # genera artifacts\ins
 - Una versión nueva sustituye a la instalada (la versión sale de `Directory.Build.props`); no deja instalar una más
   antigua encima. Se desinstala desde *Configuración › Aplicaciones*; la configuración del usuario (`%APPDATA%`) se
   conserva.
-- No instala el runtime de .NET: si falta, Windows lo avisa al abrir la aplicación, como con el zip.
+- El `.msi` no instala el runtime de .NET: lo hace el programa de instalación (abajo). Con el `.msi` solo o con el zip,
+  si falta, Windows lo avisa al abrir la aplicación.
 - El `UpgradeCode` de `Package.wxs` identifica el producto entre versiones: no se debe cambiar.
+
+### Programa de instalación con .NET (setup.exe)
+
+`installer\Polaris.Gps.Setup` (bundle Burn de WiX 5) genera `artifacts\installer\PolarisGPS-<versión>-setup.exe` (unos 100 MB), lo
+que se publica para los usuarios:
+
+```powershell
+dotnet build installer\Polaris.Gps.Setup -c Release   # compila antes el .msi
+```
+
+- Si falta el runtime de escritorio de .NET 10 (x64), una página (en español, `Prereq.es.wxl`) pide instalarlo y su
+  instalador muestra el progreso; después se abre el asistente del `.msi` con sus páginas. Si ya está, se abre directamente.
+- El instalador del runtime se descarga una vez de `https://aka.ms/dotnet/10.0/windowsdesktop-runtime-win-x64.exe`
+  (último 10.0.x) a `obj\runtime` y va dentro del `.exe`, que funciona sin conexión. Para actualizarlo, borrar `obj\runtime`.
+- En *Aplicaciones instaladas* aparece sólo el programa de instalación; al desinstalarlo se quita Polaris GPS y se
+  conserva el runtime. Su `UpgradeCode` (`Bundle.wxs`) tampoco se debe cambiar.
+- Sin firmar: Windows SmartScreen puede avisar al descargarlo («Más información › Ejecutar de todas formas»).
 
 ## Arquitectura
 
@@ -180,6 +207,11 @@ También muestra el datum del archivo activo (WGS84 en GPX, KML y TCX) y, al det
 la del punto del archivo si hay uno con elevación (`Alt. 1.234 m (archivo)`) o, si no, la del terreno según el MDT
 del IGN (`Alt. 846 m (MDT IGN 5 m)`, sólo España y con conexión; sin dato, «—»).
 
+Con *Archivo › Configuración… › Coordenadas › Datum* = ED50, la UTM se calcula sobre el elipsoide Internacional 1924
+con la transformación de Helmert de mendikat.net (`Ed50`), y lo mismo la latitud y longitud de la lista y del detalle
+(lo escrito en ED50 se pasa a WGS84 al aplicar). Sólo en los husos 29 a 31; fuera, WGS84 y la barra de estado lo dice.
+La cuadrícula UTM (`UtmGrid`) usa el huso del centro del mapa y el mismo datum; separación redonda de al menos 90 px.
+
 ## Dependencias y licencias
 
 | Paquete | Licencia |
@@ -215,4 +247,10 @@ Datos: mosaicos y MDT del IGN España bajo CC BY 4.0 (scne.es); datos OSM bajo O
   y el dibujo del mapa se comprueban a mano.
 - Condiciones de uso de Esri, OSM y del SCAN 25 del IGN francés a revisar antes de distribuir públicamente.
 - MtbMap y CyclOSM son servidores comunitarios sin garantía de disponibilidad.
-- «Buscar actualizaciones» abre de momento https://www.mendikat.net (falta la dirección definitiva).
+- «Buscar actualizaciones» consulta la API de GitHub sin credenciales (60 consultas por hora y dirección) en el
+  repositorio público `mendikat/polaris-gps-releases`: hay que crearlo y publicar en él cada versión (el código sigue
+  en el repositorio privado). Sin release publicada, avisa de que no se pudo comprobar.
+- «Seguir caminos» usa el servidor público de BRouter (brouter.de), sin garantía de disponibilidad ni límites
+  publicados; `BRouterClient` admite otro servidor (BRouter se puede instalar en uno propio).
+- Comunicaciones sólo ve los GPS conectados como unidad USB; los que usan MTP (muchos relojes) no aparecen.
+- El `.exe` y el `.msi` no están firmados.

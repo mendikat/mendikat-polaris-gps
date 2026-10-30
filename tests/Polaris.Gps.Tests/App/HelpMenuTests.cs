@@ -85,11 +85,11 @@ public sealed partial class HelpMenuTests
     }
 
     [Fact]
-    public void Check_for_updates_opens_mendikat_net_for_now()
+    public void Without_an_update_checker_the_releases_page_is_opened()
     {
         _vm.CheckUpdatesCommand.Execute(null);
 
-        Assert.Equal("https://www.mendikat.net", Assert.Single(_dialogs.OpenedExternally));
+        Assert.Equal("https://github.com/mendikat/polaris-gps-releases/releases", Assert.Single(_dialogs.OpenedExternally));
     }
 
     [Fact]
@@ -98,7 +98,7 @@ public sealed partial class HelpMenuTests
         _vm.AboutCommand.Execute(null);
 
         var about = _dialogs.AboutShown!;
-        Assert.Equal("Versión 0.4.0", about.VersionText);
+        Assert.Equal("Versión 0.5.0", about.VersionText);
         Assert.Equal("Autor: Javier Urrutia", about.AuthorText);
         Assert.Equal("mailto:javi@mendikat.net", about.AuthorEmailUri);
         Assert.Equal("https://www.mendikat.net", about.Web);

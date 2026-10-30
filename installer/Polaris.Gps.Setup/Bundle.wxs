@@ -1,0 +1,34 @@
+<!-- Polaris GPS setup: the .NET 10 Desktop Runtime if it is missing, then the Polaris GPS installer with its own pages
+     (language, licence, Mendikat, folder…). The bundle has no pages of its own (WixInternalUIBootstrapperApplication):
+     when the runtime is missing a short page (Prereq.es.wxl) asks to install it, its installer shows the progress, and
+     then the .msi wizard opens. Only the bundle appears in "Installed apps"; uninstalling it removes Polaris GPS and
+     keeps the runtime, which other applications may use. -->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal"
+     xmlns:netfx="http://wixtoolset.org/schemas/v4/wxs/netfx">
+  <!-- UpgradeCode identifies the setup across versions: never change it. -->
+  <Bundle Name="Polaris GPS" Manufacturer="Mendikat" Version="$(Version)"
+          UpgradeCode="5FA0B37E-AB80-454F-BD60-7BCD1B6DD808"
+          IconSourceFile="$(AppDir)Assets\icon.ico" AboutUrl="https://www.mendikat.net"
+          DisableModify="yes">
+    <BootstrapperApplication>
+      <!-- Shows only the pages of the .msi; the runtime, a prerequisite, gets a short page of its own (Prereq.es.wxl). -->
+      <bal:WixInternalUIBootstrapperApplication LocalizationFile="Prereq.es.wxl" />
+    </BootstrapperApplication>
+
+    <!-- Highest installed .NET Desktop Runtime 10.x for x64, empty if there is none -->
+    <netfx:DotNetCoreSearch Id="DesktopRuntime10" RuntimeType="desktop" Platform="x64" MajorVersion="10" Variable="DesktopRuntime10" />
+
+    <Chain>
+      <ExePackage Id="DotNetDesktopRuntime10" DisplayName="Microsoft .NET 10 Desktop Runtime (x64)"
+                  SourceFile="$(RuntimeDir)windowsdesktop-runtime-win-x64.exe" Compressed="yes" Vital="yes" Permanent="yes"
+                  DetectCondition="DesktopRuntime10 &gt;= v10.0.0"
+                  InstallArguments="/install /passive /norestart"
+                  bal:PrereqPackage="yes" bal:PrereqLicenseUrl="https://github.com/dotnet/runtime/blob/main/LICENSE.TXT">
+        <ExitCode Value="1638" Behavior="success" />
+        <ExitCode Value="3010" Behavior="scheduleReboot" />
+      </ExePackage>
+      <MsiPackage Id="PolarisGps" SourceFile="$(var.Polaris.Gps.Installer.TargetPath)" Vital="yes" />
+    </Chain>
+  </Bundle>
+</Wix>

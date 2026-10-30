@@ -99,6 +99,8 @@ public sealed class WpfDialogService : IDialogService
         Window dialog = viewModel switch
         {
             SimplifyViewModel simplify => new SimplifyWindow(simplify),
+            CleanViewModel clean => new CleanWindow(clean),
+            GpsDeviceViewModel gps => new GpsDeviceWindow(gps),
             JoinTracksViewModel join => new JoinTracksWindow(join),
             TimesViewModel times => new TimesWindow(times),
             DemViewModel dem => new DemWindow(dem),

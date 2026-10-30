@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.IO;
 using Polaris.Gps.App.Resources;
+using Polaris.Gps.App.Services;
 using Polaris.Gps.App.Settings;
 using Microsoft.Extensions.Logging;
 
@@ -55,8 +56,51 @@ public sealed partial class MainViewModel
     /// <summary>Opens https://www.mendikat.net in the browser.</summary>
     public void OpenWeb() => _dialogs.OpenExternal(AboutViewModel.WebUrl);
 
-    /// <summary>Opens the page with the latest version (for now the mendikat.net home page).</summary>
-    public void CheckUpdates() => _dialogs.OpenExternal(AboutViewModel.UpdatesUrl);
+    /// <summary>Asks for the latest published version. Set at startup; without it the releases page is opened.</summary>
+    public IUpdateChecker? UpdateChecker { get; init; }
+
+    /// <summary>
+    /// Help › Check for updates: compares this version with the latest published one. If there is a newer one, offers to
+    /// open its page to download the setup program; if the check fails (offline), offers the page with all versions.
+    /// </summary>
+    public async Task CheckUpdatesAsync()
+    {
+        if (UpdateChecker is null)
+        {
+            _dialogs.OpenExternal(AboutViewModel.UpdatesUrl);
+            return;
+        }
+
+        var current = GitHubUpdateChecker.TryParseVersion(AboutViewModel.Version) ?? new Version(0, 0, 0);
+        StatusMessage = Strings.StatusCheckingUpdates;
+        try
+        {
+            var latest = await UpdateChecker.LatestAsync(CancellationToken.None);
+            _logger.LogInformation("Update check: running {Current}, latest {Latest}", current, latest.Version);
+            if (latest.Version > current)
+            {
+                StatusMessage = string.Format(Strings.UpdateAvailableStatus, latest.Version.ToString(3));
+                if (_dialogs.Confirm(string.Format(Strings.UpdateAvailable, latest.Version.ToString(3), current.ToString(3))))
+                {
+                    _dialogs.OpenExternal(latest.PageUrl);
+                }
+            }
+            else
+            {
+                StatusMessage = Strings.StatusReady;
+                _dialogs.ShowInfo(string.Format(Strings.UpdateNone, current.ToString(3)));
+            }
+        }
+        catch (UpdateCheckException ex)
+        {
+            _logger.LogInformation("Update check failed: {Reason}", ex.Message);
+            StatusMessage = Strings.StatusReady;
+            if (_dialogs.Confirm(Strings.UpdateCheckFailed))
+            {
+                _dialogs.OpenExternal(AboutViewModel.UpdatesUrl);
+            }
+        }
+    }
 
     private void InitializeHelpCommands()
     {
@@ -64,6 +108,6 @@ public sealed partial class MainViewModel
         DonateCommand = new RelayCommand(Donate);
         AboutCommand = new RelayCommand(ShowAbout);
         WebCommand = new RelayCommand(OpenWeb);
-        CheckUpdatesCommand = new RelayCommand(CheckUpdates);
+        CheckUpdatesCommand = new RelayCommand(_ => CheckUpdatesAsync());
     }
 }

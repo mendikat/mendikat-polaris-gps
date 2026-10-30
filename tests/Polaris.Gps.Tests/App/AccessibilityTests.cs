@@ -101,6 +101,8 @@ public sealed class AccessibilityTests
         yield return WindowSmokeTests.CreateMainWindow();
         yield return new Window { Content = new DocumentPanel { DataContext = new DocumentViewModel(new TrailDocument(@"C:\data\d.gpx", DocumentFormat.Gpx)) } };
         yield return new SimplifyWindow(new SimplifyViewModel(layer));
+        yield return new CleanWindow(new CleanViewModel(layer));
+        yield return new GpsDeviceWindow(new GpsDeviceViewModel(new Polaris.Gps.App.Services.DriveGpsDeviceFinder(), sending: true, "ruta"));
         yield return new JoinTracksWindow(new JoinTracksViewModel([(WindowSmokeTests.SampleTrack(42.8), "a.gpx"), (WindowSmokeTests.SampleTrack(42.9), "b.gpx")]));
         yield return new TimesWindow(new TimesViewModel(layer));
         yield return new DemWindow(new DemViewModel(layer, _ => new WindowSmokeTests.NoDataSource()));

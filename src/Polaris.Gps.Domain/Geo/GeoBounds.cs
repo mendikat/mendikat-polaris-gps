@@ -20,6 +20,10 @@ public readonly record struct GeoBounds(double MinLatitude, double MinLongitude,
         Math.Max(MaxLatitude, p.Latitude),
         Math.Max(MaxLongitude, p.Longitude));
 
+    /// <summary>True if <paramref name="p"/> is inside the box or on its border.</summary>
+    public bool Contains(GeoPosition p) =>
+        p.Latitude >= MinLatitude && p.Latitude <= MaxLatitude && p.Longitude >= MinLongitude && p.Longitude <= MaxLongitude;
+
     public GeoBounds Union(GeoBounds other) => new(
         Math.Min(MinLatitude, other.MinLatitude),
         Math.Min(MinLongitude, other.MinLongitude),

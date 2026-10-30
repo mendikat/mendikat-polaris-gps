@@ -33,6 +33,7 @@ public partial class MainWindow : Window
     private bool _closeConfirmed;
     private DragState? _drag;
     private System.Windows.Point? _addPointPress;
+    private System.Windows.Point? _drawPress;
     private GeoPosition? _contextPosition;
     private bool _contextOnPoint;
     private readonly List<ProfileWindow> _profileWindows = [];
@@ -46,6 +47,7 @@ public partial class MainWindow : Window
         MapView.Map = new Mapsui.Map();
         _map = createMapController(MapView.Map);
         _map.SetProvider(viewModel.SelectedMapProvider);
+        _map.SetTrackColoring(viewModel.TrackColoring, []);
         _map.TileStatusChanged += (_, failed) => Dispatcher.BeginInvoke(() => _viewModel.ReportMapTiles(failed));
         viewModel.PointAt = position =>
         {
@@ -73,6 +75,7 @@ public partial class MainWindow : Window
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
         MapView.Map.Navigator.ViewportChanged += (_, _) => OnViewportChanged();
+        _map.UpdateGrid(viewModel.ShowUtmGrid, viewModel.CoordinateDatum);
         OnViewportChanged();
         MapView.MapPointerMoved += OnMapPointerMoved;
         MapView.MapPointerPressed += OnMapPointerPressed;
@@ -99,6 +102,7 @@ public partial class MainWindow : Window
             return;
         }
 
+        _map.UpdateGrid(_viewModel.ShowUtmGrid, _viewModel.CoordinateDatum);
         ScaleBarLabel.Text = scale.Label;
         ScaleBarRuler.Width = Math.Round(scale.Pixels);
         ScaleBarRuler.Segments = scale.Segments;
@@ -186,6 +190,17 @@ public partial class MainWindow : Window
         {
             case nameof(MainViewModel.SelectedMapProvider):
                 _map.SetProvider(_viewModel.SelectedMapProvider);
+                break;
+            case nameof(MainViewModel.ShowUtmGrid) or nameof(MainViewModel.CoordinateDatum):
+                _map.UpdateGrid(_viewModel.ShowUtmGrid, _viewModel.CoordinateDatum);
+                MapView.RefreshGraphics();
+                break;
+            case nameof(MainViewModel.IsDrawing):
+                MapView.Cursor = _viewModel.IsDrawing ? Cursors.Cross : null;
+                break;
+            case nameof(MainViewModel.TrackColoring):
+                _map.SetTrackColoring(_viewModel.TrackColoring, _viewModel.Documents);
+                MapView.RefreshGraphics();
                 break;
             case nameof(MainViewModel.ActiveDocument):
                 ShowSelection(ensureVisible: false);
@@ -386,7 +401,7 @@ public partial class MainWindow : Window
     /// </summary>
     private void OnMapTapped(object? sender, MapEventArgs e)
     {
-        if (e.WorldPosition is null || IsControlPressed)
+        if (e.WorldPosition is null || IsControlPressed || _viewModel.IsDrawing)
         {
             return;
         }
@@ -403,15 +418,35 @@ public partial class MainWindow : Window
     private void OnMapLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         _addPointPress = null;
+        _drawPress = null;
         if (IsControlPressed && _viewModel.ActiveDocument is not null)
         {
             _addPointPress = e.GetPosition(MapView);
             e.Handled = true;
         }
+        else if (_viewModel.IsDrawing)
+        {
+            // Drawing mode: not handled, so dragging still pans the map; a click without moving adds the point on release.
+            _drawPress = e.GetPosition(MapView);
+        }
     }
 
     private void OnMapLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
+        if (_drawPress is { } drawPress)
+        {
+            _drawPress = null;
+            var at = e.GetPosition(MapView);
+            // A press on the selected point may be a drag of that point (OnMapPointerPressed): that moves it instead.
+            if (_drag is null && (at - drawPress).Length < MinimumDragPixels)
+            {
+                var point = MapView.Map.Navigator.Viewport.ScreenToWorld(at.X, at.Y);
+                _viewModel.AddPointAt(WebMercator.ToGeo(point.X, point.Y));
+            }
+
+            return;
+        }
+
         if (_addPointPress is not { } press)
         {
             return;

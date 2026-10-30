@@ -42,6 +42,7 @@
         <KeyBinding Key="Insert" Command="{Binding InsertPointCommand}" />
         <KeyBinding Key="Escape" Command="{Binding CancelOperationCommand}" />
         <KeyBinding Key="F1" Command="{Binding HelpCommand}" />
+        <KeyBinding Key="D" Modifiers="Control" Command="{Binding ToggleDrawingCommand}" />
     </Window.InputBindings>
 
     <DockPanel>
@@ -71,12 +72,25 @@
                 <MenuItem Header="{x:Static res:Strings.MenuDelete}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />
                 <MenuItem Header="{x:Static res:Strings.MenuInsertPoint}" Command="{Binding InsertPointCommand}" InputGestureText="Insert" />
                 <MenuItem Header="{x:Static res:Strings.MenuEditWaypoint}" Command="{Binding EditWaypointCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuDrawMode}" Command="{Binding ToggleDrawingCommand}" IsChecked="{Binding IsDrawing, Mode=OneWay}" InputGestureText="Ctrl+D" />
+                <MenuItem Header="{x:Static res:Strings.MenuNewTrack}" Command="{Binding NewTrackCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuNewRoute}" Command="{Binding NewRouteCommand}" />
             </MenuItem>
             <MenuItem Header="{x:Static res:Strings.MenuTools}">
                 <MenuItem Header="{x:Static res:Strings.MenuSimplify}" Command="{Binding SimplifyCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuClean}" Command="{Binding CleanCommand}" />
                 <MenuItem Header="{x:Static res:Strings.MenuRegenerateTimes}" Command="{Binding RegenerateTimesCommand}" />
                 <MenuItem Header="{x:Static res:Strings.MenuReverse}" Command="{Binding ReverseCommand}" />
                 <MenuItem Header="{x:Static res:Strings.MenuJoinTracks}" Command="{Binding JoinTracksCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuSplitAtPoint}" Command="{Binding SplitAtPointCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuRemoveBefore}" Command="{Binding RemoveBeforeCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuRemoveAfter}" Command="{Binding RemoveAfterCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuSegmentsToTracks}" Command="{Binding SegmentsToTracksCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuCloseLoop}" Command="{Binding CloseLoopCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuOutAndBack}" Command="{Binding OutAndBackCommand}" />
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuAdjustElevations}" Command="{Binding AdjustElevationsCommand}" />
             </MenuItem>
@@ -86,6 +100,16 @@
                 <MenuItem Header="{x:Static res:Strings.MenuZoomToData}" Command="{Binding ZoomToDataCommand}" />
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.MenuElevationProfile}" Command="{Binding ElevationProfileCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuTrackColoring}">
+                    <MenuItem Header="{x:Static res:Strings.MenuColoringNone}" Command="{Binding TrackColoringCommand}" CommandParameter="None" IsChecked="{Binding IsColoringNone, Mode=OneWay}" />
+                    <MenuItem Header="{x:Static res:Strings.MenuColoringElevation}" Command="{Binding TrackColoringCommand}" CommandParameter="Elevation" IsChecked="{Binding IsColoringElevation, Mode=OneWay}" />
+                    <MenuItem Header="{x:Static res:Strings.MenuColoringSlope}" Command="{Binding TrackColoringCommand}" CommandParameter="Slope" IsChecked="{Binding IsColoringSlope, Mode=OneWay}" />
+                    <MenuItem Header="{x:Static res:Strings.MenuColoringSpeed}" Command="{Binding TrackColoringCommand}" CommandParameter="Speed" IsChecked="{Binding IsColoringSpeed, Mode=OneWay}" />
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{x:Static res:Strings.MenuCommunications}">
+                <MenuItem Header="{x:Static res:Strings.MenuSendToGps}" Command="{Binding SendToGpsCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuReceiveFromGps}" Command="{Binding ReceiveFromGpsCommand}" />
             </MenuItem>
             <MenuItem Header="{x:Static res:Strings.MenuHelp}">
                 <MenuItem Header="{x:Static res:Strings.MenuHelpContents}" Command="{Binding HelpCommand}" InputGestureText="F1" />
@@ -162,6 +186,25 @@
             <Button Content="{x:Static res:Strings.ToolProfileButton}" Command="{Binding ElevationProfileCommand}"
                     ToolTip="{x:Static res:Strings.ToolElevationProfile}" ToolTipService.ShowOnDisabled="True"
                     AutomationProperties.Name="{x:Static res:Strings.MenuElevationProfile}" />
+            <Separator />
+            <!-- Drawing: a click adds a point; options for the new points -->
+            <ToggleButton Content="{x:Static res:Strings.ToolDraw}" IsChecked="{Binding IsDrawing}" Padding="8,0"
+                          ToolTip="{x:Static res:Strings.ToolDrawToolTip}" AutomationProperties.Name="{x:Static res:Strings.ToolDrawToolTip}" />
+        </ToolBar>
+
+        <!-- Drawing options, shown only while drawing (the main toolbar would not fit them) -->
+        <ToolBar DockPanel.Dock="Top" ToolBarTray.IsLocked="True" Visibility="{Binding IsDrawing, Converter={StaticResource BoolToVisibility}}">
+            <CheckBox Content="{x:Static res:Strings.ToolFollowPaths}" IsChecked="{Binding FollowPaths}" IsEnabled="{Binding CanFollowPaths}" Margin="4,0,4,0"
+                      VerticalAlignment="Center" ToolTip="{x:Static res:Strings.ToolFollowPathsToolTip}" />
+            <ComboBox ItemsSource="{Binding RoutingProfiles}" SelectedItem="{Binding RoutingProfile}" MinWidth="170" IsEnabled="{Binding FollowPaths}"
+                      AutomationProperties.Name="{x:Static res:Strings.ToolRoutingProfileName}" />
+            <CheckBox Content="{x:Static res:Strings.ToolSnap}" IsChecked="{Binding SnapToPoints}" Margin="8,0,4,0" VerticalAlignment="Center"
+                      ToolTip="{x:Static res:Strings.ToolSnapToolTip}" />
+            <CheckBox Content="{x:Static res:Strings.ToolAutoElevation}" IsChecked="{Binding AutoElevation}" Margin="4,0" VerticalAlignment="Center"
+                      ToolTip="{x:Static res:Strings.ToolAutoElevationToolTip}" />
+            <Separator />
+            <Button Content="{x:Static res:Strings.MenuCloseLoop}" Command="{Binding CloseLoopCommand}" Padding="8,0" />
+            <Button Content="{x:Static res:Strings.MenuOutAndBack}" Command="{Binding OutAndBackCommand}" Padding="8,0" />
         </ToolBar>
 
         <!-- Status bar: messages, cartography problems and pointer coordinates (COORD-01/02, MAP-07) -->
@@ -188,6 +231,11 @@
                 <TextBlock Text="{Binding PointerElevation}" AutomationProperties.Name="{x:Static res:Strings.A11yElevationName}" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
+            <!-- Figures of what is being drawn -->
+            <StatusBarItem DockPanel.Dock="Right" Visibility="{Binding DrawingStats, Converter={StaticResource NullToCollapsed}}">
+                <TextBlock Text="{Binding DrawingStats}" FontWeight="SemiBold" AutomationProperties.Name="{x:Static res:Strings.A11yDrawingStatsName}" />
+            </StatusBarItem>
+            <Separator DockPanel.Dock="Right" Visibility="{Binding DrawingStats, Converter={StaticResource NullToCollapsed}}" />
             <!-- Long operations: progress and Cancel (NFR-02) -->
             <StatusBarItem DockPanel.Dock="Right" Visibility="{Binding CanCancelOperation, Converter={StaticResource BoolToVisibility}}">
                 <Button Content="{x:Static res:Strings.CancelOperation}" Padding="8,0" Command="{Binding CancelOperationCommand}"
@@ -260,8 +308,13 @@
                             <MenuItem Tag="track" Header="{x:Static res:Strings.MenuDeletePoint}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />
                             <Separator Tag="track" />
                             <MenuItem Tag="track" Header="{x:Static res:Strings.MenuSimplify}" Command="{Binding SimplifyCommand}" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuClean}" Command="{Binding CleanCommand}" />
                             <MenuItem Tag="track" Header="{x:Static res:Strings.MenuRegenerateTimes}" Command="{Binding RegenerateTimesCommand}" />
                             <MenuItem Tag="track" Header="{x:Static res:Strings.MenuReverse}" Command="{Binding ReverseCommand}" />
+                            <Separator Tag="track" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuSplitAtPoint}" Command="{Binding SplitAtPointCommand}" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuRemoveBefore}" Command="{Binding RemoveBeforeCommand}" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuRemoveAfter}" Command="{Binding RemoveAfterCommand}" />
                             <Separator Tag="track" />
                             <MenuItem Tag="track" Header="{x:Static res:Strings.MenuAdjustElevations}" Command="{Binding AdjustElevationsCommand}" />
                             <Separator Tag="track" />
@@ -269,6 +322,24 @@
                         </ContextMenu>
                     </mapsui:MapControl.ContextMenu>
                 </mapsui:MapControl>
+                <!-- Legend of the track colours (View › Colour tracks by) -->
+                <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10" Padding="8,4" Background="#E0FFFFFF"
+                        BorderBrush="#80000000" BorderThickness="1" CornerRadius="4" IsHitTestVisible="False"
+                        Visibility="{Binding HasLegend, Converter={StaticResource BoolToVisibility}}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding LegendTitle}" Foreground="Black" FontWeight="SemiBold" FontSize="11" Margin="0,0,0,3" />
+                        <ItemsControl ItemsSource="{Binding Legend}" Focusable="False">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,1">
+                                        <Rectangle Width="22" Height="10" Fill="{Binding ColorHex}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                        <TextBlock Text="{Binding Label}" Foreground="Black" FontSize="11" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
                 <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
                     <!-- Scale bar, updated when the view changes (OnViewportChanged); File › Settings › Display hides it -->
                     <Border x:Name="ScaleBar" HorizontalAlignment="Right" Margin="0,0,10,6" Padding="6,1,6,5" Background="#C8FFFFFF"

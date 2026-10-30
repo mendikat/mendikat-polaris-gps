@@ -25,6 +25,7 @@ public partial class App : Application
     private ILogger? _logger;
     private HttpClient? _tileHttpClient;
     private HttpClient? _demHttpClient;
+    private HttpClient? _routingHttpClient;
 
     /// <summary>
     /// Handles the application startup event.
@@ -50,6 +51,8 @@ public partial class App : Application
         _demHttpClient = TileHttpClientFactory.Create(version, timeout: TimeSpan.FromSeconds(30));
         // One source per resolution for the whole session, so their tile caches are shared by the "Adjust elevations"
         // tool and the pointer elevation in the status bar (COORD-08).
+        // Routing for "Follow paths": a long mountain route can take several seconds to compute.
+        _routingHttpClient = TileHttpClientFactory.Create(version, timeout: TimeSpan.FromSeconds(30));
         var dem5 = new IgnWcsElevationSource(_demHttpClient, IgnDemResolution.FiveMeters);
         var dem25 = new IgnWcsElevationSource(_demHttpClient, IgnDemResolution.TwentyFiveMeters);
         // First run: the language chosen in the installer, if any.
@@ -62,6 +65,8 @@ public partial class App : Application
             new WpfDialogService(), new FileDocumentStore(), settings, _loggerFactory.CreateLogger<MainViewModel>())
         {
             ElevationSources = resolution => resolution == IgnDemResolution.FiveMeters ? dem5 : dem25,
+            Router = new Mapping.Routing.BRouterClient(_routingHttpClient),
+            UpdateChecker = new GitHubUpdateChecker(_tileHttpClient),
             LocalMapLoader = (path, cancellationToken) => Mapping.Local.LocalMapLoader.Load(path, new WpfRasterImageDecoder(), cancellationToken),
         };
         var window = new MainWindow(
@@ -100,6 +105,7 @@ public partial class App : Application
         _logger?.LogInformation("Polaris GPS exiting");
         _tileHttpClient?.Dispose();
         _demHttpClient?.Dispose();
+        _routingHttpClient?.Dispose();
         _loggerFactory?.Dispose();
         base.OnExit(e);
     }

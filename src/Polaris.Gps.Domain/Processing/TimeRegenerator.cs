@@ -20,6 +20,9 @@ public enum TimeMode
 
     /// <summary>t = t0 + i · interval: strictly uniform spacing, regardless of distance (TIME-03).</summary>
     UniformInterval,
+
+    /// <summary>Walking time from distance and slope (<see cref="MideTime"/>); the speed is the speed on the flat.</summary>
+    BySlope,
 }
 
 public enum TimeStartIssue
@@ -90,7 +93,7 @@ public static class TimeRegenerator
         var points = segments.SelectMany(s => s).ToList();
         var issue = CheckStart(options.StartLocal, options.TimeZone);
         var metersPerSecond = ToMetersPerSecond(options.Speed, options.Unit);
-        var invalidRate = options.Mode == TimeMode.ByDistance
+        var invalidRate = options.Mode is TimeMode.ByDistance or TimeMode.BySlope
             ? !(double.IsFinite(metersPerSecond) && metersPerSecond > 0)
             : options.Interval <= TimeSpan.Zero;
         if (points.Count == 0 || issue == TimeStartIssue.Invalid || invalidRate)
@@ -100,6 +103,9 @@ public static class TimeRegenerator
 
         // Ambiguous local times are converted as standard time (documented, shown in the preview).
         var startUtc = new DateTimeOffset(TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(options.StartLocal, DateTimeKind.Unspecified), options.TimeZone), TimeSpan.Zero);
+        var mide = options.Mode == TimeMode.BySlope
+            ? MideTime.CumulativeSeconds(segments, metersPerSecond * 3.6, options.IncludeSegmentGaps)
+            : null;
         var times = new List<(TrailPoint, DateTimeOffset)>(points.Count);
         var distance = 0.0;
         var index = 0;
@@ -115,9 +121,12 @@ public static class TimeRegenerator
                     distance += Geodesy.Distance(previous.Position, point.Position);
                 }
 
-                var offset = options.Mode == TimeMode.ByDistance
-                    ? TimeSpan.FromSeconds(distance / metersPerSecond)
-                    : options.Interval * index;
+                var offset = options.Mode switch
+                {
+                    TimeMode.ByDistance => TimeSpan.FromSeconds(distance / metersPerSecond),
+                    TimeMode.BySlope => TimeSpan.FromSeconds(mide![index]),
+                    _ => options.Interval * index,
+                };
                 times.Add((point, RoundToMilliseconds(startUtc + offset)));
                 previous = point;
                 index++;

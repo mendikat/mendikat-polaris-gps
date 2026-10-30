@@ -12,8 +12,11 @@ public sealed record PointValues(
     string? Comment,
     string? Description)
 {
+    /// <summary>Waypoint symbol (GPX sym), e.g. "Summit"; null when there is none.</summary>
+    public string? Symbol { get; init; }
+
     public static PointValues From(TrailPoint point) =>
-        new(point.Position, point.Elevation, point.Time, point.Name, point.Comment, point.Description);
+        new(point.Position, point.Elevation, point.Time, point.Name, point.Comment, point.Description) { Symbol = point.Symbol };
 
     public void ApplyTo(TrailPoint point)
     {
@@ -23,5 +26,6 @@ public sealed record PointValues(
         point.Name = Name;
         point.Comment = Comment;
         point.Description = Description;
+        point.Symbol = Symbol;
     }
 }

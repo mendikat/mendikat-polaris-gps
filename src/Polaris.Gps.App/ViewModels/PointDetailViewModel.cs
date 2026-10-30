@@ -5,6 +5,7 @@ using Polaris.Gps.App.Services;
 using Polaris.Gps.Domain.Editing;
 using Polaris.Gps.Domain.Geo;
 using Polaris.Gps.Domain.Model;
+using Polaris.Gps.Mapping.Coordinates;
 
 namespace Polaris.Gps.App.ViewModels;
 
@@ -16,6 +17,9 @@ namespace Polaris.Gps.App.ViewModels;
 public sealed class PointDetailViewModel : ObservableObject
 {
     private readonly PointValues _original;
+    private readonly CoordinateDatum _datum;
+    private readonly WaypointSymbolOption _originalSymbol;
+    private WaypointSymbolOption _symbol;
     private readonly string _originalLatitude;
     private readonly string _originalLongitude;
     private readonly string _originalElevation;
@@ -29,15 +33,20 @@ public sealed class PointDetailViewModel : ObservableObject
     private string _timeUtc;
     private string? _error;
 
-    public PointDetailViewModel(TrailPoint point)
+    /// <param name="isWaypoint">The point is a waypoint: its symbol is shown and can be changed.</param>
+    public PointDetailViewModel(TrailPoint point, CoordinateDatum datum = CoordinateDatum.Wgs84, bool isWaypoint = false)
     {
         Point = point;
+        _datum = datum;
+        IsWaypoint = isWaypoint;
+        (Symbols, _symbol) = WaypointViewModel.SymbolOptions(point.Symbol);
+        _originalSymbol = _symbol;
         _original = PointValues.From(point);
         _name = point.Name ?? string.Empty;
         _comment = point.Comment ?? string.Empty;
         _description = point.Description ?? string.Empty;
-        _latitude = _originalLatitude = PointInput.FormatCoordinate(point.Position.Latitude);
-        _longitude = _originalLongitude = PointInput.FormatCoordinate(point.Position.Longitude);
+        (_originalLatitude, _originalLongitude) = PointInput.FormatPosition(point.Position, datum);
+        (_latitude, _longitude) = (_originalLatitude, _originalLongitude);
         _elevation = _originalElevation = PointInput.FormatElevation(point.Elevation);
         _timeUtc = _originalTime = PointInput.FormatUtc(point.Time);
         LocalTime = point.Time is null ? "—" : PointInput.FormatLocal(point.Time);
@@ -46,6 +55,7 @@ public sealed class PointDetailViewModel : ObservableObject
             ElevationSource.Interpolated => Strings.ElevationSourceInterpolated,
             ElevationSource.Dem => Strings.ElevationSourceDem,
             ElevationSource.Edited => Strings.ElevationSourceEdited,
+            ElevationSource.Smoothed => Strings.ElevationSourceSmoothed,
             _ => Strings.ElevationSourceOriginal,
         };
         OtherFields = DescribeOtherFields(point.OtherElements);
@@ -62,6 +72,24 @@ public sealed class PointDetailViewModel : ObservableObject
 
     /// <summary>Format fields without a typed property (sat, hdop, extensions…), read-only; "—" if none.</summary>
     public string OtherFields { get; }
+
+    public bool IsWaypoint { get; }
+
+    /// <summary>Waypoints: the symbols to choose from (see <see cref="WaypointViewModel.SymbolOptions"/>).</summary>
+    public IReadOnlyList<WaypointSymbolOption> Symbols { get; }
+
+    public WaypointSymbolOption Symbol
+    {
+        get => _symbol;
+        set
+        {
+            if (value is not null && SetProperty(ref _symbol, value))
+            {
+                Error = null;
+                OnPropertyChanged(nameof(HasChanges));
+            }
+        }
+    }
 
     public string Name { get => _name; set => SetText(ref _name, value); }
 
@@ -90,7 +118,8 @@ public sealed class PointDetailViewModel : ObservableObject
         || _latitude != _originalLatitude
         || _longitude != _originalLongitude
         || _elevation != _originalElevation
-        || _timeUtc != _originalTime;
+        || _timeUtc != _originalTime
+        || !ReferenceEquals(_symbol, _originalSymbol);
 
     /// <summary>Validates the texts (WPE-03). On failure sets <see cref="Error"/> and returns false.</summary>
     public bool TryBuild(out PointValues values)
@@ -110,8 +139,8 @@ public sealed class PointDetailViewModel : ObservableObject
     private string? Validate(out PointValues result)
     {
         result = _original;
-        var lat = _original.Position.Latitude;
-        var lon = _original.Position.Longitude;
+        // Typed coordinates are in the display datum (File › Settings › Coordinates); an untouched pair keeps the exact position.
+        var (lat, lon) = CoordinateDatums.FromWgs84(_original.Position, _datum);
         if (_latitude != _originalLatitude && !PointInput.TryParseLatitude(_latitude, out lat))
         {
             return Strings.ValidationLatitude;
@@ -134,13 +163,16 @@ public sealed class PointDetailViewModel : ObservableObject
             return Strings.ValidationTime;
         }
 
+        var position = _latitude == _originalLatitude && _longitude == _originalLongitude
+            ? _original.Position
+            : CoordinateDatums.ToWgs84(lat, lon, _datum);
         result = new PointValues(
-            new GeoPosition(lat, lon),
+            position,
             elevation,
             time,
             Keep(_name, _original.Name),
             Keep(_comment, _original.Comment),
-            Keep(_description, _original.Description));
+            Keep(_description, _original.Description)) { Symbol = ReferenceEquals(_symbol, _originalSymbol) ? _original.Symbol : _symbol.GpxName };
         return null;
     }
 

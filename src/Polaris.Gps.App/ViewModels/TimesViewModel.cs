@@ -18,7 +18,7 @@ public sealed class TimesViewModel : ObservableObject
     private DateTime? _startDate;
     private string _startTimeText;
     private TimeZoneInfo _timeZone = TimeZoneInfo.Local;
-    private bool _byDistance = true;
+    private TimeMode _mode = TimeMode.ByDistance;
     private string _speedText = "4";
     private SpeedUnitOption _speedUnit;
     private string _intervalText = "5";
@@ -62,23 +62,40 @@ public sealed class TimesViewModel : ObservableObject
 
     public TimeZoneInfo TimeZone { get => _timeZone; set => Set(ref _timeZone, value ?? TimeZoneInfo.Local); }
 
-    /// <summary>True: times from distance and speed (TIME-02). False: uniform interval (TIME-03).</summary>
+    /// <summary>Times from distance and a constant speed (TIME-02).</summary>
     public bool ByDistance
     {
-        get => _byDistance;
-        set
-        {
-            if (Set(ref _byDistance, value))
-            {
-                OnPropertyChanged(nameof(Uniform));
-            }
-        }
+        get => _mode == TimeMode.ByDistance;
+        set => SetMode(TimeMode.ByDistance, value);
     }
 
+    /// <summary>Times from distance and slope, MIDE method (<see cref="MideTime"/>); the speed is the speed on the flat.</summary>
+    public bool BySlope
+    {
+        get => _mode == TimeMode.BySlope;
+        set => SetMode(TimeMode.BySlope, value);
+    }
+
+    /// <summary>Uniform interval between points (TIME-03).</summary>
     public bool Uniform
     {
-        get => !_byDistance;
-        set => ByDistance = !value;
+        get => _mode == TimeMode.UniformInterval;
+        set => SetMode(TimeMode.UniformInterval, value);
+    }
+
+    /// <summary>The speed applies to distance and slope modes.</summary>
+    public bool UsesSpeed => _mode != TimeMode.UniformInterval;
+
+    private void SetMode(TimeMode mode, bool chosen)
+    {
+        if (!chosen || !Set(ref _mode, mode, nameof(ByDistance)))
+        {
+            return;
+        }
+
+        OnPropertyChanged(nameof(BySlope));
+        OnPropertyChanged(nameof(Uniform));
+        OnPropertyChanged(nameof(UsesSpeed));
     }
 
     public string SpeedText { get => _speedText; set => Set(ref _speedText, value ?? string.Empty); }
@@ -195,7 +212,7 @@ public sealed class TimesViewModel : ObservableObject
 
         double speed = 0;
         var interval = TimeSpan.Zero;
-        if (ByDistance)
+        if (UsesSpeed)
         {
             if (!PointInput.TryParseNumber(SpeedText, out speed) || speed <= 0 || speed > 1000)
             {
@@ -212,7 +229,7 @@ public sealed class TimesViewModel : ObservableObject
             interval = TimeSpan.FromSeconds(seconds);
         }
 
-        options = new TimeOptions(start, TimeZone, ByDistance ? TimeMode.ByDistance : TimeMode.UniformInterval,
+        options = new TimeOptions(start, TimeZone, _mode,
             speed, SelectedSpeedUnit.Unit, interval, IncludeSegmentGaps);
         return null;
     }
