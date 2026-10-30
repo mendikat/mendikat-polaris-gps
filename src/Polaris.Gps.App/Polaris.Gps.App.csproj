@@ -1,0 +1,75 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!-- 10.0.19041 (Windows 10 2004+) is required by SkiaSharp.Views.WPF, used by Mapsui.Wpf. -->
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>PolarisGps</AssemblyName>
+    <RootNamespace>Polaris.Gps.App</RootNamespace>
+    <SatelliteResourceLanguages>es</SatelliteResourceLanguages>
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.13" />
+    <PackageReference Include="Mapsui.Wpf" Version="5.1.0" />
+    <!-- GDAL native libraries (GISInternals build, x64) and the ECW plugin. Their own build targets copy x86 and every
+         plugin (~190 MB); they are excluded and only what is used is copied below. -->
+    <PackageReference Include="GDAL.Native" Version="3.12.1" ExcludeAssets="build" GeneratePathProperty="true" />
+    <PackageReference Include="GDAL.Plugins" Version="3.12.1" ExcludeAssets="build" GeneratePathProperty="true" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(PkgGDAL_Native)\build\gdal\x64\*.dll" Link="gdal\x64\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <Content Include="$(PkgGDAL_Native)\build\gdal\data\**" Link="gdal\data\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <Content Include="$(PkgGDAL_Native)\build\gdal\share\**" Link="gdal\share\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <Content Include="$(PkgGDAL_Native)\build\gdal\*.rtf;$(PkgGDAL_Native)\build\gdal\license.txt;$(PkgGDAL_Native)\build\gdal\curl-ca-bundle.crt" Link="gdal\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <!-- ECW: ERDAS ECW/JP2 Desktop Read-Only Redistributable SDK; its licence obliges ECWP support, an end-user licence
+         and the Intergraph notice in "About" (see EcwLicense). -->
+    <Content Include="$(PkgGDAL_Plugins)\build\gdal\x64\plugins\gdal_ECW_JP2ECW.dll;$(PkgGDAL_Plugins)\build\gdal\x64\plugins\NCSEcw.dll" Link="gdal\x64\plugins\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <Content Include="$(PkgGDAL_Plugins)\gdal\ECW5License.rtf" Link="gdal\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Polaris.Gps.Domain\Polaris.Gps.Domain.csproj" />
+    <ProjectReference Include="..\Polaris.Gps.Gpx\Polaris.Gps.Gpx.csproj" />
+    <ProjectReference Include="..\Polaris.Gps.Mapping\Polaris.Gps.Mapping.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Polaris.Gps.Tests" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- ApplicationIcon only sets the .exe icon. The window icon (Icon="Assets/icon.ico" in MainWindow.xaml)
+         is loaded at run time from the assembly resources, so the file must be a WPF Resource too. -->
+    <Resource Include="Assets\icon.ico" />
+    <Resource Include="Assets\icon.png" />
+    <!-- Shown centred on the screen while the application starts; WPF closes it when the main window appears. -->
+    <SplashScreen Include="Assets\splash.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- User guide (APP-09): plain HTML and CSS, opened in the default browser; also published. -->
+    <Content Include="Help\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- UI texts (Spanish). The strongly typed class is generated into obj/ at build time. -->
+    <EmbeddedResource Update="Resources\Strings.resx">
+      <StronglyTypedFileName>$(IntermediateOutputPath)Strings.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>Polaris.Gps.App.Resources</StronglyTypedNamespace>
+      <StronglyTypedClassName>Strings</StronglyTypedClassName>
+      <PublicClass>true</PublicClass>
+    </EmbeddedResource>
+  </ItemGroup>
+  <!-- Native debug symbols of SkiaSharp and HarfBuzz (~100 MB) are useless to users. Our own .pdb files are kept:
+       they add line numbers to the stack traces in the technical log. -->
+  <Target Name="DropNativeSymbolsFromPublish" AfterTargets="ComputeResolvedFilesToPublishList">
+    <ItemGroup>
+      <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)"
+                             Condition="'%(Extension)' == '.pdb' and ('%(Filename)' == 'libSkiaSharp' or '%(Filename)' == 'libHarfBuzzSharp')" />
+    </ItemGroup>
+  </Target>
+  <!-- WPF compiles XAML in a temporary project before resources are generated; generate the
+       strongly typed Strings class first so both XAML and code can use it. -->
+  <Target Name="GenerateStringsBeforeMarkup" BeforeTargets="MarkupCompilePass1" DependsOnTargets="PrepareResourceNames;ResGen">
+    <ItemGroup>
+      <_GeneratedCodeFiles Include="$(IntermediateOutputPath)Strings.Designer.cs" />
+    </ItemGroup>
+  </Target>
+</Project>

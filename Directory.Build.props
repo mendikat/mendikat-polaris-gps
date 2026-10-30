@@ -5,8 +5,8 @@
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Company>Mendikat</Company>
-    <Product>Mendikat TrailLab</Product>
-    <Version>0.1.1</Version>
+    <Product>Polaris GPS</Product>
+    <Version>0.1.2</Version>
     <NeutralLanguage>es-ES</NeutralLanguage>
   </PropertyGroup>
 </Project>

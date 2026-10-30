@@ -1,0 +1,281 @@
+<Window x:Class="Polaris.Gps.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Polaris.Gps.App"
+        xmlns:res="clr-namespace:Polaris.Gps.App.Resources"
+        xmlns:vm="clr-namespace:Polaris.Gps.App.ViewModels"
+        xmlns:views="clr-namespace:Polaris.Gps.App.Views"
+        xmlns:mapsui="clr-namespace:Mapsui.UI.Wpf;assembly=Mapsui.UI.Wpf"
+        Title="{Binding Title}"
+        Width="1280" Height="820" MinWidth="800" MinHeight="500"
+        WindowStartupLocation="CenterScreen"
+        Icon="Assets/icon.ico">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        <local:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVisibility" />
+        <local:NullToCollapsedConverter x:Key="NullToCollapsed" />
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewGpxCommand}" />
+        <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenGpxCommand}" />
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveCommand}" />
+        <KeyBinding Key="F4" Modifiers="Control" Command="{Binding CloseDocumentCommand}" />
+        <KeyBinding Key="OemPlus" Modifiers="Control" Command="{Binding ZoomInCommand}" />
+        <KeyBinding Key="Add" Modifiers="Control" Command="{Binding ZoomInCommand}" />
+        <KeyBinding Key="OemMinus" Modifiers="Control" Command="{Binding ZoomOutCommand}" />
+        <KeyBinding Key="Subtract" Modifiers="Control" Command="{Binding ZoomOutCommand}" />
+        <KeyBinding Key="Z" Modifiers="Control" Command="{Binding UndoCommand}" />
+        <KeyBinding Key="Y" Modifiers="Control" Command="{Binding RedoCommand}" />
+        <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" />
+        <KeyBinding Key="Insert" Command="{Binding InsertPointCommand}" />
+        <KeyBinding Key="Escape" Command="{Binding CancelOperationCommand}" />
+        <KeyBinding Key="F1" Command="{Binding HelpCommand}" />
+    </Window.InputBindings>
+
+    <DockPanel>
+        <!-- Classic top menu (APP-02) -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{x:Static res:Strings.MenuFile}">
+                <MenuItem Header="{x:Static res:Strings.MenuNewGpx}" Command="{Binding NewGpxCommand}" InputGestureText="Ctrl+N" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuOpenGpx}" Command="{Binding OpenGpxCommand}" InputGestureText="Ctrl+O" />
+                <MenuItem Header="{x:Static res:Strings.MenuConvertToGpx}" Command="{Binding ConvertToGpxCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuOpenLocalMap}" Command="{Binding OpenLocalMapCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuOpenEcwp}" Command="{Binding OpenEcwpCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuSave}" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S" />
+                <MenuItem Header="{x:Static res:Strings.MenuSaveAs}" Command="{Binding SaveAsCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuCloseDocument}" Command="{Binding CloseDocumentCommand}" InputGestureText="Ctrl+F4" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuSettings}" Command="{Binding SettingsCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuExit}" Command="{Binding ExitCommand}" InputGestureText="Alt+F4" />
+            </MenuItem>
+            <MenuItem Header="{x:Static res:Strings.MenuEdit}">
+                <MenuItem Header="{x:Static res:Strings.MenuUndo}" Command="{Binding UndoCommand}" InputGestureText="Ctrl+Z" />
+                <MenuItem Header="{x:Static res:Strings.MenuRedo}" Command="{Binding RedoCommand}" InputGestureText="Ctrl+Y" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuDelete}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />
+                <MenuItem Header="{x:Static res:Strings.MenuInsertPoint}" Command="{Binding InsertPointCommand}" InputGestureText="Insert" />
+                <MenuItem Header="{x:Static res:Strings.MenuEditWaypoint}" Command="{Binding EditWaypointCommand}" />
+            </MenuItem>
+            <MenuItem Header="{x:Static res:Strings.MenuTools}">
+                <MenuItem Header="{x:Static res:Strings.MenuSimplify}" Command="{Binding SimplifyCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuRegenerateTimes}" Command="{Binding RegenerateTimesCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuReverse}" Command="{Binding ReverseCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuJoinTracks}" Command="{Binding JoinTracksCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuAdjustElevations}" Command="{Binding AdjustElevationsCommand}" />
+            </MenuItem>
+            <MenuItem Header="{x:Static res:Strings.MenuView}">
+                <MenuItem Header="{x:Static res:Strings.MenuZoomIn}" Command="{Binding ZoomInCommand}" InputGestureText="Ctrl++" />
+                <MenuItem Header="{x:Static res:Strings.MenuZoomOut}" Command="{Binding ZoomOutCommand}" InputGestureText="Ctrl+-" />
+                <MenuItem Header="{x:Static res:Strings.MenuZoomToData}" Command="{Binding ZoomToDataCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuElevationProfile}" Command="{Binding ElevationProfileCommand}" />
+            </MenuItem>
+            <MenuItem Header="{x:Static res:Strings.MenuHelp}">
+                <MenuItem Header="{x:Static res:Strings.MenuHelpContents}" Command="{Binding HelpCommand}" InputGestureText="F1" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuDonate}" Command="{Binding DonateCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuWeb}" Command="{Binding WebCommand}" />
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MenuCheckUpdates}" Command="{Binding CheckUpdatesCommand}" />
+                <MenuItem Header="{x:Static res:Strings.MenuAbout}" Command="{Binding AboutCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <!-- Map controls (APP-06) -->
+        <ToolBar DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
+            <Button Content="+" Width="28" FontWeight="Bold" Command="{Binding ZoomInCommand}"
+                    ToolTip="{x:Static res:Strings.ToolZoomIn}" AutomationProperties.Name="{x:Static res:Strings.MenuZoomIn}" />
+            <Button Content="−" Width="28" FontWeight="Bold" Command="{Binding ZoomOutCommand}"
+                    ToolTip="{x:Static res:Strings.ToolZoomOut}" AutomationProperties.Name="{x:Static res:Strings.MenuZoomOut}" />
+            <Button Content="⤢" Width="28" Command="{Binding ZoomToDataCommand}"
+                    ToolTip="{x:Static res:Strings.ToolZoomToData}" AutomationProperties.Name="{x:Static res:Strings.MenuZoomToData}" />
+            <Separator />
+            <TextBlock Text="{x:Static res:Strings.ToolMapProvider}" VerticalAlignment="Center" Margin="4,0" />
+            <ComboBox Width="220" ItemsSource="{Binding MapProviders}" SelectedItem="{Binding SelectedMapProvider}"
+                      DisplayMemberPath="DisplayName" AutomationProperties.Name="{x:Static res:Strings.ToolMapProvider}" />
+            <!-- User cartographies (LMAP-01, LMAP-11, LDEM-01): order by dragging (first on top), opacity, show/hide or use, zoom to, remove -->
+            <ToggleButton x:Name="LocalMapsButton" Content="{Binding LocalMapsHeader}" Margin="6,0,0,0" Padding="6,0"
+                          ToolTip="{x:Static res:Strings.LocalMapsToolTip}" AutomationProperties.Name="{x:Static res:Strings.LocalMapsToolTip}" />
+            <Popup IsOpen="{Binding IsChecked, ElementName=LocalMapsButton}" PlacementTarget="{Binding ElementName=LocalMapsButton}"
+                   Placement="Bottom" StaysOpen="False" Closed="OnLocalMapsPopupClosed">
+                <Border Background="{x:Static SystemColors.WindowBrush}" BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1" Padding="6" MinWidth="380">
+                    <StackPanel>
+                        <TextBlock Text="{x:Static res:Strings.LocalMapsEmpty}" Foreground="DimGray" TextWrapping="Wrap" MaxWidth="360"
+                                   Visibility="{Binding HasLocalMaps, Converter={StaticResource InverseBoolToVisibility}}" />
+                        <ListBox x:Name="LocalMapsList" ItemsSource="{Binding LocalMaps}" BorderThickness="0" AllowDrop="True"
+                                 HorizontalContentAlignment="Stretch" MaxHeight="420"
+                                 Visibility="{Binding HasLocalMaps, Converter={StaticResource BoolToVisibility}}"
+                                 DragOver="OnLocalMapsDragOver" Drop="OnLocalMapsDrop" PreviewKeyDown="OnLocalMapsKeyDown"
+                                 AutomationProperties.Name="{x:Static res:Strings.A11yLocalMapsList}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,2" ToolTip="{Binding Details}">
+                                        <DockPanel>
+                                            <TextBlock DockPanel.Dock="Left" Text="≡" FontSize="16" Width="18" Cursor="SizeAll" VerticalAlignment="Center"
+                                                       Foreground="DimGray" ToolTip="{x:Static res:Strings.LocalDragHandle}"
+                                                       MouseLeftButtonDown="OnLocalMapHandleDown" MouseMove="OnLocalMapHandleMove" />
+                                            <Button DockPanel.Dock="Right" Content="✕" Width="24" Margin="4,0,0,0"
+                                                    Command="{Binding DataContext.RemoveLocalMapCommand, Source={x:Reference LocalMapsButton}}" CommandParameter="{Binding}"
+                                                    ToolTip="{x:Static res:Strings.LocalRemove}" AutomationProperties.Name="{x:Static res:Strings.LocalRemove}" />
+                                            <Button DockPanel.Dock="Right" Content="⤢" Width="24" Margin="4,0,0,0"
+                                                    Command="{Binding DataContext.ZoomToLocalMapCommand, Source={x:Reference LocalMapsButton}}" CommandParameter="{Binding}"
+                                                    ToolTip="{x:Static res:Strings.LocalZoomTo}" AutomationProperties.Name="{x:Static res:Strings.LocalZoomTo}" />
+                                            <CheckBox IsChecked="{Binding IsVisible}" VerticalAlignment="Center" ToolTip="{Binding VisibilityToolTip}">
+                                                <TextBlock>
+                                                    <Run Text="{Binding Kind, Mode=OneWay}" Foreground="DimGray" /><Run Text=" " /><Run Text="{Binding Name, Mode=OneWay}" />
+                                                </TextBlock>
+                                            </CheckBox>
+                                        </DockPanel>
+                                        <DockPanel Margin="18,2,56,0" Visibility="{Binding HasOpacity, Converter={StaticResource BoolToVisibility}}">
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding OpacityText}" Width="40" TextAlignment="Right" Foreground="DimGray" VerticalAlignment="Center" />
+                                            <Slider Minimum="0" Maximum="1" SmallChange="0.05" LargeChange="0.1" Value="{Binding Opacity}"
+                                                    VerticalAlignment="Center" ToolTip="{x:Static res:Strings.LocalOpacityToolTip}"
+                                                    AutomationProperties.Name="{Binding OpacityName}" />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+            </Popup>
+            <Separator />
+            <!-- ToolTip shown even when disabled: the button explains when it becomes available. -->
+            <Button Content="{x:Static res:Strings.ToolProfileButton}" Command="{Binding ElevationProfileCommand}"
+                    ToolTip="{x:Static res:Strings.ToolElevationProfile}" ToolTipService.ShowOnDisabled="True"
+                    AutomationProperties.Name="{x:Static res:Strings.MenuElevationProfile}" />
+        </ToolBar>
+
+        <!-- Status bar: messages, cartography problems and pointer coordinates (COORD-01/02, MAP-07) -->
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel LastChildFill="True" />
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem DockPanel.Dock="Right" MinWidth="190" ToolTip="{x:Static res:Strings.A11yDmsToolTip}">
+                <TextBlock Text="{Binding PointerDms}" AutomationProperties.Name="{x:Static res:Strings.A11yDmsName}" />
+            </StatusBarItem>
+            <Separator DockPanel.Dock="Right" />
+            <StatusBarItem DockPanel.Dock="Right" MinWidth="118" ToolTip="{x:Static res:Strings.A11yUtmToolTip}">
+                <TextBlock Text="{Binding PointerUtm}" AutomationProperties.Name="{x:Static res:Strings.A11yUtmName}" />
+            </StatusBarItem>
+            <Separator DockPanel.Dock="Right" />
+            <!-- Datum of the active file and elevation under the pointer (COORD-07, COORD-08) -->
+            <StatusBarItem DockPanel.Dock="Right" ToolTip="{x:Static res:Strings.A11yDatumToolTip}">
+                <TextBlock Text="{Binding PointerDatum}" AutomationProperties.Name="{x:Static res:Strings.A11yDatumName}" />
+            </StatusBarItem>
+            <Separator DockPanel.Dock="Right" />
+            <StatusBarItem DockPanel.Dock="Right" MinWidth="150" ToolTip="{Binding PointerElevationToolTip, TargetNullValue={x:Static res:Strings.A11yElevationToolTip}}">
+                <TextBlock Text="{Binding PointerElevation}" AutomationProperties.Name="{x:Static res:Strings.A11yElevationName}" />
+            </StatusBarItem>
+            <Separator DockPanel.Dock="Right" />
+            <!-- Long operations: progress and Cancel (NFR-02) -->
+            <StatusBarItem DockPanel.Dock="Right" Visibility="{Binding CanCancelOperation, Converter={StaticResource BoolToVisibility}}">
+                <Button Content="{x:Static res:Strings.CancelOperation}" Padding="8,0" Command="{Binding CancelOperationCommand}"
+                        ToolTip="{x:Static res:Strings.CancelOperationToolTip}"
+                        AutomationProperties.Name="{x:Static res:Strings.CancelOperationToolTip}" />
+            </StatusBarItem>
+            <StatusBarItem DockPanel.Dock="Right" Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}">
+                <ProgressBar Width="120" Height="12" Minimum="0" Maximum="1"
+                             Value="{Binding Progress, Mode=OneWay, TargetNullValue=0}"
+                             IsIndeterminate="{Binding IsProgressIndeterminate, Mode=OneWay}"
+                             AutomationProperties.Name="{x:Static res:Strings.ProgressName}" />
+            </StatusBarItem>
+            <StatusBarItem DockPanel.Dock="Right" Visibility="{Binding MapStatus, Converter={StaticResource NullToCollapsed}}">
+                <TextBlock Text="{Binding MapStatus}" Foreground="DarkRed" AutomationProperties.Name="{x:Static res:Strings.A11yMapStatusName}" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="{Binding StatusMessage}" TextTrimming="CharacterEllipsis" AutomationProperties.Name="{x:Static res:Strings.A11yStatusName}" />
+            </StatusBarItem>
+        </StatusBar>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="420" MinWidth="260" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Documents: one tab per open file (APP-03, ADR-0002) -->
+            <TabControl Grid.Column="0" ItemsSource="{Binding Documents}"
+                        SelectedItem="{Binding ActiveDocument, Mode=TwoWay}"
+                        Visibility="{Binding HasDocuments, Converter={StaticResource BoolToVisibility}}">
+                <TabControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:DocumentViewModel}">
+                        <StackPanel Orientation="Horizontal" ToolTip="{Binding FileName}">
+                            <Rectangle Width="10" Height="10" Margin="0,0,6,0" Fill="{Binding ColorHex}" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Header}" VerticalAlignment="Center" MaxWidth="160" TextTrimming="CharacterEllipsis" />
+                            <Button Content="✕" Margin="6,0,0,0" Padding="4,0" FontSize="10"
+                                    Background="Transparent" BorderThickness="0" Focusable="False"
+                                    ToolTip="{x:Static res:Strings.CloseTabToolTip}"
+                                    AutomationProperties.Name="{x:Static res:Strings.CloseTabToolTip}"
+                                    Command="{Binding DataContext.CloseDocumentCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate DataType="{x:Type vm:DocumentViewModel}">
+                        <views:DocumentPanel />
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
+
+            <TextBlock Grid.Column="0" Text="{x:Static res:Strings.NoDocumentsHint}" Margin="16"
+                       TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="Gray"
+                       Visibility="{Binding HasDocuments, Converter={StaticResource InverseBoolToVisibility}}" />
+
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+            <!-- Shared map with the layers of all documents (MAP-01) -->
+            <Grid Grid.Column="2">
+                <mapsui:MapControl x:Name="MapView" AutomationProperties.Name="{x:Static res:Strings.A11yMapName}"
+                                   ContextMenuOpening="OnMapContextMenuOpening">
+                    <!-- The items shown depend on what is under the pointer: Tag = group (OnMapContextMenuOpening) -->
+                    <mapsui:MapControl.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Tag="waypoint" Header="{x:Static res:Strings.MenuEditWaypoint}" Command="{Binding EditWaypointCommand}" />
+                            <MenuItem Tag="waypoint" Header="{x:Static res:Strings.MenuDeleteWaypoint}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />
+                            <MenuItem Tag="track" x:Name="MapInsertPointItem" Header="{x:Static res:Strings.MenuInsertPoint}"
+                                      InputGestureText="{x:Static res:Strings.GestureCtrlClick}" Click="OnMapInsertPointClick" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuDeletePoint}" Command="{Binding DeleteCommand}" InputGestureText="Supr" />
+                            <Separator Tag="track" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuSimplify}" Command="{Binding SimplifyCommand}" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuRegenerateTimes}" Command="{Binding RegenerateTimesCommand}" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuReverse}" Command="{Binding ReverseCommand}" />
+                            <Separator Tag="track" />
+                            <MenuItem Tag="track" Header="{x:Static res:Strings.MenuAdjustElevations}" Command="{Binding AdjustElevationsCommand}" />
+                            <Separator Tag="track" />
+                            <MenuItem Tag="add" Header="{x:Static res:Strings.MenuAddWaypoint}" Click="OnMapAddWaypointClick" />
+                        </ContextMenu>
+                    </mapsui:MapControl.ContextMenu>
+                </mapsui:MapControl>
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <!-- Scale bar, updated when the view changes (OnViewportChanged); File › Settings › Display hides it -->
+                    <Border x:Name="ScaleBar" HorizontalAlignment="Right" Margin="0,0,10,6" Padding="6,1,6,5" Background="#C8FFFFFF"
+                            BorderBrush="Black" BorderThickness="1" IsHitTestVisible="False"
+                            Visibility="{Binding ShowScaleBar, Converter={StaticResource BoolToVisibility}}">
+                        <StackPanel>
+                            <TextBlock x:Name="ScaleBarLabel" HorizontalAlignment="Center" FontWeight="Bold" FontSize="12" Margin="0,0,0,2" />
+                            <views:ScaleRuler x:Name="ScaleBarRuler" Height="7" HorizontalAlignment="Left" />
+                        </StackPanel>
+                    </Border>
+                    <!-- Mandatory attribution of the active provider (MAP-06) -->
+                    <Border HorizontalAlignment="Right" Background="#C8FFFFFF" Padding="6,2" MaxWidth="600">
+                        <TextBlock FontSize="11" TextWrapping="Wrap">
+                            <Hyperlink NavigateUri="{Binding SelectedMapProvider.AttributionUrl}" RequestNavigate="OnAttributionNavigate">
+                                <Run Text="{Binding SelectedMapProvider.AttributionText, Mode=OneWay}" />
+                            </Hyperlink>
+                        </TextBlock>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

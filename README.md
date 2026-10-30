@@ -1,9 +1,9 @@
-# Mendikat TrailLab
+# Polaris GPS
 
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.1.1.**
+> **Estado: versión 0.1.2.**
 > Se abren archivos GPX, y KML, KMZ, TCX, OziExplorer (PLT, WPT) y CompeGPS/TwoNav (TRK, WPT) convertidos a GPX, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -36,7 +36,7 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Mostrar u ocultar la regla de escala | *Archivo › Configuración…* › **Visualización** › **Mostrar la regla de escala en el mapa** (activada por defecto); el cambio se ve al aceptar |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
 | Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |
-| Ayuda | **F1** o *Ayuda › Ayuda de Mendikat TrailLab* (guía HTML en el navegador, en el idioma de la aplicación; arriba enlaza a los demás idiomas). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones y Acerca de (versión, autor) |
+| Ayuda | **F1** o *Ayuda › Ayuda de Polaris GPS* (guía HTML en el navegador, en el idioma de la aplicación; arriba enlaza a los demás idiomas). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones y Acerca de (versión, autor) |
 
 ## Requisitos
 
@@ -52,16 +52,16 @@ Desde la carpeta del repositorio:
 ```powershell
 dotnet build                                   # compila la solución (advertencias = errores)
 dotnet test                                    # ejecuta las pruebas (Microsoft.Testing.Platform)
-dotnet run --project src\Mendikat.TrailLab.App  # compila y arranca la aplicación
+dotnet run --project src\Polaris.Gps.App  # compila y arranca la aplicación
 ```
 
 `dotnet run` sin `--project` no funciona en la raíz, porque allí está la solución y no el proyecto de la aplicación.
 Tras compilar, también se puede abrir directamente
-`src\Mendikat.TrailLab.App\bin\Debug\net10.0-windows10.0.19041.0\Mendikat.TrailLab.exe`.
+`src\Polaris.Gps.App\bin\Debug\net10.0-windows10.0.19041.0\PolarisGps.exe`.
 
 Archivos de usuario:
-- Configuración: `%APPDATA%\Mendikat\TrailLab\settings.json` (cartografía elegida, idioma y regla de escala).
-- Registro técnico: `%LOCALAPPDATA%\Mendikat\TrailLab\logs\traillab-AAAAMMDD.log` (se conservan los 10 últimos;
+- Configuración: `%APPDATA%\Polaris GPS\settings.json` (cartografía elegida, idioma y regla de escala).
+- Registro técnico: `%LOCALAPPDATA%\Polaris GPS\logs\polarisgps-AAAAMMDD.log` (se conservan los 10 últimos;
   la carpeta del perfil de usuario se sustituye por `%USERPROFILE%`).
 
 ## Distribuir
@@ -70,10 +70,10 @@ La aplicación se distribuye dependiente del runtime: cada usuario instala una v
 .NET 10 (x64) y recibe una carpeta de unos 140 MB (unos 90 MB son GDAL, para GeoTIFF y ECW).
 
 ```powershell
-dotnet publish src\Mendikat.TrailLab.App -p:PublishProfile=win-x64   # genera artifacts\publish\win-x64\
+dotnet publish src\Polaris.Gps.App -p:PublishProfile=win-x64   # genera artifacts\publish\win-x64\
 ```
 
-Se comprime esa carpeta y el usuario ejecuta `Mendikat.TrailLab.exe`. Si falta el runtime, Windows muestra un aviso con el
+Se comprime esa carpeta y el usuario ejecuta `PolarisGps.exe`. Si falta el runtime, Windows muestra un aviso con el
 enlace de descarga.
 
 ## Arquitectura
@@ -82,11 +82,11 @@ WPF + MVVM sin framework externo, documentos en pestañas con un mapa compartido
 
 | Proyecto | Contenido |
 |----------|-----------|
-| `src/Mendikat.TrailLab.Domain` | Modelo: documentos, tracks, segmentos, puntos, waypoints. Sin dependencias de UI |
-| `src/Mendikat.TrailLab.Gpx` | Lector y escritor GPX 1.0/1.1 |
-| `src/Mendikat.TrailLab.Mapping` | Catálogo de cartografías, descarga de mosaicos, capas del mapa, formato UTM/DMS |
-| `src/Mendikat.TrailLab.App` | WPF: ventana, ViewModels, `MapController`, diálogos, configuración, logging, textos en `Resources/Strings.resx` (español) y `Strings.ca/eu/fr/pt.resx` |
-| `tests/Mendikat.TrailLab.Tests` | xUnit v3 con fixtures propios en `Fixtures/`; sin acceso a la red |
+| `src/Polaris.Gps.Domain` | Modelo: documentos, tracks, segmentos, puntos, waypoints. Sin dependencias de UI |
+| `src/Polaris.Gps.Gpx` | Lector y escritor GPX 1.0/1.1 |
+| `src/Polaris.Gps.Mapping` | Catálogo de cartografías, descarga de mosaicos, capas del mapa, formato UTM/DMS |
+| `src/Polaris.Gps.App` | WPF: ventana, ViewModels, `MapController`, diálogos, configuración, logging, textos en `Resources/Strings.resx` (español) y `Strings.ca/eu/fr/pt.resx` |
+| `tests/Polaris.Gps.Tests` | xUnit v3 con fixtures propios en `Fixtures/`; sin acceso a la red |
 
 ## Formatos admitidos
 

@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Polaris.Gps.App/Polaris.Gps.App.csproj" />
+    <Project Path="src/Polaris.Gps.Domain/Polaris.Gps.Domain.csproj" />
+    <Project Path="src/Polaris.Gps.Gpx/Polaris.Gps.Gpx.csproj" />
+    <Project Path="src/Polaris.Gps.Mapping/Polaris.Gps.Mapping.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Polaris.Gps.Tests/Polaris.Gps.Tests.csproj" />
+  </Folder>
+</Solution>

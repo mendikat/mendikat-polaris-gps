@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Map providers catalog, tile fetching, map layers and coordinate display formats. No WPF dependency. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <!-- LibraryImport (GdalSetup: DLL search folders for GDAL) generates unsafe marshalling code. -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Mapsui" Version="5.1.0" />
+    <PackageReference Include="Mapsui.Nts" Version="5.1.0" />
+    <PackageReference Include="Mapsui.Tiling" Version="5.1.0" />
+    <PackageReference Include="GeographicLib.NET" Version="2.3.2" />
+    <!-- GDAL C# bindings (MIT) for GeoTIFF and ECW. The native libraries are copied by the application project.
+         The package's GdalConfiguration.cs is not used: GdalSetup configures GDAL. -->
+    <PackageReference Include="GDAL" Version="3.12.1" ExcludeAssets="contentFiles" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Polaris.Gps.Domain\Polaris.Gps.Domain.csproj" />
+  </ItemGroup>
+</Project>

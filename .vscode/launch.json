@@ -1,15 +1,15 @@
 {
-    // F5 compila (tarea "build") y arranca Mendikat TrailLab con el depurador de .NET (extensión C#).
+    // F5 compila (tarea "build") y arranca Polaris GPS con el depurador de .NET (extensión C#).
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Mendikat TrailLab",
+            "name": "Polaris GPS",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Mendikat.TrailLab.App/bin/Debug/net10.0-windows10.0.19041.0/Mendikat.TrailLab.dll",
+            "program": "${workspaceFolder}/src/Polaris.Gps.App/bin/Debug/net10.0-windows10.0.19041.0/PolarisGps.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Mendikat.TrailLab.App",
+            "cwd": "${workspaceFolder}/src/Polaris.Gps.App",
             "console": "internalConsole",
             "stopAtEntry": false,
             "justMyCode": true

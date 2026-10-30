@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="MenuFile" xml:space="preserve"><value>_Ficheiro</value></data>
+  <data name="MenuNewGpx" xml:space="preserve"><value>_Novo ficheiro</value></data>
+  <data name="MenuOpenGpx" xml:space="preserve"><value>_Abrir ficheiro...</value></data>
+  <data name="MenuSave" xml:space="preserve"><value>_Guardar</value></data>
+  <data name="MenuSaveAs" xml:space="preserve"><value>Guardar co_mo...</value></data>
+  <data name="MenuCloseDocument" xml:space="preserve"><value>_Fechar ficheiro</value></data>
+  <data name="MenuExit" xml:space="preserve"><value>_Sair</value></data>
+  <data name="MenuSettings" xml:space="preserve"><value>_Definições...</value></data>
+  <data name="SettingsTitle" xml:space="preserve"><value>Definições</value></data>
+  <data name="SettingsLanguageGroup" xml:space="preserve"><value>Idioma</value></data>
+  <data name="SettingsDisplay" xml:space="preserve"><value>Visualização</value></data>
+  <data name="SettingsShowScaleBar" xml:space="preserve"><value>Mostrar a _régua de escala no mapa</value></data>
+  <data name="SettingsLanguage" xml:space="preserve"><value>_Idioma da aplicação:</value></data>
+  <data name="SettingsLanguageName" xml:space="preserve"><value>Idioma da aplicação</value></data>
+  <data name="SettingsLanguageRestart" xml:space="preserve"><value>A mudança de idioma aplica-se ao voltar a abrir a aplicação.</value></data>
+  <data name="SettingsAccept" xml:space="preserve"><value>OK</value></data>
+  <data name="SettingsLanguageChanged" xml:space="preserve"><value>Idioma alterado para português. Feche e volte a abrir o Polaris GPS para o ver.</value></data>
+  <data name="MenuView" xml:space="preserve"><value>_Ver</value></data>
+  <data name="MenuZoomIn" xml:space="preserve"><value>_Aproximar</value></data>
+  <data name="MenuZoomOut" xml:space="preserve"><value>A_fastar</value></data>
+  <data name="MenuZoomToData" xml:space="preserve"><value>Ajustar aos _dados</value></data>
+  <data name="MenuElevationProfile" xml:space="preserve"><value>_Perfil de elevação</value></data>
+  <data name="ToolZoomIn" xml:space="preserve"><value>Aproximar (Ctrl++)</value></data>
+  <data name="ToolZoomOut" xml:space="preserve"><value>Afastar (Ctrl+-)</value></data>
+  <data name="ToolZoomToData" xml:space="preserve"><value>Ajustar o mapa aos dados abertos</value></data>
+  <data name="ToolMapProvider" xml:space="preserve"><value>Cartografia</value></data>
+  <data name="ToolElevationProfile" xml:space="preserve"><value>Perfil de elevação do track ou rota selecionado em «Camadas»</value></data>
+  <data name="ToolProfileButton" xml:space="preserve"><value>Perfil</value></data>
+  <data name="CloseTabToolTip" xml:space="preserve"><value>Fechar documento</value></data>
+  <data name="StatusReady" xml:space="preserve"><value>Pronto</value></data>
+  <data name="StatusOpening" xml:space="preserve"><value>A abrir {0}...</value></data>
+  <data name="StatusOpened" xml:space="preserve"><value>Aberto: {0}</value></data>
+  <data name="StatusAlreadyOpen" xml:space="preserve"><value>«{0}» já está aberto.</value></data>
+  <data name="StatusClosed" xml:space="preserve"><value>Fechado: {0}</value></data>
+  <data name="StatusOpenFailed" xml:space="preserve"><value>Não foi possível abrir {0}.</value></data>
+  <data name="StatusOpenCancelled" xml:space="preserve"><value>Abertura de {0} cancelada.</value></data>
+  <data name="CancelOperation" xml:space="preserve"><value>Cancelar</value></data>
+  <data name="CancelOperationToolTip" xml:space="preserve"><value>Cancelar a abertura em curso (Esc)</value></data>
+  <data name="ProgressName" xml:space="preserve"><value>Progresso</value></data>
+  <data name="A11yDmsToolTip" xml:space="preserve"><value>WGS84, graus minutos segundos</value></data>
+  <data name="A11yDmsName" xml:space="preserve"><value>Coordenadas geográficas WGS84</value></data>
+  <data name="A11yUtmToolTip" xml:space="preserve"><value>UTM WGS84: fuso e banda, Este, Norte (m)</value></data>
+  <data name="A11yUtmName" xml:space="preserve"><value>Coordenadas UTM</value></data>
+  <data name="A11yMapStatusName" xml:space="preserve"><value>Estado da cartografia</value></data>
+  <data name="A11yStatusName" xml:space="preserve"><value>Estado</value></data>
+  <data name="A11yMapName" xml:space="preserve"><value>Mapa</value></data>
+  <data name="A11ySpeedUnitName" xml:space="preserve"><value>Unidade de velocidade</value></data>
+  <data name="StatusMapLoadFailed" xml:space="preserve"><value>Não foi possível carregar a cartografia «{0}»: sem ligação ou o servidor não responde.</value></data>
+  <data name="StatusMapSaveSettingsFailed" xml:space="preserve"><value>Não foi possível guardar as definições.</value></data>
+  <data name="NoDocumentsHint" xml:space="preserve"><value>Não há documentos abertos. Utilize Ficheiro › Novo ficheiro ou Abrir ficheiro...</value></data>
+  <data name="NewDocumentTitle" xml:space="preserve"><value>Sem título {0}.gpx</value></data>
+  <data name="NewTrackName" xml:space="preserve"><value>Track 1</value></data>
+  <data name="StatusNewDocument" xml:space="preserve"><value>Novo documento «{0}». Ctrl + clique no mapa para adicionar pontos ao track selecionado.</value></data>
+  <data name="StatusPointAdded" xml:space="preserve"><value>Ponto adicionado. Ctrl + clique para adicionar o seguinte.</value></data>
+  <data name="SummaryCounts" xml:space="preserve"><value>Tracks: {0} · Rotas: {1} · Waypoints: {2} · Pontos: {3}</value></data>
+  <data name="SummaryTrack" xml:space="preserve"><value>Track «{0}»: {1} segmento(s), {2} pontos</value></data>
+  <data name="SummaryRoute" xml:space="preserve"><value>Rota «{0}»: {1} pontos</value></data>
+  <data name="SummaryWaypoints" xml:space="preserve"><value>{0} waypoints</value></data>
+  <data name="UnnamedItem" xml:space="preserve"><value>(sem nome)</value></data>
+  <data name="WarningTimesWithoutZone" xml:space="preserve"><value>Marcas de tempo sem fuso horário: {0}. Foram interpretadas como UTC.</value></data>
+  <data name="WarningGpx10" xml:space="preserve"><value>Ficheiro GPX 1.0: ao guardá-lo será convertido para GPX 1.1.</value></data>
+  <data name="WarningGpxWithoutNamespace" xml:space="preserve"><value>O ficheiro não declara o espaço de nomes GPX padrão; foi interpretado como GPX.</value></data>
+  <data name="WarningNoData" xml:space="preserve"><value>O ficheiro não contém pontos.</value></data>
+  <data name="FilterGpx" xml:space="preserve"><value>Ficheiros GPX (*.gpx)&#124;*.gpx&#124;Todos os ficheiros (*.*)&#124;*.*</value></data>
+  <data name="DialogOpenGpxTitle" xml:space="preserve"><value>Abrir ficheiro</value></data>
+  <data name="DialogSaveAsTitle" xml:space="preserve"><value>Guardar como</value></data>
+  <data name="DialogErrorTitle" xml:space="preserve"><value>Erro</value></data>
+  <data name="DialogInfoTitle" xml:space="preserve"><value>Informação</value></data>
+  <data name="SaveChangesQuestion" xml:space="preserve"><value>O documento «{0}» tem alterações por guardar.&#10;&#10;Pretende guardá-las antes de o fechar?</value></data>
+  <data name="AtLine" xml:space="preserve"><value>, linha {0}</value></data>
+  <data name="ErrorFileNotFound" xml:space="preserve"><value>Não se encontra o ficheiro «{0}».</value></data>
+  <data name="ErrorAccessDenied" xml:space="preserve"><value>Não tem permissão para ler o ficheiro «{0}».</value></data>
+  <data name="ErrorEmptyFile" xml:space="preserve"><value>O ficheiro «{0}» está vazio.</value></data>
+  <data name="ErrorReadFailed" xml:space="preserve"><value>Não foi possível ler o ficheiro «{0}».</value></data>
+  <data name="ErrorInvalidXml" xml:space="preserve"><value>O ficheiro «{0}» não é um XML válido{1}.</value></data>
+  <data name="ErrorNotGpx" xml:space="preserve"><value>O ficheiro «{0}» não é um GPX: o seu elemento raiz ou o seu espaço de nomes não corresponde a GPX 1.0 nem 1.1.</value></data>
+  <data name="ErrorInvalidCoordinate" xml:space="preserve"><value>Coordenadas inválidas em «{0}»{1}: {2}.&#10;A latitude deve estar entre −90 e 90 e a longitude entre −180 e 180.</value></data>
+  <data name="ErrorInvalidNumber" xml:space="preserve"><value>Valor numérico inválido em «{0}»{1}: {2}.</value></data>
+  <data name="ErrorInvalidDate" xml:space="preserve"><value>Data ou hora inválida em «{0}»{1}: {2}.</value></data>
+  <data name="ErrorUnexpected" xml:space="preserve"><value>Ocorreu um erro inesperado. A aplicação continua a funcionar e os detalhes técnicos foram guardados no registo.&#10;&#10;{0}</value></data>
+  <data name="ErrorSaveFailed" xml:space="preserve"><value>Não foi possível guardar o ficheiro «{0}». O ficheiro original não foi alterado.</value></data>
+  <data name="MenuEdit" xml:space="preserve"><value>_Editar</value></data>
+  <data name="MenuUndo" xml:space="preserve"><value>_Anular</value></data>
+  <data name="MenuRedo" xml:space="preserve"><value>_Refazer</value></data>
+  <data name="MenuDelete" xml:space="preserve"><value>_Eliminar</value></data>
+  <data name="MenuInsertPoint" xml:space="preserve"><value>_Inserir ponto</value></data>
+  <data name="MenuDeletePoint" xml:space="preserve"><value>_Eliminar ponto</value></data>
+  <data name="GestureCtrlClick" xml:space="preserve"><value>Ctrl+clique</value></data>
+  <data name="MenuAddWaypoint" xml:space="preserve"><value>_Adicionar waypoint...</value></data>
+  <data name="MenuEditWaypoint" xml:space="preserve"><value>Editar _waypoint...</value></data>
+  <data name="MenuDeleteWaypoint" xml:space="preserve"><value>E_liminar waypoint</value></data>
+  <data name="WaypointNewTitle" xml:space="preserve"><value>Novo waypoint</value></data>
+  <data name="WaypointEditTitle" xml:space="preserve"><value>Editar waypoint</value></data>
+  <data name="WaypointDefaultName" xml:space="preserve"><value>Waypoint {0}</value></data>
+  <data name="WaypointPosition" xml:space="preserve"><value>Posição</value></data>
+  <data name="ConfirmDeleteWaypoint" xml:space="preserve"><value>Eliminar o waypoint «{0}»?&#10;&#10;Pode anular com Ctrl+Z.</value></data>
+  <data name="ConfirmDeleteWaypoints" xml:space="preserve"><value>Eliminar {0} waypoints?&#10;&#10;Pode anular com Ctrl+Z.</value></data>
+  <data name="StatusWaypointAdded" xml:space="preserve"><value>Waypoint «{0}» adicionado.</value></data>
+  <data name="StatusWaypointUpdated" xml:space="preserve"><value>Waypoint atualizado.</value></data>
+  <data name="PanelLayers" xml:space="preserve"><value>Camadas</value></data>
+  <data name="PanelPoints" xml:space="preserve"><value>Pontos</value></data>
+  <data name="PanelPoint" xml:space="preserve"><value>Ponto selecionado</value></data>
+  <data name="LayerVisibleToolTip" xml:space="preserve"><value>Mostrar ou ocultar no mapa</value></data>
+  <data name="LayerDetailsLine" xml:space="preserve"><value>{0} pontos · {1} km</value></data>
+  <data name="LayerDetailsPoints" xml:space="preserve"><value>{0} pontos</value></data>
+  <data name="ColName" xml:space="preserve"><value>Nome</value></data>
+  <data name="ColLatitude" xml:space="preserve"><value>Latitude</value></data>
+  <data name="ColLongitude" xml:space="preserve"><value>Longitude</value></data>
+  <data name="ColElevation" xml:space="preserve"><value>Elev. (m)</value></data>
+  <data name="ColTime" xml:space="preserve"><value>Hora local</value></data>
+  <data name="FieldName" xml:space="preserve"><value>Nome</value></data>
+  <data name="FieldComment" xml:space="preserve"><value>Comentário</value></data>
+  <data name="FieldDescription" xml:space="preserve"><value>Descrição</value></data>
+  <data name="FieldLatitude" xml:space="preserve"><value>Latitude (°)</value></data>
+  <data name="FieldLongitude" xml:space="preserve"><value>Longitude (°)</value></data>
+  <data name="FieldElevation" xml:space="preserve"><value>Elevação (m)</value></data>
+  <data name="FieldTimeUtc" xml:space="preserve"><value>Hora UTC</value></data>
+  <data name="FieldTimeLocal" xml:space="preserve"><value>Hora local</value></data>
+  <data name="FieldOther" xml:space="preserve"><value>Outros campos</value></data>
+  <data name="FieldAdded" xml:space="preserve"><value>Ponto adicionado nesta sessão</value></data>
+  <data name="FieldTimeUtcHint" xml:space="preserve"><value>AAAA-MM-DD HH:MM:SS; vazio = sem hora</value></data>
+  <data name="ApplyButton" xml:space="preserve"><value>Aplicar</value></data>
+  <data name="RevertButton" xml:space="preserve"><value>Descartar</value></data>
+  <data name="NoPointSelected" xml:space="preserve"><value>Selecione um ponto na lista ou no mapa.</value></data>
+  <data name="SeveralPointsSelected" xml:space="preserve"><value>{0} pontos selecionados.</value></data>
+  <data name="StatusSelectSomething" xml:space="preserve"><value>Selecione um ponto ou um track.</value></data>
+  <data name="StatusInsertNeedsPoint" xml:space="preserve"><value>Para inserir, selecione um único ponto de um track ou de uma rota. Para adicionar pontos novos, utilize Ctrl + clique no mapa.</value></data>
+  <data name="StatusInsertTooFewPoints" xml:space="preserve"><value>São necessários pelo menos dois pontos para inserir um intermédio. Utilize Ctrl + clique no mapa para adicionar pontos.</value></data>
+  <data name="StatusDeletedPoints" xml:space="preserve"><value>{0} pontos eliminados.</value></data>
+  <data name="StatusDeletedItem" xml:space="preserve"><value>«{0}» eliminado.</value></data>
+  <data name="StatusInserted" xml:space="preserve"><value>Ponto inserido.</value></data>
+  <data name="StatusMoved" xml:space="preserve"><value>Ponto movido.</value></data>
+  <data name="StatusPointUpdated" xml:space="preserve"><value>Ponto atualizado.</value></data>
+  <data name="StatusUndone" xml:space="preserve"><value>Anulado.</value></data>
+  <data name="StatusRedone" xml:space="preserve"><value>Refeito.</value></data>
+  <data name="DialogConfirmTitle" xml:space="preserve"><value>Confirmar</value></data>
+  <data name="ConfirmDeleteTrack" xml:space="preserve"><value>Eliminar o track «{0}» com {1} pontos?&#10;&#10;Pode anular com Ctrl+Z.</value></data>
+  <data name="ConfirmDeleteRoute" xml:space="preserve"><value>Eliminar a rota «{0}» com {1} pontos?&#10;&#10;Pode anular com Ctrl+Z.</value></data>
+  <data name="ConfirmDeletePoints" xml:space="preserve"><value>Eliminar {0} pontos?&#10;&#10;Pode anular com Ctrl+Z.</value></data>
+  <data name="ValidationLatitude" xml:space="preserve"><value>A latitude deve ser um número entre −90 e 90.</value></data>
+  <data name="ValidationLongitude" xml:space="preserve"><value>A longitude deve ser um número entre −180 e 180.</value></data>
+  <data name="ValidationElevation" xml:space="preserve"><value>A elevação deve ser um número entre −500 e 9000 m, ou ficar vazia.</value></data>
+  <data name="ValidationTime" xml:space="preserve"><value>A hora deve ter o formato AAAA-MM-DD HH:MM:SS (UTC), ou ficar vazia.</value></data>
+  <data name="SaveNotAvailable" xml:space="preserve"><value>Guardar ficheiros {0} não está disponível.</value></data>
+  <data name="StatusSaving" xml:space="preserve"><value>A guardar {0}...</value></data>
+  <data name="StatusSaved" xml:space="preserve"><value>Guardado: {0}</value></data>
+  <data name="StatusSaveFailed" xml:space="preserve"><value>Não foi possível guardar {0}.</value></data>
+  <data name="ConfirmSaveWithIssues" xml:space="preserve"><value>Ao guardar «{0}»:&#10;&#10;{1}&#10;&#10;Guardar mesmo assim?</value></data>
+  <data name="SaveIssueGpxUpgrade" xml:space="preserve"><value>• O ficheiro é GPX 1.0 e será guardado como GPX 1.1. Os campos sem equivalente em GPX 1.1 são conservados dentro de «extensions».</value></data>
+  <data name="ConfirmOverwrite" xml:space="preserve"><value>O ficheiro «{0}» já existe.&#10;&#10;Pretende substituí-lo?</value></data>
+  <data name="ErrorSaveAccessDenied" xml:space="preserve"><value>Não tem permissão para escrever o ficheiro «{0}». O ficheiro original não foi alterado.</value></data>
+  <data name="ErrorSaveVerification" xml:space="preserve"><value>O ficheiro gerado para «{0}» não passou na verificação e não foi guardado. O ficheiro original não foi alterado.</value></data>
+  <data name="ProfileWindowTitle" xml:space="preserve"><value>Perfil de elevação — {0} ({1})</value></data>
+  <data name="ProfileAxisDistance" xml:space="preserve"><value>Distância (km)</value></data>
+  <data name="ProfileAxisElevation" xml:space="preserve"><value>Elevação (m)</value></data>
+  <data name="ProfileMissing" xml:space="preserve"><value>⚠ {0} de {1} pontos não têm elevação; a curva interrompe-se neles.</value></data>
+  <data name="ProfileNoElevation" xml:space="preserve"><value>Este track ou rota não tem elevações.</value></data>
+  <data name="ProfileNoPoints" xml:space="preserve"><value>Não há pontos.</value></data>
+  <data name="ProfileIncludeGaps" xml:space="preserve"><value>Contar a distância entre segmentos</value></data>
+  <data name="ProfileHover" xml:space="preserve"><value>km {0} · {1} · ponto {2}</value></data>
+  <data name="ProfileElevationMissingValue" xml:space="preserve"><value>sem elevação</value></data>
+  <data name="ProfileHint" xml:space="preserve"><value>Mova o ponteiro sobre o perfil para ver o ponto no mapa; clique para o selecionar. Setas ← → : ponto anterior / seguinte.</value></data>
+  <data name="MenuTools" xml:space="preserve"><value>_Ferramentas</value></data>
+  <data name="MenuSimplify" xml:space="preserve"><value>_Simplificar track...</value></data>
+  <data name="MenuRegenerateTimes" xml:space="preserve"><value>_Regenerar tempos...</value></data>
+  <data name="DialogCancel" xml:space="preserve"><value>Cancelar</value></data>
+  <data name="DialogApply" xml:space="preserve"><value>Aplicar</value></data>
+  <data name="SimplifyTitle" xml:space="preserve"><value>Simplificar «{0}»</value></data>
+  <data name="SimplifyTolerance" xml:space="preserve"><value>Tolerância (m):</value></data>
+  <data name="SimplifyPreview" xml:space="preserve"><value>{0} → {1} pontos (eliminam-se {2}) com tolerância de {3} m.</value></data>
+  <data name="SimplifyNote" xml:space="preserve"><value>Douglas–Peucker por segmento: conservam-se o primeiro e o último ponto de cada segmento e os segmentos não se unem. Os pontos conservados não mudam; os eliminados perdem os seus campos e extensões. Pode anular com Ctrl+Z.</value></data>
+  <data name="SimplifyInvalidTolerance" xml:space="preserve"><value>A tolerância deve ser um número de metros maior que 0.</value></data>
+  <data name="SimplifyComputing" xml:space="preserve"><value>A calcular...</value></data>
+  <data name="StatusSimplified" xml:space="preserve"><value>«{0}» simplificado: {1} → {2} pontos.</value></data>
+  <data name="TimesTitle" xml:space="preserve"><value>Regenerar tempos de «{0}»</value></data>
+  <data name="TimesStartDate" xml:space="preserve"><value>Data de início:</value></data>
+  <data name="TimesStartTime" xml:space="preserve"><value>Hora de início (HH:MM:SS):</value></data>
+  <data name="TimesTimeZone" xml:space="preserve"><value>Fuso horário:</value></data>
+  <data name="TimesModeDistance" xml:space="preserve"><value>Segundo a distância percorrida e uma velocidade</value></data>
+  <data name="TimesModeUniform" xml:space="preserve"><value>Intervalo fixo entre pontos (não tem em conta a distância)</value></data>
+  <data name="TimesSpeed" xml:space="preserve"><value>Velocidade:</value></data>
+  <data name="TimesInterval" xml:space="preserve"><value>Segundos entre pontos:</value></data>
+  <data name="TimesIncludeGaps" xml:space="preserve"><value>Percorrer o intervalo entre segmentos à mesma velocidade</value></data>
+  <data name="TimesNote" xml:space="preserve"><value>Substituem-se as horas de todos os pontos deste track ou rota; os waypoints e os outros documentos não mudam. São guardadas em UTC. Pode anular com Ctrl+Z.</value></data>
+  <data name="TimesPreviewStart" xml:space="preserve"><value>Início: {0} (hora local) = {1}</value></data>
+  <data name="TimesPreviewEnd" xml:space="preserve"><value>Fim: {0} (hora local) = {1}</value></data>
+  <data name="TimesPreviewDuration" xml:space="preserve"><value>Duração: {0} · {1} pontos</value></data>
+  <data name="TimesPreviewReplaced" xml:space="preserve"><value>Serão substituídas as horas que {0} pontos já tinham.</value></data>
+  <data name="TimesAmbiguousStart" xml:space="preserve"><value>⚠ A hora de início repete-se devido à mudança de hora; foi usada a hora padrão (inverno).</value></data>
+  <data name="TimesInvalidStart" xml:space="preserve"><value>Indique a data e a hora de início (HH:MM ou HH:MM:SS).</value></data>
+  <data name="TimesInvalidDaylightStart" xml:space="preserve"><value>Essa hora não existe no fuso escolhido devido à mudança para a hora de verão.</value></data>
+  <data name="TimesInvalidSpeed" xml:space="preserve"><value>A velocidade deve ser um número maior que 0.</value></data>
+  <data name="TimesInvalidInterval" xml:space="preserve"><value>O intervalo deve ser um número de segundos maior que 0.</value></data>
+  <data name="StatusTimesRegenerated" xml:space="preserve"><value>Tempos regenerados em «{0}»: {1} pontos.</value></data>
+  <data name="UnitMinKm" xml:space="preserve"><value>min/km (ritmo)</value></data>
+  <data name="MenuAdjustElevations" xml:space="preserve"><value>_Ajustar altitudes com o MDT do IGN...</value></data>
+  <data name="MenuHelp" xml:space="preserve"><value>Aj_uda</value></data>
+  <data name="MenuHelpContents" xml:space="preserve"><value>_Ajuda do Polaris GPS</value></data>
+  <data name="MenuWeb" xml:space="preserve"><value>Site do _Mendikat (www.mendikat.net)</value></data>
+  <data name="MenuCheckUpdates" xml:space="preserve"><value>_Procurar atualizações...</value></data>
+  <data name="AboutCheckUpdates" xml:space="preserve"><value>Procurar atualizações</value></data>
+  <data name="MenuDonate" xml:space="preserve"><value>_Faça um donativo!</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>A_cerca do Polaris GPS...</value></data>
+  <data name="ErrorHelpNotFound" xml:space="preserve"><value>Não se encontra o ficheiro de ajuda. Volte a instalar a aplicação ou consulte https://www.mendikat.net.</value></data>
+  <data name="ErrorOpenExternal" xml:space="preserve"><value>O Windows não tem nenhum programa para abrir «{0}». Abra-o manualmente.</value></data>
+  <data name="AboutTitle" xml:space="preserve"><value>Acerca do Polaris GPS</value></data>
+  <data name="AboutVersion" xml:space="preserve"><value>Versão {0}</value></data>
+  <data name="AboutAuthor" xml:space="preserve"><value>Autor: {0}</value></data>
+  <data name="AboutDescription" xml:space="preserve"><value>Gere, visualiza e aperfeiçoa os teus tracks GPS. Edita percursos, analisa perfis de elevação e ajusta altitudes sobre cartografia especializada. Tudo o que precisas para levar as tuas rotas mais longe.</value></data>
+  <data name="AboutEmailLabel" xml:space="preserve"><value>E-mail:</value></data>
+  <data name="AboutWebLabel" xml:space="preserve"><value>Web:</value></data>
+  <data name="AboutDonateHint" xml:space="preserve"><value>Se a aplicação te é útil, podes apoiar o Mendikat com um donativo.</value></data>
+  <data name="AboutDonateButton" xml:space="preserve"><value>Faça um donativo!</value></data>
+  <data name="AboutDonateToolTip" xml:space="preserve"><value>PayPal. A forma rápida e segura de pagar na Internet.</value></data>
+  <data name="DialogClose" xml:space="preserve"><value>Fechar</value></data>
+  <data name="DemTitle" xml:space="preserve"><value>Ajustar altitudes de «{0}» com o MDT</value></data>
+  <data name="DemResolution" xml:space="preserve"><value>Modelo:</value></data>
+  <data name="DemResolution5" xml:space="preserve"><value>MDT IGN 5 m (mais detalhe)</value></data>
+  <data name="DemResolution25" xml:space="preserve"><value>MDT IGN 25 m (mais rápido)</value></data>
+  <data name="DemQuery" xml:space="preserve"><value>Consultar</value></data>
+  <data name="DemStop" xml:space="preserve"><value>Parar</value></data>
+  <data name="DemDatum" xml:space="preserve"><value>Referência vertical:</value></data>
+  <data name="DemPreviewCounts" xml:space="preserve"><value>{0} pontos: mudarão {1} · iguais {2} · sem dado do MDT {3} (conservam a sua elevação).</value></data>
+  <data name="DemPreviewMissing" xml:space="preserve"><value>Dos que mudam, {0} não tinham elevação.</value></data>
+  <data name="DemPreviewDifferences" xml:space="preserve"><value>Diferença MDT − original: mínima {0} m · máxima {1} m · média {2} m.</value></data>
+  <data name="DemPreviewNothing" xml:space="preserve"><value>Não há nada a mudar.</value></data>
+  <data name="DemCancelled" xml:space="preserve"><value>Consulta interrompida. Nada foi alterado.</value></data>
+  <data name="DemServiceError" xml:space="preserve"><value>Não foi possível consultar o serviço de elevações do IGN (sem ligação ou o serviço não responde). Nada foi alterado.</value></data>
+  <data name="DemNote" xml:space="preserve"><value>Só há dados para Espanha; no mar e fora de Espanha os pontos conservam a sua elevação. A elevação original do GPS pode estar referida a outra superfície (o elipsoide ou EGM96); não se aplica nenhuma correção. Nada muda até premir «Aplicar», que pode ser anulado com Ctrl+Z; o ficheiro original não é alterado até guardar.</value></data>
+  <data name="MenuReverse" xml:space="preserve"><value>_Inverter track</value></data>
+  <data name="StatusReversed" xml:space="preserve"><value>«{0}» invertido: {1} pontos.</value></data>
+  <data name="MenuJoinTracks" xml:space="preserve"><value>_Unir tracks...</value></data>
+  <data name="JoinTitle" xml:space="preserve"><value>Unir tracks</value></data>
+  <data name="JoinTracksLabel" xml:space="preserve"><value>Tracks a unir (de todos os documentos abertos):</value></data>
+  <data name="JoinTrackItem" xml:space="preserve"><value>{0} — {1} · {2} pontos</value></data>
+  <data name="JoinMaxGap" xml:space="preserve"><value>Intervalo máximo dentro de um segmento (m):</value></data>
+  <data name="JoinAllowReverse" xml:space="preserve"><value>Permitir inverter o sentido de um track</value></data>
+  <data name="JoinOrderLabel" xml:space="preserve"><value>Ordem por proximidade:</value></data>
+  <data name="JoinStepFirst" xml:space="preserve"><value>{0}. {1}</value></data>
+  <data name="JoinStep" xml:space="preserve"><value>{0}. {1} — intervalo {2}</value></data>
+  <data name="JoinStepNewSegment" xml:space="preserve"><value>{0}. {1} — intervalo {2}, segmento novo</value></data>
+  <data name="JoinReversedName" xml:space="preserve"><value>{0} (invertido)</value></data>
+  <data name="JoinDistanceMeters" xml:space="preserve"><value>{0} m</value></data>
+  <data name="JoinDistanceKilometers" xml:space="preserve"><value>{0} km</value></data>
+  <data name="JoinPreview" xml:space="preserve"><value>{0} tracks → 1 track de {1} pontos. Segmentos: {2}. Intervalos: {3} no total.</value></data>
+  <data name="JoinNeedsTwo" xml:space="preserve"><value>Marque pelo menos dois tracks.</value></data>
+  <data name="JoinInvalidGap" xml:space="preserve"><value>O intervalo máximo deve ser um número de metros entre 0 e 100 000.</value></data>
+  <data name="JoinNote" xml:space="preserve"><value>Cada track é colocado a seguir ao que tiver a extremidade mais próxima. Se o intervalo ultrapassar o máximo, começa um segmento novo. Os tracks originais não mudam: o resultado abre-se num GPX novo por guardar, com o nome do primeiro track. As horas de um track invertido são refletidas, como em «Inverter track».</value></data>
+  <data name="JoinApply" xml:space="preserve"><value>Unir</value></data>
+  <data name="StatusJoined" xml:space="preserve"><value>{0} tracks unidos em «{1}»: {2} pontos. Segmentos: {3}.</value></data>
+  <data name="StatusJoinNeedsTracks" xml:space="preserve"><value>Para unir são necessários pelo menos dois tracks com pontos nos documentos abertos.</value></data>
+  <data name="StatusElevationsAdjusted" xml:space="preserve"><value>Altitudes ajustadas com o MDT em «{0}»: {1} pontos.</value></data>
+  <data name="FieldElevationSource" xml:space="preserve"><value>Origem da elevação</value></data>
+  <data name="ElevationSourceOriginal" xml:space="preserve"><value>do ficheiro</value></data>
+  <data name="ElevationSourceInterpolated" xml:space="preserve"><value>interpolada ao inserir</value></data>
+  <data name="ElevationSourceDem" xml:space="preserve"><value>MDT do IGN</value></data>
+  <data name="ElevationSourceEdited" xml:space="preserve"><value>editada à mão</value></data>
+  <data name="ProfileNoTimes" xml:space="preserve"><value>Os pontos não têm hora.</value></data>
+  <data name="StatDistance" xml:space="preserve"><value>Distância</value></data>
+  <data name="StatAscent" xml:space="preserve"><value>Desnível positivo</value></data>
+  <data name="StatDescent" xml:space="preserve"><value>Desnível negativo</value></data>
+  <data name="StatMinElevation" xml:space="preserve"><value>Elevação mínima</value></data>
+  <data name="StatMaxElevation" xml:space="preserve"><value>Elevação máxima</value></data>
+  <data name="StatTotalTime" xml:space="preserve"><value>Tempo total</value></data>
+  <data name="StatMovingTime" xml:space="preserve"><value>Em movimento</value></data>
+  <data name="StatStoppedTime" xml:space="preserve"><value>Parado</value></data>
+  <data name="StatAverageSpeed" xml:space="preserve"><value>Velocidade média</value></data>
+  <data name="StatMaxSpeed" xml:space="preserve"><value>Velocidade máxima</value></data>
+  <data name="StatGroupRoute" xml:space="preserve"><value>Percurso</value></data>
+  <data name="StatGroupTime" xml:space="preserve"><value>Tempo</value></data>
+  <data name="ProfileStatsHint" xml:space="preserve"><value>Desnível calculado sobre o perfil suavizado com uma média gaussiana de 100 m, como em mendikat.net, para não somar o ruído do GPS. Num circuito, o desnível negativo iguala-se ao positivo. Parado: troços a menos de 1 km/h e pausas entre segmentos. Velocidade média: distância em movimento ÷ tempo em movimento. Velocidade máxima: a maior mantida durante pelo menos 30 s, para não contar os saltos do GPS.</value></data>
+  <data name="FilterOpen" xml:space="preserve"><value>Ficheiros suportados (*.gpx;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk;*.map;*.imp;*.rmap;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.gpx;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk;*.map;*.imp;*.rmap;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;GPX (*.gpx)&#124;*.gpx&#124;KML do Google Earth (*.kml)&#124;*.kml&#124;KMZ do Google Earth (*.kmz)&#124;*.kmz&#124;TCX da Garmin (*.tcx)&#124;*.tcx&#124;OziExplorer (*.plt;*.wpt)&#124;*.plt;*.wpt&#124;CompeGPS/TwoNav (*.trk;*.wpt)&#124;*.trk;*.wpt&#124;Cartografia: mapas e MDT (*.map;*.imp;*.rmap;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.rmap;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Todos os ficheiros (*.*)&#124;*.*</value></data>
+  <data name="FilterConvert" xml:space="preserve"><value>KML, KMZ, TCX, OziExplorer e CompeGPS/TwoNav (*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk)&#124;*.kml;*.kmz;*.tcx;*.plt;*.wpt;*.trk&#124;KML do Google Earth (*.kml)&#124;*.kml&#124;KMZ do Google Earth (*.kmz)&#124;*.kmz&#124;TCX da Garmin (*.tcx)&#124;*.tcx&#124;OziExplorer (*.plt;*.wpt)&#124;*.plt;*.wpt&#124;CompeGPS/TwoNav (*.trk;*.wpt)&#124;*.trk;*.wpt&#124;Cartografia: mapas e MDT (*.map;*.imp;*.rmap;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt)&#124;*.map;*.imp;*.rmap;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt&#124;Todos os ficheiros (*.*)&#124;*.*</value></data>
+  <data name="ErrorUnsupportedFormat" xml:space="preserve"><value>O ficheiro «{0}» não tem um formato suportado (GPX, KML, KMZ, TCX, OziExplorer ou CompeGPS/TwoNav): «{2}».</value></data>
+  <data name="ErrorUnsupportedDatum" xml:space="preserve"><value>«{0}» usa um datum ou sistema de coordenadas que não é possível converter{1}: {2}. São suportados WGS84 e ED50 (Espanha e Portugal) em coordenadas geográficas.</value></data>
+  <data name="ErrorInvalidArchive" xml:space="preserve"><value>O ficheiro «{0}» não é um KMZ válido: não é um ZIP correto, não contém nenhum KML ou é demasiado grande ao descomprimi-lo.</value></data>
+  <data name="WarningConvertedFrom" xml:space="preserve"><value>Convertido de {0} para GPX. O ficheiro original não é alterado; ao guardar, é pedido onde guardar o GPX.</value></data>
+  <data name="WarningIgnoredFeatures" xml:space="preserve"><value>Elementos de KML sem equivalente em GPX que não foram convertidos (polígonos, sobreposições, modelos…): {0}.</value></data>
+  <data name="WarningPointsWithoutPosition" xml:space="preserve"><value>Pontos sem posição (atividades em interior ou pausas) que foram omitidos: {0}.</value></data>
+  <data name="WarningDataNotConverted" xml:space="preserve"><value>Pontos com dados de TCX sem equivalente em GPX (distância, velocidade ou potência) que não foram convertidos: {0}. A frequência cardíaca e a cadência são conservadas.</value></data>
+  <data name="FormatConverted" xml:space="preserve"><value>{0} (convertido para GPX)</value></data>
+  <data name="StatusConverted" xml:space="preserve"><value>«{0}» convertido para GPX como «{1}» (por guardar).</value></data>
+  <data name="MenuConvertToGpx" xml:space="preserve"><value>Con_verter para GPX...</value></data>
+  <data name="DialogConvertFilesTitle" xml:space="preserve"><value>Ficheiros a converter para GPX</value></data>
+  <data name="DialogConvertFolderTitle" xml:space="preserve"><value>Pasta de destino dos GPX</value></data>
+  <data name="ConvertTitle" xml:space="preserve"><value>Converter para GPX</value></data>
+  <data name="ConvertFiles" xml:space="preserve"><value>Ficheiros KML, KMZ, TCX, OziExplorer e CompeGPS/TwoNav:</value></data>
+  <data name="ConvertAddFiles" xml:space="preserve"><value>Adicionar...</value></data>
+  <data name="ConvertRemove" xml:space="preserve"><value>Remover</value></data>
+  <data name="ConvertDestination" xml:space="preserve"><value>Guardar os GPX em:</value></data>
+  <data name="ConvertSameFolder" xml:space="preserve"><value>A pasta de cada ficheiro</value></data>
+  <data name="ConvertOtherFolder" xml:space="preserve"><value>Outra pasta:</value></data>
+  <data name="ConvertBrowse" xml:space="preserve"><value>Procurar...</value></data>
+  <data name="ConvertExisting" xml:space="preserve"><value>Se o GPX já existir:</value></data>
+  <data name="ConvertExistingRename" xml:space="preserve"><value>Guardá-lo com outro nome («nome (2).gpx»)</value></data>
+  <data name="ConvertExistingOverwrite" xml:space="preserve"><value>Substituí-lo</value></data>
+  <data name="ConvertExistingSkip" xml:space="preserve"><value>Não converter esse ficheiro</value></data>
+  <data name="ConvertStart" xml:space="preserve"><value>Converter</value></data>
+  <data name="ConvertStop" xml:space="preserve"><value>Parar</value></data>
+  <data name="ConvertNote" xml:space="preserve"><value>Os ficheiros originais não são alterados. Cada GPX é verificado antes de ser escrito e nunca fica a meio.</value></data>
+  <data name="ConvertReportOk" xml:space="preserve"><value>✓ {0} → {1}: tracks {2}, pontos {3}, waypoints {4}.</value></data>
+  <data name="ConvertReportSkipped" xml:space="preserve"><value>– {0}: não é convertido porque «{1}» já existe.</value></data>
+  <data name="ConvertReportAlreadyGpx" xml:space="preserve"><value>– {0}: já é um ficheiro GPX; não é convertido.</value></data>
+  <data name="ConvertReportWriteError" xml:space="preserve"><value>✗ {0}: não foi possível escrever «{1}»; esse ficheiro não foi alterado.</value></data>
+  <data name="ConvertSummary" xml:space="preserve"><value>Convertidos: {0} · Omitidos: {1} · Com erro: {2}.</value></data>
+  <data name="ConvertCancelled" xml:space="preserve"><value>Conversão interrompida. Os GPX já escritos estão completos; os restantes não foram criados.</value></data>
+  <data name="ConvertNoFolder" xml:space="preserve"><value>Escolha a pasta de destino.</value></data>
+  <data name="StatusConvertedFiles" xml:space="preserve"><value>Converter para GPX: {0} convertidos, {1} omitidos, {2} com erro.</value></data>
+  <data name="A11yConvertFiles" xml:space="preserve"><value>Ficheiros a converter</value></data>
+  <data name="A11yConvertFolder" xml:space="preserve"><value>Pasta de destino</value></data>
+  <data name="A11yConvertExisting" xml:space="preserve"><value>O que fazer se o GPX já existir</value></data>
+  <data name="A11yConvertReport" xml:space="preserve"><value>Resultado da conversão</value></data>
+  <data name="StatusElevation" xml:space="preserve"><value>Alt. {0} m ({1})</value></data>
+  <data name="ElevationSourceFile" xml:space="preserve"><value>ficheiro</value></data>
+  <data name="ElevationFileToolTip" xml:space="preserve"><value>Elevação do ponto do ficheiro que está sob o ponteiro, tal como está guardada.</value></data>
+  <data name="A11yElevationName" xml:space="preserve"><value>Altitude sob o ponteiro</value></data>
+  <data name="A11yElevationToolTip" xml:space="preserve"><value>Altitude sob o ponteiro: a do ponto do ficheiro, se existir; caso contrário, a do terreno segundo o MDT do IGN (só Espanha, requer Internet).</value></data>
+  <data name="A11yDatumName" xml:space="preserve"><value>Datum das coordenadas</value></data>
+  <data name="A11yDatumToolTip" xml:space="preserve"><value>Datum das coordenadas do ficheiro ativo. GPX, KML e TCX usam sempre WGS84.</value></data>
+  <data name="MenuOpenLocalMap" xml:space="preserve"><value>Abrir car_tografia...</value></data>
+  <data name="DialogOpenLocalMapTitle" xml:space="preserve"><value>Abrir cartografia local</value></data>
+  <data name="FilterLocalMaps" xml:space="preserve"><value>Mapas e MDT (*.map;*.imp;*.rmap;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt;*.jpg;*.png)&#124;*.map;*.imp;*.rmap;*.tif;*.tiff;*.cog;*.ecw;*.asc;*.hgt;*.jpg;*.jpeg;*.png;*.gif;*.bmp&#124;GeoTIFF e COG (*.tif;*.tiff;*.cog)&#124;*.tif;*.tiff;*.cog&#124;ECW (*.ecw)&#124;*.ecw&#124;Imagens com .tfw, .jgw, .pgw… (*.tif;*.jpg;*.png;*.gif;*.bmp)&#124;*.tif;*.tiff;*.jpg;*.jpeg;*.png;*.gif;*.bmp&#124;Mapas do OziExplorer (*.map)&#124;*.map&#124;Mapas do CompeGPS/TwoNav (*.imp;*.rmap)&#124;*.imp;*.rmap&#124;MDT ESRI ASCII Grid (*.asc)&#124;*.asc&#124;MDT SRTM (*.hgt)&#124;*.hgt&#124;Todos os ficheiros (*.*)&#124;*.*</value></data>
+  <data name="LocalMapsHeader" xml:space="preserve"><value>Cartografias do utilizador ({0})</value></data>
+  <data name="LocalMapsToolTip" xml:space="preserve"><value>Cartografias do utilizador (mapas e modelos digitais do terreno) abertas com Ficheiro › Abrir cartografia. Arraste ≡ para mudar qual fica por cima; a cartografia online fica sempre no fundo.</value></data>
+  <data name="LocalKindMap" xml:space="preserve"><value>Mapa</value></data>
+  <data name="LocalKindDem" xml:space="preserve"><value>MDT</value></data>
+  <data name="LocalMapShowToolTip" xml:space="preserve"><value>Mostrar ou ocultar o mapa</value></data>
+  <data name="LocalDemUseToolTip" xml:space="preserve"><value>Usar este MDT para a altitude sob o ponteiro e em «Ajustar altitudes»</value></data>
+  <data name="LocalZoomTo" xml:space="preserve"><value>Ajustar o mapa à sua extensão</value></data>
+  <data name="LocalRemove" xml:space="preserve"><value>Remover</value></data>
+  <data name="LocalMapsEmpty" xml:space="preserve"><value>Não há cartografias do utilizador. Utilize Ficheiro › Abrir cartografia (.map, .imp, .rmap, GeoTIFF, ECW, .asc, .hgt) ou largue os ficheiros sobre a janela.</value></data>
+  <data name="LocalMapDetails" xml:space="preserve"><value>{0} · {1} · {2} × {3} píxeis · {4} pontos de calibração, erro máximo {5} píxeis{6}</value></data>
+  <data name="LocalMapReduced" xml:space="preserve"><value> · imagem reduzida a {0} % para caber na memória</value></data>
+  <data name="LocalDemDetails" xml:space="preserve"><value>MDT de {0} × {1} nós · {2} · {3}</value></data>
+  <data name="StatusLocalMapOpened" xml:space="preserve"><value>Mapa «{0}» aberto.</value></data>
+  <data name="StatusLocalDemOpened" xml:space="preserve"><value>MDT «{0}» aberto: é usado para a altitude sob o ponteiro e em «Ajustar altitudes».</value></data>
+  <data name="StatusLocalMapRemoved" xml:space="preserve"><value>«{0}» removido.</value></data>
+  <data name="ErrorLocalUnsupportedFormat" xml:space="preserve"><value>O ficheiro «{0}» não é um formato de cartografia suportado ({2}). São suportados mapas .map (OziExplorer), .imp/.rmap (CompeGPS/TwoNav), GeoTIFF, ECW e imagens com .tfw/.jgw/.pgw e .prj, e MDT .asc, .hgt e GeoTIFF.</value></data>
+  <data name="ErrorLocalInvalidCalibration" xml:space="preserve"><value>A calibração de «{0}» não é válida{1}: {2}.</value></data>
+  <data name="ErrorLocalImageMissing" xml:space="preserve"><value>Não se encontra a imagem do mapa «{0}»: «{2}». Deve estar nesse caminho ou na mesma pasta que o ficheiro de calibração.</value></data>
+  <data name="ErrorLocalUnsupportedImage" xml:space="preserve"><value>A imagem «{2}» do mapa «{0}» está num formato não suportado. São suportados JPG, PNG, BMP, GIF e TIFF; OZF (OziExplorer) não. Se a imagem for um ECW ou um GeoTIFF georreferenciado, abra-a diretamente.</value></data>
+  <data name="ErrorLocalUnsupportedRmap" xml:space="preserve"><value>«{0}» é um RMAP de um tipo não suportado ({2}). Só são suportados os RMAP do TwoNav com mosaicos JPEG.</value></data>
+  <data name="ErrorLocalInvalidImage" xml:space="preserve"><value>Não foi possível ler a imagem «{2}» do mapa «{0}»: está danificada ou não é uma imagem.</value></data>
+  <data name="ErrorLocalUnsupportedCrs" xml:space="preserve"><value>«{0}» usa um sistema de coordenadas não suportado{1}: {2}. São suportados WGS84, ETRS89 e ED50 (fusos 29 a 31), em geográficas, UTM ou Transversa de Mercator.</value></data>
+  <data name="ErrorLocalMissingProjection" xml:space="preserve"><value>Falta o ficheiro «{2}» com o sistema de coordenadas de «{0}». Sem ele não é possível saber onde o colocar.</value></data>
+  <data name="ErrorLocalInvalidDem" xml:space="preserve"><value>O MDT «{0}» não é válido{1}: {2}.</value></data>
+  <data name="ErrorLocalTooLarge" xml:space="preserve"><value>«{0}» é demasiado grande para ser aberto ({2}).</value></data>
+  <data name="LocalOpacityName" xml:space="preserve"><value>Opacidade de {0}</value></data>
+  <data name="LocalOpacityToolTip" xml:space="preserve"><value>Opacidade: para a esquerda vê-se o que está por baixo</value></data>
+  <data name="LocalDragHandle" xml:space="preserve"><value>Arraste para mudar a ordem (ou Ctrl+↑ / Ctrl+↓). A de cima é desenhada por cima.</value></data>
+  <data name="A11yLocalMapsList" xml:space="preserve"><value>Cartografias do utilizador, da de cima para a de baixo</value></data>
+  <data name="StatusDropSkipped" xml:space="preserve"><value>{0} ficheiros largados não foram abertos: não são tracks (GPX, KML, KMZ, TCX, OziExplorer, CompeGPS/TwoNav) nem cartografia suportada.</value></data>
+  <data name="MenuOpenEcwp" xml:space="preserve"><value>Abrir cartografia _online (ECWP)...</value></data>
+  <data name="EcwpTitle" xml:space="preserve"><value>Abrir cartografia online (ECWP)</value></data>
+  <data name="EcwpPrompt" xml:space="preserve"><value>Endereço do mapa ECW servido por ECWP:</value></data>
+  <data name="EcwpExample" xml:space="preserve"><value>Exemplo: ecwp://servidor.exemplo.org/imagens/ortofoto.ecw (ou ecwps:// para ligação segura).</value></data>
+  <data name="EcwpOpen" xml:space="preserve"><value>Abrir</value></data>
+  <data name="EcwLicenseTitle" xml:space="preserve"><value>Licença de utilização do ECW (ERDAS ECW/JP2)</value></data>
+  <data name="EcwLicenseIntro" xml:space="preserve"><value>Para abrir mapas ECW e ECWP, o Polaris GPS usa tecnologia propriedade da Intergraph Corporation (Hexagon). A sua licença exige que aceites estas condições, em inglês, antes de a usar. Se não as aceitares, tudo o resto funciona igual e só os ECW ficam desativados; poderás aceitá-las ao tentar abrir outro.</value></data>
+  <data name="EcwLicenseAccept" xml:space="preserve"><value>Aceito</value></data>
+  <data name="EcwLicenseDecline" xml:space="preserve"><value>Não aceito</value></data>
+  <data name="StatusEcwLicenseDeclined" xml:space="preserve"><value>ECW desativado: a sua licença de utilização não foi aceite.</value></data>
+  <data name="LocalGdalMapDetails" xml:space="preserve"><value>{0} · {1} · {2} × {3} píxeis · {4} bandas</value></data>
+  <data name="ErrorLocalGdalUnavailable" xml:space="preserve"><value>Não é possível abrir «{0}»: falta a biblioteca GDAL da aplicação ({2}). Volte a instalar o Polaris GPS.</value></data>
+  <data name="ErrorLocalEcwUnavailable" xml:space="preserve"><value>Não é possível abrir «{0}»: falta o módulo ECW do GDAL (gdal_ECW_JP2ECW.dll e NCSEcw.dll na pasta gdal\x64\plugins da aplicação).</value></data>
+  <data name="ErrorLocalEcwLicense" xml:space="preserve"><value>Não é possível abrir «{0}»: é necessário aceitar a licença de utilização do ECW.</value></data>
+  <data name="ErrorLocalNotGeoreferenced" xml:space="preserve"><value>«{0}» não está georreferenciado: não indica onde está. Se for a imagem de um mapa calibrado, abra o seu .map ou .imp; se tiver ficheiro de georreferenciação (.tfw, .jgw, .pgw…), coloque-o junto da imagem com o mesmo nome.</value></data>
+</root>

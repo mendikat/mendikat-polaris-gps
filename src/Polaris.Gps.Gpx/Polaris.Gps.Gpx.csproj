@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- GPX file format (reading in increment 2, writing in increment 4). No UI dependencies. Other formats (KML, KMZ, TCX, OziExplorer, CompeGPS/TwoNav) are only read and converted to GPX. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Polaris.Gps.Domain\Polaris.Gps.Domain.csproj" />
+  </ItemGroup>
+</Project>

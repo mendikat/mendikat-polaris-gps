@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- 10.0.19041 (Windows 10 2004+) is required by SkiaSharp.Views.WPF, used by Mapsui.Wpf. -->
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <UseWPF>true</UseWPF>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" Version="4.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Using Include="System.IO" />
+    <Using Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Polaris.Gps.Domain\Polaris.Gps.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Polaris.Gps.App\Polaris.Gps.App.csproj" />
+    <ProjectReference Include="..\..\src\Polaris.Gps.Gpx\Polaris.Gps.Gpx.csproj" />
+    <ProjectReference Include="..\..\src\Polaris.Gps.Mapping\Polaris.Gps.Mapping.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Fixtures\**\*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

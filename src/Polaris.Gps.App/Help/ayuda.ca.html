@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajuda de Polaris GPS</title>
+<link rel="stylesheet" href="ayuda.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <svg width="48" height="48" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M6,26 C10,17 15,25 17,16 S25,12 26,6" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="6" cy="26" r="3.5" fill="#2e7d32" stroke="#fff" stroke-width="1.2"/>
+      <circle cx="26" cy="6" r="3.5" fill="#fff" stroke="#8b0000" stroke-width="1.2"/>
+    </svg>
+    <div>
+      <h1>Ajuda de Polaris GPS</h1>
+      <p>Obre, revisa, edita i desa fitxers GPX sobre el mapa.</p>
+      <p class="langs"><a href="ayuda.html" hreflang="es">Español</a> · Català · <a href="ayuda.eu.html" hreflang="eu">Euskara</a> · <a href="ayuda.fr.html" hreflang="fr">Français</a> · <a href="ayuda.pt.html" hreflang="pt">Português</a></p>
+    </div>
+    <a class="web" href="https://www.mendikat.net">www.mendikat.net ↗</a>
+  </div>
+</header>
+
+<div class="layout">
+  <nav aria-label="Contingut">
+    <h2>Contingut</h2>
+    <a href="#empezar">Primers passos</a>
+    <a href="#mapa">Mapa i coordenades</a>
+    <a href="#capas">Capes i punts</a>
+    <a href="#editar">Edició</a>
+    <a href="#perfil">Perfil d'elevació</a>
+    <a href="#herramientas">Eines</a>
+    <a href="#teclado">Dreceres de teclat</a>
+    <a href="#archivos">Fitxers i desament</a>
+    <a href="#configuracion">Configuració</a>
+    <a href="#problemas">Problemes freqüents</a>
+    <a href="#apoya">Doneu suport a Mendikat</a>
+    <a href="#acerca">Quant a</a>
+  </nav>
+
+  <main>
+    <section id="empezar">
+      <h2>Primers passos</h2>
+      <ol>
+        <li>Arrossegueu un o diversos fitxers des de l'Explorador de Windows i deixeu-los anar sobre la finestra, o feu servir <span class="path">Fitxer › Obre un fitxer…</span> (<kbd>Ctrl</kbd>+<kbd>O</kbd>) i trieu un fitxer <strong>.gpx</strong>, <strong>.kml</strong>, <strong>.kmz</strong> (Google Earth), <strong>.tcx</strong> (Garmin), <strong>.plt</strong> o <strong>.wpt</strong> (OziExplorer), o <strong>.trk</strong> o <strong>.wpt</strong> (CompeGPS/TwoNav). Els que no són GPX s'obren convertits a GPX (vegeu <a href="#archivos">Fitxers i desament</a>). Se'n poden obrir diversos alhora: cadascun apareix a la seva pestanya i amb el seu color al mapa.</li>
+        <li>El mapa s'ajusta a les dades. Al tauler esquerre, <strong>Capes</strong> mostra els tracks, rutes i waypoints del fitxer, i <strong>Punts</strong> els punts de l'element seleccionat.</li>
+        <li>Per començar un track nou: <span class="path">Fitxer › Nou fitxer</span> (<kbd>Ctrl</kbd>+<kbd>N</kbd>) i <kbd>Ctrl</kbd> + clic al mapa per afegir-hi punts.</li>
+      </ol>
+      <div class="note">Els fitxers grans mostren el percentatge de càrrega a la barra d'estat. Es pot aturar amb el botó <strong>Cancel·la</strong> o amb <kbd>Esc</kbd>.</div>
+    </section>
+
+    <section id="mapa">
+      <h2>Mapa i coordenades</h2>
+      <p>Arrossegueu per desplaçar-vos i feu servir la roda per apropar o allunyar. La barra d'eines té <strong>+</strong>, <strong>−</strong> i <strong>⤢</strong> (ajusta a les dades), i el selector de cartografia:</p>
+      <div class="cards">
+        <div class="card"><strong>Mapa IGN (España)</strong><span>Predeterminada. Topogràfic oficial.</span></div>
+        <div class="card"><strong>OpenTopoMap · CyclOSM · OpenStreetMap</strong><span>Mundial, dades OSM.</span></div>
+        <div class="card"><strong>Satèl·lit i Topogràfic (ESRI)</strong><span>Imatge aèria i relleu.</span></div>
+        <div class="card"><strong>Géoportail IGN (France)</strong><span>Mapa topogràfic SCAN 25 de l'IGN francès.</span></div>
+        <div class="card"><strong>MtbMap</strong><span>Mapa per a BTT.</span></div>
+      </div>
+      <p>La cartografia triada es recorda per a la propera vegada. Sense connexió no es veu el fons, però els fitxers s'obren, s'editen i es desen igual.</p>
+      <h3>Regle d'escala</h3>
+      <p>A la cantonada inferior dreta del mapa, damunt de l'atribució de la cartografia, un regle de blocs blancs i negres indica la <strong>distància sobre el terreny</strong> que representa: sempre una xifra rodona (10, 20, 50, 100, 200, 500 m, 1, 2, 5 km…), en metres fins a 999 m i en quilòmetres a partir de 1000 m. Canvia de longitud i de xifra en apropar o allunyar, i té en compte la latitud del centre del mapa. És activat d'entrada; s'amaga o es torna a mostrar a <span class="path">Fitxer › Configuració… › Visualització</span> (vegeu <a href="#configuracion">Configuració</a>).</p>
+      <p>En moure el punter, la barra d'estat mostra la posició en <strong>UTM WGS84</strong> (per exemple <code>30T 575700 4760048</code>) i en <strong>graus, minuts i segons</strong>, al costat del <strong>datum</strong> del fitxer: sempre WGS84, perquè els fitxers en ED50 (OziExplorer, CompeGPS/TwoNav) es passen a WGS84 en obrir-los.</p>
+      <p>Si deixeu el punter quiet un moment, també es mostra l'<strong>altitud</strong>: la del punt del fitxer que hi hagi a sota, marcada «(fitxer)», o si no la del terreny: la d'un MDT local obert, marcada amb el seu nom, o la del MDT de l'IGN, marcada «(MDT IGN 5 m)». La de l'IGN només existeix a Espanya i necessita connexió; sense dada es mostra «—». Passeu-hi el ratolí per sobre per veure d'on surt.</p>
+      <h3>Cartografia i MDT locals</h3>
+      <p><span class="path">Fitxer › Obre cartografia…</span> obre mapes escanejats calibrats i models digitals del terreny desats al vostre equip, sense connexió:</p>
+      <ul>
+        <li><strong>Mapes</strong>: calibracions <code>.map</code> d'OziExplorer i <code>.imp</code> de CompeGPS/TwoNav. La imatge ha de ser en JPG, PNG, BMP, GIF o TIFF (les OZF d'OziExplorer no s'admeten; si la imatge és un ECW o un GeoTIFF georeferenciat, obriu-la directament) i es busca a la ruta indicada o a la mateixa carpeta que la calibració. El mapa es dibuixa sobre la cartografia triada i sota els tracks.</li>
+        <li><strong>RMAP de TwoNav</strong>: els mapes <code>.rmap</code> de CompeGPS/TwoNav porten la imatge i la calibració en un sol fitxer. S'admeten els de tessel·les JPEG (els habituals); els d'altres tipus es rebutgen amb un avís. Un RMAP molt gran es carrega amb el nivell de detall més alt que càpiga a la memòria.</li>
+        <li><strong>GeoTIFF (també COG, <code>.cog</code>) i ECW</strong>: mapes ja georeferenciats (ortofotos, mapes de l'IGN…), en qualsevol sistema de coordenades. Només es llegeix la zona que es veu, de manera que els ECW enormes s'obren a l'instant. Un GeoTIFF d'una sola banda d'altures s'obre com a MDT.</li>
+        <li><strong>Imatges amb fitxer de georeferència</strong>: un TIFF, JPEG o PNG acompanyat del seu <code>.tfw</code>, <code>.jgw</code> o <code>.pgw</code> (o <code>.wld</code>) i d'un <code>.prj</code> amb el mateix nom. El fitxer de georeferència situa la imatge i el <code>.prj</code> diu en quin sistema de coordenades; sense <code>.prj</code> no es pot col·locar. S'obre la imatge; el seu <code>.tfw</code> i el seu <code>.prj</code> es llegeixen sols. Un GeoTIFF o COG ja porta la georeferència a dins i no els necessita.</li>
+        <li><strong>ECW a internet</strong>: <span class="path">Fitxer › Obre cartografia en línia (ECWP)…</span> i escriviu l'adreça <code>ecwp://…</code> o <code>ecwps://…</code>.</li>
+        <li><strong>Llicència d'ECW</strong>: ECW és un format propietat d'Intergraph (Hexagon). La primera vegada que obriu un ECW se us demanarà que n'accepteu la llicència d'ús; si no l'accepteu, tota la resta funciona igual i només els ECW queden desactivats.</li>
+        <li><strong>MDT</strong>: <code>.hgt</code> (SRTM) i <code>.asc</code> (ESRI ASCII Grid, amb el seu <code>.prj</code> al costat). També <code>.tif</code> d'una banda d'altures. No es dibuixen: donen l'altitud sota el punter i apareixen a <em>Ajusta les altituds</em> després del MDT de l'IGN.</li>
+      </ul>
+      <p>El que s'obre apareix al botó <strong>Cartografies d'usuari</strong> de la barra d'eines. La de dalt de la llista es dibuixa damunt de les altres: arrossegueu la nansa <strong>≡</strong> (o feu servir <kbd>Ctrl</kbd>+<kbd>↑</kbd> / <kbd>Ctrl</kbd>+<kbd>↓</kbd>) per canviar l'ordre; la cartografia en línia queda sempre al fons i els tracks sempre a sobre. El control lliscant de cada mapa n'ajusta l'opacitat per veure el que hi ha a sota. La casella mostra o amaga cada mapa (en un MDT, decideix si s'utilitza), <strong>⤢</strong> us hi porta i <strong>✕</strong> el treu. S'admeten els datums WGS84, ETRS89 i ED50 (fusos 29 a 31) en geogràfiques, UTM o Transverse Mercator; si un fitxer fa servir un altre sistema s'avisa en lloc de col·locar-lo malament. No es recorden en tancar l'aplicació.</p>
+    </section>
+
+    <section id="capas">
+      <h2>Capes i punts</h2>
+      <ul>
+        <li>La casella de cada capa la mostra o l'amaga al mapa.</li>
+        <li>En seleccionar una capa, la seva llista de punts apareix a sota. Un clic a la llista o al mapa selecciona un punt; <kbd>Ctrl</kbd> o <kbd>Maj</kbd> + clic a la llista en selecciona diversos.</li>
+        <li>Els <strong>waypoints</strong> del GPX es dibuixen com a triangles amb el seu nom en apropar-vos.</li>
+        <li>El tauler <strong>Punt seleccionat</strong> mostra i permet canviar el nom, el comentari, la descripció, la latitud, la longitud, l'elevació i l'hora. També indica d'on ve l'elevació: del fitxer, interpolada, del MDT o editada a mà.</li>
+      </ul>
+    </section>
+
+    <section id="editar">
+      <h2>Edició</h2>
+      <table>
+        <tr><th>Acció</th><th>Com</th></tr>
+        <tr><td>Eliminar punts</td><td><kbd>Supr</kbd>. Sense punts seleccionats, elimina el track o la ruta (demana confirmació).</td></tr>
+        <tr><td>Inserir un punt intermedi</td><td><kbd>Insert</kbd>: afegeix el punt mitjà entre el seleccionat i el següent.</td></tr>
+        <tr><td>Afegir punts</td><td><kbd>Ctrl</kbd> + clic al mapa: després del punt seleccionat o al final de l'element.</td></tr>
+        <tr><td>Menú contextual</td><td>Amb un punt d'un track seleccionat, clic dret al mapa: <strong>Insereix un punt</strong> (al lloc del clic, després del seleccionat, com <kbd>Ctrl</kbd> + clic; sobre un punt, el punt mitjà després d'ell), <strong>Elimina el punt</strong>, les eines del menú <em>Eines</em> i <strong>Afegeix un waypoint</strong>.</td></tr>
+        <tr><td>Afegir un waypoint</td><td>Clic dret al mapa › <strong>Afegeix un waypoint…</strong>: es crea al lloc del clic després d'escriure'n el nom, el comentari i la descripció.</td></tr>
+        <tr><td>Editar o eliminar un waypoint</td><td>Clic dret sobre el waypoint › <strong>Edita el waypoint…</strong> o <strong>Elimina el waypoint</strong>. També <em>Edició › Edita el waypoint…</em> o <kbd>Supr</kbd> amb el waypoint seleccionat; eliminar sempre demana confirmació.</td></tr>
+        <tr><td>Moure un punt</td><td>Seleccionar-lo i arrossegar-lo al mapa, o canviar la latitud i la longitud al tauler i prémer <strong>Aplica</strong> (<kbd>Retorn</kbd>).</td></tr>
+        <tr><td>Desfer / refer</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd>. Cada document té el seu propi historial.</td></tr>
+      </table>
+      <p>Un asterisc <strong>*</strong> a la pestanya i al títol indica canvis sense desar.</p>
+    </section>
+
+    <section id="perfil">
+      <h2>Perfil d'elevació</h2>
+      <p>Seleccioneu un track o una ruta a <strong>Capes</strong> i premeu <strong>Perfil</strong> (o <span class="path">Visualitza › Perfil d'elevació</span>).</p>
+      <div class="cards">
+        <div class="card"><strong>Recorregut</strong><span>Distància, desnivell positiu i negatiu, elevació mínima i màxima.</span></div>
+        <div class="card"><strong>Temps</strong><span>Total, en moviment, aturat, velocitat mitjana i màxima.</span></div>
+      </div>
+      <ul>
+        <li>El <strong>desnivell</strong> es calcula com a mendikat.net: sobre el perfil suavitzat amb una mitjana gaussiana de 100 m, per no sumar el soroll del GPS. En un circuit, el negatiu s'iguala al positiu.</li>
+        <li><strong>Aturat</strong>: trams a menys d'1 km/h i pauses entre segments. La <strong>velocitat mitjana</strong> només compta el temps en moviment; la <strong>màxima</strong> és la més alta mantinguda durant almenys 30 s.</li>
+        <li>En passar el punter pel perfil, el punt es marca al mapa; un clic el selecciona i <kbd>←</kbd> <kbd>→</kbd> recorren els punts.</li>
+      </ul>
+    </section>
+
+    <section id="herramientas">
+      <h2>Eines</h2>
+      <p>S'apliquen al track o a la ruta seleccionats a <strong>Capes</strong> i es desfan amb <kbd>Ctrl</kbd>+<kbd>Z</kbd>. Excepte «Inverteix el track», mostren una previsualització i no canvien res fins que premeu <strong>Aplica</strong>. «Uneix tracks» és diferent: treballa amb els tracks de tots els documents oberts i deixa el resultat en un document nou.</p>
+      <h3>Simplifica el track</h3>
+      <p>Redueix punts amb l'algorisme de Douglas–Peucker. La tolerància en metres indica quant es pot separar la línia simplificada de l'original. Es conserven el primer i l'últim punt de cada segment.</p>
+      <h3>Regenera els temps</h3>
+      <p>Posa hores noves a partir d'una data, una hora i una zona horària d'inici, amb una velocitat (km/h, m/s o min/km) o un interval fix entre punts.</p>
+      <h3>Inverteix el track</h3>
+      <p>Canvia el sentit del recorregut: l'últim punt passa a ser el primer (també l'ordre dels segments). Si els punts tenen hora, es reflecteixen perquè continuïn en ordre: el track invertit comença i acaba a les mateixes hores i conserva el temps entre cada parell de punts.</p>
+      <h3>Uneix tracks</h3>
+      <p>Uneix dos o més tracks en un, per proximitat: cada track es posa a continuació del que té l'extrem més proper i, si cal, se n'inverteix el sentit (les hores es reflecteixen com a «Inverteix el track»). La llista inclou els tracks de tots els documents oberts; desmarqueu els que no vulgueu unir. Si el buit entre dos tracks supera el <strong>buit màxim</strong>, el següent comença un segment nou. La vista prèvia mostra l'ordre i cada buit. Els tracks originals no canvien: el resultat s'obre en un GPX nou sense desar, amb el nom del primer track.</p>
+      <h3>Ajusta les altituds amb el MDT de l'IGN</h3>
+      <p>Consulta el Model Digital del Terreny de l'IGN (5 m o 25 m) i substitueix les elevacions. Només cobreix Espanya i necessita connexió. Els punts sense dada (mar o fora d'Espanya) conserven la seva elevació.</p>
+    </section>
+
+    <section id="teclado">
+      <h2>Dreceres de teclat</h2>
+      <table>
+        <tr><th>Tecles</th><th>Acció</th></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>N</kbd></td><td>Nou fitxer</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td>Obre un fitxer (GPX, KML, KMZ, TCX, OziExplorer, CompeGPS/TwoNav)</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Desa</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>F4</kbd></td><td>Tanca el fitxer</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Desfés / refés</td></tr>
+        <tr><td><kbd>Supr</kbd> / <kbd>Insert</kbd></td><td>Elimina / insereix un punt</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>Ctrl</kbd>+<kbd>−</kbd></td><td>Apropa / allunya el mapa</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Cancel·la l'obertura d'un fitxer</td></tr>
+        <tr><td><kbd>F1</kbd></td><td>Aquesta ajuda</td></tr>
+        <tr><td><kbd>Alt</kbd> + lletra subratllada</td><td>Obre els menús amb el teclat</td></tr>
+      </table>
+    </section>
+
+    <section id="archivos">
+      <h2>Fitxers i desament</h2>
+      <ul>
+        <li>S'obren <strong>GPX 1.1 i 1.0</strong>, i sempre es desa GPX 1.1 vàlid. Si el fitxer era GPX 1.0, s'avisa abans de desar.</li>
+        <li>Els <strong>KML</strong> i <strong>KMZ</strong> de Google Earth i els <strong>TCX</strong> de Garmin s'obren convertits a GPX, com un document nou sense desar amb el mateix nom i l'extensió <code>.gpx</code>. El fitxer original no es modifica mai: en desar es demana on desar el GPX. El que no té equivalent en GPX (polígons, superposicions, distància o potència del TCX…) s'indica als avisos del document. El pols i la cadència del TCX es conserven.</li>
+        <li><span class="path">Fitxer › Converteix a GPX…</span> converteix d'un sol cop diversos fitxers KML, KMZ, TCX, OziExplorer o CompeGPS/TwoNav en fitxers GPX, sense obrir-los ni necessitar cap fitxer obert. Trieu els fitxers, on desar els GPX (per defecte, al costat de cada original) i què cal fer si ja existeix un GPX amb aquest nom: desar-lo amb un altre nom, reemplaçar-lo o no convertir aquell fitxer. En acabar es mostra un informe per fitxer. Un fitxer amb errors no atura els altres, i <strong>Atura</strong> mai no deixa un GPX a mitges.</li>
+        <li>Els tracks <strong>.plt</strong> i waypoints <strong>.wpt</strong> d'<strong>OziExplorer</strong> i els tracks <strong>.trk</strong> i waypoints <strong>.wpt</strong> de <strong>CompeGPS/TwoNav</strong> també s'obren convertits a GPX (i es poden convertir per lots). Els dos tipus de <code>.wpt</code> es reconeixen pel contingut. Les coordenades en ED50 es passen a WGS84; un altre datum o coordenades UTM no s'admeten. Les altituds d'OziExplorer, en peus, es passen a metres, i les seves hores es prenen com a UTC. Les hores de CompeGPS es passen a UTC amb la zona horària del fitxer.</li>
+        <li>Es conserven les metadades, les extensions i els camps que l'aplicació no edita.</li>
+        <li>Desar és segur: primer s'escriu un fitxer temporal, es comprova i només aleshores substitueix l'original.</li>
+      </ul>
+    </section>
+
+    <section id="configuracion">
+      <h2>Configuració</h2>
+      <p><span class="path">Fitxer › Configuració…</span> té dos blocs. Els canvis es desen en prémer <strong>D'acord</strong> i es recorden per a la propera vegada.</p>
+      <table>
+        <tr><th>Bloc</th><th>Opció</th></tr>
+        <tr><td><strong>Idioma</strong></td><td><strong>Idioma de l'aplicació</strong>: español (per defecte), català, euskara, français o português, amb la seva bandera. El canvi s'aplica en tornar a obrir l'aplicació; aquesta guia (<kbd>F1</kbd>) també s'obre en aquest idioma. Alguns detalls tècnics dels errors de cartografia continuen en castellà. Els nombres s'escriuen sempre amb coma decimal, sigui quin sigui l'idioma.</td></tr>
+        <tr><td><strong>Visualització</strong></td><td><strong>Mostra el regle d'escala al mapa</strong> (activat per defecte). El canvi es veu a l'instant, sense reiniciar.</td></tr>
+      </table>
+      <p>La configuració es desa a <code>%APPDATA%\Polaris GPS\settings.json</code> (també la cartografia triada) i el registre tècnic a <code>%LOCALAPPDATA%\Polaris GPS\logs</code>.</p>
+    </section>
+
+    <section id="problemas">
+      <h2>Problemes freqüents</h2>
+      <h3>No es veu el mapa de fons</h3>
+      <p>Sense connexió o amb el servidor caigut, la barra d'estat ho indica en vermell. Proveu una altra cartografia.</p>
+      <h3>Un fitxer no s'obre</h3>
+      <p>El missatge n'indica el motiu i, si se sap, la línia del fitxer amb el problema (per exemple, una coordenada fora de rang). Els fitxers d'OziExplorer i CompeGPS/TwoNav només s'obren en WGS84 o ED50 (Espanya i Portugal) i en coordenades geogràfiques; amb un altre datum o en UTM, el missatge ho diu. Torneu-los a exportar des del vostre programa en WGS84 i graus.</p>
+      <h3>El desnivell no coincideix amb el d'un altre programa</h3>
+      <p>Cada programa filtra el soroll del GPS a la seva manera. Polaris GPS fa servir el mateix mètode que mendikat.net.</p>
+    </section>
+
+    <section id="apoya">
+      <h2>Doneu suport a Mendikat</h2>
+      <div class="donate">
+        <p>Polaris GPS és gratuïta. Si et resulta útil, pots ajudar a mantenir Mendikat amb un donatiu.</p>
+        <form action="https://www.paypal.com/donate" method="post" target="_top">
+          <input type="hidden" name="hosted_button_id" value="4BNLU9ACSHTFN">
+          <input type="submit" class="btn btn-lg btn-warning" value="Feu un donatiu!" title="PayPal. La manera ràpida i segura de pagar a internet.">
+        </form>
+      </div>
+    </section>
+
+    <section id="acerca">
+      <h2>Quant a</h2>
+      <p><strong>Polaris GPS</strong>. La versió instal·lada es veu a <span class="path">Ajuda › Quant a Polaris GPS…</span></p>
+      <p>Autor: Javier Urrutia · <a href="mailto:javi@mendikat.net">javi@mendikat.net</a> · <a href="https://www.mendikat.net">www.mendikat.net</a></p>
+      <p>Cartografia i MDT de l'IGN d'Espanya sota CC BY 4.0 (scne.es); dades d'OpenStreetMap sota ODbL.</p>
+    </section>
+  </main>
+</div>
+
+<footer>© Mendikat · <a href="https://www.mendikat.net">www.mendikat.net</a></footer>
+
+</body>
+</html>

@@ -7,7 +7,7 @@
             "command": "dotnet",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Mendikat.TrailLab.App/Mendikat.TrailLab.App.csproj",
+                "${workspaceFolder}/src/Polaris.Gps.App/Polaris.Gps.App.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -23,7 +23,7 @@
             "args": [
                 "watch",
                 "--project",
-                "${workspaceFolder}/src/Mendikat.TrailLab.App/Mendikat.TrailLab.App.csproj",
+                "${workspaceFolder}/src/Polaris.Gps.App/Polaris.Gps.App.csproj",
                 "run"
             ],
             "options": {
