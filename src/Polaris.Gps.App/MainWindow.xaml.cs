@@ -43,6 +43,7 @@ public partial class MainWindow : Window
         _viewModel = viewModel;
         DataContext = viewModel;
         InitializeComponent();
+        CenterOnPrimaryScreen();
 
         MapView.Map = new Mapsui.Map();
         _map = createMapController(MapView.Map);
@@ -85,6 +86,19 @@ public partial class MainWindow : Window
         MapView.PreviewMouseLeftButtonDown += OnMapLeftButtonDown;
         MapView.PreviewMouseLeftButtonUp += OnMapLeftButtonUp;
         MapView.MouseLeave += (_, _) => _viewModel.UpdatePointer(null);
+    }
+
+    /// <summary>
+    /// Opens centred on the primary screen, where Windows shows the splash screen. CenterScreen would use the screen of the
+    /// mouse pointer, so with two screens the splash and the window could appear on different ones.
+    /// </summary>
+    private void CenterOnPrimaryScreen()
+    {
+        var area = SystemParameters.WorkArea; // primary screen, without the taskbar
+        Width = Math.Min(Width, area.Width);
+        Height = Math.Min(Height, area.Height);
+        Left = area.Left + ((area.Width - Width) / 2);
+        Top = area.Top + ((area.Height - Height) / 2);
     }
 
     /// <summary>Sizes the scale bar for the current zoom and latitude (at most <see cref="MaxScaleBarPixels"/> wide).</summary>

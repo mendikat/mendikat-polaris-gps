@@ -23,7 +23,7 @@ public sealed class UpdateCheckException(string message, Exception? innerExcepti
 /// </summary>
 public sealed class GitHubUpdateChecker(HttpClient http, string repository = GitHubUpdateChecker.Repository) : IUpdateChecker
 {
-    public const string Repository = "mendikat/polaris-gps-releases";
+    public const string Repository = "mendikat/mendikat-polaris-gps-application";
 
     /// <summary>Page with all the published versions, opened when the check cannot be made.</summary>
     public const string ReleasesPage = "https://github.com/" + Repository + "/releases";

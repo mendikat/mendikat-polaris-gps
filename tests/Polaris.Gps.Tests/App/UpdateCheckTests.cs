@@ -16,12 +16,12 @@ public sealed class UpdateCheckTests
     [Fact]
     public async Task A_newer_version_offers_its_page()
     {
-        var vm = Create(() => new ReleaseInfo(new Version(99, 0, 0), "v99.0.0", "https://github.com/mendikat/polaris-gps-releases/releases/tag/v99.0.0"));
+        var vm = Create(() => new ReleaseInfo(new Version(99, 0, 0), "v99.0.0", "https://github.com/mendikat/mendikat-polaris-gps-application/releases/tag/v99.0.0"));
 
         await vm.CheckUpdatesAsync();
 
         Assert.StartsWith("Hay una versión nueva de Polaris GPS: 99.0.0", Assert.Single(_dialogs.Confirmations));
-        Assert.Equal("https://github.com/mendikat/polaris-gps-releases/releases/tag/v99.0.0", Assert.Single(_dialogs.OpenedExternally));
+        Assert.Equal("https://github.com/mendikat/mendikat-polaris-gps-application/releases/tag/v99.0.0", Assert.Single(_dialogs.OpenedExternally));
     }
 
     [Fact]
@@ -54,7 +54,7 @@ public sealed class UpdateCheckTests
         Assert.Equal(new Version(1, 2, 3), GitHubUpdateChecker.TryParseVersion("1.2.3+abc"));
         Assert.Null(GitHubUpdateChecker.TryParseVersion("latest"));
 
-        var release = GitHubUpdateChecker.Parse("""{"tag_name":"v0.5.0","html_url":"https://github.com/mendikat/polaris-gps-releases/releases/tag/v0.5.0","draft":false}""");
+        var release = GitHubUpdateChecker.Parse("""{"tag_name":"v0.5.0","html_url":"https://github.com/mendikat/mendikat-polaris-gps-application/releases/tag/v0.5.0","draft":false}""");
         Assert.Equal(new Version(0, 5, 0), release.Version);
         Assert.Throws<UpdateCheckException>(() => GitHubUpdateChecker.Parse("""{"message":"Not Found"}"""));
     }

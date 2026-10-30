@@ -3,7 +3,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.5.0.**
+> **Estado: versión 0.5.1.**
 > Se abren archivos GPX, y KML, KMZ, TCX, OziExplorer (PLT, WPT) y CompeGPS/TwoNav (TRK, WPT) convertidos a GPX, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -46,7 +46,7 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Colorear los tracks | *Ver › Colorear tracks por* › Altitud, Pendiente o Velocidad, con leyenda en el mapa; Ninguno vuelve al color del documento |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
 | Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |
-| Ayuda | **F1** o *Ayuda › Ayuda de Polaris GPS* (guía HTML en el navegador, en el idioma de la aplicación; arriba enlaza a los demás idiomas). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones (compara con la última release de `mendikat/polaris-gps-releases` y ofrece abrir su página) y Acerca de (versión, autor) |
+| Ayuda | **F1** o *Ayuda › Ayuda de Polaris GPS* (guía HTML en el navegador, en el idioma de la aplicación; arriba enlaza a los demás idiomas). En el mismo menú: ¡Dona ahora! (PayPal), web de Mendikat, Buscar actualizaciones (compara con la última release de `mendikat/mendikat-polaris-gps-application` y ofrece abrir su página) y Acerca de (versión, autor) |
 
 ## Requisitos
 
@@ -248,7 +248,7 @@ Datos: mosaicos y MDT del IGN España bajo CC BY 4.0 (scne.es); datos OSM bajo O
 - Condiciones de uso de Esri, OSM y del SCAN 25 del IGN francés a revisar antes de distribuir públicamente.
 - MtbMap y CyclOSM son servidores comunitarios sin garantía de disponibilidad.
 - «Buscar actualizaciones» consulta la API de GitHub sin credenciales (60 consultas por hora y dirección) en el
-  repositorio público `mendikat/polaris-gps-releases`: hay que crearlo y publicar en él cada versión (el código sigue
+  repositorio público `mendikat/mendikat-polaris-gps-application`, donde se publica cada versión con sus instaladores (el código sigue
   en el repositorio privado). Sin release publicada, avisa de que no se pudo comprobar.
 - «Seguir caminos» usa el servidor público de BRouter (brouter.de), sin garantía de disponibilidad ni límites
   publicados; `BRouterClient` admite otro servidor (BRouter se puede instalar en uno propio).

@@ -6,7 +6,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Company>Mendikat</Company>
     <Product>Polaris GPS</Product>
-    <Version>0.5.0</Version>
+    <Version>0.5.1</Version>
     <NeutralLanguage>es-ES</NeutralLanguage>
   </PropertyGroup>
 </Project>
