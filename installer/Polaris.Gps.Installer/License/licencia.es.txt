@@ -1,0 +1,39 @@
+# Contrato de licencia de usuario final de Polaris GPS
+
+Lea atentamente este contrato antes de instalar Polaris GPS (el «Software»). Al instalarlo o usarlo, usted acepta estas condiciones. Si no las acepta, no instale ni use el Software.
+
+## 1. Titularidad
+El Software es propiedad de Mendikat («el Titular») y está protegido por la legislación de propiedad intelectual. El Software se licencia, no se vende. El Titular se reserva todos los derechos que este contrato no le concede expresamente.
+
+## 2. Licencia de uso
+El Titular le concede una licencia gratuita, no exclusiva e intransferible para instalar y usar el Software, para fines personales o profesionales, en los equipos que necesite.
+
+## 3. Restricciones
+Usted no puede: (a) vender, alquilar, prestar, sublicenciar ni distribuir el Software sin autorización escrita del Titular; (b) modificar, traducir, descompilar, desensamblar ni aplicar ingeniería inversa al Software, salvo en la medida en que la ley lo permita expresamente; (c) eliminar ni alterar los avisos de propiedad, marcas o copyright del Software.
+
+## 4. Componentes de terceros
+El Software incluye componentes de terceros que se rigen por sus propias licencias, entre ellos GDAL, PROJ, Mapsui, SkiaSharp y NetTopologySuite (licencias MIT, Apache 2.0, BSD y similares; las de GDAL y sus bibliotecas están en la carpeta «gdal» de la instalación), y el SDK ERDAS ECW/JP2 de Hexagon, cuya licencia se le pide aceptar en la aplicación antes de abrir archivos ECW. Para esos componentes prevalecen sus licencias.
+
+## 5. Datos y servicios de terceros
+La cartografía, los modelos digitales del terreno y otros servicios en línea (por ejemplo, del Instituto Geográfico Nacional bajo CC BY 4.0 u OpenStreetMap bajo ODbL) pertenecen a sus proveedores y se rigen por sus condiciones. El Titular no garantiza su disponibilidad, exactitud ni continuidad.
+
+## 6. Uso en el monte
+El Software es una herramienta para preparar y editar recorridos. Los tracks, altitudes, distancias, tiempos y mapas pueden contener errores. No lo use como única fuente de orientación ni de toma de decisiones en el monte: usted es responsable de su seguridad y de la de su grupo.
+
+## 7. Privacidad
+El Software no envía al Titular datos personales ni de uso. Para mostrar mapas y altitudes descarga datos de los servidores de los proveedores, que reciben las peticiones como en cualquier navegación web. El registro técnico se guarda solo en su equipo.
+
+## 8. Ausencia de garantía
+El Software se ofrece «tal cual», sin garantías de ningún tipo, expresas o implícitas, incluidas las de comerciabilidad, idoneidad para un fin concreto y ausencia de errores.
+
+## 9. Limitación de responsabilidad
+En la máxima medida permitida por la ley, el Titular no será responsable de daños directos o indirectos, pérdida de datos o de beneficios derivados del uso o de la imposibilidad de uso del Software. Nada en este contrato limita los derechos que la ley reconoce a los consumidores y que no pueden excluirse.
+
+## 10. Duración
+Esta licencia es válida hasta que se resuelva. Se resolverá automáticamente si usted incumple estas condiciones; en ese caso deberá dejar de usar el Software y desinstalarlo.
+
+## 11. Ley aplicable
+Este contrato se rige por la legislación española.
+
+Contacto: javi@mendikat.net · www.mendikat.net
+© Mendikat. Todos los derechos reservados.

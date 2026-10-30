@@ -30,6 +30,12 @@ public sealed class JsonSettingsStore : ISettingsStore
     {
     }
 
+    /// <summary>
+    /// Interface language while the user has no settings file yet (first run): the one chosen in the installer
+    /// (<see cref="InstalledLanguage"/>). Null or unknown means Spanish.
+    /// </summary>
+    public string? DefaultLanguage { get; init; }
+
     public static string DefaultPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Polaris GPS", "settings.json");
 
@@ -42,7 +48,7 @@ public sealed class JsonSettingsStore : ISettingsStore
         MigrateLegacy();
         if (!File.Exists(_path))
         {
-            return new UserSettings();
+            return new UserSettings { Language = AppLanguage.FromCode(DefaultLanguage).Code };
         }
 
         try

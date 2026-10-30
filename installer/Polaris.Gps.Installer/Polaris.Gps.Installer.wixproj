@@ -1,0 +1,41 @@
+<!-- Windows Installer package (.msi) of Polaris GPS, built with WiX Toolset 5 (MS-RL licence; WiX 6 adds the OSMF
+     maintenance fee). It publishes the application first (profile win-x64, framework-dependent), builds the installer
+     pictures and licence pages (make-assets.ps1) and packs everything.
+     Usage, from the repository root: dotnet build installer\Polaris.Gps.Installer -c Release
+     Output: artifacts\installer\PolarisGPS-<version>-win-x64.msi -->
+<Project Sdk="WixToolset.Sdk/5.0.2">
+  <PropertyGroup>
+    <Platform>x64</Platform>
+    <OutputName>PolarisGPS-$(Version)-win-x64</OutputName>
+    <OutputPath>$(MSBuildThisFileDirectory)..\..\artifacts\installer\</OutputPath>
+    <AppDir>$(MSBuildThisFileDirectory)..\..\src\Polaris.Gps.App\</AppDir>
+    <PublishDir>$(MSBuildThisFileDirectory)..\..\artifacts\publish\win-x64\</PublishDir>
+    <AssetsDir>$(MSBuildThisFileDirectory)obj\assets\</AssetsDir>
+    <!-- Dialogs of the standard pages (folder, progress, end) in Spanish; the language and licence pages are ours. -->
+    <Cultures>es-ES</Cultures>
+    <DefineConstants>Version=$(Version);PublishDir=$(PublishDir);AppDir=$(AppDir);AssetsDir=$(AssetsDir)</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.UI.wixext" Version="5.0.2" />
+    <!-- WixShellExec: opens web pages (donation) from the installer pages -->
+    <PackageReference Include="WixToolset.Util.wixext" Version="5.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <LicenseText Include="License\licencia.*.txt" />
+    <Picture Include="$(AppDir)Assets\splash.jpg;$(AppDir)Assets\icon.png;$(AppDir)Assets\author.png;$(AppDir)Assets\mendikat-navigator-icon.png;$(AppDir)Assets\mendikat-navigator-app.png" />
+    <None Include="make-assets.ps1;@(LicenseText)" />
+  </ItemGroup>
+
+  <!-- Publish the application before packing it, so the .msi always holds the current build. -->
+  <Target Name="PublishApplication" BeforeTargets="BeforeBuild">
+    <MSBuild Projects="$(AppDir)Polaris.Gps.App.csproj" Targets="Restore" Properties="PublishProfile=win-x64" />
+    <MSBuild Projects="$(AppDir)Polaris.Gps.App.csproj" Targets="Publish" Properties="PublishProfile=win-x64" />
+  </Target>
+
+  <!-- Installer pictures from the application Assets, and RTF licence pages from the .txt texts. -->
+  <Target Name="GenerateInstallerAssets" BeforeTargets="BeforeBuild"
+          Inputs="make-assets.ps1;@(Picture);@(LicenseText)"
+          Outputs="$(AssetsDir)splash.bmp;$(AssetsDir)dialog.bmp;$(AssetsDir)banner.bmp;$(AssetsDir)author.bmp;$(AssetsDir)navigator-icon.bmp;$(AssetsDir)navigator-app.bmp;$(AssetsDir)button-web.bmp;$(AssetsDir)button-donate.es.bmp;$(AssetsDir)button-play.es.bmp;@(LicenseText->'$(AssetsDir)%(Filename).rtf')">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)make-assets.ps1&quot; -Splash &quot;$(AppDir)Assets\splash.jpg&quot; -Icon &quot;$(AppDir)Assets\icon.png&quot; -Author &quot;$(AppDir)Assets\author.png&quot; -NavigatorIcon &quot;$(AppDir)Assets\mendikat-navigator-icon.png&quot; -NavigatorApp &quot;$(AppDir)Assets\mendikat-navigator-app.png&quot; -LicenseDir &quot;$(MSBuildThisFileDirectory)License&quot; -OutDir &quot;$(AssetsDir.TrimEnd('\'))&quot;" />
+  </Target>
+</Project>

@@ -3,7 +3,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.3.0.**
+> **Estado: versión 0.4.0.**
 > Se abren archivos GPX, y KML, KMZ, TCX, OziExplorer (PLT, WPT) y CompeGPS/TwoNav (TRK, WPT) convertidos a GPX, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -32,7 +32,7 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Abrir KML, KMZ, TCX, PLT, WPT o TRK | *Archivo › Abrir archivo…* (Ctrl+O): se abre como un GPX nuevo «nombre.gpx» sin guardar; **Guardar** pide dónde guardarlo |
 | Convertir varios archivos a GPX | *Archivo › Convertir a GPX…*: elegir los KML, KMZ, TCX, PLT, WPT o TRK, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
 | Ver un mapa escaneado o un MDT propio | *Archivo › Abrir cartografía…* (o soltarlos sobre la ventana): mapas `.map` (OziExplorer) e `.imp` (CompeGPS/TwoNav) con su imagen JPG, PNG, BMP, GIF o TIFF, RMAP de TwoNav (`.rmap`), GeoTIFF, ECW e imágenes con `.tfw`/`.jgw`/`.pgw` y `.prj`, y MDT `.asc` (con su `.prj`), `.hgt` y GeoTIFF. ECW servidos por internet: *Archivo › Abrir cartografía en línea (ECWP)…*. Se listan en **Cartografías Usuario (n)** de la barra de herramientas: arrastrar ≡ (o Ctrl+↑/↓) para decidir cuál queda encima (la de arriba de la lista; la cartografía en línea siempre al fondo), deslizador de opacidad para ver la de debajo, casilla para mostrar u ocultar (en un MDT, para usarlo), ⤢ para ir a ella y ✕ para quitarla |
-| Cambiar el idioma | *Archivo › Configuración…* › **Idioma de la aplicación**: español (por defecto), català, euskara, français o português, con su bandera. Se aplica al volver a abrir la aplicación, también a la guía de ayuda (F1). Algunos detalles técnicos de los errores de cartografía siguen en español; los números mantienen la coma decimal |
+| Cambiar el idioma | *Archivo › Configuración…* › **Idioma de la aplicación**: español (por defecto), català, euskara, français o português, con su bandera. El instalador `.msi` también lo pregunta y es el idioma de la primera ejecución. Se aplica al volver a abrir la aplicación, también a la guía de ayuda (F1). Algunos detalles técnicos de los errores de cartografía siguen en español; los números mantienen la coma decimal |
 | Modo claro u oscuro | La aplicación sigue el modo de Windows (*Configuración de Windows › Personalización › Colores*), también en la barra de título; el mapa y su regla de escala no cambian |
 | Mostrar u ocultar la regla de escala | *Archivo › Configuración…* › **Visualización** › **Mostrar la regla de escala en el mapa** (activada por defecto); el cambio se ve al aceptar |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
@@ -76,6 +76,34 @@ dotnet publish src\Polaris.Gps.App -p:PublishProfile=win-x64   # genera artifact
 
 Se comprime esa carpeta y el usuario ejecuta `PolarisGps.exe`. Si falta el runtime, Windows muestra un aviso con el
 enlace de descarga.
+
+### Instalador (.msi)
+
+El proyecto `installer\Polaris.Gps.Installer` (WiX Toolset 5, se descarga como paquete NuGet; no está en la solución
+para no alargar cada compilación) publica la aplicación y la empaqueta en un instalador de unos 38 MB:
+
+```powershell
+dotnet build installer\Polaris.Gps.Installer -c Release   # genera artifacts\installer\PolarisGPS-<versión>-win-x64.msi
+```
+
+- Páginas: portada con la imagen de inicio, **idioma de la aplicación** (español, català, euskara, français,
+  português; propone el de la instalación anterior o el de Windows), **contrato de licencia** en ese idioma (hay que
+  aceptarlo), **Mendikat** (el proyecto altruista, su autor y un botón a la página de donaciones), **Mendikat
+  Navigator** (la app para Android, con enlace a Google Play), carpeta de destino y progreso; estas dos últimas, de WiX,
+  en español. Las imágenes salen de `src\Polaris.Gps.App\Assets` (`splash.jpg`, `icon.png`, `author.png`,
+  `mendikat-navigator-icon.png`, `mendikat-navigator-app.png`).
+- El idioma elegido se guarda en `HKLM\SOFTWARE\Mendikat\Polaris GPS\Language`; la aplicación lo usa la primera vez que
+  la abre cada usuario y después manda *Configuración*. Sin interfaz: `msiexec /i PolarisGPS-….msi /qn APPLANGUAGE=eu`.
+- La licencia está en `installer\Polaris.Gps.Installer\License\licencia.<idioma>.txt` (texto: `# ` título, `## `
+  apartado, el resto párrafos); `make-assets.ps1` la convierte a RTF y saca de `splash.jpg` las imágenes del
+  instalador al compilar.
+- Instala para todos los usuarios en `Archivos de programa\Polaris GPS`, con acceso directo en el menú Inicio; pide
+  permisos de administrador.
+- Una versión nueva sustituye a la instalada (la versión sale de `Directory.Build.props`); no deja instalar una más
+  antigua encima. Se desinstala desde *Configuración › Aplicaciones*; la configuración del usuario (`%APPDATA%`) se
+  conserva.
+- No instala el runtime de .NET: si falta, Windows lo avisa al abrir la aplicación, como con el zip.
+- El `UpgradeCode` de `Package.wxs` identifica el producto entre versiones: no se debe cambiar.
 
 ## Arquitectura
 

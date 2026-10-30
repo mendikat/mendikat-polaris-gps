@@ -20,7 +20,7 @@ public sealed class AboutViewModel
 
     public string ProductName => Strings.AppTitle;
 
-    /// <summary>"Versión 0.3.0". The build may append "+commit" to the informational version; it is not shown.</summary>
+    /// <summary>"Versión 0.4.0". The build may append "+commit" to the informational version; it is not shown.</summary>
     public string VersionText => string.Format(Strings.AboutVersion, Version);
 
     public static string Version

@@ -56,6 +56,38 @@ public sealed class SettingsAndStoreTests : IDisposable
         Assert.Equal("ign-es", Settings().Load().Map.Provider);
     }
 
+    [Theory]
+    [InlineData("eu", "eu")]
+    [InlineData("FR", "fr")]
+    [InlineData("de", "es")]
+    [InlineData(null, "es")]
+    public void Installer_language_is_used_until_the_user_has_settings(string? installed, string expected)
+    {
+        var path = Path.Combine(_directory, "settings.json");
+        var store = new JsonSettingsStore(path, NullLogger<JsonSettingsStore>.Instance) { DefaultLanguage = installed };
+
+        Assert.Equal(expected, store.Load().Language);
+    }
+
+    [Fact]
+    public void Saved_language_wins_over_the_installer_language()
+    {
+        var path = Path.Combine(_directory, "settings.json");
+        var store = new JsonSettingsStore(path, NullLogger<JsonSettingsStore>.Instance) { DefaultLanguage = "pt" };
+        Assert.True(store.Save(new UserSettings { Language = "ca" }));
+
+        Assert.Equal("ca", store.Load().Language);
+    }
+
+    [Theory]
+    [InlineData("eu", "eu")]
+    [InlineData(" Ca ", "ca")]
+    [InlineData("en", null)]
+    [InlineData("", null)]
+    [InlineData(null, null)]
+    public void Installer_language_must_be_an_application_language(string? value, string? expected) =>
+        Assert.Equal(expected, InstalledLanguage.Validate(value));
+
     [Fact]
     public async Task File_store_loads_gpx_with_content_and_warnings()
     {

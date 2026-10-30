@@ -52,7 +52,11 @@ public partial class App : Application
         // tool and the pointer elevation in the status bar (COORD-08).
         var dem5 = new IgnWcsElevationSource(_demHttpClient, IgnDemResolution.FiveMeters);
         var dem25 = new IgnWcsElevationSource(_demHttpClient, IgnDemResolution.TwentyFiveMeters);
-        var settings = new JsonSettingsStore(JsonSettingsStore.DefaultPath, JsonSettingsStore.LegacyPath, _loggerFactory.CreateLogger<JsonSettingsStore>());
+        // First run: the language chosen in the installer, if any.
+        var settings = new JsonSettingsStore(JsonSettingsStore.DefaultPath, JsonSettingsStore.LegacyPath, _loggerFactory.CreateLogger<JsonSettingsStore>())
+        {
+            DefaultLanguage = InstalledLanguage.Read(),
+        };
         ApplyCulture(AppLanguage.FromCode(settings.Load().Language));
         var viewModel = new MainViewModel(
             new WpfDialogService(), new FileDocumentStore(), settings, _loggerFactory.CreateLogger<MainViewModel>())

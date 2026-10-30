@@ -1,0 +1,39 @@
+# Polaris GPS azken erabiltzailearen lizentzia-kontratua
+
+Irakurri arretaz kontratu hau Polaris GPS («Softwarea») instalatu aurretik. Instalatzean edo erabiltzean, baldintza hauek onartzen dituzu. Onartzen ez badituzu, ez instalatu eta ez erabili Softwarea.
+
+## 1. Jabetza
+Softwarea Mendikaten jabetzakoa da («Titularra») eta jabetza intelektualari buruzko legeriak babesten du. Softwarearen lizentzia ematen da, ez da saltzen. Kontratu honek berariaz ematen ez dizkizun eskubide guztiak Titularrak gordetzen ditu.
+
+## 2. Erabilera-lizentzia
+Titularrak doako lizentzia ez-esklusiboa eta eskualdaezina ematen dizu Softwarea instalatu eta erabiltzeko, helburu pertsonal edo profesionaletarako, behar dituzun ekipoetan.
+
+## 3. Mugak
+Ezin duzu: (a) Softwarea saldu, alokatu, mailegatu, azpilizentziatu edo banatu Titularraren idatzizko baimenik gabe; (b) Softwarea aldatu, itzuli, deskonpilatu, desmuntatu edo alderantzizko ingeniaritza aplikatu, legeak berariaz baimentzen duen neurrian izan ezik; (c) Softwarearen jabetza-, marka- edo copyright-oharrak ezabatu edo aldatu.
+
+## 4. Hirugarrenen osagaiak
+Softwareak bere lizentzien arabera arautzen diren hirugarrenen osagaiak ditu, besteak beste GDAL, PROJ, Mapsui, SkiaSharp eta NetTopologySuite (MIT, Apache 2.0, BSD eta antzeko lizentziak; GDALenak eta haren liburutegienak instalazioaren «gdal» karpetan daude), eta Hexagonen ERDAS ECW/JP2 SDKa, zeinaren lizentzia aplikazioan onartzeko eskatzen zaizun ECW fitxategiak ireki aurretik. Osagai horietarako haien lizentziak dira nagusi.
+
+## 5. Hirugarrenen datuak eta zerbitzuak
+Kartografia, lursailaren eredu digitalak eta lineako beste zerbitzu batzuk (adibidez, Instituto Geográfico Nacionalarenak CC BY 4.0 lizentziarekin edo OpenStreetMapenak ODbL lizentziarekin) haien hornitzaileenak dira eta haien baldintzek arautzen dituzte. Titularrak ez ditu bermatzen haien erabilgarritasuna, zehaztasuna ezta jarraitutasuna ere.
+
+## 6. Mendiko erabilera
+Softwarea ibilbideak prestatu eta editatzeko tresna bat da. Trackek, altitudeek, distantziek, denborek eta mapek akatsak izan ditzakete. Ez erabili mendian orientatzeko edo erabakiak hartzeko iturri bakar gisa: zu zara zure segurtasunaren eta zure taldearenaren arduraduna.
+
+## 7. Pribatutasuna
+Softwareak ez dio Titularrari datu pertsonalik ezta erabilera-daturik bidaltzen. Mapak eta altitudeak erakusteko hornitzaileen zerbitzarietatik deskargatzen ditu datuak, eta zerbitzari horiek eskaerak jasotzen dituzte, edozein web-nabigaziotan bezala. Erregistro teknikoa zure ekipoan bakarrik gordetzen da.
+
+## 8. Bermerik eza
+Softwarea «dagoen bezala» eskaintzen da, inolako bermerik gabe, ez berariazkorik ez inplizitorik, merkaturatzeko gaitasunari, helburu jakin baterako egokitasunari eta akatsik ezari buruzkoak barne.
+
+## 9. Erantzukizunaren muga
+Legeak baimentzen duen neurririk handienean, Titularra ez da izango Softwarea erabiltzearen edo erabili ezinaren ondoriozko kalte zuzen edo zeharkakoen, datu-galeren edo irabazi-galeren erantzule. Kontratu honetako ezerk ez ditu mugatzen legeak kontsumitzaileei aitortzen dizkien eta baztertu ezin diren eskubideak.
+
+## 10. Iraupena
+Lizentzia hau baliozkoa da suntsiarazi arte. Baldintza hauek betetzen ez badituzu, automatikoki suntsiaraziko da; kasu horretan Softwarea erabiltzeari utzi eta desinstalatu egin beharko duzu.
+
+## 11. Lege aplikagarria
+Kontratu hau Espainiako legeriak arautzen du.
+
+Harremanetarako: javi@mendikat.net · www.mendikat.net
+© Mendikat. Eskubide guztiak erreserbatuta.

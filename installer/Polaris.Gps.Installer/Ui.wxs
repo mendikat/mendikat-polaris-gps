@@ -1,0 +1,304 @@
+<!-- Installer pages. Based on WiX 5.0.2 WixUI_InstallDir (MS-RL), with our first pages instead of WelcomeDlg and
+     LicenseAgreementDlg:
+       SplashDlg          the splash
+       LanguageDlg        the application language (APPLANGUAGE: es, ca, eu, fr, pt)
+       PolarisLicenseDlg  the licence in that language (one hidden copy of each text per language)
+       MendikatDlg        the Mendikat project, its author and donations (texts in that language)
+       NavigatorDlg       the Mendikat Navigator app for Android (texts in that language)
+     then the standard InstallDirDlg, VerifyReadyDlg, progress and end pages, in Spanish. -->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <!-- The licence is accepted with the check box of the language being shown (LicEs, LicCa... one per language;
+       short names: a condition must fit in 255 characters). -->
+  <?define DonateUrl = "https://www.paypal.com/donate/?hosted_button_id=4BNLU9ACSHTFN" ?>
+  <?define NavigatorUrl = "https://play.google.com/store/apps/details?id=net.mendikat.navigator" ?>
+  <?define LicenseAccepted = (APPLANGUAGE="es" AND LicEs="1") OR (APPLANGUAGE="ca" AND LicCa="1") OR (APPLANGUAGE="eu" AND LicEu="1") OR (APPLANGUAGE="fr" AND LicFr="1") OR (APPLANGUAGE="pt" AND LicPt="1") ?>
+  <Fragment>
+    <UI Id="PolarisUI">
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+      <Property Id="ARPNOMODIFY" Value="1" />
+
+      <DialogRef Id="BrowseDlg" />
+      <DialogRef Id="DiskCostDlg" />
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+
+      <Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath_X64" Order="3" Condition="NOT WIXUI_DONTVALIDATEPATH" />
+      <Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4" Condition="NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID&lt;&gt;&quot;1&quot;" />
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999" />
+
+      <!-- The language page edits LanguageChoice (a radio group needs a property with a default value; APPLANGUAGE must
+           start empty to propose the previous or Windows language): copied in when entering, back when leaving. -->
+      <Property Id="LanguageChoice" Value="es" />
+      <Publish Dialog="SplashDlg" Control="Next" Property="LanguageChoice" Value="[APPLANGUAGE]" Order="1" />
+      <Publish Dialog="SplashDlg" Control="Next" Event="NewDialog" Value="LanguageDlg" Order="2" Condition="NOT Installed" />
+
+      <Publish Dialog="LanguageDlg" Control="Back" Event="NewDialog" Value="SplashDlg" />
+      <Publish Dialog="LanguageDlg" Control="Next" Property="APPLANGUAGE" Value="[LanguageChoice]" Order="1" />
+      <Publish Dialog="LanguageDlg" Control="Next" Event="NewDialog" Value="PolarisLicenseDlg" Order="2" />
+
+      <Publish Dialog="PolarisLicenseDlg" Control="Back" Event="NewDialog" Value="LanguageDlg" />
+      <Publish Dialog="PolarisLicenseDlg" Control="Next" Event="NewDialog" Value="MendikatDlg" Condition="$(var.LicenseAccepted)" />
+
+      <Publish Dialog="MendikatDlg" Control="Back" Event="NewDialog" Value="PolarisLicenseDlg" />
+      <Publish Dialog="MendikatDlg" Control="Next" Event="NewDialog" Value="NavigatorDlg" />
+      <Publish Dialog="NavigatorDlg" Control="Back" Event="NewDialog" Value="MendikatDlg" />
+      <Publish Dialog="NavigatorDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" />
+
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="NavigatorDlg" />
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1" />
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath_X64" Order="2" Condition="NOT WIXUI_DONTVALIDATEPATH" />
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3" Condition="NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID&lt;&gt;&quot;1&quot;" />
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="4" Condition="WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID=&quot;1&quot;" />
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1" />
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2" />
+
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="InstallDirDlg" Order="1" Condition="NOT Installed" />
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2" Condition="Installed" />
+
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg" />
+      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg" />
+      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg" />
+      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg" />
+
+      <!-- First page: only the splash. -->
+      <Dialog Id="SplashDlg" Width="370" Height="270" Title="!(loc.WelcomeDlg_Title)">
+        <Control Id="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Text="PolarisSplash" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" />
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg" />
+        </Control>
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUIBack)" />
+      </Dialog>
+
+      <!-- Second page: the application language, one option per language, in its own name. -->
+      <Dialog Id="LanguageDlg" Width="370" Height="270" Title="!(loc.WelcomeDlg_Title)">
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Text="!(loc.InstallDirDlgBannerBitmap)" />
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes"
+                 Text="{\WixUI_Font_Title}Idioma · Llengua · Hizkuntza · Langue" />
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes"
+                 Text="Elija el idioma de Polaris GPS. Podrá cambiarlo después en Configuración." />
+        <Control Id="LanguageList" Type="RadioButtonGroup" X="40" Y="64" Width="200" Height="100" Property="LanguageChoice">
+          <RadioButtonGroup Property="LanguageChoice">
+            <RadioButton Value="es" X="0" Y="0" Width="200" Height="18" Text="Español" />
+            <RadioButton Value="ca" X="0" Y="20" Width="200" Height="18" Text="Català" />
+            <RadioButton Value="eu" X="0" Y="40" Width="200" Height="18" Text="Euskara" />
+            <RadioButton Value="fr" X="0" Y="60" Width="200" Height="18" Text="Français" />
+            <RadioButton Value="pt" X="0" Y="80" Width="200" Height="18" Text="Português" />
+          </RadioButtonGroup>
+        </Control>
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" />
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg" />
+        </Control>
+      </Dialog>
+
+      <!-- Licence page: title, description, text and check box exist once per language; only the chosen one is shown. -->
+      <Dialog Id="PolarisLicenseDlg" Width="370" Height="270" Title="!(loc.LicenseAgreementDlg_Title)">
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Text="!(loc.LicenseAgreementDlgBannerBitmap)" />
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+
+        <Control Id="TitleEs" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;es&quot;" Text="{\WixUI_Font_Title}Contrato de licencia" />
+        <Control Id="TitleCa" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;ca&quot;" Text="{\WixUI_Font_Title}Contracte de llicència" />
+        <Control Id="TitleEu" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;eu&quot;" Text="{\WixUI_Font_Title}Lizentzia-kontratua" />
+        <Control Id="TitleFr" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;fr&quot;" Text="{\WixUI_Font_Title}Contrat de licence" />
+        <Control Id="TitlePt" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;pt&quot;" Text="{\WixUI_Font_Title}Contrato de licença" />
+
+        <Control Id="DescriptionEs" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;es&quot;" Text="Lea atentamente el siguiente contrato de licencia." />
+        <Control Id="DescriptionCa" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;ca&quot;" Text="Llegiu atentament el contracte de llicència següent." />
+        <Control Id="DescriptionEu" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;eu&quot;" Text="Irakurri arretaz honako lizentzia-kontratu hau." />
+        <Control Id="DescriptionFr" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;fr&quot;" Text="Veuillez lire attentivement le contrat de licence suivant." />
+        <Control Id="DescriptionPt" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;pt&quot;" Text="Leia atentamente o seguinte contrato de licença." />
+
+        <Control Id="LicenseEs" Type="ScrollableText" X="20" Y="60" Width="330" Height="140" Sunken="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;es&quot;">
+          <Text SourceFile="$(var.AssetsDir)licencia.es.rtf" />
+        </Control>
+        <Control Id="LicenseCa" Type="ScrollableText" X="20" Y="60" Width="330" Height="140" Sunken="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;ca&quot;">
+          <Text SourceFile="$(var.AssetsDir)licencia.ca.rtf" />
+        </Control>
+        <Control Id="LicenseEu" Type="ScrollableText" X="20" Y="60" Width="330" Height="140" Sunken="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;eu&quot;">
+          <Text SourceFile="$(var.AssetsDir)licencia.eu.rtf" />
+        </Control>
+        <Control Id="LicenseFr" Type="ScrollableText" X="20" Y="60" Width="330" Height="140" Sunken="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;fr&quot;">
+          <Text SourceFile="$(var.AssetsDir)licencia.fr.rtf" />
+        </Control>
+        <Control Id="LicensePt" Type="ScrollableText" X="20" Y="60" Width="330" Height="140" Sunken="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;pt&quot;">
+          <Text SourceFile="$(var.AssetsDir)licencia.pt.rtf" />
+        </Control>
+
+        <Control Id="AcceptEs" Type="CheckBox" X="20" Y="207" Width="330" Height="18" CheckBoxValue="1" Property="LicEs" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;es&quot;" Text="Acepto los términos del contrato de licencia" />
+        <Control Id="AcceptCa" Type="CheckBox" X="20" Y="207" Width="330" Height="18" CheckBoxValue="1" Property="LicCa" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;ca&quot;" Text="Accepto els termes del contracte de llicència" />
+        <Control Id="AcceptEu" Type="CheckBox" X="20" Y="207" Width="330" Height="18" CheckBoxValue="1" Property="LicEu" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;eu&quot;" Text="Lizentzia-kontratuaren baldintzak onartzen ditut" />
+        <Control Id="AcceptFr" Type="CheckBox" X="20" Y="207" Width="330" Height="18" CheckBoxValue="1" Property="LicFr" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;fr&quot;" Text="J'accepte les termes du contrat de licence" />
+        <Control Id="AcceptPt" Type="CheckBox" X="20" Y="207" Width="330" Height="18" CheckBoxValue="1" Property="LicPt" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;pt&quot;" Text="Aceito os termos do contrato de licença" />
+
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)"
+                 DisableCondition="NOT ($(var.LicenseAccepted))" EnableCondition="$(var.LicenseAccepted)">
+          <Publish Event="SpawnWaitDialog" Value="WaitForCostingDlg" Condition="!(wix.WixUICostingPopupOptOut) OR CostingComplete = 1" />
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg" />
+        </Control>
+      </Dialog>
+
+      <!-- Mendikat page: the author, the project and a button to the donation page. -->
+      <Dialog Id="MendikatDlg" Width="370" Height="270" Title="!(loc.WelcomeDlg_Title)">
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Text="!(loc.InstallDirDlgBannerBitmap)" />
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+
+        <Control Id="TitleEs" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;es&quot;" Text="{\WixUI_Font_Title}Mendikat, un proyecto altruista" />
+        <Control Id="TitleCa" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;ca&quot;" Text="{\WixUI_Font_Title}Mendikat, un projecte altruista" />
+        <Control Id="TitleEu" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;eu&quot;" Text="{\WixUI_Font_Title}Mendikat, proiektu altruista bat" />
+        <Control Id="TitleFr" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;fr&quot;" Text="{\WixUI_Font_Title}Mendikat, un projet altruiste" />
+        <Control Id="TitlePt" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;pt&quot;" Text="{\WixUI_Font_Title}Mendikat, um projeto altruísta" />
+
+        <Control Id="DescriptionEs" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;es&quot;" Text="Polaris GPS es gratuito gracias a las donaciones." />
+        <Control Id="DescriptionCa" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;ca&quot;" Text="Polaris GPS és gratuït gràcies als donatius." />
+        <Control Id="DescriptionEu" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;eu&quot;" Text="Polaris GPS doakoa da dohaintzei esker." />
+        <Control Id="DescriptionFr" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;fr&quot;" Text="Polaris GPS est gratuit grâce aux dons." />
+        <Control Id="DescriptionPt" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;pt&quot;" Text="O Polaris GPS é gratuito graças aos donativos." />
+
+        <Control Id="Author" Type="Bitmap" X="20" Y="58" Width="66" Height="66" Text="PolarisAuthor" />
+        <Control Id="AuthorName" Type="Text" X="20" Y="128" Width="70" Height="12" NoPrefix="yes" Text="Javier Urrutia" />
+
+        <Control Id="BodyEs" Type="Text" X="100" Y="58" Width="250" Height="100" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;es&quot;"
+                 Text="Polaris GPS forma parte de Mendikat, un proyecto altruista dedicado a la montaña. Se desarrolla de forma desinteresada y se mantiene gracias a las donaciones de quienes lo usan.&#13;&#10;&#13;&#10;Si la aplicación te resulta útil, puedes apoyar a Mendikat con un donativo." />
+        <Control Id="BodyCa" Type="Text" X="100" Y="58" Width="250" Height="100" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;ca&quot;"
+                 Text="Polaris GPS forma part de Mendikat, un projecte altruista dedicat a la muntanya. Es desenvolupa de manera desinteressada i es manté gràcies als donatius de qui l'utilitza.&#13;&#10;&#13;&#10;Si l'aplicació et resulta útil, pots donar suport a Mendikat amb un donatiu." />
+        <Control Id="BodyEu" Type="Text" X="100" Y="58" Width="250" Height="100" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;eu&quot;"
+                 Text="Polaris GPS Mendikaten parte da, mendiari eskainitako proiektu altruista bat. Modu desinteresatuan garatzen da, eta erabiltzen dutenen dohaintzei esker mantentzen da.&#13;&#10;&#13;&#10;Aplikazioa erabilgarria iruditzen bazaizu, Mendikat lagun dezakezu dohaintza batekin." />
+        <Control Id="BodyFr" Type="Text" X="100" Y="58" Width="250" Height="100" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;fr&quot;"
+                 Text="Polaris GPS fait partie de Mendikat, un projet altruiste consacré à la montagne. Il est développé de façon bénévole et vit grâce aux dons de ses utilisateurs.&#13;&#10;&#13;&#10;Si l'application vous est utile, vous pouvez soutenir Mendikat par un don." />
+        <Control Id="BodyPt" Type="Text" X="100" Y="58" Width="250" Height="100" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;pt&quot;"
+                 Text="O Polaris GPS faz parte do Mendikat, um projeto altruísta dedicado à montanha. É desenvolvido de forma desinteressada e mantém-se graças aos donativos de quem o utiliza.&#13;&#10;&#13;&#10;Se a aplicação te é útil, podes apoiar o Mendikat com um donativo." />
+
+        <!-- Big buttons drawn as bitmaps (make-assets.ps1): the web site and, per language, the donation. -->
+        <Control Id="Web" Type="PushButton" X="100" Y="164" Width="250" Height="26" Bitmap="yes" Text="MendikatWebButton" ToolTip="https://www.mendikat.net">
+          <Publish Property="WixShellExecTarget" Value="https://www.mendikat.net" Order="1" />
+          <Publish Event="DoAction" Value="OpenWebPage" Order="2" />
+        </Control>
+        <Control Id="DonateEs" Type="PushButton" X="100" Y="198" Width="250" Height="26" Bitmap="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;es&quot;" Text="DonateEs" ToolTip="PayPal">
+          <Publish Property="WixShellExecTarget" Value="$(var.DonateUrl)" Order="1" />
+          <Publish Event="DoAction" Value="OpenWebPage" Order="2" />
+        </Control>
+        <Control Id="DonateCa" Type="PushButton" X="100" Y="198" Width="250" Height="26" Bitmap="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;ca&quot;" Text="DonateCa" ToolTip="PayPal">
+          <Publish Property="WixShellExecTarget" Value="$(var.DonateUrl)" Order="1" />
+          <Publish Event="DoAction" Value="OpenWebPage" Order="2" />
+        </Control>
+        <Control Id="DonateEu" Type="PushButton" X="100" Y="198" Width="250" Height="26" Bitmap="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;eu&quot;" Text="DonateEu" ToolTip="PayPal">
+          <Publish Property="WixShellExecTarget" Value="$(var.DonateUrl)" Order="1" />
+          <Publish Event="DoAction" Value="OpenWebPage" Order="2" />
+        </Control>
+        <Control Id="DonateFr" Type="PushButton" X="100" Y="198" Width="250" Height="26" Bitmap="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;fr&quot;" Text="DonateFr" ToolTip="PayPal">
+          <Publish Property="WixShellExecTarget" Value="$(var.DonateUrl)" Order="1" />
+          <Publish Event="DoAction" Value="OpenWebPage" Order="2" />
+        </Control>
+        <Control Id="DonatePt" Type="PushButton" X="100" Y="198" Width="250" Height="26" Bitmap="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;pt&quot;" Text="DonatePt" ToolTip="PayPal">
+          <Publish Property="WixShellExecTarget" Value="$(var.DonateUrl)" Order="1" />
+          <Publish Event="DoAction" Value="OpenWebPage" Order="2" />
+        </Control>
+
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" />
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg" />
+        </Control>
+      </Dialog>
+
+      <!-- Mendikat Navigator page: the Android app, with a link to Google Play and a screenshot. -->
+      <Dialog Id="NavigatorDlg" Width="370" Height="270" Title="!(loc.WelcomeDlg_Title)">
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Text="!(loc.InstallDirDlgBannerBitmap)" />
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Text="{\WixUI_Font_Title}Mendikat Navigator" />
+
+        <Control Id="DescriptionEs" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;es&quot;" Text="La app de Mendikat para llevar tus rutas al monte." />
+        <Control Id="DescriptionCa" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;ca&quot;" Text="L'app de Mendikat per portar les teves rutes a la muntanya." />
+        <Control Id="DescriptionEu" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;eu&quot;" Text="Mendikaten aplikazioa, zure ibilbideak mendira eramateko." />
+        <Control Id="DescriptionFr" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;fr&quot;" Text="L'application de Mendikat pour emporter vos itinéraires en montagne." />
+        <Control Id="DescriptionPt" Type="Text" X="25" Y="23" Width="300" Height="15" Transparent="yes" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;pt&quot;" Text="A app do Mendikat para levares as tuas rotas para a montanha." />
+
+        <Control Id="AppIcon" Type="Bitmap" X="20" Y="58" Width="40" Height="40" Text="NavigatorIcon" />
+
+        <Control Id="BodyEs" Type="Text" X="72" Y="58" Width="170" Height="120" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;es&quot;"
+                 Text="Mendikat Navigator es la aplicación de Mendikat para Android. Te guía en el monte siguiendo tus tracks sobre mapas topográficos, muestra las cumbres de alrededor con su información y te avisa si te desvías de la ruta." />
+        <Control Id="BodyCa" Type="Text" X="72" Y="58" Width="170" Height="120" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;ca&quot;"
+                 Text="Mendikat Navigator és l'aplicació de Mendikat per a Android. Et guia a la muntanya seguint els teus tracks sobre mapes topogràfics, mostra els cims del voltant amb la seva informació i t'avisa si et desvies de la ruta." />
+        <Control Id="BodyEu" Type="Text" X="72" Y="58" Width="170" Height="120" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;eu&quot;"
+                 Text="Mendikat Navigator Mendikaten Android aplikazioa da. Mendian gidatzen zaitu zure trackei jarraituz mapa topografikoen gainean, inguruko gailurrak beren informazioarekin erakusten ditu eta ibilbidetik desbideratzen bazara ohartarazten dizu." />
+        <Control Id="BodyFr" Type="Text" X="72" Y="58" Width="170" Height="120" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;fr&quot;"
+                 Text="Mendikat Navigator est l'application Android de Mendikat. Elle vous guide en montagne en suivant vos traces sur des cartes topographiques, affiche les sommets alentour avec leurs informations et vous avertit si vous vous écartez de l'itinéraire." />
+        <Control Id="BodyPt" Type="Text" X="72" Y="58" Width="170" Height="120" NoPrefix="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;pt&quot;"
+                 Text="O Mendikat Navigator é a aplicação Android do Mendikat. Guia-te na montanha seguindo os teus tracks sobre mapas topográficos, mostra os cumes à volta com a sua informação e avisa-te se te desviares da rota." />
+
+        <Control Id="PlayEs" Type="PushButton" X="72" Y="192" Width="170" Height="26" Bitmap="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;es&quot;" Text="PlayEs" ToolTip="Google Play">
+          <Publish Property="WixShellExecTarget" Value="$(var.NavigatorUrl)" Order="1" />
+          <Publish Event="DoAction" Value="OpenWebPage" Order="2" />
+        </Control>
+        <Control Id="PlayCa" Type="PushButton" X="72" Y="192" Width="170" Height="26" Bitmap="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;ca&quot;" Text="PlayCa" ToolTip="Google Play">
+          <Publish Property="WixShellExecTarget" Value="$(var.NavigatorUrl)" Order="1" />
+          <Publish Event="DoAction" Value="OpenWebPage" Order="2" />
+        </Control>
+        <Control Id="PlayEu" Type="PushButton" X="72" Y="192" Width="170" Height="26" Bitmap="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;eu&quot;" Text="PlayEu" ToolTip="Google Play">
+          <Publish Property="WixShellExecTarget" Value="$(var.NavigatorUrl)" Order="1" />
+          <Publish Event="DoAction" Value="OpenWebPage" Order="2" />
+        </Control>
+        <Control Id="PlayFr" Type="PushButton" X="72" Y="192" Width="170" Height="26" Bitmap="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;fr&quot;" Text="PlayFr" ToolTip="Google Play">
+          <Publish Property="WixShellExecTarget" Value="$(var.NavigatorUrl)" Order="1" />
+          <Publish Event="DoAction" Value="OpenWebPage" Order="2" />
+        </Control>
+        <Control Id="PlayPt" Type="PushButton" X="72" Y="192" Width="170" Height="26" Bitmap="yes" Hidden="yes" ShowCondition="APPLANGUAGE = &quot;pt&quot;" Text="PlayPt" ToolTip="Google Play">
+          <Publish Property="WixShellExecTarget" Value="$(var.NavigatorUrl)" Order="1" />
+          <Publish Event="DoAction" Value="OpenWebPage" Order="2" />
+        </Control>
+
+        <Control Id="Screenshot" Type="Bitmap" X="262" Y="50" Width="80" Height="180" Text="NavigatorApp" />
+
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" />
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg" />
+        </Control>
+      </Dialog>
+
+      <InstallUISequence>
+        <Show Dialog="SplashDlg" Before="ProgressDlg" Condition="NOT Installed" />
+      </InstallUISequence>
+    </UI>
+
+    <UIRef Id="WixUI_Common" />
+    <Binary Id="PolarisSplash" SourceFile="$(var.AssetsDir)splash.bmp" />
+    <Binary Id="PolarisAuthor" SourceFile="$(var.AssetsDir)author.bmp" />
+    <Binary Id="NavigatorIcon" SourceFile="$(var.AssetsDir)navigator-icon.bmp" />
+    <Binary Id="NavigatorApp" SourceFile="$(var.AssetsDir)navigator-app.bmp" />
+    <Binary Id="MendikatWebButton" SourceFile="$(var.AssetsDir)button-web.bmp" />
+    <Binary Id="DonateEs" SourceFile="$(var.AssetsDir)button-donate.es.bmp" />
+    <Binary Id="DonateCa" SourceFile="$(var.AssetsDir)button-donate.ca.bmp" />
+    <Binary Id="DonateEu" SourceFile="$(var.AssetsDir)button-donate.eu.bmp" />
+    <Binary Id="DonateFr" SourceFile="$(var.AssetsDir)button-donate.fr.bmp" />
+    <Binary Id="DonatePt" SourceFile="$(var.AssetsDir)button-donate.pt.bmp" />
+    <Binary Id="PlayPt" SourceFile="$(var.AssetsDir)button-play.pt.bmp" />
+    <Binary Id="PlayFr" SourceFile="$(var.AssetsDir)button-play.fr.bmp" />
+    <Binary Id="PlayEu" SourceFile="$(var.AssetsDir)button-play.eu.bmp" />
+    <Binary Id="PlayCa" SourceFile="$(var.AssetsDir)button-play.ca.bmp" />
+    <Binary Id="PlayEs" SourceFile="$(var.AssetsDir)button-play.es.bmp" />
+    <!-- Opens WixShellExecTarget (a web page) in the default browser; WixShellExec comes from the WiX Util extension. -->
+    <CustomAction Id="OpenWebPage" BinaryRef="Wix4UtilCA_X64" DllEntry="WixShellExec" Impersonate="yes" Return="ignore" />
+  </Fragment>
+</Wix>

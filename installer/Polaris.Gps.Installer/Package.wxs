@@ -1,0 +1,68 @@
+<!-- Polaris GPS installer: per-machine install in Program Files with a Start menu shortcut. A newer version
+     replaces the installed one (MajorUpgrade). Pages (Ui.wxs): splash with the application language, licence in that
+     language, folder, progress. The chosen language is saved in HKLM\SOFTWARE\Mendikat\Polaris GPS\Language and the
+     application uses it the first time each user starts it (InstalledLanguage). The .NET 10 Desktop Runtime is not
+     installed here: if it is missing, Windows shows its download link when the application starts. -->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <!-- UpgradeCode identifies the product across versions: never change it. -->
+  <Package Name="Polaris GPS" Manufacturer="Mendikat" Version="$(Version)"
+           UpgradeCode="D4C0DE16-7F87-4A4E-949A-01FC68806892" Scope="perMachine">
+    <MajorUpgrade DowngradeErrorMessage="Ya está instalada una versión más reciente de [ProductName]." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+
+    <!-- "Installed apps" entry -->
+    <Icon Id="PolarisGps.ico" SourceFile="$(AppDir)Assets\icon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="PolarisGps.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="https://www.mendikat.net" />
+    <Property Id="ARPCONTACT" Value="javi@mendikat.net" />
+
+    <!-- Application language (es, ca, eu, fr, pt). Proposed: the one of the previous installation, else the Windows
+         language, else Spanish. Can be given on the command line: msiexec /i ... APPLANGUAGE=eu -->
+    <Property Id="APPLANGUAGE" Secure="yes">
+      <RegistrySearch Id="PreviousLanguage" Root="HKLM" Key="SOFTWARE\Mendikat\Polaris GPS" Name="Language" Type="raw" Bitness="always64" />
+    </Property>
+    <SetProperty Action="SetLanguageCa" Id="APPLANGUAGE" Value="ca" After="AppSearch" Sequence="both"
+                 Condition="NOT APPLANGUAGE AND UserLanguageID = 1027" />
+    <SetProperty Action="SetLanguageEu" Id="APPLANGUAGE" Value="eu" After="SetLanguageCa" Sequence="both"
+                 Condition="NOT APPLANGUAGE AND UserLanguageID = 1069" />
+    <SetProperty Action="SetLanguageFr" Id="APPLANGUAGE" Value="fr" After="SetLanguageEu" Sequence="both"
+                 Condition="NOT APPLANGUAGE AND (UserLanguageID = 1036 OR UserLanguageID = 2060 OR UserLanguageID = 3084 OR UserLanguageID = 4108 OR UserLanguageID = 5132)" />
+    <SetProperty Action="SetLanguagePt" Id="APPLANGUAGE" Value="pt" After="SetLanguageFr" Sequence="both"
+                 Condition="NOT APPLANGUAGE AND (UserLanguageID = 2070 OR UserLanguageID = 1046)" />
+    <!-- Anything else (no value, another Windows language, an unknown code): Spanish -->
+    <SetProperty Action="SetLanguageEs" Id="APPLANGUAGE" Value="es" After="SetLanguagePt" Sequence="both"
+                 Condition="NOT (APPLANGUAGE = &quot;es&quot; OR APPLANGUAGE = &quot;ca&quot; OR APPLANGUAGE = &quot;eu&quot; OR APPLANGUAGE = &quot;fr&quot; OR APPLANGUAGE = &quot;pt&quot;)" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="Polaris GPS" />
+    </StandardDirectory>
+
+    <Feature Id="Main" Title="Polaris GPS">
+      <ComponentGroupRef Id="ApplicationFiles" />
+    </Feature>
+
+    <ComponentGroup Id="ApplicationFiles" Directory="INSTALLFOLDER">
+      <!-- The executable, declared on its own to carry the Start menu shortcut -->
+      <Component>
+        <File Id="PolarisGps.exe" Source="$(PublishDir)PolarisGps.exe" KeyPath="yes">
+          <Shortcut Id="StartMenuShortcut" Directory="ProgramMenuFolder" Name="Polaris GPS"
+                    Description="Editor de archivos GPX" WorkingDirectory="INSTALLFOLDER"
+                    Icon="PolarisGps.ico" Advertise="yes" />
+        </File>
+      </Component>
+      <!-- Everything else in the published folder, subfolders included (Help, gdal) -->
+      <Files Include="$(PublishDir)**">
+        <Exclude Files="$(PublishDir)PolarisGps.exe" />
+      </Files>
+      <!-- Language chosen in the installer, read by the application on first run -->
+      <Component Id="InstalledLanguage">
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Mendikat\Polaris GPS" Name="Language" Type="string" Value="[APPLANGUAGE]" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Pictures of the standard pages, made from the splash by make-assets.ps1 -->
+    <WixVariable Id="WixUIBannerBmp" Value="$(AssetsDir)banner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(AssetsDir)dialog.bmp" />
+    <UIRef Id="PolarisUI" />
+  </Package>
+</Wix>

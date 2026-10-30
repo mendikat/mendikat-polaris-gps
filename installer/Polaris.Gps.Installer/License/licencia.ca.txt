@@ -1,0 +1,39 @@
+# Contracte de llicència d'usuari final de Polaris GPS
+
+Llegiu atentament aquest contracte abans d'instal·lar Polaris GPS (el «Programari»). En instal·lar-lo o utilitzar-lo, accepteu aquestes condicions. Si no les accepteu, no instal·leu ni utilitzeu el Programari.
+
+## 1. Titularitat
+El Programari és propietat de Mendikat («el Titular») i està protegit per la legislació de propietat intel·lectual. El Programari es llicencia, no es ven. El Titular es reserva tots els drets que aquest contracte no us concedeix expressament.
+
+## 2. Llicència d'ús
+El Titular us concedeix una llicència gratuïta, no exclusiva i intransferible per instal·lar i utilitzar el Programari, amb finalitats personals o professionals, en els equips que necessiteu.
+
+## 3. Restriccions
+No podeu: (a) vendre, llogar, prestar, subllicenciar ni distribuir el Programari sense autorització escrita del Titular; (b) modificar, traduir, descompilar, desassemblar ni aplicar enginyeria inversa al Programari, excepte en la mesura que la llei ho permeti expressament; (c) eliminar ni alterar els avisos de propietat, marques o copyright del Programari.
+
+## 4. Components de tercers
+El Programari inclou components de tercers que es regeixen per les seves pròpies llicències, entre els quals GDAL, PROJ, Mapsui, SkiaSharp i NetTopologySuite (llicències MIT, Apache 2.0, BSD i similars; les de GDAL i les seves biblioteques són a la carpeta «gdal» de la instal·lació), i l'SDK ERDAS ECW/JP2 d'Hexagon, la llicència del qual se us demana que accepteu a l'aplicació abans d'obrir fitxers ECW. Per a aquests components prevalen les seves llicències.
+
+## 5. Dades i serveis de tercers
+La cartografia, els models digitals del terreny i altres serveis en línia (per exemple, de l'Instituto Geográfico Nacional sota CC BY 4.0 o d'OpenStreetMap sota ODbL) pertanyen als seus proveïdors i es regeixen per les seves condicions. El Titular no en garanteix la disponibilitat, l'exactitud ni la continuïtat.
+
+## 6. Ús a la muntanya
+El Programari és una eina per preparar i editar recorreguts. Els tracks, altituds, distàncies, temps i mapes poden contenir errors. No l'utilitzeu com a única font d'orientació ni de presa de decisions a la muntanya: sou responsables de la vostra seguretat i de la del vostre grup.
+
+## 7. Privadesa
+El Programari no envia al Titular dades personals ni d'ús. Per mostrar mapes i altituds descarrega dades dels servidors dels proveïdors, que reben les peticions com en qualsevol navegació web. El registre tècnic es desa només al vostre equip.
+
+## 8. Absència de garantia
+El Programari s'ofereix «tal com és», sense garanties de cap mena, expresses o implícites, incloses les de comerciabilitat, idoneïtat per a una finalitat concreta i absència d'errors.
+
+## 9. Limitació de responsabilitat
+En la màxima mesura permesa per la llei, el Titular no serà responsable de danys directes o indirectes, pèrdua de dades o de beneficis derivats de l'ús o de la impossibilitat d'ús del Programari. Res d'aquest contracte limita els drets que la llei reconeix als consumidors i que no es poden excloure.
+
+## 10. Durada
+Aquesta llicència és vàlida fins que es resolgui. Es resoldrà automàticament si incompliu aquestes condicions; en aquest cas haureu de deixar d'utilitzar el Programari i desinstal·lar-lo.
+
+## 11. Llei aplicable
+Aquest contracte es regeix per la legislació espanyola.
+
+Contacte: javi@mendikat.net · www.mendikat.net
+© Mendikat. Tots els drets reservats.
