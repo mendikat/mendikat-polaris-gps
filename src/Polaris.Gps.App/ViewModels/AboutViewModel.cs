@@ -12,7 +12,10 @@ public sealed class AboutViewModel
 
     public const string WebUrl = "https://www.mendikat.net";
 
-    /// <summary>Where the new versions are published (a public repository: the source code one is private).</summary>
+    /// <summary>Public source code repository (GPL-3.0 with the ECW exception).</summary>
+    public const string SourceUrl = "https://github.com/mendikat/mendikat-polaris-gps";
+
+    /// <summary>Where the new versions are published: the releases of the source code repository.</summary>
     public const string UpdatesUrl = Services.GitHubUpdateChecker.ReleasesPage;
 
     /// <summary>PayPal donation button of mendikat.net (same <c>hosted_button_id</c> as the web form).</summary>
@@ -20,7 +23,7 @@ public sealed class AboutViewModel
 
     public string ProductName => Strings.AppTitle;
 
-    /// <summary>"Versión 0.5.1". The build may append "+commit" to the informational version; it is not shown.</summary>
+    /// <summary>"Versión 0.6.0". The build may append "+commit" to the informational version; it is not shown.</summary>
     public string VersionText => string.Format(Strings.AboutVersion, Version);
 
     public static string Version
@@ -43,4 +46,8 @@ public sealed class AboutViewModel
     public string WebText => "www.mendikat.net";
 
     public string Web => WebUrl;
+
+    public string Source => SourceUrl;
+
+    public string SourceText => "github.com/mendikat/mendikat-polaris-gps";
 }

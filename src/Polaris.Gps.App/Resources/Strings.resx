@@ -534,4 +534,6 @@
   <data name="CleanSmoothToolTip" xml:space="preserve"><value>Ancho de la ventana a lo largo del recorrido. 100 m es la que usa mendikat.net para el desnivel; más ancha suaviza más.</value></data>
   <data name="CleanInvalidWindow" xml:space="preserve"><value>Escribe una ventana en metros entre 10 y 5.000.</value></data>
   <data name="FieldSymbolPlain" xml:space="preserve"><value>Símbolo</value></data>
+  <data name="AboutSourceLabel" xml:space="preserve"><value>Código fuente:</value></data>
+  <data name="AboutLicense" xml:space="preserve"><value>Software libre bajo la licencia GNU GPL versión 3, con una excepción para el SDK ECW. Sin ninguna garantía.</value></data>
 </root>

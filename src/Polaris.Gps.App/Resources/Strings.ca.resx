@@ -511,4 +511,6 @@ Voleu obrir la pàgina de versions al navegador?</value></data>
   <data name="CleanSmoothToolTip" xml:space="preserve"><value>Amplada de la finestra al llarg del recorregut. 100 m és la que fa servir mendikat.net per al desnivell; més ampla suavitza més.</value></data>
   <data name="CleanInvalidWindow" xml:space="preserve"><value>Escriviu una finestra en metres entre 10 i 5.000.</value></data>
   <data name="FieldSymbolPlain" xml:space="preserve"><value>Símbol</value></data>
+  <data name="AboutSourceLabel" xml:space="preserve"><value>Codi font:</value></data>
+  <data name="AboutLicense" xml:space="preserve"><value>Programari lliure sota la llicència GNU GPL versió 3, amb una excepció per a l&apos;SDK ECW. Sense cap garantia.</value></data>
 </root>

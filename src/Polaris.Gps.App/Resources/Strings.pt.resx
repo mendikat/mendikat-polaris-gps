@@ -511,4 +511,6 @@ Abrir a página de versões no navegador?</value></data>
   <data name="CleanSmoothToolTip" xml:space="preserve"><value>Largura da janela ao longo do percurso. 100 m é a que o mendikat.net usa para o desnível; mais larga suaviza mais.</value></data>
   <data name="CleanInvalidWindow" xml:space="preserve"><value>Escreva uma janela em metros entre 10 e 5.000.</value></data>
   <data name="FieldSymbolPlain" xml:space="preserve"><value>Símbolo</value></data>
+  <data name="AboutSourceLabel" xml:space="preserve"><value>Código-fonte:</value></data>
+  <data name="AboutLicense" xml:space="preserve"><value>Software livre sob a licença GNU GPL versão 3, com uma exceção para o SDK ECW. Sem qualquer garantia.</value></data>
 </root>

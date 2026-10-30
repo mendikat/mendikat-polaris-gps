@@ -511,4 +511,6 @@ Ireki bertsioen orria nabigatzailean?</value></data>
   <data name="CleanSmoothToolTip" xml:space="preserve"><value>Leihoaren zabalera ibilbidean zehar. 100 m da mendikat.net-ek desnibelerako erabiltzen duena; zabalagoak gehiago leuntzen du.</value></data>
   <data name="CleanInvalidWindow" xml:space="preserve"><value>Idatzi 10 eta 5.000 arteko leihoa metrotan.</value></data>
   <data name="FieldSymbolPlain" xml:space="preserve"><value>Ikurra</value></data>
+  <data name="AboutSourceLabel" xml:space="preserve"><value>Iturburu-kodea:</value></data>
+  <data name="AboutLicense" xml:space="preserve"><value>Software librea, GNU GPL 3. bertsioaren lizentziapean, ECW SDKrako salbuespen batekin. Inolako bermerik gabe.</value></data>
 </root>

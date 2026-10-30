@@ -17,13 +17,12 @@ public interface IUpdateChecker
 public sealed class UpdateCheckException(string message, Exception? innerException = null) : Exception(message, innerException);
 
 /// <summary>
-/// The latest release of the public repository where the setup programs are published (the source code repository is
-/// private): GitHub REST API <c>GET /repos/{repository}/releases/latest</c>, without credentials (60 requests per hour
+/// The latest release of the public source code repository, where the setup programs are published: GitHub REST API <c>GET /repos/{repository}/releases/latest</c>, without credentials (60 requests per hour
 /// and address). Drafts and pre-releases are not "latest". The tag is the version with a leading "v".
 /// </summary>
 public sealed class GitHubUpdateChecker(HttpClient http, string repository = GitHubUpdateChecker.Repository) : IUpdateChecker
 {
-    public const string Repository = "mendikat/mendikat-polaris-gps-application";
+    public const string Repository = "mendikat/mendikat-polaris-gps";
 
     /// <summary>Page with all the published versions, opened when the check cannot be made.</summary>
     public const string ReleasesPage = "https://github.com/" + Repository + "/releases";

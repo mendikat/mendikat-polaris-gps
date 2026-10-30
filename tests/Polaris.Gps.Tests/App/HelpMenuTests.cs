@@ -89,7 +89,7 @@ public sealed partial class HelpMenuTests
     {
         _vm.CheckUpdatesCommand.Execute(null);
 
-        Assert.Equal("https://github.com/mendikat/mendikat-polaris-gps-application/releases", Assert.Single(_dialogs.OpenedExternally));
+        Assert.Equal("https://github.com/mendikat/mendikat-polaris-gps/releases", Assert.Single(_dialogs.OpenedExternally));
     }
 
     [Fact]
@@ -98,7 +98,7 @@ public sealed partial class HelpMenuTests
         _vm.AboutCommand.Execute(null);
 
         var about = _dialogs.AboutShown!;
-        Assert.Equal("Versión 0.5.1", about.VersionText);
+        Assert.Equal("Versión 0.6.0", about.VersionText);
         Assert.Equal("Autor: Javier Urrutia", about.AuthorText);
         Assert.Equal("mailto:javi@mendikat.net", about.AuthorEmailUri);
         Assert.Equal("https://www.mendikat.net", about.Web);

@@ -1,39 +1,30 @@
-# Polaris GPS azken erabiltzailearen lizentzia-kontratua
+# Polaris GPSaren lizentzia
 
-Irakurri arretaz kontratu hau Polaris GPS («Softwarea») instalatu aurretik. Instalatzean edo erabiltzean, baldintza hauek onartzen dituzu. Onartzen ez badituzu, ez instalatu eta ez erabili Softwarea.
+Polaris GPS Mendikaten software librea da, doakoa eta kode irekikoa.
 
-## 1. Jabetza
-Softwarea Mendikaten jabetzakoa da («Titularra») eta jabetza intelektualari buruzko legeriak babesten du. Softwarearen lizentzia ematen da, ez da saltzen. Kontratu honek berariaz ematen ez dizkizun eskubide guztiak Titularrak gordetzen ditu.
+## 1. GNU Lizentzia Publiko Orokorra, 3. bertsioa
+Polaris GPS erabili, kopiatu, aztertu, aldatu eta birbanatu dezakezu Free Software Foundation-ek argitaratutako GNU Lizentzia Publiko Orokorraren (GPL) 3. bertsioaren baldintzen arabera. Programa banatzen baduzu, aldatuta edo ez, lizentzia berarekin egin behar duzu eta haren iturburu-kodea eskuragarri jarri.
 
-## 2. Erabilera-lizentzia
-Titularrak doako lizentzia ez-esklusiboa eta eskualdaezina ematen dizu Softwarea instalatu eta erabiltzeko, helburu pertsonal edo profesionaletarako, behar dituzun ekipoetan.
+## 2. Bermerik ez
+Polaris GPS erabilgarria izango delakoan banatzen da, baina INOLAKO BERMERIK GABE, ezta MERKATURATZEKO edo HELBURU JAKIN BATERAKO EGOKITASUNAREN berme inplizitua ere. Ikus GPL xehetasun gehiagorako.
 
-## 3. Mugak
-Ezin duzu: (a) Softwarea saldu, alokatu, mailegatu, azpilizentziatu edo banatu Titularraren idatzizko baimenik gabe; (b) Softwarea aldatu, itzuli, deskonpilatu, desmuntatu edo alderantzizko ingeniaritza aplikatu, legeak berariaz baimentzen duen neurrian izan ezik; (c) Softwarearen jabetza-, marka- edo copyright-oharrak ezabatu edo aldatu.
+## 3. Testu osoa eta iturburu-kodea
+Lizentziaren testu osoa, ingelesez (bertsio ofizial bakarra), programarekin batera instalatzen da LICENSE fitxategian, eta https://www.gnu.org/licenses/gpl-3.0.html helbidean dago. Iturburu-kodea https://github.com/mendikat/mendikat-polaris-gps helbidean dago.
 
-## 4. Hirugarrenen osagaiak
-Softwareak bere lizentzien arabera arautzen diren hirugarrenen osagaiak ditu, besteak beste GDAL, PROJ, Mapsui, SkiaSharp eta NetTopologySuite (MIT, Apache 2.0, BSD eta antzeko lizentziak; GDALenak eta haren liburutegienak instalazioaren «gdal» karpetan daude), eta Hexagonen ERDAS ECW/JP2 SDKa, zeinaren lizentzia aplikazioan onartzeko eskatzen zaizun ECW fitxategiak ireki aurretik. Osagai horietarako haien lizentziak dira nagusi.
+## 4. ECW SDKrako salbuespena
+GPLren 7. ataleko baimen gehigarri gisa, Polaris GPS Hexagon-en ERDAS ECW/JP2 SDKarekin konbinatzea eta emaitza banatzea baimentzen da. SDK hori ez dago GPLren barruan: bere lizentzia du, eta aplikazioak hura onartzeko eskatzen du ECW fitxategiak ireki aurretik (xehetasunak LICENSE-EXCEPTION.md fitxategian).
 
-## 5. Hirugarrenen datuak eta zerbitzuak
-Kartografia, lursailaren eredu digitalak eta lineako beste zerbitzu batzuk (adibidez, Instituto Geográfico Nacionalarenak CC BY 4.0 lizentziarekin edo OpenStreetMapenak ODbL lizentziarekin) haien hornitzaileenak dira eta haien baldintzek arautzen dituzte. Titularrak ez ditu bermatzen haien erabilgarritasuna, zehaztasuna ezta jarraitutasuna ere.
+## 5. Hirugarrenen osagaiak
+Polaris GPSak bere lizentzien arabera arautzen diren hirugarrenen osagaiak ditu, besteak beste GDAL, PROJ, Mapsui, SkiaSharp eta NetTopologySuite (MIT, Apache 2.0, BSD eta antzeko lizentziak; GDALenak eta haren liburutegienak instalazioaren «gdal» karpetan daude), eta Hexagonen ERDAS ECW/JP2 SDKa, zeinaren lizentzia aplikazioan onartzeko eskatzen zaizun ECW fitxategiak ireki aurretik. Osagai horietarako haien lizentziak dira nagusi.
 
-## 6. Mendiko erabilera
-Softwarea ibilbideak prestatu eta editatzeko tresna bat da. Trackek, altitudeek, distantziek, denborek eta mapek akatsak izan ditzakete. Ez erabili mendian orientatzeko edo erabakiak hartzeko iturri bakar gisa: zu zara zure segurtasunaren eta zure taldearenaren arduraduna.
+## 6. Hirugarrenen datuak eta zerbitzuak
+Kartografia, lursailaren eredu digitalak eta lineako beste zerbitzu batzuk (adibidez, Instituto Geográfico Nacionalarenak CC BY 4.0 lizentziarekin edo OpenStreetMapenak ODbL lizentziarekin) haien hornitzaileenak dira eta haien baldintzek arautzen dituzte. Mendikatek ez ditu bermatzen haien erabilgarritasuna, zehaztasuna ezta jarraitutasuna ere.
 
-## 7. Pribatutasuna
-Softwareak ez dio Titularrari datu pertsonalik ezta erabilera-daturik bidaltzen. Mapak eta altitudeak erakusteko hornitzaileen zerbitzarietatik deskargatzen ditu datuak, eta zerbitzari horiek eskaerak jasotzen dituzte, edozein web-nabigaziotan bezala. Erregistro teknikoa zure ekipoan bakarrik gordetzen da.
+## 7. Mendiko erabilera
+Polaris GPS ibilbideak prestatu eta editatzeko tresna bat da. Trackek, altitudeek, distantziek, denborek eta mapek akatsak izan ditzakete. Ez erabili mendian orientatzeko edo erabakiak hartzeko iturri bakar gisa: zu zara zure segurtasunaren eta zure taldearenaren arduraduna.
 
-## 8. Bermerik eza
-Softwarea «dagoen bezala» eskaintzen da, inolako bermerik gabe, ez berariazkorik ez inplizitorik, merkaturatzeko gaitasunari, helburu jakin baterako egokitasunari eta akatsik ezari buruzkoak barne.
-
-## 9. Erantzukizunaren muga
-Legeak baimentzen duen neurririk handienean, Titularra ez da izango Softwarea erabiltzearen edo erabili ezinaren ondoriozko kalte zuzen edo zeharkakoen, datu-galeren edo irabazi-galeren erantzule. Kontratu honetako ezerk ez ditu mugatzen legeak kontsumitzaileei aitortzen dizkien eta baztertu ezin diren eskubideak.
-
-## 10. Iraupena
-Lizentzia hau baliozkoa da suntsiarazi arte. Baldintza hauek betetzen ez badituzu, automatikoki suntsiaraziko da; kasu horretan Softwarea erabiltzeari utzi eta desinstalatu egin beharko duzu.
-
-## 11. Lege aplikagarria
-Kontratu hau Espainiako legeriak arautzen du.
+## 8. Pribatutasuna
+Polaris GPSak ez dio Mendikati datu pertsonalik ezta erabilera-daturik bidaltzen. Mapak eta altitudeak erakusteko hornitzaileen zerbitzarietatik deskargatzen ditu datuak, eta zerbitzari horiek eskaerak jasotzen dituzte, edozein web-nabigaziotan bezala. Erregistro teknikoa zure ekipoan bakarrik gordetzen da.
 
 Harremanetarako: javi@mendikat.net · www.mendikat.net
-© Mendikat. Eskubide guztiak erreserbatuta.
+© 2026 Mendikat (Javier Urrutia) · GPL-3.0

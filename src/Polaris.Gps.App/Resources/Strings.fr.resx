@@ -511,4 +511,6 @@ Ouvrir la page des versions dans le navigateur ?</value></data>
   <data name="CleanSmoothToolTip" xml:space="preserve"><value>Largeur de la fenêtre le long du parcours. 100 m est celle qu&apos;utilise mendikat.net pour le dénivelé ; plus large, elle lisse davantage.</value></data>
   <data name="CleanInvalidWindow" xml:space="preserve"><value>Saisissez une fenêtre en mètres entre 10 et 5 000.</value></data>
   <data name="FieldSymbolPlain" xml:space="preserve"><value>Symbole</value></data>
+  <data name="AboutSourceLabel" xml:space="preserve"><value>Code source :</value></data>
+  <data name="AboutLicense" xml:space="preserve"><value>Logiciel libre sous licence GNU GPL version 3, avec une exception pour le SDK ECW. Sans aucune garantie.</value></data>
 </root>

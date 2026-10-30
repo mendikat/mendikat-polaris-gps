@@ -28,6 +28,8 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.ColumnSpan="2" Text="{Binding AuthorText}" Margin="0,0,0,4" />
                 <TextBlock Grid.Row="1" Text="{x:Static res:Strings.AboutEmailLabel}" Margin="0,0,8,4" />
@@ -44,6 +46,14 @@
                         <Run Text="{Binding WebText, Mode=OneWay}" />
                     </Hyperlink>
                 </TextBlock>
+                <TextBlock Grid.Row="3" Text="{x:Static res:Strings.AboutSourceLabel}" Margin="0,4,8,0" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Margin="0,4,0,0">
+                    <Hyperlink NavigateUri="{Binding Source}" RequestNavigate="OnNavigate" AutomationProperties.Name="{Binding SourceText}">
+                        <Run Text="{Binding SourceText, Mode=OneWay}" />
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Text="{x:Static res:Strings.AboutLicense}" TextWrapping="Wrap" Margin="0,4,0,0"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
             </Grid>
     
             <!-- Donation, as on mendikat.net -->

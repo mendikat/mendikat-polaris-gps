@@ -1,0 +1,83 @@
+# Builds and tests Polaris GPS on every push and pull request. On a version tag (v1.2.3, matching <Version> in
+# Directory.Build.props) it also builds the setup program, the .msi and the portable .zip, and creates a draft release
+# with them, to be reviewed and published by hand.
+# Code signing: once the project is approved by SignPath Foundation, set the SIGNPATH_API_TOKEN secret and the
+# SIGNPATH_ORGANIZATION_ID variable, and enable the "Sign" steps below (the signed files replace the unsigned ones).
+name: Build
+
+on:
+  push:
+    branches: [master]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Build
+        run: dotnet build -c Release
+
+      - name: Test
+        run: dotnet test -c Release --no-build
+
+      - name: Version
+        if: startsWith(github.ref, 'refs/tags/v')
+        id: version
+        shell: pwsh
+        run: |
+          $version = ([xml](Get-Content Directory.Build.props)).Project.PropertyGroup.Version | Where-Object { $_ } | Select-Object -First 1
+          if ("v$version" -ne "${{ github.ref_name }}") { throw "Tag ${{ github.ref_name }} does not match <Version> $version" }
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Installers
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: dotnet build installer/Polaris.Gps.Setup -c Release
+
+      - name: Portable zip
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: Compress-Archive -Path artifacts/publish/win-x64/* -DestinationPath artifacts/installer/PolarisGPS-${{ steps.version.outputs.version }}-win-x64.zip
+
+      - name: Upload
+        if: startsWith(github.ref, 'refs/tags/v')
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: polaris-gps-${{ steps.version.outputs.version }}
+          path: |
+            artifacts/installer/*.exe
+            artifacts/installer/*.msi
+            artifacts/installer/*.zip
+
+      # - name: Sign (SignPath Foundation)
+      #   if: startsWith(github.ref, 'refs/tags/v')
+      #   uses: signpath/github-action-submit-signing-request@v1
+      #   with:
+      #     api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+      #     organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+      #     project-slug: polaris-gps
+      #     signing-policy-slug: release-signing
+      #     github-artifact-id: ${{ steps.upload.outputs.artifact-id }}
+      #     wait-for-completion: true
+      #     output-artifact-directory: artifacts/signed
+
+      - name: Draft release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          $v = "${{ steps.version.outputs.version }}"
+          gh release create "${{ github.ref_name }}" --draft --title "Polaris GPS $v" --generate-notes `
+            "artifacts/installer/PolarisGPS-$v-setup.exe" "artifacts/installer/PolarisGPS-$v-win-x64.msi" "artifacts/installer/PolarisGPS-$v-win-x64.zip"

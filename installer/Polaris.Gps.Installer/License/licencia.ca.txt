@@ -1,39 +1,30 @@
-# Contracte de llicència d'usuari final de Polaris GPS
+# Llicència de Polaris GPS
 
-Llegiu atentament aquest contracte abans d'instal·lar Polaris GPS (el «Programari»). En instal·lar-lo o utilitzar-lo, accepteu aquestes condicions. Si no les accepteu, no instal·leu ni utilitzeu el Programari.
+Polaris GPS és programari lliure de Mendikat, gratuït i de codi obert.
 
-## 1. Titularitat
-El Programari és propietat de Mendikat («el Titular») i està protegit per la legislació de propietat intel·lectual. El Programari es llicencia, no es ven. El Titular es reserva tots els drets que aquest contracte no us concedeix expressament.
+## 1. Llicència Pública General GNU, versió 3
+Podeu usar, copiar, estudiar, modificar i redistribuir Polaris GPS segons els termes de la Llicència Pública General GNU (GPL) versió 3, publicada per la Free Software Foundation. Si distribuïu el programa, modificat o no, ho heu de fer amb la mateixa llicència i facilitar-ne el codi font.
 
-## 2. Llicència d'ús
-El Titular us concedeix una llicència gratuïta, no exclusiva i intransferible per instal·lar i utilitzar el Programari, amb finalitats personals o professionals, en els equips que necessiteu.
+## 2. Sense garantia
+Polaris GPS es distribueix amb l'esperança que sigui útil, però SENSE CAP GARANTIA, ni tan sols la garantia implícita de COMERCIABILITAT o d'IDONEÏTAT PER A UNA FINALITAT DETERMINADA. Consulteu la GPL per a més detalls.
 
-## 3. Restriccions
-No podeu: (a) vendre, llogar, prestar, subllicenciar ni distribuir el Programari sense autorització escrita del Titular; (b) modificar, traduir, descompilar, desassemblar ni aplicar enginyeria inversa al Programari, excepte en la mesura que la llei ho permeti expressament; (c) eliminar ni alterar els avisos de propietat, marques o copyright del Programari.
+## 3. Text complet i codi font
+El text complet de la llicència, en anglès (l'única versió oficial), s'instal·la amb el programa al fitxer LICENSE i és a https://www.gnu.org/licenses/gpl-3.0.html. El codi font és a https://github.com/mendikat/mendikat-polaris-gps.
 
-## 4. Components de tercers
-El Programari inclou components de tercers que es regeixen per les seves pròpies llicències, entre els quals GDAL, PROJ, Mapsui, SkiaSharp i NetTopologySuite (llicències MIT, Apache 2.0, BSD i similars; les de GDAL i les seves biblioteques són a la carpeta «gdal» de la instal·lació), i l'SDK ERDAS ECW/JP2 d'Hexagon, la llicència del qual se us demana que accepteu a l'aplicació abans d'obrir fitxers ECW. Per a aquests components prevalen les seves llicències.
+## 4. Excepció per a l'SDK ECW
+Com a permís addicional segons la secció 7 de la GPL, es permet combinar Polaris GPS amb l'SDK ERDAS ECW/JP2 d'Hexagon i distribuir-ne el resultat. Aquest SDK no està cobert per la GPL: es regeix per la seva pròpia llicència, que l'aplicació demana acceptar abans d'obrir fitxers ECW (detalls a LICENSE-EXCEPTION.md).
 
-## 5. Dades i serveis de tercers
-La cartografia, els models digitals del terreny i altres serveis en línia (per exemple, de l'Instituto Geográfico Nacional sota CC BY 4.0 o d'OpenStreetMap sota ODbL) pertanyen als seus proveïdors i es regeixen per les seves condicions. El Titular no en garanteix la disponibilitat, l'exactitud ni la continuïtat.
+## 5. Components de tercers
+Polaris GPS inclou components de tercers que es regeixen per les seves pròpies llicències, entre els quals GDAL, PROJ, Mapsui, SkiaSharp i NetTopologySuite (llicències MIT, Apache 2.0, BSD i similars; les de GDAL i les seves biblioteques són a la carpeta «gdal» de la instal·lació), i l'SDK ERDAS ECW/JP2 d'Hexagon, la llicència del qual se us demana que accepteu a l'aplicació abans d'obrir fitxers ECW. Per a aquests components prevalen les seves llicències.
 
-## 6. Ús a la muntanya
-El Programari és una eina per preparar i editar recorreguts. Els tracks, altituds, distàncies, temps i mapes poden contenir errors. No l'utilitzeu com a única font d'orientació ni de presa de decisions a la muntanya: sou responsables de la vostra seguretat i de la del vostre grup.
+## 6. Dades i serveis de tercers
+La cartografia, els models digitals del terreny i altres serveis en línia (per exemple, de l'Instituto Geográfico Nacional sota CC BY 4.0 o d'OpenStreetMap sota ODbL) pertanyen als seus proveïdors i es regeixen per les seves condicions. Mendikat no en garanteix la disponibilitat, l'exactitud ni la continuïtat.
 
-## 7. Privadesa
-El Programari no envia al Titular dades personals ni d'ús. Per mostrar mapes i altituds descarrega dades dels servidors dels proveïdors, que reben les peticions com en qualsevol navegació web. El registre tècnic es desa només al vostre equip.
+## 7. Ús a la muntanya
+Polaris GPS és una eina per preparar i editar recorreguts. Els tracks, altituds, distàncies, temps i mapes poden contenir errors. No l'utilitzeu com a única font d'orientació ni de presa de decisions a la muntanya: sou responsables de la vostra seguretat i de la del vostre grup.
 
-## 8. Absència de garantia
-El Programari s'ofereix «tal com és», sense garanties de cap mena, expresses o implícites, incloses les de comerciabilitat, idoneïtat per a una finalitat concreta i absència d'errors.
-
-## 9. Limitació de responsabilitat
-En la màxima mesura permesa per la llei, el Titular no serà responsable de danys directes o indirectes, pèrdua de dades o de beneficis derivats de l'ús o de la impossibilitat d'ús del Programari. Res d'aquest contracte limita els drets que la llei reconeix als consumidors i que no es poden excloure.
-
-## 10. Durada
-Aquesta llicència és vàlida fins que es resolgui. Es resoldrà automàticament si incompliu aquestes condicions; en aquest cas haureu de deixar d'utilitzar el Programari i desinstal·lar-lo.
-
-## 11. Llei aplicable
-Aquest contracte es regeix per la legislació espanyola.
+## 8. Privadesa
+Polaris GPS no envia a Mendikat dades personals ni d'ús. Per mostrar mapes i altituds descarrega dades dels servidors dels proveïdors, que reben les peticions com en qualsevol navegació web. El registre tècnic es desa només al vostre equip.
 
 Contacte: javi@mendikat.net · www.mendikat.net
-© Mendikat. Tots els drets reservats.
+© 2026 Mendikat (Javier Urrutia) · GPL-3.0

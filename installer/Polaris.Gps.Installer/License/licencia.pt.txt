@@ -1,39 +1,30 @@
-# Contrato de licença de utilizador final do Polaris GPS
+# Licença do Polaris GPS
 
-Leia atentamente este contrato antes de instalar o Polaris GPS (o «Software»). Ao instalá-lo ou utilizá-lo, aceita estas condições. Se não as aceitar, não instale nem utilize o Software.
+O Polaris GPS é software livre da Mendikat, gratuito e de código aberto.
 
-## 1. Titularidade
-O Software é propriedade da Mendikat («o Titular») e está protegido pela legislação de propriedade intelectual. O Software é licenciado, não é vendido. O Titular reserva-se todos os direitos que este contrato não lhe concede expressamente.
+## 1. Licença Pública Geral GNU, versão 3
+Pode usar, copiar, estudar, modificar e redistribuir o Polaris GPS nos termos da Licença Pública Geral GNU (GPL) versão 3, publicada pela Free Software Foundation. Se distribuir o programa, modificado ou não, deve fazê-lo com a mesma licença e disponibilizar o seu código-fonte.
 
-## 2. Licença de utilização
-O Titular concede-lhe uma licença gratuita, não exclusiva e intransmissível para instalar e utilizar o Software, para fins pessoais ou profissionais, nos computadores de que necessitar.
+## 2. Sem garantia
+O Polaris GPS é distribuído na esperança de que seja útil, mas SEM QUALQUER GARANTIA, nem sequer a garantia implícita de COMERCIALIZAÇÃO ou de ADEQUAÇÃO A UM FIM ESPECÍFICO. Consulte a GPL para mais pormenores.
 
-## 3. Restrições
-Não pode: (a) vender, alugar, emprestar, sublicenciar nem distribuir o Software sem autorização escrita do Titular; (b) modificar, traduzir, descompilar, desmontar nem aplicar engenharia inversa ao Software, salvo na medida em que a lei o permita expressamente; (c) eliminar nem alterar os avisos de propriedade, marcas ou direitos de autor do Software.
+## 3. Texto completo e código-fonte
+O texto completo da licença, em inglês (a única versão oficial), é instalado com o programa no ficheiro LICENSE e está em https://www.gnu.org/licenses/gpl-3.0.html. O código-fonte está em https://github.com/mendikat/mendikat-polaris-gps.
 
-## 4. Componentes de terceiros
-O Software inclui componentes de terceiros que se regem pelas suas próprias licenças, entre eles GDAL, PROJ, Mapsui, SkiaSharp e NetTopologySuite (licenças MIT, Apache 2.0, BSD e semelhantes; as do GDAL e das suas bibliotecas encontram-se na pasta «gdal» da instalação), e o SDK ERDAS ECW/JP2 da Hexagon, cuja licença lhe é pedido que aceite na aplicação antes de abrir ficheiros ECW. Para esses componentes prevalecem as suas licenças.
+## 4. Exceção para o SDK ECW
+Como permissão adicional nos termos da secção 7 da GPL, é permitido combinar o Polaris GPS com o SDK ERDAS ECW/JP2 da Hexagon e distribuir o resultado. Esse SDK não está abrangido pela GPL: rege-se pela sua própria licença, que a aplicação pede para aceitar antes de abrir ficheiros ECW (pormenores em LICENSE-EXCEPTION.md).
 
-## 5. Dados e serviços de terceiros
-A cartografia, os modelos digitais do terreno e outros serviços em linha (por exemplo, do Instituto Geográfico Nacional sob CC BY 4.0 ou do OpenStreetMap sob ODbL) pertencem aos seus fornecedores e regem-se pelas suas condições. O Titular não garante a sua disponibilidade, exatidão nem continuidade.
+## 5. Componentes de terceiros
+O Polaris GPS inclui componentes de terceiros que se regem pelas suas próprias licenças, entre eles GDAL, PROJ, Mapsui, SkiaSharp e NetTopologySuite (licenças MIT, Apache 2.0, BSD e semelhantes; as do GDAL e das suas bibliotecas encontram-se na pasta «gdal» da instalação), e o SDK ERDAS ECW/JP2 da Hexagon, cuja licença lhe é pedido que aceite na aplicação antes de abrir ficheiros ECW. Para esses componentes prevalecem as suas licenças.
 
-## 6. Utilização na montanha
-O Software é uma ferramenta para preparar e editar percursos. Os tracks, altitudes, distâncias, tempos e mapas podem conter erros. Não o utilize como única fonte de orientação nem de tomada de decisões na montanha: é responsável pela sua segurança e pela do seu grupo.
+## 6. Dados e serviços de terceiros
+A cartografia, os modelos digitais do terreno e outros serviços em linha (por exemplo, do Instituto Geográfico Nacional sob CC BY 4.0 ou do OpenStreetMap sob ODbL) pertencem aos seus fornecedores e regem-se pelas suas condições. A Mendikat não garante a sua disponibilidade, exatidão nem continuidade.
 
-## 7. Privacidade
-O Software não envia ao Titular dados pessoais nem de utilização. Para mostrar mapas e altitudes descarrega dados dos servidores dos fornecedores, que recebem os pedidos como em qualquer navegação na web. O registo técnico é guardado apenas no seu computador.
+## 7. Utilização na montanha
+O Polaris GPS é uma ferramenta para preparar e editar percursos. Os tracks, altitudes, distâncias, tempos e mapas podem conter erros. Não o utilize como única fonte de orientação nem de tomada de decisões na montanha: é responsável pela sua segurança e pela do seu grupo.
 
-## 8. Ausência de garantia
-O Software é fornecido «tal como está», sem garantias de qualquer tipo, expressas ou implícitas, incluindo as de comerciabilidade, adequação a um fim específico e ausência de erros.
-
-## 9. Limitação de responsabilidade
-Na máxima medida permitida por lei, o Titular não será responsável por danos diretos ou indiretos, perda de dados ou de lucros resultantes da utilização ou da impossibilidade de utilização do Software. Nada neste contrato limita os direitos que a lei reconhece aos consumidores e que não podem ser excluídos.
-
-## 10. Duração
-Esta licença é válida até ser resolvida. Será resolvida automaticamente se não cumprir estas condições; nesse caso, deverá deixar de utilizar o Software e desinstalá-lo.
-
-## 11. Lei aplicável
-Este contrato rege-se pela legislação espanhola.
+## 8. Privacidade
+O Polaris GPS não envia à Mendikat dados pessoais nem de utilização. Para mostrar mapas e altitudes descarrega dados dos servidores dos fornecedores, que recebem os pedidos como em qualquer navegação na web. O registo técnico é guardado apenas no seu computador.
 
 Contacto: javi@mendikat.net · www.mendikat.net
-© Mendikat. Todos os direitos reservados.
+© 2026 Mendikat (Javier Urrutia) · GPL-3.0

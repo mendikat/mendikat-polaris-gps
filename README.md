@@ -1,13 +1,33 @@
 # Polaris GPS
 
+![Polaris GPS](src/Polaris.Gps.App/Assets/splash.jpg)
+
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.5.1.**
+> **Estado: versión 0.6.0.**
 > Se abren archivos GPX, y KML, KMZ, TCX, OziExplorer (PLT, WPT) y CompeGPS/TwoNav (TRK, WPT) convertidos a GPX, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
 > Los archivos grandes se abren con porcentaje de progreso y se pueden cancelar.
+
+## Licencia
+
+Polaris GPS es software libre: © 2026 Mendikat (Javier Urrutia), bajo la [GNU GPL versión 3](LICENSE), con un permiso adicional
+(sección 7) que permite combinarlo y distribuirlo con el SDK ERDAS ECW/JP2 de Hexagon, que no es libre: ver
+[LICENSE-EXCEPTION.md](LICENSE-EXCEPTION.md). Los componentes de terceros conservan sus licencias (ver *Dependencias y licencias*).
+
+Descargas: [Releases](https://github.com/mendikat/mendikat-polaris-gps/releases/latest) (`PolarisGPS-<versión>-setup.exe` recomendado).
+
+## Capturas
+
+![Track circular con waypoints sobre el mapa topográfico del IGN](src/Polaris.Gps.App/Assets/screen-capture-01.jpg)
+
+*Un track circular por el Parque Nacional de Ordesa con sus waypoints (cimas, fuentes, refugios…) sobre el mapa del IGN.*
+
+![Perfil de elevación con desnivel, tiempos y velocidades](src/Polaris.Gps.App/Assets/screen-capture-02.jpg)
+
+*Perfil de elevación: distancia, desnivel, altitudes, tiempo total, en movimiento y detenido, y velocidades.*
 
 ## Uso rápido
 
@@ -248,9 +268,10 @@ Datos: mosaicos y MDT del IGN España bajo CC BY 4.0 (scne.es); datos OSM bajo O
 - Condiciones de uso de Esri, OSM y del SCAN 25 del IGN francés a revisar antes de distribuir públicamente.
 - MtbMap y CyclOSM son servidores comunitarios sin garantía de disponibilidad.
 - «Buscar actualizaciones» consulta la API de GitHub sin credenciales (60 consultas por hora y dirección) en el
-  repositorio público `mendikat/mendikat-polaris-gps-application`, donde se publica cada versión con sus instaladores (el código sigue
-  en el repositorio privado). Sin release publicada, avisa de que no se pudo comprobar.
+  repositorio `mendikat/mendikat-polaris-gps` (sus releases llevan los instaladores). La 0.5.1 consultaba el antiguo
+  repositorio de descargas `mendikat/mendikat-polaris-gps-application`, ya cerrado: quien la tenga debe instalar la 0.6.0 a mano.
 - «Seguir caminos» usa el servidor público de BRouter (brouter.de), sin garantía de disponibilidad ni límites
   publicados; `BRouterClient` admite otro servidor (BRouter se puede instalar en uno propio).
 - Comunicaciones sólo ve los GPS conectados como unidad USB; los que usan MTP (muchos relojes) no aparecen.
-- El `.exe` y el `.msi` no están firmados.
+- El `.exe` y el `.msi` no están firmados todavía: el flujo de GitHub Actions está preparado para firmarlos con SignPath
+  Foundation cuando se apruebe el proyecto.

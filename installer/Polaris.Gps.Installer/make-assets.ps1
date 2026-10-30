@@ -144,3 +144,37 @@ $play = @{
     pt = 'Descarrega-a no Google Play'
 }
 foreach ($language in $play.Keys) { Save-ButtonFace $download $play[$language] $orange 227 35 "button-play.$language.bmp" }
+
+# RTF: Windows-1252 escapes (the five languages fit in it), Segoe UI 9 pt.
+$cp1252 = [System.Text.Encoding]::GetEncoding(1252)
+function ConvertTo-RtfText([string] $text) {
+    $builder = New-Object System.Text.StringBuilder
+    foreach ($char in $text.ToCharArray()) {
+        switch ($char) {
+            '\' { [void]$builder.Append('\\') }
+            '{' { [void]$builder.Append('\{') }
+            '}' { [void]$builder.Append('\}') }
+            default {
+                if ([int]$char -lt 128) { [void]$builder.Append($char) }
+                else {
+                    $bytes = $cp1252.GetBytes([string]$char)
+                    [void]$builder.Append(('\''{0:x2}' -f $bytes[0]))
+                }
+            }
+        }
+    }
+    $builder.ToString()
+}
+Get-ChildItem $LicenseDir -Filter 'licencia.*.txt' | ForEach-Object {
+    $rtf = New-Object System.Text.StringBuilder
+    [void]$rtf.Append('{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fswiss Segoe UI;}}\viewkind4\uc1\f0\fs18' + "`r`n")
+    foreach ($line in [System.IO.File]::ReadAllLines($_.FullName, [System.Text.Encoding]::UTF8)) {
+        if ($line.Trim() -eq '') { continue }
+        if ($line.StartsWith('# ')) { [void]$rtf.Append('\pard\sa160\b\fs24 ' + (ConvertTo-RtfText $line.Substring(2)) + '\b0\fs18\par' + "`r`n") }
+        elseif ($line.StartsWith('## ')) { [void]$rtf.Append('\pard\sb120\sa40\b ' + (ConvertTo-RtfText $line.Substring(3)) + '\b0\par' + "`r`n") }
+        else { [void]$rtf.Append('\pard\sa80 ' + (ConvertTo-RtfText $line) + '\par' + "`r`n") }
+    }
+    [void]$rtf.Append('}')
+    [System.IO.File]::WriteAllText((Join-Path $OutDir ($_.BaseName + '.rtf')), $rtf.ToString(), [System.Text.Encoding]::ASCII)
+}
+
