@@ -25,15 +25,15 @@
 
         <!-- One figure: icon, value and label (PROF-02, PROF-06, PROF-07) -->
         <DataTemplate x:Key="StatTile" DataType="{x:Type vm:ProfileStat}">
-            <Border Background="#F3F5F8" BorderBrush="#E1E5EB" BorderThickness="1" CornerRadius="6"
+            <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="6"
                     Padding="8,5,12,5" Margin="0,0,6,6"
                     AutomationProperties.Name="{Binding Description}" Focusable="True">
                 <StackPanel Orientation="Horizontal">
                     <Path x:Name="Icon" Width="22" Height="22" Stretch="Uniform" VerticalAlignment="Center"
-                          Margin="0,0,8,0" Fill="#34495E" Data="{StaticResource IconDistance}" />
+                          Margin="0,0,8,0" Fill="{DynamicResource TextFillColorSecondaryBrush}" Data="{StaticResource IconDistance}" />
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Value}" FontSize="15" FontWeight="SemiBold" Foreground="#1F2933" />
-                        <TextBlock Text="{Binding Label}" FontSize="11" Foreground="#5F6B7A" />
+                        <TextBlock Text="{Binding Value}" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                        <TextBlock Text="{Binding Label}" FontSize="11" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -59,7 +59,7 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Kind}" Value="{x:Static vm:ProfileStatKind.TotalTime}">
                     <Setter TargetName="Icon" Property="Data" Value="{StaticResource IconTotalTime}" />
-                    <Setter TargetName="Icon" Property="Fill" Value="#34495E" />
+                    <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource TextFillColorSecondaryBrush}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Kind}" Value="{x:Static vm:ProfileStatKind.MovingTime}">
                     <Setter TargetName="Icon" Property="Data" Value="{StaticResource IconMovingTime}" />
@@ -127,26 +127,30 @@
                     <ItemsControl ItemsSource="{Binding TimeStats}" ItemTemplate="{StaticResource StatTile}"
                                   ItemsPanel="{StaticResource TileRow}" Focusable="False"
                                   AutomationProperties.Name="{x:Static res:Strings.StatGroupTime}" />
-                    <TextBlock Text="{Binding NoTimesNote}" FontSize="11" Foreground="#5F6B7A" Margin="2,0,0,6"
+                    <TextBlock Text="{Binding NoTimesNote}" FontSize="11" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Margin="2,0,0,6"
                                Visibility="{Binding NoTimesNote, Converter={StaticResource NullToCollapsed}}" />
                 </StackPanel>
             </StackPanel>
         </DockPanel>
-        <TextBlock DockPanel.Dock="Top" Margin="10,0,10,4" Text="{Binding MissingWarning}" Foreground="DarkGoldenrod" TextWrapping="Wrap"
+        <TextBlock DockPanel.Dock="Top" Margin="10,0,10,4" Text="{Binding MissingWarning}" Foreground="{DynamicResource SystemFillColorCautionBrush}" TextWrapping="Wrap"
                    Visibility="{Binding HasMissingWarning, Converter={StaticResource BoolToVisibility}}" />
 
         <!-- Readout of the point under the pointer (PROF-04) and the segment gap option (PROF-02) -->
-        <Border DockPanel.Dock="Bottom" BorderBrush="LightGray" BorderThickness="0,1,0,0" Padding="10,4">
+        <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}" BorderThickness="0,1,0,0" Padding="10,4">
             <DockPanel>
                 <CheckBox DockPanel.Dock="Right" Content="{x:Static res:Strings.ProfileIncludeGaps}" Margin="12,0,0,0"
                           IsChecked="{Binding IncludeSegmentGaps}" VerticalAlignment="Center"
                           Visibility="{Binding HasSeveralSegments, Converter={StaticResource BoolToVisibility}}" />
-                <TextBlock Text="{Binding HoverText}" Foreground="DimGray" TextTrimming="CharacterEllipsis"
+                <TextBlock Text="{Binding HoverText}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextTrimming="CharacterEllipsis"
                            VerticalAlignment="Center" AutomationProperties.LiveSetting="Polite" />
             </DockPanel>
         </Border>
 
         <charting:ProfileChart x:Name="Chart" Margin="4"
+                               Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+                               Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                               SecondaryForeground="{DynamicResource TextFillColorSecondaryBrush}"
+                               GridBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
                                Profile="{Binding Profile}"
                                CursorDistance="{Binding CursorDistance}"
                                HoverDistance="{Binding HoverDistance}"

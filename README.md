@@ -3,7 +3,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.1.2.**
+> **Estado: versión 0.2.0.**
 > Se abren archivos GPX, y KML, KMZ, TCX, OziExplorer (PLT, WPT) y CompeGPS/TwoNav (TRK, WPT) convertidos a GPX, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -33,6 +33,7 @@ y waypoints) sobre cartografía online (IGN España por defecto).
 | Convertir varios archivos a GPX | *Archivo › Convertir a GPX…*: elegir los KML, KMZ, TCX, PLT, WPT o TRK, la carpeta de destino (por defecto la de cada archivo) y qué hacer si el GPX ya existe › **Convertir**; informe por archivo |
 | Ver un mapa escaneado o un MDT propio | *Archivo › Abrir cartografía…* (o soltarlos sobre la ventana): mapas `.map` (OziExplorer) e `.imp` (CompeGPS/TwoNav) con su imagen JPG, PNG, BMP, GIF o TIFF, RMAP de TwoNav (`.rmap`), GeoTIFF, ECW e imágenes con `.tfw`/`.jgw`/`.pgw` y `.prj`, y MDT `.asc` (con su `.prj`), `.hgt` y GeoTIFF. ECW servidos por internet: *Archivo › Abrir cartografía en línea (ECWP)…*. Se listan en **Cartografías Usuario (n)** de la barra de herramientas: arrastrar ≡ (o Ctrl+↑/↓) para decidir cuál queda encima (la de arriba de la lista; la cartografía en línea siempre al fondo), deslizador de opacidad para ver la de debajo, casilla para mostrar u ocultar (en un MDT, para usarlo), ⤢ para ir a ella y ✕ para quitarla |
 | Cambiar el idioma | *Archivo › Configuración…* › **Idioma de la aplicación**: español (por defecto), català, euskara, français o português, con su bandera. Se aplica al volver a abrir la aplicación, también a la guía de ayuda (F1). Algunos detalles técnicos de los errores de cartografía siguen en español; los números mantienen la coma decimal |
+| Modo claro u oscuro | La aplicación sigue el modo de Windows (*Configuración de Windows › Personalización › Colores*), también en la barra de título; el mapa y su regla de escala no cambian |
 | Mostrar u ocultar la regla de escala | *Archivo › Configuración…* › **Visualización** › **Mostrar la regla de escala en el mapa** (activada por defecto); el cambio se ve al aceptar |
 | Cancelar la apertura de un archivo grande | Botón **Cancelar** de la barra de estado, o **Esc** |
 | Usar sólo el teclado | **Alt** + letra subrayada abre los menús; **Tab** recorre paneles y campos; flechas en las listas |

@@ -1,6 +1,9 @@
+<!-- ThemeMode: WPF's built-in Windows 11 (Fluent) theme, light or dark as Windows is set, including the title bar.
+     Views use its brushes (DynamicResource TextFillColorSecondaryBrush, SystemFillColorCriticalBrush...) instead of
+     fixed colours, so they follow the theme; only what sits over the map keeps fixed light colours. -->
 <Application x:Class="Polaris.Gps.App.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             ShutdownMode="OnMainWindowClose">
+             ShutdownMode="OnMainWindowClose" ThemeMode="System">
     <Application.Resources />
 </Application>

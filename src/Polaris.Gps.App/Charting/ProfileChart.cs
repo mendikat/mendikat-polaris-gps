@@ -23,6 +23,20 @@ public sealed class ProfileChart : FrameworkElement
     public static readonly DependencyProperty HoverDistanceProperty = DependencyProperty.Register(
         nameof(HoverDistance), typeof(double?), typeof(ProfileChart), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
+    // Theme colours, bound to the Fluent theme brushes in ProfileWindow.xaml so the chart follows light or dark mode.
+    public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
+        nameof(Background), typeof(Brush), typeof(ProfileChart), new FrameworkPropertyMetadata(Brushes.White, FrameworkPropertyMetadataOptions.AffectsRender));
+
+    public static readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(
+        nameof(Foreground), typeof(Brush), typeof(ProfileChart), new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+
+    public static readonly DependencyProperty SecondaryForegroundProperty = DependencyProperty.Register(
+        nameof(SecondaryForeground), typeof(Brush), typeof(ProfileChart), new FrameworkPropertyMetadata(Brushes.DimGray, FrameworkPropertyMetadataOptions.AffectsRender));
+
+    public static readonly DependencyProperty GridBrushProperty = DependencyProperty.Register(
+        nameof(GridBrush), typeof(Brush), typeof(ProfileChart),
+        new FrameworkPropertyMetadata(Frozen(new SolidColorBrush(Color.FromRgb(225, 225, 225))), FrameworkPropertyMetadataOptions.AffectsRender));
+
     private const double LeftMargin = 56;
     private const double RightMargin = 16;
     // Room above the plot for the elevation axis title, so it never touches the top tick label.
@@ -31,11 +45,8 @@ public sealed class ProfileChart : FrameworkElement
 
     private static readonly CultureInfo Spanish = CultureInfo.GetCultureInfo("es-ES");
     private static readonly Typeface Font = new("Segoe UI");
-    private static readonly Pen GridPen = Frozen(new Pen(new SolidColorBrush(Color.FromRgb(225, 225, 225)), 1));
-    private static readonly Pen AxisPen = Frozen(new Pen(Brushes.Gray, 1));
     private static readonly Pen LinePen = Frozen(new Pen(new SolidColorBrush(Color.FromRgb(200, 30, 50)), 2) { LineJoin = PenLineJoin.Round });
     private static readonly Brush AreaBrush = Frozen(new SolidColorBrush(Color.FromArgb(60, 200, 30, 50)));
-    private static readonly Pen CursorPen = Frozen(new Pen(Brushes.Black, 1.5));
     private static readonly Pen HoverPen = Frozen(new Pen(new SolidColorBrush(Color.FromRgb(25, 90, 220)), 1) { DashStyle = DashStyles.Dash });
     private static readonly Brush CursorFill = Frozen(new SolidColorBrush(Color.FromRgb(255, 230, 0)));
 
@@ -71,16 +82,44 @@ public sealed class ProfileChart : FrameworkElement
         set => SetValue(HoverDistanceProperty, value);
     }
 
+    /// <summary>Chart background.</summary>
+    public Brush Background
+    {
+        get => (Brush)GetValue(BackgroundProperty);
+        set => SetValue(BackgroundProperty, value);
+    }
+
+    /// <summary>Axis titles and the selected position.</summary>
+    public Brush Foreground
+    {
+        get => (Brush)GetValue(ForegroundProperty);
+        set => SetValue(ForegroundProperty, value);
+    }
+
+    /// <summary>Tick labels, plot frame and messages.</summary>
+    public Brush SecondaryForeground
+    {
+        get => (Brush)GetValue(SecondaryForegroundProperty);
+        set => SetValue(SecondaryForegroundProperty, value);
+    }
+
+    /// <summary>Grid lines.</summary>
+    public Brush GridBrush
+    {
+        get => (Brush)GetValue(GridBrushProperty);
+        set => SetValue(GridBrushProperty, value);
+    }
+
     private Rect Plot => new(LeftMargin, TopMargin, Math.Max(1, ActualWidth - LeftMargin - RightMargin), Math.Max(1, ActualHeight - TopMargin - BottomMargin));
 
     protected override void OnRender(DrawingContext dc)
     {
-        dc.DrawRectangle(Brushes.White, null, new Rect(0, 0, ActualWidth, ActualHeight));
+        dc.DrawRectangle(Background, null, new Rect(0, 0, ActualWidth, ActualHeight));
         var profile = Profile;
         if (profile is null || profile.Samples.Count == 0 || !profile.HasElevation)
         {
             var message = profile is null || profile.Samples.Count == 0 ? Strings.ProfileNoPoints : Strings.ProfileNoElevation;
-            DrawText(dc, message, new Point(ActualWidth / 2, ActualHeight / 2), 14, Brushes.Gray, HorizontalAlignment.Center);
+            DrawText(dc, message, new Point(ActualWidth / 2, ActualHeight / 2), 14, SecondaryForeground, HorizontalAlignment.Center);
             return;
         }
 
@@ -127,10 +166,11 @@ public sealed class ProfileChart : FrameworkElement
         if (CursorDistance is { } cursor && profile.Nearest(cursor) is { } selected)
         {
             var x = plot.Left + selected.Distance / maxX * plot.Width;
-            dc.DrawLine(CursorPen, new Point(x, plot.Top), new Point(x, plot.Bottom));
+            var cursorPen = Frozen(new Pen(Foreground, 1.5));
+            dc.DrawLine(cursorPen, new Point(x, plot.Top), new Point(x, plot.Bottom));
             if (selected.Elevation is { } elevation)
             {
-                dc.DrawEllipse(CursorFill, CursorPen, ToScreen(selected.Distance, elevation), 5, 5);
+                dc.DrawEllipse(CursorFill, cursorPen, ToScreen(selected.Distance, elevation), 5, 5);
             }
         }
     }
@@ -178,23 +218,24 @@ public sealed class ProfileChart : FrameworkElement
 
     private void DrawGrid(DrawingContext dc, Rect plot, double maxX, double minY, double maxY)
     {
+        var gridPen = Frozen(new Pen(GridBrush, 1));
         foreach (var km in AxisTicks.Ticks(0, maxX / 1000, Math.Max(2, (int)(plot.Width / 80))))
         {
             var x = plot.Left + km * 1000 / maxX * plot.Width;
-            dc.DrawLine(GridPen, new Point(x, plot.Top), new Point(x, plot.Bottom));
-            DrawText(dc, km.ToString("0.##", Spanish), new Point(x, plot.Bottom + 4), 11, Brushes.DimGray, HorizontalAlignment.Center);
+            dc.DrawLine(gridPen, new Point(x, plot.Top), new Point(x, plot.Bottom));
+            DrawText(dc, km.ToString("0.##", Spanish), new Point(x, plot.Bottom + 4), 11, SecondaryForeground, HorizontalAlignment.Center);
         }
 
         foreach (var meters in AxisTicks.Ticks(minY, maxY, Math.Max(2, (int)(plot.Height / 40))))
         {
             var y = plot.Bottom - (meters - minY) / (maxY - minY) * plot.Height;
-            dc.DrawLine(GridPen, new Point(plot.Left, y), new Point(plot.Right, y));
-            DrawText(dc, meters.ToString("N0", Spanish), new Point(plot.Left - 6, y - 8), 11, Brushes.DimGray, HorizontalAlignment.Right);
+            dc.DrawLine(gridPen, new Point(plot.Left, y), new Point(plot.Right, y));
+            DrawText(dc, meters.ToString("N0", Spanish), new Point(plot.Left - 6, y - 8), 11, SecondaryForeground, HorizontalAlignment.Right);
         }
 
-        dc.DrawRectangle(null, AxisPen, plot);
-        DrawText(dc, Strings.ProfileAxisDistance, new Point(plot.Left + plot.Width / 2, plot.Bottom + 20), 11, Brushes.Black, HorizontalAlignment.Center);
-        DrawText(dc, Strings.ProfileAxisElevation, new Point(4, 2), 11, Brushes.Black, HorizontalAlignment.Left);
+        dc.DrawRectangle(null, Frozen(new Pen(SecondaryForeground, 1)), plot);
+        DrawText(dc, Strings.ProfileAxisDistance, new Point(plot.Left + plot.Width / 2, plot.Bottom + 20), 11, Foreground, HorizontalAlignment.Center);
+        DrawText(dc, Strings.ProfileAxisElevation, new Point(4, 2), 11, Foreground, HorizontalAlignment.Left);
     }
 
     private void DrawText(DrawingContext dc, string text, Point anchor, double size, Brush brush, HorizontalAlignment alignment)

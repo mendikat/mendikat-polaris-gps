@@ -98,7 +98,7 @@ public sealed partial class HelpMenuTests
         _vm.AboutCommand.Execute(null);
 
         var about = _dialogs.AboutShown!;
-        Assert.Equal("Versión 0.1.2", about.VersionText);
+        Assert.Equal("Versión 0.2.0", about.VersionText);
         Assert.Equal("Autor: Javier Urrutia", about.AuthorText);
         Assert.Equal("mailto:javi@mendikat.net", about.AuthorEmailUri);
         Assert.Equal("https://www.mendikat.net", about.Web);

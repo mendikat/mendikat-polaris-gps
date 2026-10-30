@@ -14,7 +14,7 @@
                       IsEnabled="{Binding CanChangeResolution}" AutomationProperties.Name="{x:Static res:Strings.DemResolution}" />
             <Button Content="{x:Static res:Strings.DemQuery}" Command="{Binding QueryCommand}" Padding="12,2" Margin="10,0,0,0" />
         </StackPanel>
-        <TextBlock Text="{Binding SourceInfo}" Foreground="DimGray" TextWrapping="Wrap" Margin="0,8,0,0" />
+        <TextBlock Text="{Binding SourceInfo}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextWrapping="Wrap" Margin="0,8,0,0" />
 
         <DockPanel Margin="0,10,0,0" Visibility="{Binding IsQuerying, Converter={StaticResource BoolToVisibility}}">
             <Button DockPanel.Dock="Right" Content="{x:Static res:Strings.DemStop}" Command="{Binding CancelQueryCommand}" Padding="10,2" Margin="8,0,0,0" />
@@ -22,11 +22,11 @@
                          AutomationProperties.Name="{x:Static res:Strings.ProgressName}" />
         </DockPanel>
 
-        <Border BorderBrush="LightGray" BorderThickness="0,1,0,0" Margin="0,12,0,0" Padding="0,8,0,0">
+        <Border BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}" BorderThickness="0,1,0,0" Margin="0,12,0,0" Padding="0,8,0,0">
             <StackPanel>
                 <TextBlock Text="{Binding Preview}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
-                <TextBlock Text="{Binding Error}" Foreground="DarkRed" TextWrapping="Wrap" Margin="0,4,0,0" />
-                <TextBlock Text="{x:Static res:Strings.DemNote}" Foreground="DimGray" TextWrapping="Wrap" Margin="0,8,0,0" />
+                <TextBlock Text="{Binding Error}" Foreground="{DynamicResource SystemFillColorCriticalBrush}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                <TextBlock Text="{x:Static res:Strings.DemNote}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextWrapping="Wrap" Margin="0,8,0,0" />
             </StackPanel>
         </Border>
 

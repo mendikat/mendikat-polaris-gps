@@ -14,6 +14,18 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <local:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVisibility" />
         <local:NullToCollapsedConverter x:Key="NullToCollapsed" />
+        <!-- The Fluent theme only reserves the icon column when an item has an icon or a check mark; none do, so the
+             text would touch the menu border. Indent it as other Windows 11 apps do (menu bar and map context menu). -->
+        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+            <Style.Triggers>
+                <Trigger Property="Role" Value="SubmenuItem">
+                    <Setter Property="Padding" Value="28,0,0,0" />
+                </Trigger>
+                <Trigger Property="Role" Value="SubmenuHeader">
+                    <Setter Property="Padding" Value="28,0,0,0" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewGpxCommand}" />
@@ -88,11 +100,11 @@
 
         <!-- Map controls (APP-06) -->
         <ToolBar DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
-            <Button Content="+" Width="28" FontWeight="Bold" Command="{Binding ZoomInCommand}"
+            <Button Content="+" MinWidth="32" FontWeight="Bold" Command="{Binding ZoomInCommand}"
                     ToolTip="{x:Static res:Strings.ToolZoomIn}" AutomationProperties.Name="{x:Static res:Strings.MenuZoomIn}" />
-            <Button Content="−" Width="28" FontWeight="Bold" Command="{Binding ZoomOutCommand}"
+            <Button Content="−" MinWidth="32" FontWeight="Bold" Command="{Binding ZoomOutCommand}"
                     ToolTip="{x:Static res:Strings.ToolZoomOut}" AutomationProperties.Name="{x:Static res:Strings.MenuZoomOut}" />
-            <Button Content="⤢" Width="28" Command="{Binding ZoomToDataCommand}"
+            <Button Content="⤢" MinWidth="32" Command="{Binding ZoomToDataCommand}"
                     ToolTip="{x:Static res:Strings.ToolZoomToData}" AutomationProperties.Name="{x:Static res:Strings.MenuZoomToData}" />
             <Separator />
             <TextBlock Text="{x:Static res:Strings.ToolMapProvider}" VerticalAlignment="Center" Margin="4,0" />
@@ -103,11 +115,12 @@
                           ToolTip="{x:Static res:Strings.LocalMapsToolTip}" AutomationProperties.Name="{x:Static res:Strings.LocalMapsToolTip}" />
             <Popup IsOpen="{Binding IsChecked, ElementName=LocalMapsButton}" PlacementTarget="{Binding ElementName=LocalMapsButton}"
                    Placement="Bottom" StaysOpen="False" Closed="OnLocalMapsPopupClosed">
-                <Border Background="{x:Static SystemColors.WindowBrush}" BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" BorderThickness="1" Padding="6" MinWidth="380">
+                <Border Background="{DynamicResource FlyoutBackground}" BorderBrush="{DynamicResource FlyoutBorderBrush}" BorderThickness="1"
+                        CornerRadius="{DynamicResource OverlayCornerRadius}" Padding="6" MinWidth="380">
                     <StackPanel>
-                        <TextBlock Text="{x:Static res:Strings.LocalMapsEmpty}" Foreground="DimGray" TextWrapping="Wrap" MaxWidth="360"
+                        <TextBlock Text="{x:Static res:Strings.LocalMapsEmpty}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextWrapping="Wrap" MaxWidth="360"
                                    Visibility="{Binding HasLocalMaps, Converter={StaticResource InverseBoolToVisibility}}" />
-                        <ListBox x:Name="LocalMapsList" ItemsSource="{Binding LocalMaps}" BorderThickness="0" AllowDrop="True"
+                        <ListBox x:Name="LocalMapsList" ItemsSource="{Binding LocalMaps}" BorderThickness="0" Background="Transparent" AllowDrop="True"
                                  HorizontalContentAlignment="Stretch" MaxHeight="420"
                                  Visibility="{Binding HasLocalMaps, Converter={StaticResource BoolToVisibility}}"
                                  DragOver="OnLocalMapsDragOver" Drop="OnLocalMapsDrop" PreviewKeyDown="OnLocalMapsKeyDown"
@@ -117,22 +130,22 @@
                                     <StackPanel Margin="0,2" ToolTip="{Binding Details}">
                                         <DockPanel>
                                             <TextBlock DockPanel.Dock="Left" Text="≡" FontSize="16" Width="18" Cursor="SizeAll" VerticalAlignment="Center"
-                                                       Foreground="DimGray" ToolTip="{x:Static res:Strings.LocalDragHandle}"
+                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" ToolTip="{x:Static res:Strings.LocalDragHandle}"
                                                        MouseLeftButtonDown="OnLocalMapHandleDown" MouseMove="OnLocalMapHandleMove" />
-                                            <Button DockPanel.Dock="Right" Content="✕" Width="24" Margin="4,0,0,0"
+                                            <Button DockPanel.Dock="Right" Content="✕" MinWidth="28" Padding="6,2" Margin="4,0,0,0"
                                                     Command="{Binding DataContext.RemoveLocalMapCommand, Source={x:Reference LocalMapsButton}}" CommandParameter="{Binding}"
                                                     ToolTip="{x:Static res:Strings.LocalRemove}" AutomationProperties.Name="{x:Static res:Strings.LocalRemove}" />
-                                            <Button DockPanel.Dock="Right" Content="⤢" Width="24" Margin="4,0,0,0"
+                                            <Button DockPanel.Dock="Right" Content="⤢" MinWidth="28" Padding="6,2" Margin="4,0,0,0"
                                                     Command="{Binding DataContext.ZoomToLocalMapCommand, Source={x:Reference LocalMapsButton}}" CommandParameter="{Binding}"
                                                     ToolTip="{x:Static res:Strings.LocalZoomTo}" AutomationProperties.Name="{x:Static res:Strings.LocalZoomTo}" />
                                             <CheckBox IsChecked="{Binding IsVisible}" VerticalAlignment="Center" ToolTip="{Binding VisibilityToolTip}">
                                                 <TextBlock>
-                                                    <Run Text="{Binding Kind, Mode=OneWay}" Foreground="DimGray" /><Run Text=" " /><Run Text="{Binding Name, Mode=OneWay}" />
+                                                    <Run Text="{Binding Kind, Mode=OneWay}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" /><Run Text=" " /><Run Text="{Binding Name, Mode=OneWay}" />
                                                 </TextBlock>
                                             </CheckBox>
                                         </DockPanel>
                                         <DockPanel Margin="18,2,56,0" Visibility="{Binding HasOpacity, Converter={StaticResource BoolToVisibility}}">
-                                            <TextBlock DockPanel.Dock="Right" Text="{Binding OpacityText}" Width="40" TextAlignment="Right" Foreground="DimGray" VerticalAlignment="Center" />
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding OpacityText}" Width="40" TextAlignment="Right" Foreground="{DynamicResource TextFillColorSecondaryBrush}" VerticalAlignment="Center" />
                                             <Slider Minimum="0" Maximum="1" SmallChange="0.05" LargeChange="0.1" Value="{Binding Opacity}"
                                                     VerticalAlignment="Center" ToolTip="{x:Static res:Strings.LocalOpacityToolTip}"
                                                     AutomationProperties.Name="{Binding OpacityName}" />
@@ -188,7 +201,7 @@
                              AutomationProperties.Name="{x:Static res:Strings.ProgressName}" />
             </StatusBarItem>
             <StatusBarItem DockPanel.Dock="Right" Visibility="{Binding MapStatus, Converter={StaticResource NullToCollapsed}}">
-                <TextBlock Text="{Binding MapStatus}" Foreground="DarkRed" AutomationProperties.Name="{x:Static res:Strings.A11yMapStatusName}" />
+                <TextBlock Text="{Binding MapStatus}" Foreground="{DynamicResource SystemFillColorCriticalBrush}" AutomationProperties.Name="{x:Static res:Strings.A11yMapStatusName}" />
             </StatusBarItem>
             <StatusBarItem>
                 <TextBlock Text="{Binding StatusMessage}" TextTrimming="CharacterEllipsis" AutomationProperties.Name="{x:Static res:Strings.A11yStatusName}" />
@@ -228,7 +241,7 @@
             </TabControl>
 
             <TextBlock Grid.Column="0" Text="{x:Static res:Strings.NoDocumentsHint}" Margin="16"
-                       TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="Gray"
+                       TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                        Visibility="{Binding HasDocuments, Converter={StaticResource InverseBoolToVisibility}}" />
 
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
@@ -262,14 +275,15 @@
                             BorderBrush="Black" BorderThickness="1" IsHitTestVisible="False"
                             Visibility="{Binding ShowScaleBar, Converter={StaticResource BoolToVisibility}}">
                         <StackPanel>
-                            <TextBlock x:Name="ScaleBarLabel" HorizontalAlignment="Center" FontWeight="Bold" FontSize="12" Margin="0,0,0,2" />
+                            <TextBlock x:Name="ScaleBarLabel" Foreground="Black" HorizontalAlignment="Center" FontWeight="Bold" FontSize="12" Margin="0,0,0,2" />
                             <views:ScaleRuler x:Name="ScaleBarRuler" Height="7" HorizontalAlignment="Left" />
                         </StackPanel>
                     </Border>
                     <!-- Mandatory attribution of the active provider (MAP-06) -->
                     <Border HorizontalAlignment="Right" Background="#C8FFFFFF" Padding="6,2" MaxWidth="600">
-                        <TextBlock FontSize="11" TextWrapping="Wrap">
-                            <Hyperlink NavigateUri="{Binding SelectedMapProvider.AttributionUrl}" RequestNavigate="OnAttributionNavigate">
+                        <!-- Over the map, which stays light: fixed colours instead of theme ones -->
+                        <TextBlock FontSize="11" TextWrapping="Wrap" Foreground="Black">
+                            <Hyperlink NavigateUri="{Binding SelectedMapProvider.AttributionUrl}" Foreground="#0645AD" RequestNavigate="OnAttributionNavigate">
                                 <Run Text="{Binding SelectedMapProvider.AttributionText, Mode=OneWay}" />
                             </Hyperlink>
                         </TextBlock>

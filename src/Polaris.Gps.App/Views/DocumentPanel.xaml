@@ -13,7 +13,7 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="0,2,8,2" />
         </Style>
-        <Style x:Key="FieldBox" TargetType="TextBox">
+        <Style x:Key="FieldBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Margin" Value="0,2" />
         </Style>
     </UserControl.Resources>
@@ -31,13 +31,13 @@
         <!-- Summary -->
         <StackPanel Grid.Row="0">
             <TextBlock Text="{Binding FileName}" FontSize="14" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" ToolTip="{Binding FileName}" />
-            <TextBlock Foreground="Gray" TextWrapping="Wrap">
+            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextWrapping="Wrap">
                 <Run Text="{Binding FormatLabel, Mode=OneWay}" /><Run Text=" · " /><Run Text="{Binding Counts, Mode=OneWay}" />
             </TextBlock>
             <ItemsControl ItemsSource="{Binding Warnings}" Visibility="{Binding HasWarnings, Converter={StaticResource BoolToVisibility}}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding StringFormat=⚠ {0}}" TextWrapping="Wrap" Foreground="DarkGoldenrod" Margin="0,2" />
+                        <TextBlock Text="{Binding StringFormat=⚠ {0}}" TextWrapping="Wrap" Foreground="{DynamicResource SystemFillColorCautionBrush}" Margin="0,2" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -56,7 +56,7 @@
                         <TextBlock Text="{Binding Icon}" Width="18" VerticalAlignment="Center" />
                         <StackPanel>
                             <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
-                            <TextBlock Text="{Binding Details}" Foreground="Gray" FontSize="11" />
+                            <TextBlock Text="{Binding Details}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="11" />
                         </StackPanel>
                     </DockPanel>
                 </DataTemplate>
@@ -72,10 +72,11 @@
                   EnableRowVirtualization="True" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
                   SelectionChanged="OnGridSelectionChanged"                  AutomationProperties.Name="{x:Static res:Strings.PanelPoints}">
             <DataGrid.RowStyle>
+                <!-- No BasedOn: {x:Type DataGridRow} resolves to the classic style (white rows), not the Fluent one -->
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsAdded}" Value="True">
-                            <Setter Property="Background" Value="#E3F6E3" />
+                            <Setter Property="Background" Value="{DynamicResource SystemFillColorSuccessBackgroundBrush}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -91,10 +92,10 @@
         </DataGrid>
 
         <!-- Detail of the selected point (LAY-04, EDIT-04, WPE-02) -->
-        <Border Grid.Row="5" BorderBrush="LightGray" BorderThickness="0,1,0,0" Margin="0,8,0,0" Padding="0,4,0,0">
+        <Border Grid.Row="5" BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}" BorderThickness="0,1,0,0" Margin="0,8,0,0" Padding="0,4,0,0">
             <StackPanel>
                 <TextBlock Text="{x:Static res:Strings.PanelPoint}" Style="{StaticResource SectionTitle}" Margin="0,2,0,4" />
-                <TextBlock Text="{Binding SelectionHint}" Foreground="Gray" TextWrapping="Wrap">
+                <TextBlock Text="{Binding SelectionHint}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextWrapping="Wrap">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Style.Triggers>
@@ -155,7 +156,7 @@
                                 <TextBlock Grid.Row="5" Text="{x:Static res:Strings.FieldElevation}" Style="{StaticResource FieldLabel}" />
                                 <!-- Elevation with its origin in this session: file, interpolated, DEM or typed (DEM-06) -->
                                 <DockPanel Grid.Row="5" Grid.Column="1">
-                                    <TextBlock DockPanel.Dock="Right" Text="{Binding ElevationOrigin}" Foreground="Gray" VerticalAlignment="Center" Margin="8,0,0,0"
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding ElevationOrigin}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" VerticalAlignment="Center" Margin="8,0,0,0"
                                                ToolTip="{x:Static res:Strings.FieldElevationSource}" AutomationProperties.Name="{x:Static res:Strings.FieldElevationSource}" />
                                     <TextBox Text="{Binding Elevation, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource FieldBox}"
                                              AutomationProperties.Name="{x:Static res:Strings.FieldElevation}" />
@@ -169,9 +170,9 @@
                                 <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding LocalTime}" VerticalAlignment="Center" />
 
                                 <TextBlock Grid.Row="8" Text="{x:Static res:Strings.FieldOther}" Style="{StaticResource FieldLabel}" VerticalAlignment="Top" />
-                                <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding OtherFields}" TextWrapping="Wrap" Foreground="Gray" Margin="0,2" />
+                                <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding OtherFields}" TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Margin="0,2" />
 
-                                <TextBlock Grid.Row="9" Grid.ColumnSpan="2" Text="{x:Static res:Strings.FieldAdded}" Foreground="Green"
+                                <TextBlock Grid.Row="9" Grid.ColumnSpan="2" Text="{x:Static res:Strings.FieldAdded}" Foreground="{DynamicResource SystemFillColorSuccessBrush}"
                                            Visibility="{Binding IsAdded, Converter={StaticResource BoolToVisibility}}" />
 
                                 <DockPanel Grid.Row="10" Grid.ColumnSpan="2" Margin="0,6,0,0" LastChildFill="True">
@@ -179,7 +180,7 @@
                                             Command="{Binding DataContext.ApplyPointCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
                                     <Button DockPanel.Dock="Right" Content="{x:Static res:Strings.RevertButton}" Padding="12,2"
                                             Command="{Binding DataContext.RevertPointCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
-                                    <TextBlock Text="{Binding Error}" Foreground="DarkRed" TextWrapping="Wrap" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Error}" Foreground="{DynamicResource SystemFillColorCriticalBrush}" TextWrapping="Wrap" VerticalAlignment="Center" />
                                 </DockPanel>
                             </Grid>
                         </DataTemplate>
