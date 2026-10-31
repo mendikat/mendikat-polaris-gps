@@ -9,3 +9,6 @@ artifacts/
 settings.json
 *.local.json
 ~$*.docx
+
+# Instructions for Claude Code (local, not part of the project)
+CLAUDE.md

@@ -5,7 +5,7 @@
 Aplicación de escritorio Windows para abrir, visualizar, inspeccionar, editar y guardar archivos **GPX** (tracks, rutas
 y waypoints) sobre cartografía online (IGN España por defecto).
 
-> **Estado: versión 0.6.0.**
+> **Estado: versión 0.6.1.**
 > Se abren archivos GPX, y KML, KMZ, TCX, OziExplorer (PLT, WPT) y CompeGPS/TwoNav (TRK, WPT) convertidos a GPX, se dibujan sobre 8 cartografías (IGN por defecto), se pueden seleccionar, borrar, insertar,
 > mover y editar puntos con deshacer/rehacer, y se guardan de forma segura. Los waypoints del GPX se ven en el mapa con su nombre.
 > También muestra el perfil de elevación sincronizado con el mapa, y permite simplificar tracks, regenerar sus tiempos y ajustar sus altitudes con el MDT del IGN.
@@ -29,25 +29,11 @@ Descargas: [Releases](https://github.com/mendikat/mendikat-polaris-gps/releases/
 
 *Perfil de elevación: distancia, desnivel, altitudes, tiempo total, en movimiento y detenido, y velocidades.*
 
-## Code signing policy
+## Privacidad y firma de código
 
-Releases are built from this repository by GitHub Actions (`.github/workflows/build.yml`) on version tags, never on a
-developer's computer. Once the project is approved, the setup program and the `.msi` will be signed with free code
-signing provided by [SignPath.io](https://about.signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+Polaris GPS no envía datos personales ni de uso a nadie. La política de privacidad y la de firma de código (*code signing
+policy*) están en [PRIVACY.md](PRIVACY.md).
 
-- Committers and reviewers: [Javier Urrutia](https://github.com/mendikat) (javi@mendikat.net)
-- Approvers (each release is a draft until approved and published by hand): [Javier Urrutia](https://github.com/mendikat)
-
-Third-party binaries included in the installers keep their own signatures and licences: the .NET 10 Desktop Runtime
-installer (signed by Microsoft) and the ERDAS ECW/JP2 SDK of Hexagon (not free software, see `LICENSE-EXCEPTION.md`).
-
-### Privacy
-
-Polaris GPS does not send any personal or usage data to Mendikat or anyone else. It only connects to the services needed
-for what the user does: map tiles of the chosen cartography, the IGN Spain elevation model (pointer elevation and
-*Adjust elevations*), the BRouter routing server when *Follow paths* is on, and the GitHub API when the user chooses
-*Check for updates*. Those providers receive the requests as with any web browsing. The technical log stays on the
-user's computer.
 ## Uso rápido
 
 | Acción | Cómo |
